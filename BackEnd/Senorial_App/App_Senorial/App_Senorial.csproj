@@ -28,4 +28,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\CommonModels\CommonModels.csproj" />
+    <ProjectReference Include="..\IBusiness\IBusiness.csproj" />
+    <ProjectReference Include="..\RequestResponseModels\RequestResponseModels.csproj" />
+    <ProjectReference Include="..\UtilSecurity\UtilitySecurity.csproj" />
+  </ItemGroup>
+
 </Project>

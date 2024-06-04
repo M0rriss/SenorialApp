@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace DBSenorialModels.Senorial;
+
+[Table("producto_sucursal", Schema = "Ventas")]
+public partial class ProductoSucursal
+{
+    [Column("id_sucursal")]
+    public int IdSucursal { get; set; }
+
+    [Column("id_producto")]
+    public int IdProducto { get; set; }
+
+    [Column("precio", TypeName = "decimal(10, 2)")]
+    public decimal? Precio { get; set; }
+
+    [Key]
+    [Column("id_producto_sucursal")]
+    public int IdProductoSucursal { get; set; }
+
+    [Column("id_unidad")]
+    public int IdUnidad { get; set; }
+
+    [Column("cantidad")]
+    public int? Cantidad { get; set; }
+
+    [Column("id_sub_categoria")]
+    public int IdSubCategoria { get; set; }
+
+    [InverseProperty("IdProductoSucursalNavigation")]
+    public virtual ICollection<DetalleProduccion> DetalleProduccions { get; set; } = new List<DetalleProduccion>();
+
+    [InverseProperty("IdProductoSucursalNavigation")]
+    public virtual ICollection<DetalleVenta> DetalleVenta { get; set; } = new List<DetalleVenta>();
+
+    [ForeignKey("IdProducto")]
+    [InverseProperty("ProductoSucursals")]
+    public virtual Producto IdProductoNavigation { get; set; } = null!;
+
+    [ForeignKey("IdSubCategoria")]
+    [InverseProperty("ProductoSucursals")]
+    public virtual SubCategoria IdSubCategoriaNavigation { get; set; } = null!;
+
+    [ForeignKey("IdSucursal")]
+    [InverseProperty("ProductoSucursals")]
+    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
+
+    [ForeignKey("IdUnidad")]
+    [InverseProperty("ProductoSucursals")]
+    public virtual UnidadMedicion IdUnidadNavigation { get; set; } = null!;
+}

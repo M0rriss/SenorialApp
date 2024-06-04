@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace DBSenorialModels.Senorial;
+
+[Table("insumo", Schema = "Almacen")]
+public partial class Insumo
+{
+    [Key]
+    [Column("id_insumo")]
+    public int IdInsumo { get; set; }
+
+    [Column("nombre")]
+    [StringLength(100)]
+    public string? Nombre { get; set; }
+
+    [Column("url")]
+    public string? Url { get; set; }
+
+    [Column("id_unidad")]
+    public int IdUnidad { get; set; }
+
+    [InverseProperty("IdInsumoNavigation")]
+    public virtual ICollection<DetalleCompra> DetalleCompras { get; set; } = new List<DetalleCompra>();
+
+    [InverseProperty("IdInsumoNavigation")]
+    public virtual ICollection<DetalleInventario> DetalleInventarios { get; set; } = new List<DetalleInventario>();
+
+    [ForeignKey("IdUnidad")]
+    [InverseProperty("Insumos")]
+    public virtual UnidadMedicion IdUnidadNavigation { get; set; } = null!;
+}

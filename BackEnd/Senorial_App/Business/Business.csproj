@@ -10,4 +10,20 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommonModels\CommonModels.csproj" />
+    <ProjectReference Include="..\DBSenorialModels\DBSenorialModels.csproj" />
+    <ProjectReference Include="..\ExcelGenerator\ExcelGenerator.csproj" />
+    <ProjectReference Include="..\IBusiness\IBusiness.csproj" />
+    <ProjectReference Include="..\IRepository\IRepository.csproj" />
+    <ProjectReference Include="..\IServices\IServices.csproj" />
+    <ProjectReference Include="..\PdfGenerator\PdfGenerator.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+    <ProjectReference Include="..\RequestResponseModels\RequestResponseModels.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\UtilConstants\UtilityConstants.csproj" />
+    <ProjectReference Include="..\UtilityAutoMapper\UtilityAutoMapper.csproj" />
+    <ProjectReference Include="..\UtilSecurity\UtilitySecurity.csproj" />
+  </ItemGroup>
+
 </Project>

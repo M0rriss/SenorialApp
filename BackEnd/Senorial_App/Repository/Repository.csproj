@@ -23,4 +23,12 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommonModels\CommonModels.csproj" />
+    <ProjectReference Include="..\DBSenorialModels\DBSenorialModels.csproj" />
+    <ProjectReference Include="..\IRepository\IRepository.csproj" />
+    <ProjectReference Include="..\RequestResponseModels\RequestResponseModels.csproj" />
+    <ProjectReference Include="..\UtilConstants\UtilityConstants.csproj" />
+  </ItemGroup>
+
 </Project>

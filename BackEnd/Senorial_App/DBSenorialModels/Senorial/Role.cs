@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace DBSenorialModels.Senorial;
+
+[Table("roles", Schema = "Usuarios")]
+public partial class Role
+{
+    [Key]
+    [Column("id_rol")]
+    public int IdRol { get; set; }
+
+    [Column("nombre")]
+    [StringLength(100)]
+    public string? Nombre { get; set; }
+
+    [Column("abreviacion")]
+    [StringLength(10)]
+    public string? Abreviacion { get; set; }
+
+    [Column("descripcion")]
+    [StringLength(100)]
+    public string? Descripcion { get; set; }
+
+    [Column("id_estado")]
+    public int IdEstado { get; set; }
+
+    [InverseProperty("IdRolNavigation")]
+    public virtual ICollection<DetalleDashMenu> DetalleDashMenus { get; set; } = new List<DetalleDashMenu>();
+
+    [InverseProperty("IdRolNavigation")]
+    public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
+
+    [ForeignKey("IdEstado")]
+    [InverseProperty("Roles")]
+    public virtual Estado IdEstadoNavigation { get; set; } = null!;
+
+    [InverseProperty("IdRolNavigation")]
+    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+}
