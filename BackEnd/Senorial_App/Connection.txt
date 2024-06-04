@@ -1,0 +1,1 @@
+Scaffold-DbContext "Data Source=localhost\SQLEXPRESS;Initial Catalog=senorial;Integrated Security=True;Trusted_Connection=true;Trust Server Certificate=true" Microsoft.EntityFrameworkCore.SqlServer -contextdir Data -outputdir Senorial -DataAnnotations -Context "DBSenorialContext" -Force
