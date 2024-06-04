@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using DBSenorialModels.Senorial;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 
 namespace DBSenorialModels.Data;
 
@@ -105,9 +108,16 @@ public partial class DBSenorialContext : DbContext
     public virtual DbSet<Voucher> Vouchers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=senorial;Integrated Security=True;Trusted_Connection=true;Trust Server Certificate=true");
+    {
+        IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
+        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder = configurationBuilder.AddJsonFile("appsettings.json");
+        IConfiguration configurationFile = configurationBuilder.Build();
 
+        optionsBuilder.EnableSensitiveDataLogging();
+        string connection = configurationFile.GetConnectionString("DBSenorial");
+        optionsBuilder.UseSqlServer(connection);
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Ambiente>(entity =>
