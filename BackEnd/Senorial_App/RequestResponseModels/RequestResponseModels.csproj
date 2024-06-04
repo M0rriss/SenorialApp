@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Request\Schema_Almacen\Categorias\" />
-    <Folder Include="Request\Schema_Almacen\Compra\" />
-    <Folder Include="Request\Schema_Almacen\DetalleCompra\" />
-    <Folder Include="Request\Schema_Almacen\DetalleInventario\" />
-    <Folder Include="Request\Schema_Almacen\Insumo\" />
-    <Folder Include="Request\Schema_Almacen\Entradas\" />
-    <Folder Include="Request\Schema_Almacen\Inventario\" />
     <Folder Include="Request\Schema_Almacen\SubCategoria\" />
     <Folder Include="Request\Schema_Almacen\Proveedor\" />
     <Folder Include="Request\Schema_Generico\Estado\" />
@@ -51,13 +44,6 @@
     <Folder Include="Request\Schema_Ventas\SucursalUsuario\" />
     <Folder Include="Request\Schema_Ventas\Productos\" />
     <Folder Include="Request\Schema_Ventas\ProductoSucursal\" />
-    <Folder Include="Response\Schema_Almacen\Categorias\" />
-    <Folder Include="Response\Schema_Almacen\Compra\" />
-    <Folder Include="Response\Schema_Almacen\DetalleCompra\" />
-    <Folder Include="Response\Schema_Almacen\DetalleInventario\" />
-    <Folder Include="Response\Schema_Almacen\Entradas\" />
-    <Folder Include="Response\Schema_Almacen\Insumo\" />
-    <Folder Include="Response\Schema_Almacen\Inventario\" />
     <Folder Include="Response\Schema_Almacen\SubCategoria\" />
     <Folder Include="Response\Schema_Almacen\Proveedor\" />
     <Folder Include="Response\Schema_Generico\Estado\" />
