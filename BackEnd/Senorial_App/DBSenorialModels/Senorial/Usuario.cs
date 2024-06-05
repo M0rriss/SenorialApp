@@ -37,9 +37,6 @@ public partial class Usuario
     [Column("id_img")]
     public int IdImg { get; set; }
 
-    [InverseProperty("IdUsuarioNavigation")]
-    public virtual ICollection<Error> Errors { get; set; } = new List<Error>();
-
     [ForeignKey("IdImg")]
     [InverseProperty("Usuarios")]
     public virtual Imagene IdImgNavigation { get; set; } = null!;

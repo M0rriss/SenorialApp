@@ -9,6 +9,16 @@ namespace DBSenorialModels.Senorial;
 [Table("producto_sucursal", Schema = "Ventas")]
 public partial class ProductoSucursal
 {
+    [Key]
+    [Column("id_producto_sucursal")]
+    public int IdProductoSucursal { get; set; }
+
+    [Column("id_unidad")]
+    public int IdUnidad { get; set; }
+
+    [Column("id_categoria")]
+    public int IdCategoria { get; set; }
+
     [Column("id_sucursal")]
     public int IdSucursal { get; set; }
 
@@ -18,18 +28,8 @@ public partial class ProductoSucursal
     [Column("precio", TypeName = "decimal(10, 2)")]
     public decimal? Precio { get; set; }
 
-    [Key]
-    [Column("id_producto_sucursal")]
-    public int IdProductoSucursal { get; set; }
-
-    [Column("id_unidad")]
-    public int IdUnidad { get; set; }
-
     [Column("cantidad")]
     public int? Cantidad { get; set; }
-
-    [Column("id_sub_categoria")]
-    public int IdSubCategoria { get; set; }
 
     [InverseProperty("IdProductoSucursalNavigation")]
     public virtual ICollection<DetalleProduccion> DetalleProduccions { get; set; } = new List<DetalleProduccion>();
@@ -37,13 +37,13 @@ public partial class ProductoSucursal
     [InverseProperty("IdProductoSucursalNavigation")]
     public virtual ICollection<DetalleVenta> DetalleVenta { get; set; } = new List<DetalleVenta>();
 
+    [ForeignKey("IdCategoria")]
+    [InverseProperty("ProductoSucursals")]
+    public virtual Categoria IdCategoriaNavigation { get; set; } = null!;
+
     [ForeignKey("IdProducto")]
     [InverseProperty("ProductoSucursals")]
     public virtual Producto IdProductoNavigation { get; set; } = null!;
-
-    [ForeignKey("IdSubCategoria")]
-    [InverseProperty("ProductoSucursals")]
-    public virtual SubCategoria IdSubCategoriaNavigation { get; set; } = null!;
 
     [ForeignKey("IdSucursal")]
     [InverseProperty("ProductoSucursals")]

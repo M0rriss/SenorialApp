@@ -14,7 +14,11 @@ public partial class Produccion
     public int IdProduccion { get; set; }
 
     [Column("cantidad_total")]
-    public int? CantidadTotal { get; set; }
+    public int CantidadTotal { get; set; }
+
+    [Column("motivo")]
+    [StringLength(1)]
+    public string Motivo { get; set; } = null!;
 
     [InverseProperty("IdProduccionNavigation")]
     public virtual ICollection<DetalleProduccion> DetalleProduccions { get; set; } = new List<DetalleProduccion>();

@@ -18,5 +18,5 @@ public partial class Mesa
     public string? Nombre { get; set; }
 
     [InverseProperty("IdMesaNavigation")]
-    public virtual ICollection<DetalleMesa> DetalleMesas { get; set; } = new List<DetalleMesa>();
+    public virtual ICollection<Ambiente> Ambientes { get; set; } = new List<Ambiente>();
 }

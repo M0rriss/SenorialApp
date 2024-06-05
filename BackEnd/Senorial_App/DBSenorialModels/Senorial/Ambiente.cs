@@ -17,6 +17,13 @@ public partial class Ambiente
     [StringLength(100)]
     public string Nombre { get; set; } = null!;
 
+    [Column("id_mesa")]
+    public int IdMesa { get; set; }
+
+    [ForeignKey("IdMesa")]
+    [InverseProperty("Ambientes")]
+    public virtual Mesa IdMesaNavigation { get; set; } = null!;
+
     [InverseProperty("IdAmbienteNavigation")]
-    public virtual ICollection<DetalleMesa> DetalleMesas { get; set; } = new List<DetalleMesa>();
+    public virtual ICollection<Sucursal> Sucursals { get; set; } = new List<Sucursal>();
 }

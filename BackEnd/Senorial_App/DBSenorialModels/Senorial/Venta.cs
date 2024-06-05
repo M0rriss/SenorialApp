@@ -15,8 +15,14 @@ public partial class Venta
     [Column("id_venta")]
     public int IdVenta { get; set; }
 
-    [Column("fecha_venta", TypeName = "datetime")]
-    public DateTime? FechaVenta { get; set; }
+    [Column("id_apertura")]
+    public int IdApertura { get; set; }
+
+    [Column("id_voucher")]
+    public int IdVoucher { get; set; }
+
+    [Column("id_sucursal")]
+    public int IdSucursal { get; set; }
 
     [Column("id_cliente")]
     public int IdCliente { get; set; }
@@ -24,35 +30,8 @@ public partial class Venta
     [Column("id_estado")]
     public int IdEstado { get; set; }
 
-    [Column("id_sucursal")]
-    public int IdSucursal { get; set; }
-
     [Column("id_empleado")]
     public int IdEmpleado { get; set; }
-
-    [Column("id_mesa_detalle")]
-    public int IdMesaDetalle { get; set; }
-
-    [Column("nro_serie")]
-    [StringLength(50)]
-    public string? NroSerie { get; set; }
-
-    [Column("nro_documento")]
-    [StringLength(50)]
-    public string? NroDocumento { get; set; }
-
-    [Column("observacion")]
-    [StringLength(100)]
-    public string? Observacion { get; set; }
-
-    [Column("igv", TypeName = "decimal(10, 2)")]
-    public decimal? Igv { get; set; }
-
-    [Column("sub_monto", TypeName = "decimal(10, 2)")]
-    public decimal? SubMonto { get; set; }
-
-    [Column("monto_total", TypeName = "decimal(10, 2)")]
-    public decimal? MontoTotal { get; set; }
 
     [Column("id_metodo")]
     public int IdMetodo { get; set; }
@@ -60,14 +39,42 @@ public partial class Venta
     [Column("id_comprobante")]
     public int IdComprobante { get; set; }
 
+    [Column("nro_documento")]
+    [StringLength(50)]
+    public string? NroDocumento { get; set; }
+
+    [Column("nro_serie")]
+    [StringLength(50)]
+    public string? NroSerie { get; set; }
+
     [Column("id_tipo_pedido")]
     public int IdTipoPedido { get; set; }
 
-    [Column("id_voucher")]
-    public int IdVoucher { get; set; }
+    [Column("fecha_venta", TypeName = "datetime")]
+    public DateTime? FechaVenta { get; set; }
+
+    [Column("costo_base", TypeName = "decimal(10, 2)")]
+    public decimal? CostoBase { get; set; }
+
+    [Column("igv", TypeName = "decimal(10, 2)")]
+    public decimal? Igv { get; set; }
+
+    [Column("monto_total", TypeName = "decimal(10, 2)")]
+    public decimal? MontoTotal { get; set; }
+
+    [Column("vuelto", TypeName = "decimal(10, 2)")]
+    public decimal? Vuelto { get; set; }
+
+    [Column("observacion")]
+    [StringLength(100)]
+    public string? Observacion { get; set; }
 
     [InverseProperty("IdVentaNavigation")]
     public virtual ICollection<DetalleVenta> DetalleVenta { get; set; } = new List<DetalleVenta>();
+
+    [ForeignKey("IdApertura")]
+    [InverseProperty("Venta")]
+    public virtual AperturaCaja IdAperturaNavigation { get; set; } = null!;
 
     [ForeignKey("IdCliente")]
     [InverseProperty("Venta")]
@@ -84,10 +91,6 @@ public partial class Venta
     [ForeignKey("IdEstado")]
     [InverseProperty("Venta")]
     public virtual Estado IdEstadoNavigation { get; set; } = null!;
-
-    [ForeignKey("IdMesaDetalle")]
-    [InverseProperty("Venta")]
-    public virtual DetalleMesa IdMesaDetalleNavigation { get; set; } = null!;
 
     [ForeignKey("IdMetodo")]
     [InverseProperty("Venta")]

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-
 namespace DBSenorialModels.Data;
 
 public partial class DBSenorialContext : DbContext
@@ -21,6 +20,10 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Ambiente> Ambientes { get; set; }
 
+    public virtual DbSet<AperturaCaja> AperturaCajas { get; set; }
+
+    public virtual DbSet<Caja> Cajas { get; set; }
+
     public virtual DbSet<Categoria> Categorias { get; set; }
 
     public virtual DbSet<Cliente> Clientes { get; set; }
@@ -33,8 +36,6 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<DetalleInventario> DetalleInventarios { get; set; }
 
-    public virtual DbSet<DetalleMesa> DetalleMesas { get; set; }
-
     public virtual DbSet<DetalleProduccion> DetalleProduccions { get; set; }
 
     public virtual DbSet<DetalleVenta> DetalleVentas { get; set; }
@@ -44,8 +45,6 @@ public partial class DBSenorialContext : DbContext
     public virtual DbSet<Empleado> Empleados { get; set; }
 
     public virtual DbSet<Entrada> Entradas { get; set; }
-
-    public virtual DbSet<Error> Errors { get; set; }
 
     public virtual DbSet<Estado> Estados { get; set; }
 
@@ -81,8 +80,6 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Salida> Salidas { get; set; }
 
-    public virtual DbSet<SubCategoria> SubCategorias { get; set; }
-
     public virtual DbSet<Sucursal> Sucursals { get; set; }
 
     public virtual DbSet<SucursalUsuario> SucursalUsuarios { get; set; }
@@ -110,24 +107,46 @@ public partial class DBSenorialContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
-        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder = configurationBuilder.AddJsonFile("appsettings.json");
-        IConfiguration configurationFile = configurationBuilder.Build();
+        IConfigurationBuilder configurationBuild = new ConfigurationBuilder();
+        configurationBuild = configurationBuild.AddJsonFile("appsettings.json");
+        IConfiguration configurationFile = configurationBuild.Build();
 
         optionsBuilder.EnableSensitiveDataLogging();
-        string connection = configurationFile.GetConnectionString("DBSenorial");
-        optionsBuilder.UseSqlServer(connection);
+        string conneccion = configurationFile.GetConnectionString("DBSenorial");
+        optionsBuilder.UseSqlServer(conneccion);
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Ambiente>(entity =>
         {
             entity.HasKey(e => e.IdAmbiente).HasName("ambiente_id_pk");
+
+            entity.HasOne(d => d.IdMesaNavigation).WithMany(p => p.Ambientes)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("mesa_id_fk");
+        });
+
+        modelBuilder.Entity<AperturaCaja>(entity =>
+        {
+            entity.HasKey(e => e.IdApertura).HasName("apertura_caja_id_pk");
+
+            entity.HasOne(d => d.IdCajaNavigation).WithMany(p => p.AperturaCajas)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("caja_id_fk");
+        });
+
+        modelBuilder.Entity<Caja>(entity =>
+        {
+            entity.HasKey(e => e.IdCaja).HasName("caja_id_pk");
         });
 
         modelBuilder.Entity<Categoria>(entity =>
         {
             entity.HasKey(e => e.IdCategoria).HasName("categoria_id_pk");
+
+            entity.HasOne(d => d.IdCategoriaPadreNavigation).WithMany(p => p.InverseIdCategoriaPadreNavigation)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("categorias_padre_fk");
         });
 
         modelBuilder.Entity<Cliente>(entity =>
@@ -195,19 +214,6 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("inventario_id_fk");
         });
 
-        modelBuilder.Entity<DetalleMesa>(entity =>
-        {
-            entity.HasKey(e => e.IdMesaDetalle).HasName("detalle_mesa_id_pk");
-
-            entity.HasOne(d => d.IdAmbienteNavigation).WithMany(p => p.DetalleMesas)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("ambiente_id_fk");
-
-            entity.HasOne(d => d.IdMesaNavigation).WithMany(p => p.DetalleMesas)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("mesa_id_fk");
-        });
-
         modelBuilder.Entity<DetalleProduccion>(entity =>
         {
             entity.HasKey(e => new { e.IdProduccion, e.IdProductoSucursal }).HasName("detalle_produccion_id_pk");
@@ -271,17 +277,6 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdInventarioNavigation).WithMany(p => p.Entrada)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("inventario_id_entrada_fk");
-        });
-
-        modelBuilder.Entity<Error>(entity =>
-        {
-            entity.HasKey(e => e.IdError).HasName("error_id_pk");
-
-            entity.Property(e => e.Date).HasDefaultValueSql("(getdate())");
-
-            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Errors)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("usuario_id_fk");
         });
 
         modelBuilder.Entity<Estado>(entity =>
@@ -389,13 +384,13 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdProductoSucursal).HasName("producto_local_id_pk");
 
+            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.ProductoSucursals)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("categorias_id_fk");
+
             entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.ProductoSucursals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("producto_id_fk");
-
-            entity.HasOne(d => d.IdSubCategoriaNavigation).WithMany(p => p.ProductoSucursals)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("sub_categorias_id_fk");
 
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.ProductoSucursals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -441,18 +436,13 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("sucursal_id_fk");
         });
 
-        modelBuilder.Entity<SubCategoria>(entity =>
-        {
-            entity.HasKey(e => e.IdSubCategoria).HasName("sub_categoria_id_pk");
-
-            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.SubCategoria)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("sub_categorias_id_fk");
-        });
-
         modelBuilder.Entity<Sucursal>(entity =>
         {
             entity.HasKey(e => e.IdSucursal).HasName("sucursal_id_pk");
+
+            entity.HasOne(d => d.IdAmbienteNavigation).WithMany(p => p.Sucursals)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("ambientes_id_fk");
 
             entity.HasOne(d => d.IdDocumentoNavigation).WithMany(p => p.Sucursals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -536,6 +526,10 @@ public partial class DBSenorialContext : DbContext
 
             entity.Property(e => e.FechaVenta).HasDefaultValueSql("(getdate())");
 
+            entity.HasOne(d => d.IdAperturaNavigation).WithMany(p => p.Venta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("apertura_caja_id_fk");
+
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Venta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cliente_id_fk");
@@ -551,10 +545,6 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Venta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("estado_id_fk");
-
-            entity.HasOne(d => d.IdMesaDetalleNavigation).WithMany(p => p.Venta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("mesa_detalle_id_fk");
 
             entity.HasOne(d => d.IdMetodoNavigation).WithMany(p => p.Venta)
                 .OnDelete(DeleteBehavior.ClientSetNull)

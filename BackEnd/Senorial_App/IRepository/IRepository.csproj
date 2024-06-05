@@ -14,7 +14,6 @@
     <Folder Include="Schema_Almacen\Entradas\" />
     <Folder Include="Schema_Almacen\Insumo\" />
     <Folder Include="Schema_Almacen\Inventario\" />
-    <Folder Include="Schema_Almacen\SubCategoria\" />
     <Folder Include="Schema_Almacen\Proveedor\" />
     <Folder Include="Schema_Generico\Estado\" />
     <Folder Include="Schema_Generico\Imagenes\" />
@@ -26,7 +25,6 @@
     <Folder Include="Schema_Produccion\Salidas\" />
     <Folder Include="Schema_Produccion\Produccion\" />
     <Folder Include="Schema_Usuarios\DetalleDashMenu\" />
-    <Folder Include="Schema_Usuarios\Error\" />
     <Folder Include="Schema_Usuarios\Genero\" />
     <Folder Include="Schema_Usuarios\MenuDash\" />
     <Folder Include="Schema_Usuarios\Usuario\" />
@@ -37,12 +35,13 @@
     <Folder Include="Schema_Usuarios\Persona\" />
     <Folder Include="Schema_Ventas\Ambiente\" />
     <Folder Include="Schema_Ventas\Cliente\" />
-    <Folder Include="Schema_Ventas\DetalleMesa\" />
     <Folder Include="Schema_Ventas\DetalleVentas\" />
     <Folder Include="Schema_Ventas\Documentos\" />
     <Folder Include="Schema_Ventas\Empleados\" />
     <Folder Include="Schema_Ventas\Mesas\" />
     <Folder Include="Schema_Ventas\MetodoPago\" />
+    <Folder Include="Schema_Ventas\AperturaCaja\" />
+    <Folder Include="Schema_Ventas\Cajas\" />
     <Folder Include="Schema_Ventas\Voucher\" />
     <Folder Include="Schema_Ventas\Ventas\" />
     <Folder Include="Schema_Ventas\TipoTransaccion\" />

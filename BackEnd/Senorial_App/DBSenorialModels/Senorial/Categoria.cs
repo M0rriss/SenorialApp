@@ -18,6 +18,16 @@ public partial class Categoria
     [StringLength(100)]
     public string Nombre { get; set; } = null!;
 
+    [Column("id_categoria_padre")]
+    public int IdCategoriaPadre { get; set; }
+
+    [ForeignKey("IdCategoriaPadre")]
+    [InverseProperty("InverseIdCategoriaPadreNavigation")]
+    public virtual Categoria IdCategoriaPadreNavigation { get; set; } = null!;
+
+    [InverseProperty("IdCategoriaPadreNavigation")]
+    public virtual ICollection<Categoria> InverseIdCategoriaPadreNavigation { get; set; } = new List<Categoria>();
+
     [InverseProperty("IdCategoriaNavigation")]
-    public virtual ICollection<SubCategoria> SubCategoria { get; set; } = new List<SubCategoria>();
+    public virtual ICollection<ProductoSucursal> ProductoSucursals { get; set; } = new List<ProductoSucursal>();
 }

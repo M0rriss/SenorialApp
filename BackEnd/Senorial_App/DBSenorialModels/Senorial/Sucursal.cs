@@ -13,6 +13,9 @@ public partial class Sucursal
     [Column("id_sucursal")]
     public int IdSucursal { get; set; }
 
+    [Column("id_ambiente")]
+    public int IdAmbiente { get; set; }
+
     [Column("nombre")]
     [StringLength(100)]
     public string? Nombre { get; set; }
@@ -29,6 +32,10 @@ public partial class Sucursal
 
     [InverseProperty("IdSucursalNavigation")]
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
+
+    [ForeignKey("IdAmbiente")]
+    [InverseProperty("Sucursals")]
+    public virtual Ambiente IdAmbienteNavigation { get; set; } = null!;
 
     [ForeignKey("IdDocumento")]
     [InverseProperty("Sucursals")]
