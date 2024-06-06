@@ -1,0 +1,12 @@
+public string? RazonSocial { get; set; }
+
+public string? NombreComercial { get; set; }
+
+public int IdPersona { get; set; }
+
+
+
+
+
+
+

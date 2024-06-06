@@ -1,0 +1,5 @@
+public int IdProduccion { get; set; }
+
+public int CantidadTotal { get; set; }
+//caracteres bd(200)
+public string Motivo { get; set; } = null!;

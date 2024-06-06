@@ -1,0 +1,5 @@
+public int IdProveedor { get; set; }
+
+public int IdPersona { get; set; }
+
+public string? Vende { get; set; }

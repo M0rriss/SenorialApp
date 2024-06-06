@@ -17,7 +17,7 @@ public partial class Produccion
     public int CantidadTotal { get; set; }
 
     [Column("motivo")]
-    [StringLength(1)]
+    [StringLength(200)]
     public string Motivo { get; set; } = null!;
 
     [InverseProperty("IdProduccionNavigation")]
