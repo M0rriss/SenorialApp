@@ -13,7 +13,7 @@ namespace IBusiness.Schema_Generico.CRUD
         Task<Y> Create(T entity);
         Task<List<Y>> CreateMultiple(List<T> list);
         Task<Y> Update(T entity);
-        Task<List<Y>> UpdeteMultiple(List<T> list);
+        Task<List<Y>> UpdateMultiple(List<T> list);
         Task<int> Delete(int id);
         Task<List<T>> DeleteMultiple(List<T> list);
     }

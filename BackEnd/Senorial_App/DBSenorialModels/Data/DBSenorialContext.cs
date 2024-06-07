@@ -48,8 +48,6 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Estado> Estados { get; set; }
 
-    public virtual DbSet<Genero> Generos { get; set; }
-
     public virtual DbSet<Imagene> Imagenes { get; set; }
 
     public virtual DbSet<Insumo> Insumos { get; set; }
@@ -85,10 +83,6 @@ public partial class DBSenorialContext : DbContext
     public virtual DbSet<SucursalUsuario> SucursalUsuarios { get; set; }
 
     public virtual DbSet<TipoComprobante> TipoComprobantes { get; set; }
-
-    public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
-
-    public virtual DbSet<TipoEstado> TipoEstados { get; set; }
 
     public virtual DbSet<TipoPedido> TipoPedidos { get; set; }
 
@@ -144,9 +138,7 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdCategoria).HasName("categoria_id_pk");
 
-            entity.HasOne(d => d.IdCategoriaPadreNavigation).WithMany(p => p.InverseIdCategoriaPadreNavigation)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("categorias_padre_fk");
+            entity.HasOne(d => d.IdCategoriaPadreNavigation).WithMany(p => p.InverseIdCategoriaPadreNavigation).HasConstraintName("categorias_padre_fk");
         });
 
         modelBuilder.Entity<Cliente>(entity =>
@@ -283,14 +275,7 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdEstado).HasName("estado_id_pk");
 
-            entity.HasOne(d => d.IdTipoEstadoNavigation).WithMany(p => p.Estados)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("tipo_estado_id_fk");
-        });
-
-        modelBuilder.Entity<Genero>(entity =>
-        {
-            entity.HasKey(e => e.IdGenero).HasName("genero_id_pk");
+            entity.HasOne(d => d.IdEstadoPadreNavigation).WithMany(p => p.InverseIdEstadoPadreNavigation).HasConstraintName("estado_padre_fk");
         });
 
         modelBuilder.Entity<Imagene>(entity =>
@@ -334,14 +319,6 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<Persona>(entity =>
         {
             entity.HasKey(e => e.IdPersona).HasName("persona_id_pk");
-
-            entity.HasOne(d => d.IdGeneroNavigation).WithMany(p => p.Personas)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("genero_id_fk");
-
-            entity.HasOne(d => d.IdTipoDocNavigation).WithMany(p => p.Personas)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("tipo_doc_id_fk");
         });
 
         modelBuilder.Entity<PersonaJuridica>(entity =>
@@ -469,16 +446,6 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<TipoComprobante>(entity =>
         {
             entity.HasKey(e => e.IdComprobante).HasName("tipo_comprobante_id_pk");
-        });
-
-        modelBuilder.Entity<TipoDocumento>(entity =>
-        {
-            entity.HasKey(e => e.IdTipoDoc).HasName("tipo_documento_id_pk");
-        });
-
-        modelBuilder.Entity<TipoEstado>(entity =>
-        {
-            entity.HasKey(e => e.IdTipoEstado).HasName("tipo_estado_id_pk");
         });
 
         modelBuilder.Entity<TipoPedido>(entity =>

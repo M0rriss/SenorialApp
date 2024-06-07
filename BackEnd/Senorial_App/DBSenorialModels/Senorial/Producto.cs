@@ -21,6 +21,10 @@ public partial class Producto
     [StringLength(100)]
     public string? Descripcion { get; set; }
 
+    [Column("derivar")]
+    [StringLength(100)]
+    public string Derivar { get; set; } = null!;
+
     [Column("id_img")]
     public int IdImg { get; set; }
 

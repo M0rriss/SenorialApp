@@ -7,30 +7,33 @@ using Microsoft.EntityFrameworkCore;
 namespace DBSenorialModels.Senorial;
 
 [Table("estado", Schema = "Generico")]
-[Index("Descripcion", Name = "estado_descripcion_uk", IsUnique = true)]
+[Index("Nombre", Name = "estado_descripcion_uk", IsUnique = true)]
 public partial class Estado
 {
     [Key]
     [Column("id_estado")]
     public int IdEstado { get; set; }
 
-    [Column("descripcion")]
+    [Column("nombre")]
     [StringLength(50)]
-    public string? Descripcion { get; set; }
+    public string? Nombre { get; set; }
 
     [Column("abreviacion")]
     [StringLength(50)]
     public string? Abreviacion { get; set; }
 
-    [Column("id_tipo_estado")]
-    public int IdTipoEstado { get; set; }
+    [Column("id_estado_padre")]
+    public int? IdEstadoPadre { get; set; }
 
     [InverseProperty("IdEstadoNavigation")]
     public virtual ICollection<DetalleInventario> DetalleInventarios { get; set; } = new List<DetalleInventario>();
 
-    [ForeignKey("IdTipoEstado")]
-    [InverseProperty("Estados")]
-    public virtual TipoEstado IdTipoEstadoNavigation { get; set; } = null!;
+    [ForeignKey("IdEstadoPadre")]
+    [InverseProperty("InverseIdEstadoPadreNavigation")]
+    public virtual Estado? IdEstadoPadreNavigation { get; set; }
+
+    [InverseProperty("IdEstadoPadreNavigation")]
+    public virtual ICollection<Estado> InverseIdEstadoPadreNavigation { get; set; } = new List<Estado>();
 
     [InverseProperty("IdEstadoNavigation")]
     public virtual ICollection<Role> Roles { get; set; } = new List<Role>();

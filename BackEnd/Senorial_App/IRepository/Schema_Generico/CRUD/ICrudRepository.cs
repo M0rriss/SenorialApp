@@ -13,7 +13,7 @@ namespace IRepository.Schema_Generico.CRUD
         Task<T> Create(T entity);
         Task<List<T>> CreateMultiple(List<T> list);
         Task<T> Update(T entity);
-        Task<List<T>> UpdeteMultiple(List<T> list);
+        Task<List<T>> UpdateMultiple(List<T> list);
         Task<int> Delete(int id);
         Task<List<T>> DeleteMultiple(List<T> list);
     }

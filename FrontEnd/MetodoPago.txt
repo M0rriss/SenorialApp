@@ -1,4 +1,0 @@
-
-public int IdMetodo { get; set; }
-
-public string? Descripcion { get; set; }

@@ -32,11 +32,13 @@ public partial class Persona
     [StringLength(100)]
     public string? Direccion { get; set; }
 
-    [Column("id_tipo_doc")]
-    public int IdTipoDoc { get; set; }
+    [Column("tipo_documento")]
+    [StringLength(100)]
+    public string TipoDocumento { get; set; } = null!;
 
-    [Column("id_genero")]
-    public int IdGenero { get; set; }
+    [Column("genero")]
+    [StringLength(20)]
+    public string Genero { get; set; } = null!;
 
     [Column("tipo_persona")]
     [StringLength(50)]
@@ -47,14 +49,6 @@ public partial class Persona
 
     [InverseProperty("IdPersonaNavigation")]
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
-
-    [ForeignKey("IdGenero")]
-    [InverseProperty("Personas")]
-    public virtual Genero IdGeneroNavigation { get; set; } = null!;
-
-    [ForeignKey("IdTipoDoc")]
-    [InverseProperty("Personas")]
-    public virtual TipoDocumento IdTipoDocNavigation { get; set; } = null!;
 
     [InverseProperty("IdPersonaNavigation")]
     public virtual PersonaJuridica? PersonaJuridica { get; set; }
