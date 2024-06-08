@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DBSenorialModels.Senorial;
+using IRepository.Schema_Generico.CRUD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IRepository.Schema_Ventas.DetalleVentas
 {
-    internal interface IDetalleVentaRepository
+    public interface IDetalleVentaRepository : ICrudRepository<DetalleVenta>
     {
     }
 }

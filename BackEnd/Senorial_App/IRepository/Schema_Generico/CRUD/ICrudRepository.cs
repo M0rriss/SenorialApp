@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using DBSenorialModels.Senorial;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 
 namespace IRepository.Schema_Generico.CRUD
 {
@@ -72,6 +71,6 @@ namespace IRepository.Schema_Generico.CRUD
         /// </summary>
         /// <param name="request">Solicitud de filtro</param>
         /// <returns>Tarea que representa la respuesta del filtro</returns>
-        //Task<GenericFilterResponse<Y>> GetByFilterAsync(GenericFilterRequest request);
+        Task<GenericFilterResponse<T>> GetByFilterAsync(GenericFilterRequest request);
     }
 }

@@ -1,9 +1,12 @@
 ﻿using DBSenorialModels.Data;
 using Microsoft.EntityFrameworkCore;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,6 +61,30 @@ namespace Repository.Schema_Generico.CRUD
             dbset.RemoveRange(list);
             await db.SaveChangesAsync();
             return list;
+        }
+        public async Task<GenericFilterResponse<TEntity>> GetByFilterAsync(GenericFilterRequest request, Dictionary<string, Expression<Func<TEntity, bool>>> filters)
+        {
+            IQueryable<TEntity> query = dbset.AsQueryable();
+
+            foreach (var filter in request.Filtros)
+            {
+                if (!string.IsNullOrEmpty(filter.Value) && filters.ContainsKey(filter.Name))
+                {
+                    query = query.Where(filters[filter.Name]);
+                }
+            }
+
+            GenericFilterResponse<TEntity> res = new GenericFilterResponse<TEntity>
+            {
+                TotalRegistros = await query.CountAsync(),
+                Lista = await query
+                    .Skip((request.NumeroPagina - 1) * request.Cantidad)
+                    .Take(request.Cantidad)
+                    .OrderBy(x => EF.Property<object>(x, "Nombre"))
+                    .ToListAsync()
+            };
+
+            return res;
         }
         public void Dispose()
         {

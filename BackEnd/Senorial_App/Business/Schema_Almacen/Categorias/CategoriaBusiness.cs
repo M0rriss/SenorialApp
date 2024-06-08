@@ -4,7 +4,9 @@ using IBusiness.Schema_Almacen.Categorias;
 using IRepository.Schema_Almacen.Categorias;
 using Repository.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,17 +85,18 @@ namespace Business.Schema_Almacen.Categorias
          
         }
 
-        //public async Task<ResponseFilterGeneric<CategoriaResponse>> GetByFilter(RequestFilterGeneric request)
-        //{
-        //    var filtro = await _categoriaRepository.GetByFilter(request);
-        //    var result = _mapper.Map<ResponseFilterGeneric<CategoriaResponse>>(filtro);
-        //    return result;
-        //}
+        public async Task<GenericFilterResponse<CategoriaResponse>> GetByFilterAsync(GenericFilterRequest request)
+        {
+            var filtro = await _categoriaRepository.GetByFilterAsync(request);
+            var result = _mapper.Map<GenericFilterResponse<CategoriaResponse>>(filtro);
+            return result;
+        }
 
         public void Dispose()
         {
             _categoriaRepository.Dispose();
         }
+
         #endregion
     }
 }

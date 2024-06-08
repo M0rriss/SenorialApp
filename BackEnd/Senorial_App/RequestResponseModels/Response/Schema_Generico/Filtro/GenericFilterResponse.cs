@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RequestResponseModels.Response.Schema_Generico.Filtro
 {
-    internal class GenericFilterResponse<T>
+    public class GenericFilterResponse<T>
     {
         public int TotalRegistros { get; set; }
         public List<T> Lista { get; set; } = new ();
