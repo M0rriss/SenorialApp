@@ -11,5 +11,6 @@ namespace IBusiness.Schema_Usuarios.Usuario
 {
     public interface IUsuarioBusiness : ICrudBusiness<UsuarioRequest, UsuarioResponse>
     {
+        UsuarioResponse BuscarPorUserName(string userName);
     }
 }

@@ -10,5 +10,6 @@ namespace IRepository.Schema_Usuarios.Usuarios
 {
     public interface IUsuarioRepository : ICrudRepository<Usuario>
     {
+        Usuario ObtenerPorUserName(string userName);
     }
 }
