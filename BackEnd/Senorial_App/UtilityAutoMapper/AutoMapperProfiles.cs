@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
+using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Usuarios.Roles;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
@@ -18,6 +19,12 @@ namespace UtilityAutoMapper
     {
         public AutoMapperProfiles() 
         {
+            #region AUTHORIZATION
+            CreateMap<LoginRequest, Usuario>().ReverseMap();
+            CreateMap<Usuario, UsuarioResponse>().ReverseMap();
+            #endregion
+
+
             #region Schema_Almacen
 
             #region Categoria

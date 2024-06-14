@@ -10,6 +10,10 @@ namespace IBusiness.Auth
 {
     public interface IAuthBusiness
     {
-        LoginResponse LoginDashboard(LoginDashboardRequest request);
+        LoginDashboardResponse LoginDashboard(LoginRequest request);
+        LoginEcommerceResponse LoginEcommerce(LoginRequest request);
+        LoginMobileResponse LoginMobile(LoginRequest request);
+        Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request);
+        Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request);
     }
 }

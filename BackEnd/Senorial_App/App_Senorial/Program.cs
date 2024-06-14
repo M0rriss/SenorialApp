@@ -1,3 +1,4 @@
+using DBSenorialModels.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -55,6 +56,9 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
 });
+//Add DbContext
+builder.Services.AddDbContext<DBSenorialContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DBSenorial")));
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfiles).Assembly);
@@ -63,6 +67,11 @@ builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfi
 
 
 var app = builder.Build();
+using( var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetService<DBSenorialContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

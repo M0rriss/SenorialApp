@@ -21,10 +21,6 @@ public partial class Role
     [StringLength(10)]
     public string? Abreviacion { get; set; }
 
-    [Column("descripcion")]
-    [StringLength(100)]
-    public string? Descripcion { get; set; }
-
     [Column("id_estado")]
     public int IdEstado { get; set; }
 

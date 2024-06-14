@@ -18,10 +18,48 @@ namespace Repository.Schema_Usuarios.Usuarios
         {
             throw new NotImplementedException();
         }
-
-        public Usuario ObtenerPorUserName(string userName)
+        /// <summary>
+        /// DASHBOARD
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Usuario ObtenerPorCorreo(string email)
         {
-            Usuario usuario = dbset.Where(x => x.UserName.ToLower() == userName.ToLower()).Include(x=> x.IdRolNavigation.Nombre).FirstOrDefault();
+            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).Include(x => x.IdRolNavigation.Nombre == "Admin" && x.IdRolNavigation.Nombre == "Cajera").FirstOrDefault();
+            return usuario;
+        }
+        /// <summary>
+        /// ECOMMERCE
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Usuario ObtenerCorreoEccomerce(string email)
+        {
+            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+            return usuario;
+        }
+        /// <summary>
+        /// MOBILE
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Usuario ObtenerCorreoMobile(string email)
+        {
+            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).Include(x => x.IdRolNavigation.Nombre== "Empleado").FirstOrDefault();
+            return usuario;
+        }
+
+        public async Task<Usuario> RegistrarUsuarioEcommerce(Usuario usuario)
+        {
+            await dbset.AddAsync(usuario);
+            await db.SaveChangesAsync();
+            return usuario;
+        }
+
+        public async Task<Usuario> RegistrarUsuarioMobile(Usuario usuario)
+        {
+            await dbset.AddAsync(usuario);
+            await db.SaveChangesAsync();
             return usuario;
         }
     }

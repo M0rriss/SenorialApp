@@ -17,8 +17,11 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         public string? Password { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int IdPersona { get; set; }
-        public DateTime? UpdateAt { get; set; }
         public int IdRol { get; set; }
         public int IdImg { get; set; }
+        [StringLength(100)]
+        public string? Email { get; set; }
+        [StringLength(100)]
+        public bool CambiarPassword { get; set; }
     }
 }

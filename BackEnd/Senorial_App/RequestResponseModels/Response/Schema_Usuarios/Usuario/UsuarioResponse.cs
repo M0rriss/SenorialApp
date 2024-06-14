@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,5 +18,7 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Usuario
         public DateTime? UpdateAt { get; set; }
         public int IdRol { get; set; }
         public int IdImg { get; set; }
+        public string? Email { get; set; }
+        public string? CambiarPassword { get; set; }
     }
 }

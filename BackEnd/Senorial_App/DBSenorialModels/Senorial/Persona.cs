@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DBSenorialModels.Senorial;
 
 [Table("personas", Schema = "Usuarios")]
-[Index("Correo", Name = "personas_email_uk", IsUnique = true)]
+[Index("Email", Name = "personas_email_uk", IsUnique = true)]
 [Index("NroDocumento", Name = "personas_numero_documento_uk", IsUnique = true)]
 [Index("Telefono", Name = "personas_phone_uk", IsUnique = true)]
 public partial class Persona
@@ -20,9 +20,9 @@ public partial class Persona
     [StringLength(12)]
     public string? NroDocumento { get; set; }
 
-    [Column("correo")]
+    [Column("email")]
     [StringLength(50)]
-    public string? Correo { get; set; }
+    public string? Email { get; set; }
 
     [Column("telefono")]
     [StringLength(12)]

@@ -8,8 +8,10 @@ namespace DBSenorialModels.Senorial;
 
 [Table("usuario", Schema = "Usuarios")]
 [Index("UserName", Name = "usuario_user_name_uk", IsUnique = true)]
+[Index("Email", Name = "usuario_user_email_uk", IsUnique = true)]
 public partial class Usuario
 {
+
     [Key]
     [Column("id_usuario")]
     public int IdUsuario { get; set; }
@@ -36,6 +38,14 @@ public partial class Usuario
 
     [Column("id_img")]
     public int IdImg { get; set; }
+
+    [Column("email")]
+    [StringLength(100)]
+    public string? Email { get; set; }
+
+    [Column("cambiar_password")]
+    [StringLength(100)]
+    public string CambiarPassword { get; set; }
 
     [ForeignKey("IdImg")]
     [InverseProperty("Usuarios")]
