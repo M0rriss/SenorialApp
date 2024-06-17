@@ -1,5 +1,8 @@
 ﻿using IBusiness.Schema_Generico.CRUD;
+using RequestResponseModels.Request.Auth;
+using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System;
 using System.Collections.Generic;
@@ -11,6 +14,14 @@ namespace IBusiness.Schema_Usuarios.Usuario
 {
     public interface IUsuarioBusiness : ICrudBusiness<UsuarioRequest, UsuarioResponse>
     {
-        UsuarioResponse BuscarPorUserName(string userName);
+        UsuarioResponse BuscarPorCorreo(string email);
+        UsuarioResponse BuscarCorreoEcommerce(string email);
+        UsuarioResponse BuscarCorreoMobile(string email);
+        Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request);
+        Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request);
+        Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request);
+        Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
+        Task<bool> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
+        Task<bool> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
     }
 }

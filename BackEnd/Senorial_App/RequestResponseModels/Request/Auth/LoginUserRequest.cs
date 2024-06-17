@@ -9,10 +9,11 @@ using UtilitySecurity.Validations;
 
 namespace RequestResponseModels.Request.Auth
 {
-    public class LoginDashboardRequest
+    public class LoginUserRequest
     {
         [Required]
-        public string UserName { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
         [Required]
         [StrongPassword]
         public string Password { get; set; }

@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Generico.CRUD;
+using RequestResponseModels.Request.Auth.Recuperacion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace IRepository.Schema_Usuarios.Usuarios
 {
     public interface IUsuarioRepository : ICrudRepository<Usuario>
     {
-        Usuario ObtenerPorUserName(string userName);
+        Usuario ObtenerPorCorreo(string email);
+        Usuario ObtenerCorreoEccomerce(string email);
+        Usuario ObtenerCorreoMobile(string email);
+        Task<Usuario> RegistrarUsuarioEcommerce(Usuario usuario);
+        Task<Usuario> RegistrarUsuarioMobile(Usuario usuario);
+        
     }
 }

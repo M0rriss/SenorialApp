@@ -1,9 +1,15 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
+using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
+using RequestResponseModels.Request.Schema_Usuarios.Persona;
+using RequestResponseModels.Request.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Request.Schema_Usuarios.Roles;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
+using RequestResponseModels.Response.Schema_Usuarios.Persona;
+using RequestResponseModels.Response.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Response.Schema_Usuarios.Roles;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System;
@@ -16,8 +22,15 @@ namespace UtilityAutoMapper
 {
     public class AutoMapperProfiles :Profile
     {
-        public AutoMapperProfiles() 
+        public AutoMapperProfiles()
         {
+            #region AUTHORIZATION
+            CreateMap<Usuario, SignInEcommerceResponse>().ReverseMap();
+            CreateMap<Usuario, SignInMobileResponse>().ReverseMap();
+            CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
+            #endregion
+
+
             #region Schema_Almacen
 
             #region Categoria
@@ -45,9 +58,17 @@ namespace UtilityAutoMapper
             CreateMap<Role, RolesResponse>().ReverseMap();
             CreateMap<RolesRequest, RolesResponse>().ReverseMap();
             #endregion
-
-
-
+            #region Personas
+            CreateMap<Persona, PersonaRequest>().ReverseMap();
+            CreateMap<Persona, PersonaResponse>().ReverseMap();
+            CreateMap<PersonaRequest, PersonaResponse>().ReverseMap();
+            #endregion
+            #region PersonaNatural
+            CreateMap<PersonaNatural, PersonaNaturalRequest>().ReverseMap();
+            CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
+            CreateMap<PersonaNaturalRequest, PersonaNaturalResponse>().ReverseMap();
+            #endregion
+            
 
             #endregion
             #region Schema_Ventas

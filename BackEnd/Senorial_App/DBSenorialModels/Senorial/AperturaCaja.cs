@@ -30,6 +30,10 @@ public partial class AperturaCaja
 
     [Column("monto_cierre", TypeName = "decimal(10, 2)")]
     public decimal? MontoCierre { get; set; }
+    [Column("sobrante", TypeName = "decimal(10, 2)")]
+    public decimal? Sobrante { get; set; }
+    [Column("faltante", TypeName = "decimal(10, 2)")]
+    public decimal? Faltante { get; set; }
 
     [Column("hora_fecha_cierre", TypeName = "datetime")]
     public DateTime HoraFechaCierre { get; set; }

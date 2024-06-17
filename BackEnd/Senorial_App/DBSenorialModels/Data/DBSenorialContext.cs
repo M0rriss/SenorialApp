@@ -336,13 +336,15 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
 
-            entity.Property(e => e.IdPersona).ValueGeneratedNever();
+            //entity.Property(e => e.IdPersona).ValueGeneratedNever();
+            entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
+
 
             entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("personas_id_fk");
         });
-
+        
         modelBuilder.Entity<Produccion>(entity =>
         {
             entity.HasKey(e => e.IdProduccion).HasName("produccion_id_pk");

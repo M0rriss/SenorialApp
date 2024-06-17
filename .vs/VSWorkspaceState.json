@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BackEnd",
+    "\\BackEnd\\Senorial_App",
+    "\\BackEnd\\Senorial_App\\DBSenorialModels",
+    "\\BackEnd\\Senorial_App\\DBSenorialModels\\Data",
+    "\\BackEnd\\Senorial_App\\Repository",
+    "\\BackEnd\\Senorial_App\\Repository\\Schema_Usuarios",
+    "\\BackEnd\\Senorial_App\\Repository\\Schema_Usuarios\\Usuarios",
+    "\\BackEnd\\Senorial_App\\Services",
+    "\\BackEnd\\Senorial_App\\Services\\Gmail"
+  ],
+  "SelectedNode": "\\BackEnd\\Senorial_App\\Services\\Gmail\\SendEmailWithGoogleSMTP.cs",
+  "PreviewInSolutionExplorer": false
+}

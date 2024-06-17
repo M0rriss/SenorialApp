@@ -15,7 +15,7 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Persona
         public string? Telefono { get; set; }
         public string? Direccion { get; set; }
         public string TipoDocumento { get; set; }
-        public string Genero { get; set; } = null!;
+        public string Genero { get; set; } = "";
         public string? TipoPersona { get; set; }
     }
 }

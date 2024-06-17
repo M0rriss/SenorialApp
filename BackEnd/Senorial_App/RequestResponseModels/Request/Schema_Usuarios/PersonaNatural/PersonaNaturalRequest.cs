@@ -19,5 +19,6 @@ namespace RequestResponseModels.Request.Schema_Usuarios.PersonaNatural
         [StringLength(100)]
         public string? ApellidoMaterno { get; set; }
         public int IdPersona { get; set; }
+        
     }
 }
