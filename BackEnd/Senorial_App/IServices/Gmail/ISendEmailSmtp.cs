@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Schema_Usuarios.Persona
+namespace IServices.Gmail
 {
-    public class PersonaBusiness
+    public interface ISendEmailSmtp
     {
+        Task SendEmail(string destino);
     }
 }

@@ -13,11 +13,12 @@ namespace RequestResponseModels.Request.Auth
         public string Nombres { get; set; } 
         public string Apellidos { get; set; }
         public string TipoDocumento { get; set; }
+        [Required]
         public string NumeroDocumento { get; set; }
         public string Celular { get; set; }
-        [EmailAddress]
+        [EmailAddress,Required]
         public string Email { get; set; }
-        [StrongPassword]
+        [StrongPassword,Required]
         public string Password { get; set; }
     }
 }

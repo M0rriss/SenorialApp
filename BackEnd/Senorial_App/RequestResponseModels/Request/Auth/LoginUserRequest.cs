@@ -9,7 +9,7 @@ using UtilitySecurity.Validations;
 
 namespace RequestResponseModels.Request.Auth
 {
-    public class LoginRequest
+    public class LoginUserRequest
     {
         [Required]
         [EmailAddress]

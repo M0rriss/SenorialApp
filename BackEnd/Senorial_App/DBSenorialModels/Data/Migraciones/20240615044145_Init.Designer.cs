@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240613192439_PrimeraMigracion")]
-    partial class PrimeraMigracion
+    [Migration("20240615044145_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1162,9 +1162,8 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("email");
 
-                    b.Property<int>("IdImg")
-                        .HasColumnType("int")
-                        .HasColumnName("id_img");
+                    b.Property<int?>("IdImg")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
@@ -1796,7 +1795,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasOne("DBSenorialModels.Senorial.Imagene", "IdImgNavigation")
                         .WithMany("Usuarios")
                         .HasForeignKey("IdImg")
-                        .IsRequired()
                         .HasConstraintName("img_id_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Persona", "IdPersonaNavigation")

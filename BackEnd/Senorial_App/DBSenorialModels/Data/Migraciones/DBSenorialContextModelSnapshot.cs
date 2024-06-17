@@ -719,6 +719,7 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.PersonaNatural", b =>
                 {
                     b.Property<int>("IdPersona")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_persona");
 
@@ -1159,9 +1160,8 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("email");
 
-                    b.Property<int>("IdImg")
-                        .HasColumnType("int")
-                        .HasColumnName("id_img");
+                    b.Property<int?>("IdImg")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
@@ -1793,7 +1793,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasOne("DBSenorialModels.Senorial.Imagene", "IdImgNavigation")
                         .WithMany("Usuarios")
                         .HasForeignKey("IdImg")
-                        .IsRequired()
                         .HasConstraintName("img_id_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Persona", "IdPersonaNavigation")

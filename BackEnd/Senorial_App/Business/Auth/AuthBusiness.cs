@@ -34,7 +34,7 @@ namespace Business.Auth
         }
         #endregion
         #region Logica
-        public LoginDashboardResponse LoginDashboard(LoginRequest request)
+        public LoginDashboardResponse LoginDashboard(LoginUserRequest request)
         {
             var result = new LoginDashboardResponse();
             UsuarioResponse usuario = _usuarioBusiness.BuscarPorCorreo(request.Email);
@@ -53,7 +53,7 @@ namespace Business.Auth
 
         }
 
-        public LoginEcommerceResponse LoginEcommerce(LoginRequest request)
+        public LoginEcommerceResponse LoginEcommerce(LoginUserRequest request)
         {
             var result = new LoginEcommerceResponse();
             UsuarioResponse usuario = _usuarioBusiness.BuscarCorreoEcommerce(request.Email);
@@ -69,7 +69,7 @@ namespace Business.Auth
             return result;
         }
 
-        public LoginMobileResponse LoginMobile(LoginRequest request)
+        public LoginMobileResponse LoginMobile(LoginUserRequest request)
         {
             var result = new LoginMobileResponse();
             UsuarioResponse usuario = _usuarioBusiness.BuscarCorreoMobile(request.Email);

@@ -36,8 +36,8 @@ public partial class Usuario
     [Column("id_rol")]
     public int IdRol { get; set; }
 
-    [Column("id_img")]
-    public int IdImg { get; set; }
+    //[Column("id_img")]
+    //public int? IdImg { get; set; } 
 
     [Column("email")]
     [StringLength(100)]
@@ -45,11 +45,11 @@ public partial class Usuario
 
     [Column("cambiar_password")]
     [StringLength(100)]
-    public string CambiarPassword { get; set; }
+    public string CambiarPassword { get; set; } = "";
 
     [ForeignKey("IdImg")]
     [InverseProperty("Usuarios")]
-    public virtual Imagene IdImgNavigation { get; set; } = null!;
+    public virtual Imagene? IdImgNavigation { get; set; } = null!;
 
     [ForeignKey("IdPersona")]
     [InverseProperty("Usuarios")]

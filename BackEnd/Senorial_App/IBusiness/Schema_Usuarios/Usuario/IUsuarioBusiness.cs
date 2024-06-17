@@ -1,5 +1,6 @@
 ﻿using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth;
+using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
 using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
@@ -18,5 +19,9 @@ namespace IBusiness.Schema_Usuarios.Usuario
         UsuarioResponse BuscarCorreoMobile(string email);
         Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request);
         Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request);
+        Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request);
+        Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
+        Task<bool> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
+        Task<bool> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
     }
 }

@@ -14,5 +14,12 @@ namespace RequestResponseModels.Response.Schema_Usuarios.PersonaNatural
         public string? ApellidoPaterno { get; set; }
         public string? ApellidoMaterno { get; set; }
         public int IdPersona { get; set; }
+        public string NombresCompletos
+        {
+            get
+            {
+                return $"{PrimerNombre} {SegundoNombre} {ApellidoPaterno} {ApellidoMaterno}".Trim();
+            }
+        }
     }
 }

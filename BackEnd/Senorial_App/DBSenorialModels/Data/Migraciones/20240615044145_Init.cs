@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class PrimeraMigracion : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -546,16 +546,16 @@ namespace DBSenorialModels.Data.Migraciones
                     id_persona = table.Column<int>(type: "int", nullable: false),
                     update_at = table.Column<DateTime>(type: "datetime", nullable: true),
                     id_rol = table.Column<int>(type: "int", nullable: false),
-                    id_img = table.Column<int>(type: "int", nullable: false),
                     email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    cambiar_password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    cambiar_password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdImg = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("usuario_id_pk", x => x.id_usuario);
                     table.ForeignKey(
                         name: "img_id_fk",
-                        column: x => x.id_img,
+                        column: x => x.IdImg,
                         principalSchema: "Generico",
                         principalTable: "imagenes",
                         principalColumn: "id_img");
@@ -1272,12 +1272,6 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_usuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_usuario_id_img",
-                schema: "Usuarios",
-                table: "usuario",
-                column: "id_img");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_usuario_id_persona",
                 schema: "Usuarios",
                 table: "usuario",
@@ -1288,6 +1282,12 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios",
                 table: "usuario",
                 column: "id_rol");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_usuario_IdImg",
+                schema: "Usuarios",
+                table: "usuario",
+                column: "IdImg");
 
             migrationBuilder.CreateIndex(
                 name: "usuario_user_email_uk",

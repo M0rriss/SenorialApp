@@ -2,7 +2,9 @@
 using IRepository.Schema_Usuarios.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
+using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
+using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
 using System.Collections.Generic;
@@ -45,7 +47,10 @@ namespace Repository.Schema_Usuarios.Usuarios
         /// <returns></returns>
         public Usuario ObtenerCorreoMobile(string email)
         {
-            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).Include(x => x.IdRolNavigation.Nombre== "Empleado").FirstOrDefault();
+            var usuario = dbset
+         .Include(x => x.IdRolNavigation)  
+         .Where(x => x.Email.ToLower() == email.ToLower() && x.IdRolNavigation.Nombre == "Empleado")
+         .FirstOrDefault();
             return usuario;
         }
 
@@ -62,5 +67,8 @@ namespace Repository.Schema_Usuarios.Usuarios
             await db.SaveChangesAsync();
             return usuario;
         }
+
+
+        
     }
 }

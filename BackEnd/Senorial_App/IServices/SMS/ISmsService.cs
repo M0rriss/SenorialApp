@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Schema_Usuarios.PersonaJuridica
+namespace IServices.SMS
 {
-    public class PersonaJuridicaBusiness
+    public interface ISmsService
     {
+        Task EnviarSms(string telefono, string mensaje);
     }
 }

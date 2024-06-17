@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Services.Gmail;
 using System.Reflection;
 using System.Text;
 using UtilityAutoMapper;
+using UtilitySecurity.OneTimePassword;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +36,10 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
-
+//SMTP CONFIG
+builder.Configuration.AddJsonFile("appsettings.json");
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<SendEmailWithGoogleSMTP>();
 
 // Configure Swagger for API documentation
 builder.Services.AddSwaggerGen(c =>

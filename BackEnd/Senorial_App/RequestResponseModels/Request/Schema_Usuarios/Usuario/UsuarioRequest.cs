@@ -18,7 +18,7 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         public DateTime? CreatedAt { get; set; }
         public int IdPersona { get; set; }
         public int IdRol { get; set; }
-        public int IdImg { get; set; }
+        //public int IdImg { get; set; }
         [StringLength(100)]
         public string? Email { get; set; }
         [StringLength(100)]

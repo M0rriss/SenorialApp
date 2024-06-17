@@ -17,7 +17,7 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Usuario
         public int IdPersona { get; set; }
         public DateTime? UpdateAt { get; set; }
         public int IdRol { get; set; }
-        public int IdImg { get; set; }
+        //public int IdImg { get; set; } = 0;
         public string? Email { get; set; }
         public string? CambiarPassword { get; set; }
     }

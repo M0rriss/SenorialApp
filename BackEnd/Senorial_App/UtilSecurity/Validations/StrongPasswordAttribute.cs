@@ -18,7 +18,7 @@ namespace UtilitySecurity.Validations
             {
                 return new ValidationResult("La contraseña no puede ser vacio");
             }
-            if (password.Length > 8)
+            if (password.Length < 8)
             {
                 return new ValidationResult("La contraseña no puede tener menos de 8 caracteres");
             }
