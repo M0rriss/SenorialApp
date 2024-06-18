@@ -3,14 +3,14 @@
     "",
     "\\BackEnd",
     "\\BackEnd\\Senorial_App",
-    "\\BackEnd\\Senorial_App\\DBSenorialModels",
-    "\\BackEnd\\Senorial_App\\DBSenorialModels\\Data",
+    "\\BackEnd\\Senorial_App\\Business",
+    "\\BackEnd\\Senorial_App\\Business\\Auth",
     "\\BackEnd\\Senorial_App\\Repository",
     "\\BackEnd\\Senorial_App\\Repository\\Schema_Usuarios",
     "\\BackEnd\\Senorial_App\\Repository\\Schema_Usuarios\\Usuarios",
     "\\BackEnd\\Senorial_App\\Services",
     "\\BackEnd\\Senorial_App\\Services\\Gmail"
   ],
-  "SelectedNode": "\\BackEnd\\Senorial_App\\Services\\Gmail\\SendEmailWithGoogleSMTP.cs",
+  "SelectedNode": "\\BackEnd\\Senorial_App\\Business\\Auth\\AuthBusiness.cs",
   "PreviewInSolutionExplorer": false
 }

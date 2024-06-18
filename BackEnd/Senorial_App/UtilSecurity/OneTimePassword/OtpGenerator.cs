@@ -8,20 +8,46 @@ namespace UtilitySecurity.OneTimePassword
 {
     public class OtpGenerator
     {
+        private readonly Random _random;
 
-        public  Random random = new Random();
+        public OtpGenerator()
+        {
+            _random = new Random();
+        }
 
         public string GenerateOtp(int numDigits = 4)
         {
-            string codigo = "";
-
+            // Generar el código OTP de longitud numDigits
+            string otp = "";
             for (int i = 0; i < numDigits; i++)
             {
-                codigo += random.Next(0, 10).ToString();
+                otp += _random.Next(0, 10).ToString();
             }
-
-            return codigo;
+            return otp;
         }
 
+        public OtpData GenerateOtpData(int numDigits = 4, int expirationMinutes = 5)
+        {
+            // Generar el código OTP
+            string otp = GenerateOtp(numDigits);
+
+            // Calcular la fecha de expiración
+            DateTime expirationTime = DateTime.UtcNow.AddMinutes(expirationMinutes);
+
+            // Crear el objeto OtpData
+            OtpData otpData = new OtpData
+            {
+                Otp = otp,
+                ExpirationTime = expirationTime
+            };
+
+            return otpData;
+        }
+    }
+
+    public class OtpData
+    {
+        public string Otp { get; set; }
+        public DateTime ExpirationTime { get; set; }
     }
 }

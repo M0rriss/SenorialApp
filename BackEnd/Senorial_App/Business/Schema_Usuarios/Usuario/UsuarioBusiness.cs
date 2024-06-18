@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Azure;
+using Azure.Core;
 using DBSenorialModels.Senorial;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -11,6 +12,7 @@ using IRepository.Schema_Usuarios.PersonaNaturales;
 using IRepository.Schema_Usuarios.Personas;
 using IRepository.Schema_Usuarios.Roles;
 using IRepository.Schema_Usuarios.Usuarios;
+using Microsoft.Extensions.Logging;
 using Repository.Schema_Usuarios.PersonaJuridicas;
 using Repository.Schema_Usuarios.PersonaNaturales;
 using Repository.Schema_Usuarios.Personas;
@@ -44,6 +46,7 @@ namespace Business.Schema_Usuarios.Usuarios
         private readonly IRolesRepository _rolesRepository;
         private readonly OtpGenerator _otpGenerator;
         private readonly SendEmailWithGoogleSMTP _sendEmailService;
+        private readonly Dictionary<string, OtpData> _otpStorage;
         public UsuarioBusiness(IMapper mapper)
         {
             _mapper = mapper;
@@ -55,6 +58,7 @@ namespace Business.Schema_Usuarios.Usuarios
             _personaJuridicaRepository = new PersonaJuridicaRepository();
             _otpGenerator = new OtpGenerator();
             _sendEmailService = new SendEmailWithGoogleSMTP();
+            _otpStorage = new Dictionary<string, OtpData>();
         }
         #endregion
         #region CRUD
@@ -169,7 +173,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 TipoPersona = "",
                 //falta la los nombres y apellidos
             });
-            var buscarRol = await _rolesRepository.GetById(1);
+            var buscarRol = await _rolesRepository.GetById(5);
             //idIMG
             //crear un funcion que retorne el id img |es necesario?
             var nuevoUsuario = new Usuario
@@ -221,7 +225,7 @@ namespace Business.Schema_Usuarios.Usuarios
 
             personaNatural = await _personaNaturalRepository.Create(personaNatural);
             
-            var buscarRol = await _rolesRepository.GetById(3); 
+            var buscarRol = await _rolesRepository.GetById(4); 
 
             var nuevoUsuario = new Usuario
             {
@@ -243,39 +247,138 @@ namespace Business.Schema_Usuarios.Usuarios
 
         public async Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request)
         {
+            // Validar que el correo electrónico no esté vacío
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                throw new ArgumentException("El correo electrónico es requerido para enviar el código de recuperación.");
+            }
+
             // Verificar si el usuario existe para enviar el código de recuperación
             var usuario = _usuarioRepository.ObtenerCorreoMobile(request.Email);
-            await _sendEmailService.SendEmail(request.Email);
+            if (usuario == null)
+            {
+                throw new ArgumentException("No se encontró ningún usuario con el correo electrónico proporcionado.");
+            }
+            string codigoOtp = _otpGenerator.GenerateOtp();
+
+            var oneTimeP = _usuarioRepository.OneTimePass(request.Email, codigoOtp);
+
+            await _sendEmailService.SendEmail(request.Email, codigoOtp);
+            
             return true;
         }
 
         public async Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request)
         {
+            // Validar que el correo electrónico no esté vacío
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                throw new ArgumentException("El correo electrónico es requerido para enviar el código de recuperación.");
+            }
+
+            // Verificar si el usuario existe para enviar el código de recuperación
             var usuario = _usuarioRepository.ObtenerCorreoEccomerce(request.Email);
-            await _sendEmailService.SendEmail(request.Email);
+            if (usuario == null)
+            {
+                throw new ArgumentException("No se encontró ningún usuario con el correo electrónico proporcionado.");
+            }
+            string codigoOtp = _otpGenerator.GenerateOtp();
+
+            var oneTimeP = _usuarioRepository.OneTimePass(request.Email, codigoOtp);
+
+            await _sendEmailService.SendEmail(request.Email, codigoOtp);
+
             return true;
         }
 
-        public Task<bool> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request)
+        public async Task<UsuarioResponse> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request)
         {
+            // Validar que el código OTP no esté vacío
+            if (string.IsNullOrEmpty(request.CodigoOtp))
+            {
+                throw new ArgumentException("El código OTP es requerido para restablecer la contraseña.");
+            }
 
-            //Se obtiene el correo con el codigo otp
-            //var verficacion = EnviarCodigoRecuperacionMovil();
-            //necesito el correo q se quiere cambiar la contraseña
+            // Buscar el usuario asociado al correo electrónico en el almacenamiento
+            var usuario =  _usuarioRepository.ObtenerCorreoMobile(request.Email);
+            if (usuario == null)
+            {
+                throw new ArgumentException("No se encontró ningún usuario asociado al correo electrónico proporcionado.");
+            }
+            string enviadoPorElUsuario = request.CodigoOtp;
+           
+            var codigoDeComparacion = _usuarioRepository.ObtenerCodigoOtp(request.Email);// traer de la BD
+            if (enviadoPorElUsuario != codigoDeComparacion.CodigoRecuperacion)
+            {
+                throw new ArgumentException("Los codigos no coinciden.");
+            }
+                // Validar que la nueva contraseña y su confirmación coincidan
+                if (request.NuevoPassword != request.ConfirmarContraseña)
+            {
+                throw new ArgumentException("Las contraseñas no coinciden.");
+            }
 
-            //luego ingreso los datos de la nueva contraseña y confirmo la nueva contraseña
-            //actualizo los datos en la bd
-            throw new NotImplementedException();
+            // Encriptar la nueva contraseña
+            string newPassword = _encriptar.AES_encriptar(request.NuevoPassword);
+            usuario.Password = newPassword;
+
+            // Actualizar la contraseña en la base de datos
+            await _usuarioRepository.Update(usuario);
+
+            // Remover el código OTP utilizado
+            _otpStorage.Remove(request.Email);
+
+            // Retornar el usuario actualizado como UsuarioResponse
+            return _mapper.Map<UsuarioResponse>(usuario);
+        }    
+
+        public async Task<UsuarioResponse> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request)
+        {
+            /// Validar que el código OTP no esté vacío
+            if (string.IsNullOrEmpty(request.CodigoOtp))
+            {
+                throw new ArgumentException("El código OTP es requerido para restablecer la contraseña.");
+            }
+
+            // Buscar el usuario asociado al correo electrónico en el almacenamiento
+            var usuario = _usuarioRepository.ObtenerCorreoEccomerce(request.Email);
+            if (usuario == null)
+            {
+                throw new ArgumentException("No se encontró ningún usuario asociado al correo electrónico proporcionado.");
+            }
+            string enviadoPorElUsuario = request.CodigoOtp;
+
+            var codigoDeComparacion = _usuarioRepository.ObtenerCodigoOtp(request.Email);// traer de la BD
+            if (enviadoPorElUsuario != codigoDeComparacion.CodigoRecuperacion)
+            {
+                throw new ArgumentException("Los codigos no coinciden.");
+            }
+            // Validar que la nueva contraseña y su confirmación coincidan
+            if (request.NuevoPassword != request.ConfirmarContraseña)
+            {
+                throw new ArgumentException("Las contraseñas no coinciden.");
+            }
+
+            // Encriptar la nueva contraseña
+            string newPassword = _encriptar.AES_encriptar(request.NuevoPassword);
+            usuario.Password = newPassword;
+
+            // Actualizar la contraseña en la base de datos
+            await _usuarioRepository.Update(usuario);
+
+            // Remover el código OTP utilizado
+            _otpStorage.Remove(request.Email);
+
+            // Retornar el usuario actualizado como UsuarioResponse
+            return _mapper.Map<UsuarioResponse>(usuario);
         }
 
-        public Task<bool> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request)
-        {
-            throw new NotImplementedException();
-        }
-        
+       
+
         #endregion
-        
+
     }
 }
+
 
     

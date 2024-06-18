@@ -23,5 +23,6 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         public string? Email { get; set; }
         [StringLength(100)]
         public bool CambiarPassword { get; set; }
+        public string CodigoRecuperacion { get; set; } = "";
     }
 }

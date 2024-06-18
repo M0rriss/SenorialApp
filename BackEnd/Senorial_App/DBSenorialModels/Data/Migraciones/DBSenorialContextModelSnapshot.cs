@@ -470,6 +470,25 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasFilter("[nombre] IS NOT NULL");
 
                     b.ToTable("estado", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            IdEstado = 1,
+                            Nombre = "ActividadEmpresa"
+                        },
+                        new
+                        {
+                            IdEstado = 2,
+                            IdEstadoPadre = 1,
+                            Nombre = "Activo"
+                        },
+                        new
+                        {
+                            IdEstado = 3,
+                            IdEstadoPadre = 1,
+                            Nombre = "Inactivo"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
@@ -524,6 +543,458 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdUnidad");
 
                     b.ToTable("insumo", "Almacen");
+
+                    b.HasData(
+                        new
+                        {
+                            IdInsumo = 1,
+                            IdUnidad = 1,
+                            Nombre = "Aceite"
+                        },
+                        new
+                        {
+                            IdInsumo = 2,
+                            IdUnidad = 2,
+                            Nombre = "Aceite"
+                        },
+                        new
+                        {
+                            IdInsumo = 3,
+                            IdUnidad = 3,
+                            Nombre = "Aceite Sésamo"
+                        },
+                        new
+                        {
+                            IdInsumo = 4,
+                            IdUnidad = 4,
+                            Nombre = "Aji"
+                        },
+                        new
+                        {
+                            IdInsumo = 5,
+                            IdUnidad = 5,
+                            Nombre = "Ajicero"
+                        },
+                        new
+                        {
+                            IdInsumo = 6,
+                            IdUnidad = 3,
+                            Nombre = "Arroz con leche"
+                        },
+                        new
+                        {
+                            IdInsumo = 7,
+                            IdUnidad = 4,
+                            Nombre = "Azucar Blanca"
+                        },
+                        new
+                        {
+                            IdInsumo = 8,
+                            IdUnidad = 4,
+                            Nombre = "Azucar Rubia"
+                        },
+                        new
+                        {
+                            IdInsumo = 9,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Basura"
+                        },
+                        new
+                        {
+                            IdInsumo = 10,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Cuarto Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 11,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Ensalada"
+                        },
+                        new
+                        {
+                            IdInsumo = 12,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Medio Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 13,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Pollo Entero"
+                        },
+                        new
+                        {
+                            IdInsumo = 14,
+                            IdUnidad = 6,
+                            Nombre = "Bolsa Rollo Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 15,
+                            IdUnidad = 3,
+                            Nombre = "Café Sobre"
+                        },
+                        new
+                        {
+                            IdInsumo = 16,
+                            IdUnidad = 3,
+                            Nombre = "Caja ligas"
+                        },
+                        new
+                        {
+                            IdInsumo = 17,
+                            IdUnidad = 7,
+                            Nombre = "Carbón"
+                        },
+                        new
+                        {
+                            IdInsumo = 18,
+                            IdUnidad = 4,
+                            Nombre = "Cebolla"
+                        },
+                        new
+                        {
+                            IdInsumo = 19,
+                            IdUnidad = 8,
+                            Nombre = "Cebolla China"
+                        },
+                        new
+                        {
+                            IdInsumo = 20,
+                            IdUnidad = 3,
+                            Nombre = "Champiñon lata"
+                        },
+                        new
+                        {
+                            IdInsumo = 21,
+                            IdUnidad = 9,
+                            Nombre = "Chicha Morada"
+                        },
+                        new
+                        {
+                            IdInsumo = 22,
+                            IdUnidad = 3,
+                            Nombre = "Conserva Durazno"
+                        },
+                        new
+                        {
+                            IdInsumo = 23,
+                            IdUnidad = 8,
+                            Nombre = "Espinaca"
+                        },
+                        new
+                        {
+                            IdInsumo = 24,
+                            IdUnidad = 4,
+                            Nombre = "Fideo Spaguetti"
+                        },
+                        new
+                        {
+                            IdInsumo = 25,
+                            IdUnidad = 3,
+                            Nombre = "Fósforo"
+                        },
+                        new
+                        {
+                            IdInsumo = 26,
+                            IdUnidad = 3,
+                            Nombre = "Fresa"
+                        },
+                        new
+                        {
+                            IdInsumo = 27,
+                            IdUnidad = 3,
+                            Nombre = "Gas"
+                        },
+                        new
+                        {
+                            IdInsumo = 28,
+                            IdUnidad = 8,
+                            Nombre = "Hierba Buena"
+                        },
+                        new
+                        {
+                            IdInsumo = 29,
+                            IdUnidad = 3,
+                            Nombre = "Huevo"
+                        },
+                        new
+                        {
+                            IdInsumo = 30,
+                            IdUnidad = 4,
+                            Nombre = "Ketchup"
+                        },
+                        new
+                        {
+                            IdInsumo = 31,
+                            IdUnidad = 2,
+                            Nombre = "Leche"
+                        },
+                        new
+                        {
+                            IdInsumo = 32,
+                            IdUnidad = 3,
+                            Nombre = "Leche Evaporada"
+                        },
+                        new
+                        {
+                            IdInsumo = 33,
+                            IdUnidad = 2,
+                            Nombre = "Leche Fresca"
+                        },
+                        new
+                        {
+                            IdInsumo = 34,
+                            IdUnidad = 3,
+                            Nombre = "Lechuga"
+                        },
+                        new
+                        {
+                            IdInsumo = 35,
+                            IdUnidad = 3,
+                            Nombre = "Leña"
+                        },
+                        new
+                        {
+                            IdInsumo = 36,
+                            IdUnidad = 4,
+                            Nombre = "Limón"
+                        },
+                        new
+                        {
+                            IdInsumo = 37,
+                            IdUnidad = 4,
+                            Nombre = "Lonja"
+                        },
+                        new
+                        {
+                            IdInsumo = 38,
+                            IdUnidad = 3,
+                            Nombre = "Mates General"
+                        },
+                        new
+                        {
+                            IdInsumo = 39,
+                            IdUnidad = 4,
+                            Nombre = "Mayonesa"
+                        },
+                        new
+                        {
+                            IdInsumo = 40,
+                            IdUnidad = 3,
+                            Nombre = "Milo lata"
+                        },
+                        new
+                        {
+                            IdInsumo = 41,
+                            IdUnidad = 10,
+                            Nombre = "Mondadiente"
+                        },
+                        new
+                        {
+                            IdInsumo = 42,
+                            IdUnidad = 4,
+                            Nombre = "Mostaza"
+                        },
+                        new
+                        {
+                            IdInsumo = 43,
+                            IdUnidad = 3,
+                            Nombre = "Ostión"
+                        },
+                        new
+                        {
+                            IdInsumo = 44,
+                            IdUnidad = 3,
+                            Nombre = "Pan"
+                        },
+                        new
+                        {
+                            IdInsumo = 45,
+                            IdUnidad = 3,
+                            Nombre = "Panetón"
+                        },
+                        new
+                        {
+                            IdInsumo = 46,
+                            IdUnidad = 11,
+                            Nombre = "Papa"
+                        },
+                        new
+                        {
+                            IdInsumo = 47,
+                            IdUnidad = 3,
+                            Nombre = "Papaya"
+                        },
+                        new
+                        {
+                            IdInsumo = 48,
+                            IdUnidad = 5,
+                            Nombre = "Papel Manteca"
+                        },
+                        new
+                        {
+                            IdInsumo = 49,
+                            IdUnidad = 3,
+                            Nombre = "Pepino"
+                        },
+                        new
+                        {
+                            IdInsumo = 50,
+                            IdUnidad = 3,
+                            Nombre = "Pimenton"
+                        },
+                        new
+                        {
+                            IdInsumo = 51,
+                            IdUnidad = 3,
+                            Nombre = "Pisco"
+                        },
+                        new
+                        {
+                            IdInsumo = 52,
+                            IdUnidad = 3,
+                            Nombre = "Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 53,
+                            IdUnidad = 3,
+                            Nombre = "Plátano"
+                        },
+                        new
+                        {
+                            IdInsumo = 54,
+                            IdUnidad = 3,
+                            Nombre = "Queso molde"
+                        },
+                        new
+                        {
+                            IdInsumo = 55,
+                            IdUnidad = 3,
+                            Nombre = "Queso Parmesano"
+                        },
+                        new
+                        {
+                            IdInsumo = 56,
+                            IdUnidad = 9,
+                            Nombre = "Refresco Maracuya"
+                        },
+                        new
+                        {
+                            IdInsumo = 57,
+                            IdUnidad = 3,
+                            Nombre = "Ron"
+                        },
+                        new
+                        {
+                            IdInsumo = 58,
+                            IdUnidad = 3,
+                            Nombre = "Salsa de Tomate"
+                        },
+                        new
+                        {
+                            IdInsumo = 59,
+                            IdUnidad = 3,
+                            Nombre = "Sillao"
+                        },
+                        new
+                        {
+                            IdInsumo = 60,
+                            IdUnidad = 5,
+                            Nombre = "Taper 6 u 8 Ensalada"
+                        },
+                        new
+                        {
+                            IdInsumo = 61,
+                            IdUnidad = 5,
+                            Nombre = "Taper Cuarto Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 62,
+                            IdUnidad = 5,
+                            Nombre = "Taper Ensalada Entero"
+                        },
+                        new
+                        {
+                            IdInsumo = 63,
+                            IdUnidad = 5,
+                            Nombre = "Taper Medio Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 64,
+                            IdUnidad = 5,
+                            Nombre = "Taper Pollo Entero"
+                        },
+                        new
+                        {
+                            IdInsumo = 65,
+                            IdUnidad = 4,
+                            Nombre = "Tomate"
+                        },
+                        new
+                        {
+                            IdInsumo = 66,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Plástico Flan"
+                        },
+                        new
+                        {
+                            IdInsumo = 67,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Plástico Gelatina"
+                        },
+                        new
+                        {
+                            IdInsumo = 68,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Vidrio Flan"
+                        },
+                        new
+                        {
+                            IdInsumo = 69,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Vidrio Gelatina"
+                        },
+                        new
+                        {
+                            IdInsumo = 70,
+                            IdUnidad = 3,
+                            Nombre = "Vinagre"
+                        },
+                        new
+                        {
+                            IdInsumo = 71,
+                            IdUnidad = 4,
+                            Nombre = "Vinagreta"
+                        },
+                        new
+                        {
+                            IdInsumo = 72,
+                            IdUnidad = 3,
+                            Nombre = "Vino"
+                        },
+                        new
+                        {
+                            IdInsumo = 73,
+                            IdUnidad = 3,
+                            Nombre = "Whiski"
+                        },
+                        new
+                        {
+                            IdInsumo = 74,
+                            IdUnidad = 3,
+                            Nombre = "Yuquitas"
+                        },
+                        new
+                        {
+                            IdInsumo = 75,
+                            IdUnidad = 4,
+                            Nombre = "Zanahoria"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Inventario", b =>
@@ -692,6 +1163,19 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasFilter("[telefono] IS NOT NULL");
 
                     b.ToTable("personas", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPersona = 1,
+                            Direccion = "",
+                            Email = "admin@amin.com",
+                            Genero = "Masculino",
+                            NroDocumento = "12345678",
+                            Telefono = "985851866",
+                            TipoDocumento = "DNI",
+                            TipoPersona = ""
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.PersonaJuridica", b =>
@@ -719,7 +1203,6 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.PersonaNatural", b =>
                 {
                     b.Property<int>("IdPersona")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_persona");
 
@@ -747,6 +1230,14 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("persona_natural_id_pk");
 
                     b.ToTable("persona_natural", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPersona = 1,
+                            ApellidoPaterno = "Abregu",
+                            PrimerNombre = "Victor"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Produccion", b =>
@@ -913,6 +1404,38 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdEstado");
 
                     b.ToTable("roles", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdRol = 1,
+                            IdEstado = 1,
+                            Nombre = "Administrador"
+                        },
+                        new
+                        {
+                            IdRol = 2,
+                            IdEstado = 1,
+                            Nombre = "Desarrollador"
+                        },
+                        new
+                        {
+                            IdRol = 3,
+                            IdEstado = 1,
+                            Nombre = "Cajero"
+                        },
+                        new
+                        {
+                            IdRol = 4,
+                            IdEstado = 1,
+                            Nombre = "Empleado"
+                        },
+                        new
+                        {
+                            IdRol = 5,
+                            IdEstado = 1,
+                            Nombre = "Cliente"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
@@ -1132,6 +1655,74 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("unidad_medicion_id_pk");
 
                     b.ToTable("unidad_medicion", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            IdUnidad = 1,
+                            Abreviacion = "Balde",
+                            Descripcion = "Balde"
+                        },
+                        new
+                        {
+                            IdUnidad = 2,
+                            Abreviacion = "Lt",
+                            Descripcion = "Litro"
+                        },
+                        new
+                        {
+                            IdUnidad = 3,
+                            Abreviacion = "Und",
+                            Descripcion = "Unidad"
+                        },
+                        new
+                        {
+                            IdUnidad = 4,
+                            Abreviacion = "Kg",
+                            Descripcion = "Kilo"
+                        },
+                        new
+                        {
+                            IdUnidad = 5,
+                            Abreviacion = "Cto",
+                            Descripcion = "Ciento"
+                        },
+                        new
+                        {
+                            IdUnidad = 6,
+                            Abreviacion = "Rllo",
+                            Descripcion = "Rollo"
+                        },
+                        new
+                        {
+                            IdUnidad = 7,
+                            Abreviacion = "B-Kg",
+                            Descripcion = "Bolsa 5 kg"
+                        },
+                        new
+                        {
+                            IdUnidad = 8,
+                            Abreviacion = "At",
+                            Descripcion = "Atado"
+                        },
+                        new
+                        {
+                            IdUnidad = 9,
+                            Abreviacion = "Bsa",
+                            Descripcion = "Bolsa"
+                        },
+                        new
+                        {
+                            IdUnidad = 10,
+                            Abreviacion = "Cja",
+                            Descripcion = "Caja"
+                        },
+                        new
+                        {
+                            IdUnidad = 11,
+                            Abreviacion = "B-Kg",
+                            Descripcion = "Bolsa 20 kg"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Usuario", b =>
@@ -1144,10 +1735,15 @@ namespace DBSenorialModels.Data.Migraciones
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("CambiarPassword")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("cambiar_password");
+
+                    b.Property<string>("CodigoRecuperacion")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("codigo_recuperacion");
 
                     b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -1203,6 +1799,20 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasFilter("[user_name] IS NOT NULL");
 
                     b.ToTable("usuario", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdUsuario = 1,
+                            CambiarPassword = "",
+                            CodigoRecuperacion = "",
+                            CreatedAt = new DateTime(2024, 6, 17, 23, 2, 59, 321, DateTimeKind.Local).AddTicks(5217),
+                            Email = "admin@admin.com",
+                            IdPersona = 1,
+                            IdRol = 1,
+                            Password = "Admin-Victor1",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Venta", b =>

@@ -47,7 +47,7 @@ namespace Repository.Schema_Usuarios.Usuarios
         /// <returns></returns>
         public Usuario ObtenerCorreoMobile(string email)
         {
-            var usuario = dbset
+          var usuario = dbset
          .Include(x => x.IdRolNavigation)  
          .Where(x => x.Email.ToLower() == email.ToLower() && x.IdRolNavigation.Nombre == "Empleado")
          .FirstOrDefault();
@@ -68,7 +68,27 @@ namespace Repository.Schema_Usuarios.Usuarios
             return usuario;
         }
 
-
-        
+        public Usuario ObtenerCodigoOtp(string email)
+        {
+          //hacer esto cuando el valor ya se encuentra en la BD
+          var usuario = dbset        
+         .Where(x => x.Email.ToLower() == email.ToLower())
+         .FirstOrDefault();
+           
+            return usuario;
+        }
+        public async Task<string> OneTimePass(string email, string codigo)
+        {
+            // obtengo el email del usuario
+          var usuario = dbset
+         .Where(x => x.Email.ToLower() == email.ToLower())
+         .FirstOrDefault();
+            //del objeto usuario obtengo el codigo de recuperacion
+            usuario.CodigoRecuperacion = codigo;
+            db.Update(usuario);
+            //guardo cambios
+            await db.SaveChangesAsync();
+            return codigo;
+        }
     }
 }

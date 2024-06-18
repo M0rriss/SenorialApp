@@ -20,5 +20,6 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Usuario
         //public int IdImg { get; set; } = 0;
         public string? Email { get; set; }
         public string? CambiarPassword { get; set; }
+        public string CodigoRecuperacion { get; set; } = "";
     }
 }

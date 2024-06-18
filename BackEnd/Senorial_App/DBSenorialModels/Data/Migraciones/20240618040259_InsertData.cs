@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InsertData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -547,7 +549,8 @@ namespace DBSenorialModels.Data.Migraciones
                     update_at = table.Column<DateTime>(type: "datetime", nullable: true),
                     id_rol = table.Column<int>(type: "int", nullable: false),
                     email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    cambiar_password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    cambiar_password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    codigo_recuperacion = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IdImg = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -1021,6 +1024,155 @@ namespace DBSenorialModels.Data.Migraciones
                         principalTable: "sucursal",
                         principalColumn: "id_sucursal");
                 });
+
+            migrationBuilder.InsertData(
+                schema: "Generico",
+                table: "estado",
+                columns: new[] { "id_estado", "abreviacion", "id_estado_padre", "nombre" },
+                values: new object[] { 1, null, null, "ActividadEmpresa" });
+
+            migrationBuilder.InsertData(
+                schema: "Usuarios",
+                table: "personas",
+                columns: new[] { "id_persona", "direccion", "email", "genero", "nro_Documento", "telefono", "tipo_documento", "tipo_persona" },
+                values: new object[] { 1, "", "admin@amin.com", "Masculino", "12345678", "985851866", "DNI", "" });
+
+            migrationBuilder.InsertData(
+                schema: "Generico",
+                table: "unidad_medicion",
+                columns: new[] { "id_unidad", "abreviacion", "descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Balde", "Balde" },
+                    { 2, "Lt", "Litro" },
+                    { 3, "Und", "Unidad" },
+                    { 4, "Kg", "Kilo" },
+                    { 5, "Cto", "Ciento" },
+                    { 6, "Rllo", "Rollo" },
+                    { 7, "B-Kg", "Bolsa 5 kg" },
+                    { 8, "At", "Atado" },
+                    { 9, "Bsa", "Bolsa" },
+                    { 10, "Cja", "Caja" },
+                    { 11, "B-Kg", "Bolsa 20 kg" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Generico",
+                table: "estado",
+                columns: new[] { "id_estado", "abreviacion", "id_estado_padre", "nombre" },
+                values: new object[,]
+                {
+                    { 2, null, 1, "Activo" },
+                    { 3, null, 1, "Inactivo" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Almacen",
+                table: "insumo",
+                columns: new[] { "id_insumo", "id_unidad", "nombre", "url" },
+                values: new object[,]
+                {
+                    { 1, 1, "Aceite", null },
+                    { 2, 2, "Aceite", null },
+                    { 3, 3, "Aceite Sésamo", null },
+                    { 4, 4, "Aji", null },
+                    { 5, 5, "Ajicero", null },
+                    { 6, 3, "Arroz con leche", null },
+                    { 7, 4, "Azucar Blanca", null },
+                    { 8, 4, "Azucar Rubia", null },
+                    { 9, 5, "Bolsa Basura", null },
+                    { 10, 5, "Bolsa Cuarto Pollo", null },
+                    { 11, 5, "Bolsa Ensalada", null },
+                    { 12, 5, "Bolsa Medio Pollo", null },
+                    { 13, 5, "Bolsa Pollo Entero", null },
+                    { 14, 6, "Bolsa Rollo Pollo", null },
+                    { 15, 3, "Café Sobre", null },
+                    { 16, 3, "Caja ligas", null },
+                    { 17, 7, "Carbón", null },
+                    { 18, 4, "Cebolla", null },
+                    { 19, 8, "Cebolla China", null },
+                    { 20, 3, "Champiñon lata", null },
+                    { 21, 9, "Chicha Morada", null },
+                    { 22, 3, "Conserva Durazno", null },
+                    { 23, 8, "Espinaca", null },
+                    { 24, 4, "Fideo Spaguetti", null },
+                    { 25, 3, "Fósforo", null },
+                    { 26, 3, "Fresa", null },
+                    { 27, 3, "Gas", null },
+                    { 28, 8, "Hierba Buena", null },
+                    { 29, 3, "Huevo", null },
+                    { 30, 4, "Ketchup", null },
+                    { 31, 2, "Leche", null },
+                    { 32, 3, "Leche Evaporada", null },
+                    { 33, 2, "Leche Fresca", null },
+                    { 34, 3, "Lechuga", null },
+                    { 35, 3, "Leña", null },
+                    { 36, 4, "Limón", null },
+                    { 37, 4, "Lonja", null },
+                    { 38, 3, "Mates General", null },
+                    { 39, 4, "Mayonesa", null },
+                    { 40, 3, "Milo lata", null },
+                    { 41, 10, "Mondadiente", null },
+                    { 42, 4, "Mostaza", null },
+                    { 43, 3, "Ostión", null },
+                    { 44, 3, "Pan", null },
+                    { 45, 3, "Panetón", null },
+                    { 46, 11, "Papa", null },
+                    { 47, 3, "Papaya", null },
+                    { 48, 5, "Papel Manteca", null },
+                    { 49, 3, "Pepino", null },
+                    { 50, 3, "Pimenton", null },
+                    { 51, 3, "Pisco", null },
+                    { 52, 3, "Pollo", null },
+                    { 53, 3, "Plátano", null },
+                    { 54, 3, "Queso molde", null },
+                    { 55, 3, "Queso Parmesano", null },
+                    { 56, 9, "Refresco Maracuya", null },
+                    { 57, 3, "Ron", null },
+                    { 58, 3, "Salsa de Tomate", null },
+                    { 59, 3, "Sillao", null },
+                    { 60, 5, "Taper 6 u 8 Ensalada", null },
+                    { 61, 5, "Taper Cuarto Pollo", null },
+                    { 62, 5, "Taper Ensalada Entero", null },
+                    { 63, 5, "Taper Medio Pollo", null },
+                    { 64, 5, "Taper Pollo Entero", null },
+                    { 65, 4, "Tomate", null },
+                    { 66, 3, "Vaso Plástico Flan", null },
+                    { 67, 3, "Vaso Plástico Gelatina", null },
+                    { 68, 3, "Vaso Vidrio Flan", null },
+                    { 69, 3, "Vaso Vidrio Gelatina", null },
+                    { 70, 3, "Vinagre", null },
+                    { 71, 4, "Vinagreta", null },
+                    { 72, 3, "Vino", null },
+                    { 73, 3, "Whiski", null },
+                    { 74, 3, "Yuquitas", null },
+                    { 75, 4, "Zanahoria", null }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Usuarios",
+                table: "persona_natural",
+                columns: new[] { "id_persona", "apellido_materno", "apellido_paterno", "primer_nombre", "segundo_nombre" },
+                values: new object[] { 1, null, "Abregu", "Victor", null });
+
+            migrationBuilder.InsertData(
+                schema: "Usuarios",
+                table: "roles",
+                columns: new[] { "id_rol", "abreviacion", "id_estado", "nombre" },
+                values: new object[,]
+                {
+                    { 1, null, 1, "Administrador" },
+                    { 2, null, 1, "Desarrollador" },
+                    { 3, null, 1, "Cajero" },
+                    { 4, null, 1, "Empleado" },
+                    { 5, null, 1, "Cliente" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Usuarios",
+                table: "usuario",
+                columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
+                values: new object[] { 1, "", "", new DateTime(2024, 6, 17, 23, 2, 59, 321, DateTimeKind.Local).AddTicks(5217), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",

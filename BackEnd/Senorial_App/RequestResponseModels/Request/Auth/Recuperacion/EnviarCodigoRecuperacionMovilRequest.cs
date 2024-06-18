@@ -9,7 +9,6 @@ namespace RequestResponseModels.Request.Auth.Recuperacion
 {
     public class EnviarCodigoRecuperacionMovilRequest
     {
-        //public string Telefono { get; set; }
         [Required, EmailAddress]
         public string Email { get; set; }
     }

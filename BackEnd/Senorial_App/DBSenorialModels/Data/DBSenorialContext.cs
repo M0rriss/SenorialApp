@@ -174,6 +174,9 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleCompras)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("insumo_id_fk");
+            
+
+            
         });
 
         modelBuilder.Entity<DetalleDashMenu>(entity =>
@@ -276,6 +279,11 @@ public partial class DBSenorialContext : DbContext
             entity.HasKey(e => e.IdEstado).HasName("estado_id_pk");
 
             entity.HasOne(d => d.IdEstadoPadreNavigation).WithMany(p => p.InverseIdEstadoPadreNavigation).HasConstraintName("estado_padre_fk");
+            entity.HasData(
+           new Estado { IdEstado = 1, Nombre = "ActividadEmpresa", IdEstadoPadre = null },
+           new Estado { IdEstado = 2, Nombre = "Activo", IdEstadoPadre = 1 },
+           new Estado { IdEstado = 3, Nombre = "Inactivo", IdEstadoPadre = 1 }
+       );
         });
 
         modelBuilder.Entity<Imagene>(entity =>
@@ -290,6 +298,83 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdUnidadNavigation).WithMany(p => p.Insumos)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("unidad_medida_id_fk");
+            entity.HasData(
+            new Insumo { IdInsumo = 1, Nombre = "Aceite", IdUnidad = 1 }, // Balde
+            new Insumo { IdInsumo = 2, Nombre = "Aceite", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 3, Nombre = "Aceite Sésamo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 4, Nombre = "Aji", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 5, Nombre = "Ajicero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 6, Nombre = "Arroz con leche", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 7, Nombre = "Azucar Blanca", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 8, Nombre = "Azucar Rubia", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 9, Nombre = "Bolsa Basura", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 10, Nombre = "Bolsa Cuarto Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 11, Nombre = "Bolsa Ensalada", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 12, Nombre = "Bolsa Medio Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 13, Nombre = "Bolsa Pollo Entero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 14, Nombre = "Bolsa Rollo Pollo", IdUnidad = 6 }, // Rollo
+            new Insumo { IdInsumo = 15, Nombre = "Café Sobre", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 16, Nombre = "Caja ligas", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 17, Nombre = "Carbón", IdUnidad = 7 }, // Bolsa 5 kg
+            new Insumo { IdInsumo = 18, Nombre = "Cebolla", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 19, Nombre = "Cebolla China", IdUnidad = 8 }, // Atado
+            new Insumo { IdInsumo = 20, Nombre = "Champiñon lata", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 21, Nombre = "Chicha Morada", IdUnidad = 9 }, // Bolsa
+            new Insumo { IdInsumo = 22, Nombre = "Conserva Durazno", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 23, Nombre = "Espinaca", IdUnidad = 8 }, // Atado
+            new Insumo { IdInsumo = 24, Nombre = "Fideo Spaguetti", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 25, Nombre = "Fósforo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 26, Nombre = "Fresa", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 27, Nombre = "Gas", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 28, Nombre = "Hierba Buena", IdUnidad = 8 }, // Atado
+            new Insumo { IdInsumo = 29, Nombre = "Huevo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 30, Nombre = "Ketchup", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 31, Nombre = "Leche", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 32, Nombre = "Leche Evaporada", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 33, Nombre = "Leche Fresca", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 34, Nombre = "Lechuga", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 35, Nombre = "Leña", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 36, Nombre = "Limón", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 37, Nombre = "Lonja", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 38, Nombre = "Mates General", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 39, Nombre = "Mayonesa", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 40, Nombre = "Milo lata", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 41, Nombre = "Mondadiente", IdUnidad = 10 }, // Caja
+            new Insumo { IdInsumo = 42, Nombre = "Mostaza", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 43, Nombre = "Ostión", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 44, Nombre = "Pan", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 45, Nombre = "Panetón", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 46, Nombre = "Papa", IdUnidad = 11 }, // Bolsa 20 kg
+            new Insumo { IdInsumo = 47, Nombre = "Papaya", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 48, Nombre = "Papel Manteca", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 49, Nombre = "Pepino", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 50, Nombre = "Pimenton", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 51, Nombre = "Pisco", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 52, Nombre = "Pollo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 53, Nombre = "Plátano", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 54, Nombre = "Queso molde", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 55, Nombre = "Queso Parmesano", IdUnidad = 3 },// Unidad
+            new Insumo { IdInsumo = 56, Nombre = "Refresco Maracuya", IdUnidad = 9 }, // Bolsa
+            new Insumo { IdInsumo = 57, Nombre = "Ron", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 58, Nombre = "Salsa de Tomate", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 59, Nombre = "Sillao", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 60, Nombre = "Taper 6 u 8 Ensalada", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 61, Nombre = "Taper Cuarto Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 62, Nombre = "Taper Ensalada Entero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 63, Nombre = "Taper Medio Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 64, Nombre = "Taper Pollo Entero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 65, Nombre = "Tomate", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 66, Nombre = "Vaso Plástico Flan", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 67, Nombre = "Vaso Plástico Gelatina", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 68, Nombre = "Vaso Vidrio Flan", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 69, Nombre = "Vaso Vidrio Gelatina", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 70, Nombre = "Vinagre", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 71, Nombre = "Vinagreta", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 72, Nombre = "Vino", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 73, Nombre = "Whiski", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 74, Nombre = "Yuquitas", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 75, Nombre = "Zanahoria", IdUnidad = 4 } // Kilo
+        );
         });
 
         modelBuilder.Entity<Inventario>(entity =>
@@ -319,6 +404,18 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<Persona>(entity =>
         {
             entity.HasKey(e => e.IdPersona).HasName("persona_id_pk");
+            entity.HasData(
+    new Persona
+    {
+        IdPersona = 1,
+        NroDocumento = "12345678",
+        Email = "admin@amin.com",
+        Telefono = "985851866",
+        Direccion = "",
+        TipoDocumento = "DNI",
+        Genero = "Masculino",
+        TipoPersona = ""
+    });
         });
 
         modelBuilder.Entity<PersonaJuridica>(entity =>
@@ -343,6 +440,9 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("personas_id_fk");
+            entity.HasData(
+        new PersonaNatural { IdPersona = 1, PrimerNombre = "Victor", ApellidoPaterno = "Abregu" }
+    );
         });
         
         modelBuilder.Entity<Produccion>(entity =>
@@ -396,6 +496,14 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Roles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("estado_id_fk");
+            entity.HasData(
+           new Role { IdRol = 1, Nombre = "Administrador", IdEstado = 1 }, // IdEstado para activo
+           new Role { IdRol = 2, Nombre = "Desarrollador", IdEstado = 1 }, // IdEstado para activo
+           new Role { IdRol = 3, Nombre = "Cajero", IdEstado = 1 }, // IdEstado para activo
+           new Role { IdRol = 4, Nombre = "Empleado", IdEstado = 1 }, // IdEstado para activo
+           new Role { IdRol = 5, Nombre = "Cliente", IdEstado = 1 } // IdEstado para activo
+                                                                    // Puedes agregar más roles según sea necesario
+       );
         });
 
         modelBuilder.Entity<Salida>(entity =>
@@ -468,6 +576,19 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<UnidadMedicion>(entity =>
         {
             entity.HasKey(e => e.IdUnidad).HasName("unidad_medicion_id_pk");
+            entity.HasData(
+        new UnidadMedicion { IdUnidad = 1, Abreviacion = "Balde", Descripcion = "Balde" },
+        new UnidadMedicion { IdUnidad = 2, Abreviacion = "Lt", Descripcion = "Litro" },
+        new UnidadMedicion { IdUnidad = 3, Abreviacion = "Und", Descripcion = "Unidad" },
+        new UnidadMedicion { IdUnidad = 4, Abreviacion = "Kg", Descripcion = "Kilo" },
+        new UnidadMedicion { IdUnidad = 5, Abreviacion = "Cto", Descripcion = "Ciento" },
+        new UnidadMedicion { IdUnidad = 6, Abreviacion = "Rllo", Descripcion = "Rollo" },
+        new UnidadMedicion { IdUnidad = 7, Abreviacion = "B-Kg", Descripcion = "Bolsa 5 kg" },
+        new UnidadMedicion { IdUnidad = 8, Abreviacion = "At", Descripcion = "Atado" },
+        new UnidadMedicion { IdUnidad = 9, Abreviacion = "Bsa", Descripcion = "Bolsa" },
+        new UnidadMedicion { IdUnidad = 10, Abreviacion = "Cja", Descripcion = "Caja" },
+        new UnidadMedicion { IdUnidad = 11, Abreviacion = "B-Kg", Descripcion = "Bolsa 20 kg" }
+    );
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -487,6 +608,19 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("roles_id_fk");
+            entity.HasData(
+            new Usuario
+            {
+                IdUsuario = 1,
+                CambiarPassword = "", // Asignación temporal para el ejemplo
+                CreatedAt = DateTime.Now,
+                Email = "admin@admin.com",
+                IdRol = 1, // Asigna el Id del rol de Administrador
+                IdPersona = 1, // Asigna el Id de la persona asociada al usuario
+                Password = "Admin-Victor1", // Asignación temporal para el ejemplo
+                UserName = "admin"
+            }
+        );
         });
 
         modelBuilder.Entity<Venta>(entity =>

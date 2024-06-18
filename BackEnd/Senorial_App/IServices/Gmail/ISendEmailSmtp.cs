@@ -8,6 +8,7 @@ namespace IServices.Gmail
 {
     public interface ISendEmailSmtp
     {
-        Task SendEmail(string destino);
+        Task SendEmail(string destino, string codigo);
+       // bool ValidateOtp(string destino, string codigoOtp);
     }
 }

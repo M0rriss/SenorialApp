@@ -1,19 +1,31 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
 using RequestResponseModels.Request.Auth;
+using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
+using RequestResponseModels.Request.Schema_Almacen.Insumo;
+using RequestResponseModels.Request.Schema_Generico.Estado;
+using RequestResponseModels.Request.Schema_Generico.Imagenes;
+using RequestResponseModels.Request.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
 using RequestResponseModels.Request.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Request.Schema_Usuarios.Roles;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Request.Schema_Ventas.Productos;
 using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
+using RequestResponseModels.Response.Schema_Almacen.Insumo;
+using RequestResponseModels.Response.Schema_Generico.Estado;
+using RequestResponseModels.Response.Schema_Generico.Imagenes;
+using RequestResponseModels.Response.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Response.Schema_Usuarios.Roles;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Schema_Ventas.Productos;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +40,7 @@ namespace UtilityAutoMapper
             CreateMap<Usuario, SignInEcommerceResponse>().ReverseMap();
             CreateMap<Usuario, SignInMobileResponse>().ReverseMap();
             CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
+            CreateMap<Usuario, RestablecerPasswordMovilRequest>().ReverseMap();
             #endregion
 
 
@@ -38,12 +51,29 @@ namespace UtilityAutoMapper
             CreateMap<Categoria,CategoriaResponse>().ReverseMap();
             CreateMap<CategoriaRequest,CategoriaResponse>().ReverseMap();
             #endregion
-            #region Compra
-
+            #region Insumo
+            CreateMap<Insumo, InsumoRequest>().ReverseMap();
+            CreateMap<Insumo, InsumoResponse>().ReverseMap();
+            CreateMap<InsumoRequest, InsumoResponse>().ReverseMap();
             #endregion
 
             #endregion
             #region Schema_Generico
+            #region Estado
+            CreateMap<Estado, EstadoRequest>().ReverseMap();
+            CreateMap<Estado, EstadoResponse>().ReverseMap();
+            CreateMap<EstadoRequest, EstadoResponse>().ReverseMap();
+            #endregion
+            #region Imagenes
+            CreateMap<Imagene, ImagenesRequest>().ReverseMap();
+            CreateMap<Imagene, ImagenesResponse>().ReverseMap();
+            CreateMap<ImagenesRequest, ImagenesResponse>().ReverseMap();
+            #endregion
+            #region UnidadMedicion
+            CreateMap<UnidadMedicion, UnidadMedicionRequest>().ReverseMap();
+            CreateMap<UnidadMedicion, UnidadMedicionResponse>().ReverseMap();
+            CreateMap<UnidadMedicionRequest, UnidadMedicionResponse>().ReverseMap();
+            #endregion
             #endregion
             #region Schema_Produccion
             #endregion
@@ -68,10 +98,20 @@ namespace UtilityAutoMapper
             CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
             CreateMap<PersonaNaturalRequest, PersonaNaturalResponse>().ReverseMap();
             #endregion
-            
+            #region Roles
+            CreateMap<Role, RolesRequest>().ReverseMap();
+            CreateMap<Role, RolesResponse>().ReverseMap();
+            CreateMap<RolesRequest, RolesResponse>().ReverseMap();
+            #endregion
+
 
             #endregion
             #region Schema_Ventas
+            #region Producto
+            CreateMap<Producto, ProductoRequest>().ReverseMap();
+            CreateMap<Producto, ProductoResponse>().ReverseMap();
+            CreateMap<ProductoRequest, ProductoResponse>().ReverseMap();
+            #endregion
             #endregion
 
         }

@@ -21,7 +21,10 @@ namespace IBusiness.Schema_Usuarios.Usuario
         Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request);
         Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request);
         Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
-        Task<bool> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
-        Task<bool> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
+        Task<UsuarioResponse> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
+        Task<UsuarioResponse> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
+        
+
+
     }
 }
