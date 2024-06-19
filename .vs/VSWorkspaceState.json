@@ -3,8 +3,8 @@
     "",
     "\\BackEnd",
     "\\BackEnd\\Senorial_App",
-    "\\BackEnd\\Senorial_App\\DBSenorialModels",
-    "\\BackEnd\\Senorial_App\\DBSenorialModels\\Data",
+    "\\BackEnd\\Senorial_App\\Business",
+    "\\BackEnd\\Senorial_App\\Business\\Auth",
     "\\BackEnd\\Senorial_App\\RequestResponseModels",
     "\\BackEnd\\Senorial_App\\RequestResponseModels\\Request",
     "\\BackEnd\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas",
@@ -12,6 +12,6 @@
     "\\BackEnd\\Senorial_App\\Services",
     "\\BackEnd\\Senorial_App\\Services\\Gmail"
   ],
-  "SelectedNode": "\\BackEnd\\Senorial_App\\DBSenorialModels\\Data\\DBSenorialContext.cs",
+  "SelectedNode": "\\BackEnd\\Senorial_App\\Business\\Auth\\AuthBusiness.cs",
   "PreviewInSolutionExplorer": false
 }

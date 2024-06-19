@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBusiness.Schema_Usuarios.Usuario
+namespace IBusiness.Schema_Usuarios.Usuarios
 {
     public interface IUsuarioBusiness : ICrudBusiness<UsuarioRequest, UsuarioResponse>
     {

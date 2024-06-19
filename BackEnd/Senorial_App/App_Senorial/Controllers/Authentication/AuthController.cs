@@ -7,7 +7,7 @@ using CommonModels.Common;
 using IBusiness.Auth;
 using IBusiness.Schema_Usuarios.Personas;
 using IBusiness.Schema_Usuarios.Roles;
-using IBusiness.Schema_Usuarios.Usuario;
+using IBusiness.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Usuarios.Personas;
 using IRepository.Schema_Usuarios.Roles;
 using Microsoft.AspNetCore.Http;
@@ -68,7 +68,10 @@ namespace App_Senorial.Controllers.Authentication
         {
             var loginResponse = _authBusiness.LoginDashboard(request);
 
-            if (loginResponse.Success) loginResponse.Token = await GenerateTokenDashboard(loginResponse);
+            if (loginResponse.Success)
+            {
+                loginResponse.Token = await GenerateTokenDashboard(loginResponse);
+            }
 
             return Ok(loginResponse);
         }

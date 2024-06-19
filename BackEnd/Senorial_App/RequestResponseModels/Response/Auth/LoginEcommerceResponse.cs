@@ -1,4 +1,5 @@
-﻿using RequestResponseModels.Response.Schema_Usuarios.Usuario;
+﻿using RequestResponseModels.Response.Schema_Usuarios.Roles;
+using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace RequestResponseModels.Response.Auth
         public string Token { get; set; } = "";
         public string TokenExpira { get; set; } = "";
         public UsuarioResponse Usuario { get; set; } = new UsuarioResponse();
+        public RolesResponse Roles { get; set; } =new RolesResponse();
         //userid,username,email
     }
 }

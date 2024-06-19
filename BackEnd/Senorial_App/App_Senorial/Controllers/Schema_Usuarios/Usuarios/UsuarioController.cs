@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Business.Schema_Usuarios.Usuarios;
-using IBusiness.Schema_Usuarios.Usuario;
+using IBusiness.Schema_Usuarios.Usuarios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;

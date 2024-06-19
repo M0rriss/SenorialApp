@@ -6,7 +6,7 @@ using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Spreadsheet;
 using IBusiness.Schema_Usuarios.Personas;
 using IBusiness.Schema_Usuarios.Roles;
-using IBusiness.Schema_Usuarios.Usuario;
+using IBusiness.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Usuarios.PersonaJuridicas;
 using IRepository.Schema_Usuarios.PersonaNaturales;
 using IRepository.Schema_Usuarios.Personas;

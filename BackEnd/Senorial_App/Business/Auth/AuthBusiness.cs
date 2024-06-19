@@ -4,7 +4,7 @@ using Business.Schema_Usuarios.Roles;
 using Business.Schema_Usuarios.Usuarios;
 using IBusiness.Auth;
 using IBusiness.Schema_Usuarios.Roles;
-using IBusiness.Schema_Usuarios.Usuario;
+using IBusiness.Schema_Usuarios.Usuarios;
 using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Usuarios.Roles;
@@ -23,7 +23,7 @@ namespace Business.Auth
         #region Dependency Innjection
         private readonly IUsuarioBusiness _usuarioBusiness;
         private readonly IMapper _mapper;
-        private readonly RolesBusiness _rolesBusiness;
+        private readonly IRolesBusiness _rolesBusiness;
         private readonly EncriptarDesencriptar _encriptar;
         public AuthBusiness(IMapper mapper)
         {
@@ -38,16 +38,19 @@ namespace Business.Auth
         {
             var result = new LoginDashboardResponse();
             UsuarioResponse usuario = _usuarioBusiness.BuscarPorCorreo(request.Email);
-            if(usuario == null) return result;
+            if (usuario == null) return result;
 
             string newPassword = _encriptar.AES_encriptar(request.Password);
-            if(newPassword != usuario.Password) return result;
-            
+            if (newPassword != usuario.Password) return result;
+
             result.Success = true;
             result.Message = "Login Correcto";
 
-            result.Usuario = new UsuarioResponse { Email = request.Email };
-            result.RolName = new RolesResponse { Nombre = "Admin" };
+            result.Usuario = new UsuarioResponse();
+            result.Usuario.Email = request.Email;
+            result.RolName.IdRol = usuario.IdRol;
+            result.RolName = new RolesResponse();
+            result.RolName.Nombre = "Admin" ;
 
             return result;
 
