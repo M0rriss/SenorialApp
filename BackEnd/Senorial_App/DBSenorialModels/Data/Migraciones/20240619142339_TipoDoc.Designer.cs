@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240618040259_InsertData")]
-    partial class InsertData
+    [Migration("20240619142339_TipoDoc")]
+    partial class TipoDoc
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1113,6 +1113,16 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPersona"));
 
+                    b.Property<string>("ApellidoMaterno")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("apellido_materno");
+
+                    b.Property<string>("ApellidoPaterno")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("apellido_paterno");
+
                     b.Property<string>("Direccion")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
@@ -1130,9 +1140,24 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("genero");
 
                     b.Property<string>("NroDocumento")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("nro_Documento");
+
+                    b.Property<string>("PrimerNombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("primer_nombre");
+
+                    b.Property<string>("RazonSocial")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("razon_social");
+
+                    b.Property<string>("SegundoNombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("segundo_nombre");
 
                     b.Property<string>("Telefono")
                         .HasMaxLength(12)
@@ -1165,81 +1190,28 @@ namespace DBSenorialModels.Data.Migraciones
                         .IsUnique()
                         .HasFilter("[telefono] IS NOT NULL");
 
+                    b.HasIndex(new[] { "RazonSocial" }, "razon_social_phone_uk")
+                        .IsUnique()
+                        .HasFilter("[razon_social] IS NOT NULL");
+
                     b.ToTable("personas", "Usuarios");
 
                     b.HasData(
                         new
                         {
                             IdPersona = 1,
+                            ApellidoMaterno = "",
+                            ApellidoPaterno = "Abregu",
                             Direccion = "",
                             Email = "admin@amin.com",
                             Genero = "Masculino",
-                            NroDocumento = "12345678",
+                            NroDocumento = "",
+                            PrimerNombre = "Victor",
+                            RazonSocial = "Señorial",
+                            SegundoNombre = "",
                             Telefono = "985851866",
                             TipoDocumento = "DNI",
-                            TipoPersona = ""
-                        });
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaJuridica", b =>
-                {
-                    b.Property<int>("IdPersona")
-                        .HasColumnType("int")
-                        .HasColumnName("id_persona");
-
-                    b.Property<string>("NombreComercial")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("nombre_comercial");
-
-                    b.Property<string>("RazonSocial")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("razon_social");
-
-                    b.HasKey("IdPersona")
-                        .HasName("persona_juridica_id_pk");
-
-                    b.ToTable("persona_juridicas", "Usuarios");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaNatural", b =>
-                {
-                    b.Property<int>("IdPersona")
-                        .HasColumnType("int")
-                        .HasColumnName("id_persona");
-
-                    b.Property<string>("ApellidoMaterno")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("apellido_materno");
-
-                    b.Property<string>("ApellidoPaterno")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("apellido_paterno");
-
-                    b.Property<string>("PrimerNombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("primer_nombre");
-
-                    b.Property<string>("SegundoNombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("segundo_nombre");
-
-                    b.HasKey("IdPersona")
-                        .HasName("persona_natural_id_pk");
-
-                    b.ToTable("persona_natural", "Usuarios");
-
-                    b.HasData(
-                        new
-                        {
-                            IdPersona = 1,
-                            ApellidoPaterno = "Abregu",
-                            PrimerNombre = "Victor"
+                            TipoPersona = "Natural"
                         });
                 });
 
@@ -1809,7 +1781,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 6, 17, 23, 2, 59, 321, DateTimeKind.Local).AddTicks(5217),
+                            CreatedAt = new DateTime(2024, 6, 19, 9, 23, 38, 663, DateTimeKind.Local).AddTicks(782),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -2238,28 +2210,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdSucursalNavigation");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaJuridica", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Persona", "IdPersonaNavigation")
-                        .WithOne("PersonaJuridica")
-                        .HasForeignKey("DBSenorialModels.Senorial.PersonaJuridica", "IdPersona")
-                        .IsRequired()
-                        .HasConstraintName("persona_id_fk");
-
-                    b.Navigation("IdPersonaNavigation");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaNatural", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Persona", "IdPersonaNavigation")
-                        .WithOne("PersonaNatural")
-                        .HasForeignKey("DBSenorialModels.Senorial.PersonaNatural", "IdPersona")
-                        .IsRequired()
-                        .HasConstraintName("personas_id_fk");
-
-                    b.Navigation("IdPersonaNavigation");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.Imagene", "IdImgNavigation")
@@ -2624,10 +2574,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Clientes");
 
                     b.Navigation("Empleados");
-
-                    b.Navigation("PersonaJuridica");
-
-                    b.Navigation("PersonaNatural");
 
                     b.Navigation("Proveedors");
 

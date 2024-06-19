@@ -57,6 +57,7 @@ namespace Repository.Schema_Usuarios.Usuarios
         public async Task<Usuario> RegistrarUsuarioEcommerce(Usuario usuario)
         {
             await dbset.AddAsync(usuario);
+            usuario.Email = usuario.Email.ToLower();
             await db.SaveChangesAsync();
             return usuario;
         }
@@ -64,6 +65,7 @@ namespace Repository.Schema_Usuarios.Usuarios
         public async Task<Usuario> RegistrarUsuarioMobile(Usuario usuario)
         {
             await dbset.AddAsync(usuario);
+            usuario.Email = usuario.Email.ToLower();
             await db.SaveChangesAsync();
             return usuario;
         }

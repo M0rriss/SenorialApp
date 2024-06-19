@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class InsertData : Migration
+    public partial class TipoDoc : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -154,13 +154,18 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_persona = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nro_Documento = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
+                    primer_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    segundo_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    apellido_paterno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    apellido_materno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    nro_Documento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     telefono = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
                     direccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     tipo_documento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    genero = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    tipo_persona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    tipo_persona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    razon_social = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    genero = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,48 +370,6 @@ namespace DBSenorialModels.Data.Migraciones
                     table.PrimaryKey("cliente_id_pk", x => x.id_cliente);
                     table.ForeignKey(
                         name: "persona_id_fk",
-                        column: x => x.id_persona,
-                        principalSchema: "Usuarios",
-                        principalTable: "personas",
-                        principalColumn: "id_persona");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "persona_juridicas",
-                schema: "Usuarios",
-                columns: table => new
-                {
-                    id_persona = table.Column<int>(type: "int", nullable: false),
-                    razon_social = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    nombre_comercial = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("persona_juridica_id_pk", x => x.id_persona);
-                    table.ForeignKey(
-                        name: "persona_id_fk",
-                        column: x => x.id_persona,
-                        principalSchema: "Usuarios",
-                        principalTable: "personas",
-                        principalColumn: "id_persona");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "persona_natural",
-                schema: "Usuarios",
-                columns: table => new
-                {
-                    id_persona = table.Column<int>(type: "int", nullable: false),
-                    primer_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    segundo_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    apellido_paterno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    apellido_materno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("persona_natural_id_pk", x => x.id_persona);
-                    table.ForeignKey(
-                        name: "personas_id_fk",
                         column: x => x.id_persona,
                         principalSchema: "Usuarios",
                         principalTable: "personas",
@@ -1034,8 +997,8 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.InsertData(
                 schema: "Usuarios",
                 table: "personas",
-                columns: new[] { "id_persona", "direccion", "email", "genero", "nro_Documento", "telefono", "tipo_documento", "tipo_persona" },
-                values: new object[] { 1, "", "admin@amin.com", "Masculino", "12345678", "985851866", "DNI", "" });
+                columns: new[] { "id_persona", "apellido_materno", "apellido_paterno", "direccion", "email", "genero", "nro_Documento", "primer_nombre", "razon_social", "segundo_nombre", "telefono", "tipo_documento", "tipo_persona" },
+                values: new object[] { 1, "", "Abregu", "", "admin@amin.com", "Masculino", "", "Victor", "Señorial", "", "985851866", "DNI", "Natural" });
 
             migrationBuilder.InsertData(
                 schema: "Generico",
@@ -1151,12 +1114,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
-                table: "persona_natural",
-                columns: new[] { "id_persona", "apellido_materno", "apellido_paterno", "primer_nombre", "segundo_nombre" },
-                values: new object[] { 1, null, "Abregu", "Victor", null });
-
-            migrationBuilder.InsertData(
-                schema: "Usuarios",
                 table: "roles",
                 columns: new[] { "id_rol", "abreviacion", "id_estado", "nombre" },
                 values: new object[,]
@@ -1172,7 +1129,7 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 6, 17, 23, 2, 59, 321, DateTimeKind.Local).AddTicks(5217), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 6, 19, 9, 23, 38, 663, DateTimeKind.Local).AddTicks(782), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1344,6 +1301,14 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "telefono",
                 unique: true,
                 filter: "[telefono] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "razon_social_phone_uk",
+                schema: "Usuarios",
+                table: "personas",
+                column: "razon_social",
+                unique: true,
+                filter: "[razon_social] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_producto_sucursal_id_categoria",
@@ -1562,14 +1527,6 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.DropTable(
                 name: "entradas",
                 schema: "Almacen");
-
-            migrationBuilder.DropTable(
-                name: "persona_juridicas",
-                schema: "Usuarios");
-
-            migrationBuilder.DropTable(
-                name: "persona_natural",
-                schema: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "salidas",

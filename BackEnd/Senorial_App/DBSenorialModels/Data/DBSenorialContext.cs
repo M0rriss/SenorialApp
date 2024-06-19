@@ -4,6 +4,7 @@ using DBSenorialModels.Senorial;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using UtilityConstants.Enum.TipoDocumentoEnum;
 
 namespace DBSenorialModels.Data;
 
@@ -62,9 +63,9 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Persona> Personas { get; set; }
 
-    public virtual DbSet<PersonaJuridica> PersonaJuridicas { get; set; }
+    //public virtual DbSet<PersonaJuridica> PersonaJuridicas { get; set; }
 
-    public virtual DbSet<PersonaNatural> PersonaNaturals { get; set; }
+    //public virtual DbSet<PersonaNatural> PersonaNaturals { get; set; }
 
     public virtual DbSet<Produccion> Produccions { get; set; }
 
@@ -280,7 +281,7 @@ public partial class DBSenorialContext : DbContext
 
             entity.HasOne(d => d.IdEstadoPadreNavigation).WithMany(p => p.InverseIdEstadoPadreNavigation).HasConstraintName("estado_padre_fk");
             entity.HasData(
-           new Estado { IdEstado = 1, Nombre = "ActividadEmpresa", IdEstadoPadre = null },
+           new Estado { IdEstado = 1, Nombre = "Actividad", IdEstadoPadre = null },
            new Estado { IdEstado = 2, Nombre = "Activo", IdEstadoPadre = 1 },
            new Estado { IdEstado = 3, Nombre = "Inactivo", IdEstadoPadre = 1 }
        );
@@ -405,45 +406,51 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdPersona).HasName("persona_id_pk");
             entity.HasData(
-    new Persona
-    {
-        IdPersona = 1,
-        NroDocumento = "12345678",
-        Email = "admin@amin.com",
-        Telefono = "985851866",
-        Direccion = "",
-        TipoDocumento = "DNI",
-        Genero = "Masculino",
-        TipoPersona = ""
-    });
-        });
-
-        modelBuilder.Entity<PersonaJuridica>(entity =>
-        {
-            entity.HasKey(e => e.IdPersona).HasName("persona_juridica_id_pk");
-
-            entity.Property(e => e.IdPersona).ValueGeneratedNever();
-
-            entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaJuridica)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("persona_id_fk");
-        });
-
-        modelBuilder.Entity<PersonaNatural>(entity =>
-        {
-            entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
-
-            //entity.Property(e => e.IdPersona).ValueGeneratedNever();
-            entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
-
-
-            entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("personas_id_fk");
-            entity.HasData(
-        new PersonaNatural { IdPersona = 1, PrimerNombre = "Victor", ApellidoPaterno = "Abregu" }
+   new Persona
+   {
+       IdPersona = 1,
+       PrimerNombre = "Victor",
+       SegundoNombre = "",
+       ApellidoPaterno = "Abregu",
+       ApellidoMaterno = "",
+       NroDocumento = "",
+       Email = "admin@amin.com",
+       Telefono = "985851866",
+       Direccion = "",
+       TipoDocumento = "DNI",
+       Genero = "Masculino",
+       TipoPersona = "Natural",
+       RazonSocial = "Señorial"
+   }
     );
         });
+
+    //    modelBuilder.Entity<PersonaJuridica>(entity =>
+    //    {
+    //        entity.HasKey(e => e.IdPersona).HasName("persona_juridica_id_pk");
+
+    //        entity.Property(e => e.IdPersona).ValueGeneratedNever();
+
+    //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaJuridica)
+    //            .OnDelete(DeleteBehavior.ClientSetNull)
+    //            .HasConstraintName("persona_id_fk");
+    //    });
+
+    //    modelBuilder.Entity<PersonaNatural>(entity =>
+    //    {
+    //        entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
+
+    //        //entity.Property(e => e.IdPersona).ValueGeneratedNever();
+    //        entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
+
+
+    //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
+    //            .OnDelete(DeleteBehavior.ClientSetNull)
+    //            .HasConstraintName("personas_id_fk");
+    //        entity.HasData(
+    //    new PersonaNatural { IdPersona = 1, PrimerNombre = "Victor", ApellidoPaterno = "Abregu" }
+    //);
+    //    });
         
         modelBuilder.Entity<Produccion>(entity =>
         {
@@ -497,12 +504,11 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("estado_id_fk");
             entity.HasData(
-           new Role { IdRol = 1, Nombre = "Administrador", IdEstado = 1 }, // IdEstado para activo
-           new Role { IdRol = 2, Nombre = "Desarrollador", IdEstado = 1 }, // IdEstado para activo
-           new Role { IdRol = 3, Nombre = "Cajero", IdEstado = 1 }, // IdEstado para activo
-           new Role { IdRol = 4, Nombre = "Empleado", IdEstado = 1 }, // IdEstado para activo
-           new Role { IdRol = 5, Nombre = "Cliente", IdEstado = 1 } // IdEstado para activo
-                                                                    // Puedes agregar más roles según sea necesario
+           new Role { IdRol = 1, Nombre = "Administrador", IdEstado = 2 }, // IdEstado para activo
+           new Role { IdRol = 2, Nombre = "Desarrollador", IdEstado = 2 }, // IdEstado para activo
+           new Role { IdRol = 3, Nombre = "Cajero", IdEstado = 2 }, // IdEstado para activo
+           new Role { IdRol = 4, Nombre = "Empleado", IdEstado = 2 }, // IdEstado para activo
+           new Role { IdRol = 5, Nombre = "Cliente", IdEstado = 2 } // IdEstado para activo
        );
         });
 

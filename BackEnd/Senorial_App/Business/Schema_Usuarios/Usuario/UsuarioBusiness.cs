@@ -29,6 +29,7 @@ using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using Services.Gmail;
+using UtilityConstants.Enum.TipoDocumentoEnum;
 using UtilitySecurity.Encriptar;
 using UtilitySecurity.OneTimePassword;
 
@@ -41,8 +42,6 @@ namespace Business.Schema_Usuarios.Usuarios
         private readonly IMapper _mapper;
         private readonly EncriptarDesencriptar _encriptar;
         private readonly IPersonaRepository _personaRepository;
-        private readonly IPersonaNaturalRepository _personaNaturalRepository;
-        private readonly IPersonaJuridicaRepository _personaJuridicaRepository;
         private readonly IRolesRepository _rolesRepository;
         private readonly OtpGenerator _otpGenerator;
         private readonly SendEmailWithGoogleSMTP _sendEmailService;
@@ -54,8 +53,6 @@ namespace Business.Schema_Usuarios.Usuarios
             _encriptar = new EncriptarDesencriptar();
             _personaRepository = new PersonaRepository();
             _rolesRepository = new RolesRepository();
-            _personaNaturalRepository = new PersonaNaturalRepository();
-            _personaJuridicaRepository = new PersonaJuridicaRepository();
             _otpGenerator = new OtpGenerator();
             _sendEmailService = new SendEmailWithGoogleSMTP();
             _otpStorage = new Dictionary<string, OtpData>();
@@ -164,6 +161,10 @@ namespace Business.Schema_Usuarios.Usuarios
             }
             var nuevaPersona = await _personaRepository.Create(new Persona()
             {
+                PrimerNombre = request.Nombres,
+                SegundoNombre = "",
+                ApellidoPaterno = request.Apellidos,
+                ApellidoMaterno = "",
                 NroDocumento = request.NumeroDocumento,
                 Email = request.Email,
                 Telefono = request.Celular,
@@ -181,7 +182,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 IdPersona = nuevaPersona.IdPersona,
                 IdRol = buscarRol.IdRol,
                 Email = request.Email,
-                UserName = request.Email,
+                UserName = request.Email.ToLower(),
                 Password = _encriptar.AES_encriptar(request.Password),
                 CambiarPassword = "",
                 
@@ -205,31 +206,25 @@ namespace Business.Schema_Usuarios.Usuarios
             }
             var persona = await _personaRepository.Create(new Persona
             {
+                PrimerNombre = request.Nombres,
+                SegundoNombre = "",
+                ApellidoPaterno = request.Apellidos,
+                ApellidoMaterno = "",
                 NroDocumento = request.Dni,
                 Email = request.Email,
                 Telefono = request.Telefono,
                 Direccion = "",
-                TipoDocumento = "",
+                TipoDocumento =request.TipoDoc,
                 Genero = "",
-                TipoPersona = "",
+                TipoPersona = "Natural",
                 
             });
-            var personaNatural = new PersonaNatural
-            {
-                IdPersona = persona.IdPersona,
-                PrimerNombre = request.Nombres,
-                SegundoNombre = "",
-                ApellidoPaterno = "",
-                ApellidoMaterno = ""
-            };
-
-            personaNatural = await _personaNaturalRepository.Create(personaNatural);
             
             var buscarRol = await _rolesRepository.GetById(4); 
 
             var nuevoUsuario = new Usuario
             {
-                IdPersona = personaNatural.IdPersona,
+                IdPersona = persona.IdPersona,
                 Email = request.Email,
                 Password = _encriptar.AES_encriptar(request.Password),
                 IdRol = buscarRol.IdRol,
@@ -237,7 +232,7 @@ namespace Business.Schema_Usuarios.Usuarios
 
             nuevoUsuario = await _usuarioRepository.RegistrarUsuarioMobile(nuevoUsuario);
             var response = _mapper.Map<SignInMobileResponse>(nuevoUsuario);
-            response.PersonaNatural = _mapper.Map<PersonaNaturalResponse>(personaNatural);
+            response.Persona = _mapper.Map<PersonaResponse>(persona);
 
             return response;
         }

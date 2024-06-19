@@ -39,7 +39,7 @@ namespace UtilityAutoMapper
             #region AUTHORIZATION
             CreateMap<Usuario, SignInEcommerceResponse>().ReverseMap();
             CreateMap<Usuario, SignInMobileResponse>().ReverseMap();
-            CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
+            CreateMap<Persona, PersonaResponse>().ReverseMap();
             CreateMap<Usuario, RestablecerPasswordMovilRequest>().ReverseMap();
             #endregion
 
@@ -93,11 +93,11 @@ namespace UtilityAutoMapper
             CreateMap<Persona, PersonaResponse>().ReverseMap();
             CreateMap<PersonaRequest, PersonaResponse>().ReverseMap();
             #endregion
-            #region PersonaNatural
-            CreateMap<PersonaNatural, PersonaNaturalRequest>().ReverseMap();
-            CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
-            CreateMap<PersonaNaturalRequest, PersonaNaturalResponse>().ReverseMap();
-            #endregion
+            //#region PersonaNatural
+            //CreateMap<PersonaNatural, PersonaNaturalRequest>().ReverseMap();
+            //CreateMap<PersonaNatural, PersonaNaturalResponse>().ReverseMap();
+            //CreateMap<PersonaNaturalRequest, PersonaNaturalResponse>().ReverseMap();
+            //#endregion
             #region Roles
             CreateMap<Role, RolesRequest>().ReverseMap();
             CreateMap<Role, RolesResponse>().ReverseMap();
