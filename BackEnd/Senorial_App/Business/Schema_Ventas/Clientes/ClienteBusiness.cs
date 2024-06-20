@@ -97,11 +97,11 @@ namespace Business.Schema_Ventas.Clientes
             _clienteRepository.Dispose();
         }
 
+        #endregion
         public List<ClienteFullRequest> GetFull()
         {
             return _clienteRepository.GetFull();
         }
 
-        #endregion
     }
 }

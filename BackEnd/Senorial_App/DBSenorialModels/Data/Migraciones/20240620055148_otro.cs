@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class TipoDoc : Migration
+    public partial class otro : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -148,31 +148,6 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "personas",
-                schema: "Usuarios",
-                columns: table => new
-                {
-                    id_persona = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    primer_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    segundo_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    apellido_paterno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    apellido_materno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    nro_Documento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    telefono = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
-                    direccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    tipo_documento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    tipo_persona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    razon_social = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    genero = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("persona_id_pk", x => x.id_persona);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "produccion",
                 schema: "Produccion",
                 columns: table => new
@@ -199,6 +174,20 @@ namespace DBSenorialModels.Data.Migraciones
                 constraints: table =>
                 {
                     table.PrimaryKey("tipo_comprobante_id_pk", x => x.id_comprobante);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tipo_documento",
+                schema: "Usuarios",
+                columns: table => new
+                {
+                    id_tipo_documento = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("tipo_documento_id_pk", x => x.id_tipo_documento);
                 });
 
             migrationBuilder.CreateTable(
@@ -357,47 +346,6 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "cliente",
-                schema: "Ventas",
-                columns: table => new
-                {
-                    id_cliente = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_persona = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("cliente_id_pk", x => x.id_cliente);
-                    table.ForeignKey(
-                        name: "persona_id_fk",
-                        column: x => x.id_persona,
-                        principalSchema: "Usuarios",
-                        principalTable: "personas",
-                        principalColumn: "id_persona");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "proveedor",
-                schema: "Almacen",
-                columns: table => new
-                {
-                    id_proveedor = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_persona = table.Column<int>(type: "int", nullable: false),
-                    vende = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("proveedor_id_pk", x => x.id_proveedor);
-                    table.ForeignKey(
-                        name: "proveedor_id_fk",
-                        column: x => x.id_persona,
-                        principalSchema: "Usuarios",
-                        principalTable: "personas",
-                        principalColumn: "id_persona");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "documentos",
                 schema: "Ventas",
                 columns: table => new
@@ -416,6 +364,37 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Ventas",
                         principalTable: "tipo_comprobantes",
                         principalColumn: "id_comprobante");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "personas",
+                schema: "Usuarios",
+                columns: table => new
+                {
+                    id_persona = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    primer_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    segundo_nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    apellido_paterno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    apellido_materno = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    nro_Documento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    telefono = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
+                    direccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    tipo_documento = table.Column<int>(type: "int", nullable: false),
+                    tipo_persona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    razon_social = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    genero = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("persona_id_pk", x => x.id_persona);
+                    table.ForeignKey(
+                        name: "tipo_documentos_id_fk",
+                        column: x => x.tipo_documento,
+                        principalSchema: "Usuarios",
+                        principalTable: "tipo_documento",
+                        principalColumn: "id_tipo_documento");
                 });
 
             migrationBuilder.CreateTable(
@@ -499,47 +478,6 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "usuario",
-                schema: "Usuarios",
-                columns: table => new
-                {
-                    id_usuario = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    user_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
-                    id_persona = table.Column<int>(type: "int", nullable: false),
-                    update_at = table.Column<DateTime>(type: "datetime", nullable: true),
-                    id_rol = table.Column<int>(type: "int", nullable: false),
-                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    cambiar_password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    codigo_recuperacion = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    IdImg = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("usuario_id_pk", x => x.id_usuario);
-                    table.ForeignKey(
-                        name: "img_id_fk",
-                        column: x => x.IdImg,
-                        principalSchema: "Generico",
-                        principalTable: "imagenes",
-                        principalColumn: "id_img");
-                    table.ForeignKey(
-                        name: "personas_usuario_id_fk",
-                        column: x => x.id_persona,
-                        principalSchema: "Usuarios",
-                        principalTable: "personas",
-                        principalColumn: "id_persona");
-                    table.ForeignKey(
-                        name: "roles_id_fk",
-                        column: x => x.id_rol,
-                        principalSchema: "Usuarios",
-                        principalTable: "roles",
-                        principalColumn: "id_rol");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "sucursal",
                 schema: "Generico",
                 columns: table => new
@@ -576,30 +514,85 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "compra",
-                schema: "Almacen",
+                name: "cliente",
+                schema: "Ventas",
                 columns: table => new
                 {
-                    id_compra = table.Column<int>(type: "int", nullable: false)
+                    id_cliente = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_proveedor = table.Column<int>(type: "int", nullable: false),
-                    id_voucher = table.Column<int>(type: "int", nullable: false)
+                    id_persona = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("compra_id_pk", x => x.id_compra);
+                    table.PrimaryKey("cliente_id_pk", x => x.id_cliente);
                     table.ForeignKey(
-                        name: "provedor_id_fk",
-                        column: x => x.id_proveedor,
-                        principalSchema: "Almacen",
-                        principalTable: "proveedor",
-                        principalColumn: "id_proveedor");
+                        name: "persona_id_fk",
+                        column: x => x.id_persona,
+                        principalSchema: "Usuarios",
+                        principalTable: "personas",
+                        principalColumn: "id_persona");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "proveedor",
+                schema: "Almacen",
+                columns: table => new
+                {
+                    id_proveedor = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_persona = table.Column<int>(type: "int", nullable: false),
+                    vende = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("proveedor_id_pk", x => x.id_proveedor);
                     table.ForeignKey(
-                        name: "voucher_id_fk",
-                        column: x => x.id_voucher,
-                        principalSchema: "Ventas",
-                        principalTable: "voucher",
-                        principalColumn: "id_voucher");
+                        name: "proveedor_id_fk",
+                        column: x => x.id_persona,
+                        principalSchema: "Usuarios",
+                        principalTable: "personas",
+                        principalColumn: "id_persona");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "usuario",
+                schema: "Usuarios",
+                columns: table => new
+                {
+                    id_usuario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    id_persona = table.Column<int>(type: "int", nullable: false),
+                    update_at = table.Column<DateTime>(type: "datetime", nullable: true),
+                    id_rol = table.Column<int>(type: "int", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    cambiar_password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    codigo_recuperacion = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    IdImg = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("usuario_id_pk", x => x.id_usuario);
+                    table.ForeignKey(
+                        name: "img_id_fk",
+                        column: x => x.IdImg,
+                        principalSchema: "Generico",
+                        principalTable: "imagenes",
+                        principalColumn: "id_img");
+                    table.ForeignKey(
+                        name: "personas_usuarios_id_fk",
+                        column: x => x.id_persona,
+                        principalSchema: "Usuarios",
+                        principalTable: "personas",
+                        principalColumn: "id_persona");
+                    table.ForeignKey(
+                        name: "roles_id_fk",
+                        column: x => x.id_rol,
+                        principalSchema: "Usuarios",
+                        principalTable: "roles",
+                        principalColumn: "id_rol");
                 });
 
             migrationBuilder.CreateTable(
@@ -700,6 +693,33 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
+                name: "compra",
+                schema: "Almacen",
+                columns: table => new
+                {
+                    id_compra = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_proveedor = table.Column<int>(type: "int", nullable: false),
+                    id_voucher = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("compra_id_pk", x => x.id_compra);
+                    table.ForeignKey(
+                        name: "provedor_id_fk",
+                        column: x => x.id_proveedor,
+                        principalSchema: "Almacen",
+                        principalTable: "proveedor",
+                        principalColumn: "id_proveedor");
+                    table.ForeignKey(
+                        name: "voucher_id_fk",
+                        column: x => x.id_voucher,
+                        principalSchema: "Ventas",
+                        principalTable: "voucher",
+                        principalColumn: "id_voucher");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "sucursal_usuario",
                 schema: "Ventas",
                 columns: table => new
@@ -723,34 +743,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Usuarios",
                         principalTable: "usuario",
                         principalColumn: "id_usuario");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "detalle_compra",
-                schema: "Almacen",
-                columns: table => new
-                {
-                    id_compra = table.Column<int>(type: "int", nullable: false),
-                    id_insumo = table.Column<int>(type: "int", nullable: false),
-                    cantidad = table.Column<int>(type: "int", nullable: true),
-                    precio_compra = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
-                    fecha_expiracion = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("detalle_compra_id_pk", x => new { x.id_compra, x.id_insumo });
-                    table.ForeignKey(
-                        name: "compra_id_fk",
-                        column: x => x.id_compra,
-                        principalSchema: "Almacen",
-                        principalTable: "compra",
-                        principalColumn: "id_compra");
-                    table.ForeignKey(
-                        name: "insumo_id_fk",
-                        column: x => x.id_insumo,
-                        principalSchema: "Almacen",
-                        principalTable: "insumo",
-                        principalColumn: "id_insumo");
                 });
 
             migrationBuilder.CreateTable(
@@ -873,33 +865,6 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "entradas",
-                schema: "Almacen",
-                columns: table => new
-                {
-                    id_inventario = table.Column<int>(type: "int", nullable: false),
-                    id_compra = table.Column<int>(type: "int", nullable: false),
-                    fecha_Ingreso = table.Column<DateTime>(type: "datetime", nullable: true),
-                    cantidad = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("entrada_id_pk", x => new { x.id_inventario, x.id_compra });
-                    table.ForeignKey(
-                        name: "compras_id_fk",
-                        column: x => x.id_compra,
-                        principalSchema: "Almacen",
-                        principalTable: "compra",
-                        principalColumn: "id_compra");
-                    table.ForeignKey(
-                        name: "inventario_id_entrada_fk",
-                        column: x => x.id_inventario,
-                        principalSchema: "Almacen",
-                        principalTable: "inventario",
-                        principalColumn: "id_inventario");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "detalle_produccion",
                 schema: "Produccion",
                 columns: table => new
@@ -924,6 +889,61 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Ventas",
                         principalTable: "producto_sucursal",
                         principalColumn: "id_producto_sucursal");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "detalle_compra",
+                schema: "Almacen",
+                columns: table => new
+                {
+                    id_compra = table.Column<int>(type: "int", nullable: false),
+                    id_insumo = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: true),
+                    precio_compra = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
+                    fecha_expiracion = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("detalle_compra_id_pk", x => new { x.id_compra, x.id_insumo });
+                    table.ForeignKey(
+                        name: "compra_id_fk",
+                        column: x => x.id_compra,
+                        principalSchema: "Almacen",
+                        principalTable: "compra",
+                        principalColumn: "id_compra");
+                    table.ForeignKey(
+                        name: "insumo_id_fk",
+                        column: x => x.id_insumo,
+                        principalSchema: "Almacen",
+                        principalTable: "insumo",
+                        principalColumn: "id_insumo");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "entradas",
+                schema: "Almacen",
+                columns: table => new
+                {
+                    id_inventario = table.Column<int>(type: "int", nullable: false),
+                    id_compra = table.Column<int>(type: "int", nullable: false),
+                    fecha_Ingreso = table.Column<DateTime>(type: "datetime", nullable: true),
+                    cantidad = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("entrada_id_pk", x => new { x.id_inventario, x.id_compra });
+                    table.ForeignKey(
+                        name: "compras_id_fk",
+                        column: x => x.id_compra,
+                        principalSchema: "Almacen",
+                        principalTable: "compra",
+                        principalColumn: "id_compra");
+                    table.ForeignKey(
+                        name: "inventario_id_entrada_fk",
+                        column: x => x.id_inventario,
+                        principalSchema: "Almacen",
+                        principalTable: "inventario",
+                        principalColumn: "id_inventario");
                 });
 
             migrationBuilder.CreateTable(
@@ -992,13 +1012,18 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Generico",
                 table: "estado",
                 columns: new[] { "id_estado", "abreviacion", "id_estado_padre", "nombre" },
-                values: new object[] { 1, null, null, "ActividadEmpresa" });
+                values: new object[] { 1, null, null, "Actividad" });
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
-                table: "personas",
-                columns: new[] { "id_persona", "apellido_materno", "apellido_paterno", "direccion", "email", "genero", "nro_Documento", "primer_nombre", "razon_social", "segundo_nombre", "telefono", "tipo_documento", "tipo_persona" },
-                values: new object[] { 1, "", "Abregu", "", "admin@amin.com", "Masculino", "", "Victor", "Señorial", "", "985851866", "DNI", "Natural" });
+                table: "tipo_documento",
+                columns: new[] { "id_tipo_documento", "nombre" },
+                values: new object[,]
+                {
+                    { 1, "DNI" },
+                    { 2, "Pasaporte" },
+                    { 3, "Carnet de Extranjería" }
+                });
 
             migrationBuilder.InsertData(
                 schema: "Generico",
@@ -1012,11 +1037,11 @@ namespace DBSenorialModels.Data.Migraciones
                     { 4, "Kg", "Kilo" },
                     { 5, "Cto", "Ciento" },
                     { 6, "Rllo", "Rollo" },
-                    { 7, "B-Kg", "Bolsa 5 kg" },
+                    { 7, "B-5Kg", "Bolsa 5 kg" },
                     { 8, "At", "Atado" },
                     { 9, "Bsa", "Bolsa" },
                     { 10, "Cja", "Caja" },
-                    { 11, "B-Kg", "Bolsa 20 kg" }
+                    { 11, "B-20Kg", "Bolsa 20 kg" }
                 });
 
             migrationBuilder.InsertData(
@@ -1114,22 +1139,28 @@ namespace DBSenorialModels.Data.Migraciones
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
+                table: "personas",
+                columns: new[] { "id_persona", "apellido_materno", "apellido_paterno", "direccion", "email", "genero", "tipo_documento", "nro_Documento", "primer_nombre", "razon_social", "segundo_nombre", "telefono", "tipo_persona" },
+                values: new object[] { 1, "", "Abregu", "", "admin@amin.com", "Masculino", 1, "", "Victor", "Señorial", "", "985851866", "Natural" });
+
+            migrationBuilder.InsertData(
+                schema: "Usuarios",
                 table: "roles",
                 columns: new[] { "id_rol", "abreviacion", "id_estado", "nombre" },
                 values: new object[,]
                 {
-                    { 1, null, 1, "Administrador" },
-                    { 2, null, 1, "Desarrollador" },
-                    { 3, null, 1, "Cajero" },
-                    { 4, null, 1, "Empleado" },
-                    { 5, null, 1, "Cliente" }
+                    { 1, null, 2, "Administrador" },
+                    { 2, null, 2, "Desarrollador" },
+                    { 3, null, 2, "Cajero" },
+                    { 4, null, 2, "Empleado" },
+                    { 5, null, 2, "Cliente" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 6, 19, 9, 23, 38, 663, DateTimeKind.Local).AddTicks(782), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 6, 20, 0, 51, 48, 323, DateTimeKind.Local).AddTicks(701), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1279,6 +1310,12 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_sucursal");
 
             migrationBuilder.CreateIndex(
+                name: "IX_personas_tipo_documento",
+                schema: "Usuarios",
+                table: "personas",
+                column: "tipo_documento");
+
+            migrationBuilder.CreateIndex(
                 name: "personas_email_uk",
                 schema: "Usuarios",
                 table: "personas",
@@ -1301,14 +1338,6 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "telefono",
                 unique: true,
                 filter: "[telefono] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "razon_social_phone_uk",
-                schema: "Usuarios",
-                table: "personas",
-                column: "razon_social",
-                unique: true,
-                filter: "[razon_social] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_producto_sucursal_id_categoria",
@@ -1639,6 +1668,10 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.DropTable(
                 name: "estado",
                 schema: "Generico");
+
+            migrationBuilder.DropTable(
+                name: "tipo_documento",
+                schema: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "ambiente",

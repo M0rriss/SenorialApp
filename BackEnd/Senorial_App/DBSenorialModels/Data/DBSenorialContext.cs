@@ -4,7 +4,6 @@ using DBSenorialModels.Senorial;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using UtilityConstants.Enum.TipoDocumentoEnum;
 
 namespace DBSenorialModels.Data;
 
@@ -86,6 +85,7 @@ public partial class DBSenorialContext : DbContext
     public virtual DbSet<TipoComprobante> TipoComprobantes { get; set; }
 
     public virtual DbSet<TipoPedido> TipoPedidos { get; set; }
+    public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
 
     public virtual DbSet<TipoTransaccion> TipoTransaccions { get; set; }
 
@@ -401,57 +401,76 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdMetodo).HasName("metodo_pago_id_pk");
         });
+        modelBuilder.Entity<TipoDocumento>(entity =>
+        {
+            entity.ToTable("tipo_documento", "Usuarios"); // Tabla y esquema
+            entity.HasKey(e => e.IdTipoDocumento).HasName("tipo_documento_id_pk"); // Clave primaria
 
+            // Datos de ejemplo para TipoDocumento
+            entity.HasData(
+                new TipoDocumento { IdTipoDocumento = 1, Nombre = "DNI" },
+                new TipoDocumento { IdTipoDocumento = 2, Nombre = "Pasaporte" },
+                new TipoDocumento { IdTipoDocumento = 3, Nombre = "Carnet de Extranjería" }
+            );
+        });
         modelBuilder.Entity<Persona>(entity =>
         {
+            entity.ToTable("personas", "Usuarios"); // Tabla y esquema
             entity.HasKey(e => e.IdPersona).HasName("persona_id_pk");
+            entity.HasOne(e => e.IdTipoDocumentoNavigation).WithMany(p=> p.Personas)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("tipo_documentos_id_fk");
+
             entity.HasData(
-   new Persona
-   {
-       IdPersona = 1,
-       PrimerNombre = "Victor",
-       SegundoNombre = "",
-       ApellidoPaterno = "Abregu",
-       ApellidoMaterno = "",
-       NroDocumento = "",
-       Email = "admin@amin.com",
-       Telefono = "985851866",
-       Direccion = "",
-       TipoDocumento = "DNI",
-       Genero = "Masculino",
-       TipoPersona = "Natural",
-       RazonSocial = "Señorial"
-   }
-    );
+                new Persona
+                {
+                    IdPersona = 1,
+                    PrimerNombre = "Victor",
+                    SegundoNombre = "",
+                    ApellidoPaterno = "Abregu",
+                    ApellidoMaterno = "",
+                    NroDocumento = "",
+                    Email = "admin@amin.com",
+                    Telefono = "985851866",
+                    Direccion = "",
+                    IdTipoDocumento = 1, // ID de tipo de documento según los datos de ejemplo
+                    Genero = "Masculino",
+                    TipoPersona = "Natural",
+                    RazonSocial = "Señorial"
+                }
+            );
         });
 
-    //    modelBuilder.Entity<PersonaJuridica>(entity =>
-    //    {
-    //        entity.HasKey(e => e.IdPersona).HasName("persona_juridica_id_pk");
-
-    //        entity.Property(e => e.IdPersona).ValueGeneratedNever();
-
-    //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaJuridica)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("persona_id_fk");
-    //    });
-
-    //    modelBuilder.Entity<PersonaNatural>(entity =>
-    //    {
-    //        entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
-
-    //        //entity.Property(e => e.IdPersona).ValueGeneratedNever();
-    //        entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
-
-
-    //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("personas_id_fk");
-    //        entity.HasData(
-    //    new PersonaNatural { IdPersona = 1, PrimerNombre = "Victor", ApellidoPaterno = "Abregu" }
-    //);
-    //    });
         
+
+
+        //    modelBuilder.Entity<PersonaJuridica>(entity =>
+        //    {
+        //        entity.HasKey(e => e.IdPersona).HasName("persona_juridica_id_pk");
+
+        //        entity.Property(e => e.IdPersona).ValueGeneratedNever();
+
+        //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaJuridica)
+        //            .OnDelete(DeleteBehavior.ClientSetNull)
+        //            .HasConstraintName("persona_id_fk");
+        //    });
+
+        //    modelBuilder.Entity<PersonaNatural>(entity =>
+        //    {
+        //        entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
+
+        //        //entity.Property(e => e.IdPersona).ValueGeneratedNever();
+        //        entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
+
+
+        //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
+        //            .OnDelete(DeleteBehavior.ClientSetNull)
+        //            .HasConstraintName("personas_id_fk");
+        //        entity.HasData(
+        //    new PersonaNatural { IdPersona = 1, PrimerNombre = "Victor", ApellidoPaterno = "Abregu" }
+        //);
+        //    });
+
         modelBuilder.Entity<Produccion>(entity =>
         {
             entity.HasKey(e => e.IdProduccion).HasName("produccion_id_pk");
@@ -589,11 +608,11 @@ public partial class DBSenorialContext : DbContext
         new UnidadMedicion { IdUnidad = 4, Abreviacion = "Kg", Descripcion = "Kilo" },
         new UnidadMedicion { IdUnidad = 5, Abreviacion = "Cto", Descripcion = "Ciento" },
         new UnidadMedicion { IdUnidad = 6, Abreviacion = "Rllo", Descripcion = "Rollo" },
-        new UnidadMedicion { IdUnidad = 7, Abreviacion = "B-Kg", Descripcion = "Bolsa 5 kg" },
+        new UnidadMedicion { IdUnidad = 7, Abreviacion = "B-5Kg", Descripcion = "Bolsa 5 kg" },
         new UnidadMedicion { IdUnidad = 8, Abreviacion = "At", Descripcion = "Atado" },
         new UnidadMedicion { IdUnidad = 9, Abreviacion = "Bsa", Descripcion = "Bolsa" },
         new UnidadMedicion { IdUnidad = 10, Abreviacion = "Cja", Descripcion = "Caja" },
-        new UnidadMedicion { IdUnidad = 11, Abreviacion = "B-Kg", Descripcion = "Bolsa 20 kg" }
+        new UnidadMedicion { IdUnidad = 11, Abreviacion = "B-20Kg", Descripcion = "Bolsa 20 kg" }
     );
         });
 
@@ -609,7 +628,7 @@ public partial class DBSenorialContext : DbContext
 
             entity.HasOne(d => d.IdPersonaNavigation).WithMany(p => p.Usuarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("personas_usuario_id_fk");
+                .HasConstraintName("personas_usuarios_id_fk");
 
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)

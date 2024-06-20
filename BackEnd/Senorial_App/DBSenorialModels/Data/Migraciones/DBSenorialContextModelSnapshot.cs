@@ -475,7 +475,7 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdEstado = 1,
-                            Nombre = "ActividadEmpresa"
+                            Nombre = "Actividad"
                         },
                         new
                         {
@@ -1136,6 +1136,10 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("genero");
 
+                    b.Property<int>("IdTipoDocumento")
+                        .HasColumnType("int")
+                        .HasColumnName("tipo_documento");
+
                     b.Property<string>("NroDocumento")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
@@ -1161,12 +1165,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(12)")
                         .HasColumnName("telefono");
 
-                    b.Property<string>("TipoDocumento")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("tipo_documento");
-
                     b.Property<string>("TipoPersona")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
@@ -1174,6 +1172,8 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdPersona")
                         .HasName("persona_id_pk");
+
+                    b.HasIndex("IdTipoDocumento");
 
                     b.HasIndex(new[] { "Email" }, "personas_email_uk")
                         .IsUnique()
@@ -1187,10 +1187,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .IsUnique()
                         .HasFilter("[telefono] IS NOT NULL");
 
-                    b.HasIndex(new[] { "RazonSocial" }, "razon_social_phone_uk")
-                        .IsUnique()
-                        .HasFilter("[razon_social] IS NOT NULL");
-
                     b.ToTable("personas", "Usuarios");
 
                     b.HasData(
@@ -1202,12 +1198,12 @@ namespace DBSenorialModels.Data.Migraciones
                             Direccion = "",
                             Email = "admin@amin.com",
                             Genero = "Masculino",
+                            IdTipoDocumento = 1,
                             NroDocumento = "",
                             PrimerNombre = "Victor",
                             RazonSocial = "Señorial",
                             SegundoNombre = "",
                             Telefono = "985851866",
-                            TipoDocumento = "DNI",
                             TipoPersona = "Natural"
                         });
                 });
@@ -1381,31 +1377,31 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdRol = 1,
-                            IdEstado = 1,
+                            IdEstado = 2,
                             Nombre = "Administrador"
                         },
                         new
                         {
                             IdRol = 2,
-                            IdEstado = 1,
+                            IdEstado = 2,
                             Nombre = "Desarrollador"
                         },
                         new
                         {
                             IdRol = 3,
-                            IdEstado = 1,
+                            IdEstado = 2,
                             Nombre = "Cajero"
                         },
                         new
                         {
                             IdRol = 4,
-                            IdEstado = 1,
+                            IdEstado = 2,
                             Nombre = "Empleado"
                         },
                         new
                         {
                             IdRol = 5,
-                            IdEstado = 1,
+                            IdEstado = 2,
                             Nombre = "Cliente"
                         });
                 });
@@ -1522,6 +1518,43 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("tipo_comprobante_id_pk");
 
                     b.ToTable("tipo_comprobantes", "Ventas");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.TipoDocumento", b =>
+                {
+                    b.Property<int>("IdTipoDocumento")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_tipo_documento");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoDocumento"));
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("IdTipoDocumento")
+                        .HasName("tipo_documento_id_pk");
+
+                    b.ToTable("tipo_documento", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTipoDocumento = 1,
+                            Nombre = "DNI"
+                        },
+                        new
+                        {
+                            IdTipoDocumento = 2,
+                            Nombre = "Pasaporte"
+                        },
+                        new
+                        {
+                            IdTipoDocumento = 3,
+                            Nombre = "Carnet de Extranjería"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoPedido", b =>
@@ -1668,7 +1701,7 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdUnidad = 7,
-                            Abreviacion = "B-Kg",
+                            Abreviacion = "B-5Kg",
                             Descripcion = "Bolsa 5 kg"
                         },
                         new
@@ -1692,7 +1725,7 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdUnidad = 11,
-                            Abreviacion = "B-Kg",
+                            Abreviacion = "B-20Kg",
                             Descripcion = "Bolsa 20 kg"
                         });
                 });
@@ -1778,7 +1811,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 6, 19, 9, 23, 38, 663, DateTimeKind.Local).AddTicks(782),
+                            CreatedAt = new DateTime(2024, 6, 20, 0, 51, 48, 323, DateTimeKind.Local).AddTicks(701),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -2207,6 +2240,17 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdSucursalNavigation");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
+                {
+                    b.HasOne("DBSenorialModels.Senorial.TipoDocumento", "IdTipoDocumentoNavigation")
+                        .WithMany("Personas")
+                        .HasForeignKey("IdTipoDocumento")
+                        .IsRequired()
+                        .HasConstraintName("tipo_documentos_id_fk");
+
+                    b.Navigation("IdTipoDocumentoNavigation");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.Imagene", "IdImgNavigation")
@@ -2359,7 +2403,7 @@ namespace DBSenorialModels.Data.Migraciones
                         .WithMany("Usuarios")
                         .HasForeignKey("IdPersona")
                         .IsRequired()
-                        .HasConstraintName("personas_usuario_id_fk");
+                        .HasConstraintName("personas_usuarios_id_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Role", "IdRolNavigation")
                         .WithMany("Usuarios")
@@ -2630,6 +2674,11 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Documentos");
 
                     b.Navigation("Venta");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.TipoDocumento", b =>
+                {
+                    b.Navigation("Personas");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoPedido", b =>

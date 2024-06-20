@@ -29,7 +29,6 @@ using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using Services.Gmail;
-using UtilityConstants.Enum.TipoDocumentoEnum;
 using UtilitySecurity.Encriptar;
 using UtilitySecurity.OneTimePassword;
 
@@ -170,7 +169,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 Email = request.Email,
                 Telefono = request.Celular,
                 Direccion = "",
-                TipoDocumento = request.TipoDocumento,
+                IdTipoDocumento = 1,
                 Genero = "",
                 TipoPersona = "",
                 //falta la los nombres y apellidos
@@ -215,7 +214,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 Email = request.Email,
                 Telefono = request.Telefono,
                 Direccion = "",
-                TipoDocumento =request.TipoDoc,
+                IdTipoDocumento = 1,
                 Genero = "",
                 TipoPersona = "Natural",
                 
