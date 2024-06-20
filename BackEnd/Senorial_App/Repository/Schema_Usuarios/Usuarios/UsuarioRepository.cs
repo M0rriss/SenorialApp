@@ -27,8 +27,7 @@ namespace Repository.Schema_Usuarios.Usuarios
         /// <returns></returns>
         public Usuario ObtenerPorCorreo(string email)
         {
-            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower())
-                .FirstOrDefault();
+            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
             return usuario;
         }
         /// <summary>

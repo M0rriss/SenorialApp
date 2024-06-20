@@ -132,21 +132,22 @@ namespace Business.Schema_Usuarios.Usuarios
         #region LOGIN
         public UsuarioResponse BuscarPorCorreo(string email)
         {
-            UsuarioResponse usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository);
+            var usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerPorCorreo(email));
             return usuario;
+
         }
 
         public UsuarioResponse BuscarCorreoEcommerce(string email)
         {
 
-            UsuarioResponse usuario =_mapper.Map<UsuarioResponse>(_usuarioRepository);
+            var usuario =_mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerCorreoEccomerce(email));
             return usuario;
         }
 
         public UsuarioResponse BuscarCorreoMobile(string email)
         {
-            var usuarios = _usuarioRepository.ObtenerPorCorreo(email);
-            var usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository);
+            var usuarios = _usuarioRepository.ObtenerCorreoMobile(email);
+            var usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerCorreoMobile(email));
             return usuario;
         }
         #endregion

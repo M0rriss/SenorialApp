@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RequestResponseModels.Request.Schema_Usuarios.Persona;
 
 namespace RequestResponseModels.Request.Schema_Ventas.Cliente
 {
@@ -12,6 +13,11 @@ namespace RequestResponseModels.Request.Schema_Ventas.Cliente
     {
         public int IdCliente { get; set; }
         public int IdPersona { get; set; }
+    }
+    public class ClienteFullRequest
+    {
+        public int IdCliente { get; set; }
+        public PersonaRequest Persona { get; set; }
     }
 }
 //SELECT Concat(p.primer_nombre, p.apellido_paterno) as Nombres,

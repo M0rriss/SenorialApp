@@ -40,14 +40,15 @@ namespace Business.Auth
             UsuarioResponse usuario = _usuarioBusiness.BuscarPorCorreo(request.Email);
             if (usuario == null) return result;
 
-            string newPassword = _encriptar.AES_encriptar(request.Password);
-            if (newPassword != usuario.Password) return result;
+            //string newPassword = _encriptar.AES_encriptar(request.Password);
+            //if (newPassword != usuario.Password) return result;
+            if(usuario.Password == null) return result;
 
             result.Success = true;
             result.Message = "Login Correcto";
 
             result.Usuario = new UsuarioResponse();
-            result.Usuario.Email = request.Email;
+            result.Usuario.Email = usuario.Email;
             result.RolName.IdRol = usuario.IdRol;
             result.RolName = new RolesResponse();
             result.RolName.Nombre = "Admin" ;
