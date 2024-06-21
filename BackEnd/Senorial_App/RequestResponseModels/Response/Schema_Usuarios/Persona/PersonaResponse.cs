@@ -19,7 +19,7 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Persona
         public string? Email { get; set; }
         public string? Telefono { get; set; }
         public string? Direccion { get; set; }
-        public string? TipoDocumento { get; set; } 
+        public int? IdTipoDocumento { get; set; } 
         public string? TipoPersona { get; set; }
         public string? RazonSocial { get; set; }
         public string Genero { get; set; } 

@@ -12,5 +12,6 @@ namespace IRepository.Schema_Ventas.Clientes
     public interface IClienteRepository : ICrudRepository<Cliente>
     {
         public List<ClienteFullRequest> GetFull();
+        public List<ClienteUiRequest> UiCliente();
     }
 }

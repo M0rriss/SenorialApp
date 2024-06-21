@@ -15,4 +15,32 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
         public int IdPersona { get; set; }
         public int IdSucursal { get; set; }
     }
+    public class EmpleadoUiRequest
+    {
+        public int IdEmpleado { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public string Correo { get; set; }
+        public string Telefono { get; set; }
+        public string Identificacion { get; set; }
+        public string Rol { get; set; }
+        public string Estado { get; set; }
+        public string Sucursal { get; set; } = null;
+
+
+
+    }
 }
+//SELECT CONCAT(p.primer_nombre, ' ', p.segundo_nombre) AS Nombres,
+//       CONCAT(p.apellido_paterno, ' ', p.apellido_materno) AS Apellidos,
+//       p. email AS Correo,
+//       p.telefono AS Telefono,
+//       p.nro_Documento as Identificacion,
+//       r.nombre As Rol,
+//       es.nombre as Estado,
+//       s.nombre as Sucursal
+//FROM Ventas.empleado e
+//	INNER JOIN Usuarios.personas p ON e.id_persona = p.id_persona
+//	INNER JOIN Usuarios.roles r ON e.id_rol = r.id_rol
+//	INNER JOIN Generico.estado es ON r.id_estado = es.id_estado
+//	INNER JOIN Generico.sucursal s ON e.id_sucursal = s.id_sucursal

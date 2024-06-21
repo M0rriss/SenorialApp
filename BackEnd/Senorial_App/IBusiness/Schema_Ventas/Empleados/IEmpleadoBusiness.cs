@@ -11,5 +11,6 @@ namespace IBusiness.Schema_Ventas.Empleados
 {
     public interface IEmpleadoBusiness : ICrudBusiness<EmpleadoRequest, EmpleadoResponse>
     {
+        public List<EmpleadoUiRequest> UiGetEmpleado();
     }
 }

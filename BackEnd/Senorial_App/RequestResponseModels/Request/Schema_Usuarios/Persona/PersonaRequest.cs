@@ -32,7 +32,7 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Persona
         [StringLength(100)]
         public string? Direccion { get; set; }
         [StringLength(100)]
-        public string TipoDocumento { get; set; } = null!;
+        public int IdTipoDocumento { get; set; }
         [StringLength(50)]
         public string? TipoPersona { get; set; }
         [StringLength(100)]

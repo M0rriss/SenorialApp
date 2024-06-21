@@ -8,9 +8,10 @@ using RequestResponseModels.Request.Schema_Generico.Estado;
 using RequestResponseModels.Request.Schema_Generico.Imagenes;
 using RequestResponseModels.Request.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
-using RequestResponseModels.Request.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Request.Schema_Usuarios.Roles;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Request.Schema_Ventas.Cliente;
+using RequestResponseModels.Request.Schema_Ventas.Empleados;
 using RequestResponseModels.Request.Schema_Ventas.Productos;
 using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
@@ -19,9 +20,10 @@ using RequestResponseModels.Response.Schema_Generico.Estado;
 using RequestResponseModels.Response.Schema_Generico.Imagenes;
 using RequestResponseModels.Response.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
-using RequestResponseModels.Response.Schema_Usuarios.PersonaNatural;
 using RequestResponseModels.Response.Schema_Usuarios.Roles;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Schema_Ventas.Cliente;
+using RequestResponseModels.Response.Schema_Ventas.Empleados;
 using RequestResponseModels.Response.Schema_Ventas.Productos;
 using System;
 using System.Collections.Generic;
@@ -104,6 +106,19 @@ namespace UtilityAutoMapper
             CreateMap<Producto, ProductoRequest>().ReverseMap();
             CreateMap<Producto, ProductoResponse>().ReverseMap();
             CreateMap<ProductoRequest, ProductoResponse>().ReverseMap();
+            #endregion
+            #region Cliente
+            CreateMap<Cliente, ClienteRequest>().ReverseMap();
+            CreateMap<Cliente, ClienteResponse>().ReverseMap();
+            CreateMap<ClienteRequest, ClienteResponse>().ReverseMap();
+            CreateMap<Cliente, ClienteUiRequest>().ReverseMap();
+            #endregion
+            #region Empleado
+            CreateMap<Empleado, EmpleadoRequest>().ReverseMap();
+            CreateMap<Empleado, EmpleadoResponse>().ReverseMap();
+            CreateMap<EmpleadoRequest, EmpleadoResponse>().ReverseMap();
+            CreateMap<Empleado, EmpleadoUiRequest>().ReverseMap();
+
             #endregion
             #endregion
 

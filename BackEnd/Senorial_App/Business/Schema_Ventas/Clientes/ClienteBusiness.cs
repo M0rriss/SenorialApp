@@ -103,5 +103,9 @@ namespace Business.Schema_Ventas.Clientes
             return _clienteRepository.GetFull();
         }
 
+        public List<ClienteUiRequest> UiGetCliente()
+        {
+            return _clienteRepository.UiCliente();
+        }
     }
 }

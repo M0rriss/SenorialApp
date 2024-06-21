@@ -11,7 +11,6 @@ namespace RequestResponseModels.Response.Schema_Almacen.Proveedor
     {
         public int IdProveedor { get; set; }
         public int IdPersona { get; set; }
-        [StringLength(50)]
         public string? Vende { get; set; }
     }
 }

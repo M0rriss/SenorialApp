@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
+using RequestResponseModels.Response.Schema_Ventas.Cliente;
 using System.Net;
 
 namespace App_Senorial.Controllers.Schema_Ventas.Clientes
@@ -34,12 +35,12 @@ namespace App_Senorial.Controllers.Schema_Ventas.Clientes
         /// </summary>
         /// <returns>List-CategoriaResponse</returns>
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<CategoriaResponse>))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<ClienteResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Get()
         {
-            var result =  _clienteBusiness.GetFull();
+            var result =  _clienteBusiness.UiGetCliente();
             return Ok(result);
         }
     }

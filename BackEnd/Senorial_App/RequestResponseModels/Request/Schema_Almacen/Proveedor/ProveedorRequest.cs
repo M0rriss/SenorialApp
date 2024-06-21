@@ -14,4 +14,13 @@ namespace RequestResponseModels.Request.Schema_Almacen.Proveedor
         public int IdPersona { get; set; }
         public string? Vende { get; set; }
     }
+    public class ProveedorUiRequest
+    {
+        public int IdProveedor {  get; set; }
+        public string ProveedorNombre { get; set; }
+        public string Correo {  get; set; }
+        public string Telefono {  get; set; }
+        public string Dni { get; set; }
+        public string Distribuye { get; set; }
+    }
 }

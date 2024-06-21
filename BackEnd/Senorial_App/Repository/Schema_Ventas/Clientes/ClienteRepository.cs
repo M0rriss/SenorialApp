@@ -15,7 +15,7 @@ namespace Repository.Schema_Ventas.Clientes
 {
     public class ClienteRepository : CrudRepository<Cliente>, IClienteRepository
     {
-        
+
         public Task<GenericFilterResponse<Cliente>> GetByFilterAsync(GenericFilterRequest request)
         {
             throw new NotImplementedException();
@@ -23,18 +23,47 @@ namespace Repository.Schema_Ventas.Clientes
 
         public List<ClienteFullRequest> GetFull()
         {
-             return this.db.Personas.Join(
-                this.db.Clientes,
-                (p)=>p.IdPersona,
-                (c)=>c.IdPersona,
-                (p,c) => new ClienteFullRequest { Persona = new PersonaRequest{
-                    IdPersona = p.IdPersona,
-                    PrimerNombre = p.PrimerNombre,
-                    SegundoNombre = p.SegundoNombre,
-                    ApellidoMaterno = p.ApellidoMaterno,
-                    ApellidoPaterno = p.ApellidoPaterno,
-                }, IdCliente = c.IdCliente}
-                ).ToList();
+            return db.Personas.Join(
+                   db.Clientes,
+                   (p) => p.IdPersona,
+                   (c) => c.IdPersona,
+                   (p, c) => new ClienteFullRequest
+                   {
+                       Persona = new PersonaRequest
+                       {
+                           IdPersona = p.IdPersona,
+                           PrimerNombre = p.PrimerNombre,
+                           SegundoNombre = p.SegundoNombre,
+                           ApellidoMaterno = p.ApellidoMaterno,
+                           ApellidoPaterno = p.ApellidoPaterno,
+                       },
+                       IdCliente = c.IdCliente
+                   }
+               ).ToList();
+        }
+
+        public List<ClienteUiRequest> UiCliente()
+        {
+            return db.Personas.Join(
+                    db.Clientes,
+                    p => p.IdPersona,
+                    c => c.IdPersona,
+                    (p, c) => new { p, c }
+    )
+                    .Join(
+                    db.TipoDocumentos,
+                    pc => pc.p.IdTipoDocumento,
+                    tp => tp.IdTipoDocumento,
+                    (pc, tp) => new ClienteUiRequest
+                    {
+                        IdCliente = pc.c.IdCliente,
+                        Nombres = pc.p.PrimerNombre + " " + pc.p.ApellidoPaterno,
+                        Correo = pc.p.Email,
+                        Telefono = pc.p.Telefono,
+                        DNI = pc.p.NroDocumento,
+                    }
+                    )
+                    .ToList();
         }
     }
 }

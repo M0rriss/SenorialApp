@@ -19,6 +19,14 @@ namespace RequestResponseModels.Request.Schema_Ventas.Cliente
         public int IdCliente { get; set; }
         public PersonaRequest Persona { get; set; }
     }
+    public class ClienteUiRequest
+    {
+        public int IdCliente { get; set; }
+        public string Nombres { get; set; }
+        public string Correo { get; set; }
+        public string Telefono { get; set; }
+        public string DNI { get; set; }
+    }
 }
 //SELECT Concat(p.primer_nombre, p.apellido_paterno) as Nombres,
 //p.email as Correo,p.telefono AS Celular, p.nro_Documento AS DNI FROM
