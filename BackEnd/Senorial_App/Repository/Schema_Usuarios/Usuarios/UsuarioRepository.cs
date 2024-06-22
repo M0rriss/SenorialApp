@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
+using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Request.Schema_Ventas.Cliente;
 using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
@@ -92,5 +94,32 @@ namespace Repository.Schema_Usuarios.Usuarios
             await db.SaveChangesAsync();
             return codigo;
         }
+
+        public List<UsuarioUiRequest> UiUsuarios()
+        {
+            var datos =  db.Usuarios
+                .Join(db.Personas,
+                      u => u.IdPersona,
+                      p => p.IdPersona,
+                      (u, p) => new { u, p })
+                .Join(db.Roles,
+                      up => up.u.IdRol,
+                      r => r.IdRol,
+                      (up, r) => new { up.u, up.p, r })
+                .Join(db.Estados,
+                      upr => upr.r.IdEstado,
+                      e => e.IdEstado,
+                      (upr, e) => new UsuarioUiRequest
+                      {
+                          Nombres = upr.p.PrimerNombre + " " + upr.p.SegundoNombre + " " + upr.p.ApellidoPaterno + " " + upr.p.ApellidoMaterno,
+                          Correo = upr.p.Email,
+                          Telefono = upr.p.Telefono,
+                          Rol = upr.r.Nombre,
+                          Estado = e.Nombre
+                      })
+                .ToList();
+            return datos;
+        }
+        
     }
 }

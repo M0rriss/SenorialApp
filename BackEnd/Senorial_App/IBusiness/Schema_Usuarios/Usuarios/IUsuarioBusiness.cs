@@ -23,7 +23,8 @@ namespace IBusiness.Schema_Usuarios.Usuarios
         Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
         Task<UsuarioResponse> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
         Task<UsuarioResponse> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
-        
+        List<UsuarioUiRequest> GetUiUsuarios();
+       
 
 
     }

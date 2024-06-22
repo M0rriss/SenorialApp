@@ -8,9 +8,7 @@
     "\\BackEnd\\Senorial_App\\RequestResponseModels",
     "\\BackEnd\\Senorial_App\\RequestResponseModels\\Request",
     "\\BackEnd\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas",
-    "\\BackEnd\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas\\Cliente",
-    "\\BackEnd\\Senorial_App\\Services",
-    "\\BackEnd\\Senorial_App\\Services\\Gmail"
+    "\\BackEnd\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas\\Cliente"
   ],
   "SelectedNode": "\\BackEnd\\Senorial_App\\Senorial_App.sln",
   "PreviewInSolutionExplorer": false

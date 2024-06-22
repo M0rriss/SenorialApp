@@ -22,4 +22,12 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Usuario
         public string? CambiarPassword { get; set; }
         public string CodigoRecuperacion { get; set; } = "";
     }
+    public class UsuarioUIResponse
+    {
+        public string Nombres { get; set; }
+        public string Correo { get; set; }
+        public string Telefono { get; set; }
+        public string Rol { get; set; }
+        public string Estado { get; set; }
+    }
 }

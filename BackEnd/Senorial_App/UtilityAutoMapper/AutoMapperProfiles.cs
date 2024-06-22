@@ -4,6 +4,7 @@ using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
+using RequestResponseModels.Request.Schema_Almacen.Proveedor;
 using RequestResponseModels.Request.Schema_Generico.Estado;
 using RequestResponseModels.Request.Schema_Generico.Imagenes;
 using RequestResponseModels.Request.Schema_Generico.UnidadMedicion;
@@ -16,6 +17,7 @@ using RequestResponseModels.Request.Schema_Ventas.Productos;
 using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Almacen.Insumo;
+using RequestResponseModels.Response.Schema_Almacen.Proveedor;
 using RequestResponseModels.Response.Schema_Generico.Estado;
 using RequestResponseModels.Response.Schema_Generico.Imagenes;
 using RequestResponseModels.Response.Schema_Generico.UnidadMedicion;
@@ -62,6 +64,12 @@ namespace UtilityAutoMapper
             CreateMap<Insumo, InsumoResponse>().ReverseMap();
             CreateMap<InsumoRequest, InsumoResponse>().ReverseMap();
             #endregion
+            #region Proveedor
+            CreateMap<Proveedor, ProveedorRequest>().ReverseMap();
+            CreateMap<Proveedor, ProveedorResponse>().ReverseMap();
+            CreateMap<ProveedorRequest,ProveedorResponse>().ReverseMap();
+            CreateMap<ProveedorUiRequest,Proveedor>().ReverseMap();
+            #endregion
 
             #endregion
             #region Schema_Generico
@@ -88,6 +96,7 @@ namespace UtilityAutoMapper
             CreateMap<Usuario,UsuarioRequest>().ReverseMap();
             CreateMap<Usuario,UsuarioResponse>().ReverseMap();
             CreateMap<UsuarioRequest, UsuarioResponse>().ReverseMap();
+
             #endregion
             #region Roles
             CreateMap<Role, RolesRequest>().ReverseMap();

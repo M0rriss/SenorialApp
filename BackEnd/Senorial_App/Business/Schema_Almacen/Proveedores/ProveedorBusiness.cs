@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
+using DocumentFormat.OpenXml.Vml.Office;
 using IBusiness.Schema_Almacen.Proveedores;
 using IRepository.Schema_Almacen.Proveedores;
 using Repository.Schema_Almacen.Proveedores;
@@ -61,7 +62,7 @@ namespace Business.Schema_Almacen.Proveedores
             var proveedor = _mapper.Map<Proveedor>(entity);
             proveedor = await _proveedorRepository.Update(proveedor);
             var response = _mapper.Map<ProveedorResponse>(proveedor);
-            return response; ;
+            return response; 
         }
 
         public async Task<List<ProveedorResponse>> UpdateMultiple(List<ProveedorRequest> list)
@@ -101,6 +102,11 @@ namespace Business.Schema_Almacen.Proveedores
         public List<ProveedorUiRequest> UiGetProveedor()
         {
             return _proveedorRepository.UiProveedor();
+        }
+
+        public List<ProveedorUiRequest> UiUpdateProveedor(ProveedorUiRequest proveedor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

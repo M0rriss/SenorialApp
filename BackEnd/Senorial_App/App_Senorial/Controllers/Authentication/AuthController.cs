@@ -250,103 +250,135 @@ namespace App_Senorial.Controllers.Authentication
                 Message = "Contraseña restablecida exitosamente."
             });
         }
-            #endregion
+        #endregion
 
 
-            #region JWT
+        #region JWT
         private Task<string> GenerateTokenDashboard(LoginDashboardResponse oLoginResponse)
         {
-            IConfigurationBuilder configurationBuild = new ConfigurationBuilder();
-            configurationBuild = configurationBuild.AddJsonFile("appsettings.json");
-            IConfiguration configurationFile = configurationBuild.Build();
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            int tiempoVida = int.Parse(configurationFile["Jwt:TimeJWTMin"]);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configurationFile["Jwt:Key"]));
+            int tiempoVida = int.Parse(configuration["Jwt:TimeJWTMin"]);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-{
-                     new Claim(JwtRegisteredClaimNames.Sub, configurationFile["Jwt:Subject"]),
-                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                     new Claim(ClaimTypes.Role, oLoginResponse.RolName?.IdRol.ToString()),
-                     new Claim("UserId", oLoginResponse.Usuario?.IdUsuario.ToString()),
-                     new Claim("UserName", oLoginResponse.Usuario?.UserName),
-                     new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email.ToString()),
-                     new Claim("RoleName", oLoginResponse.RolName?.Descripcion),
-                };
+
+            var claims = new List<Claim>
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
+    };
+
+            if (oLoginResponse.Usuario != null)
+            {
+                claims.Add(new Claim("UserId", oLoginResponse.Usuario.IdUsuario.ToString()));
+                claims.Add(new Claim("UserName", oLoginResponse.Usuario.UserName ?? ""));
+                claims.Add(new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email ?? "admin@admin.com"));
+            }
+
+            if (oLoginResponse.RolName != null)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, oLoginResponse.RolName.Nombre ?? "Administrador"));
+                claims.Add(new Claim("IdRole", oLoginResponse.RolName.IdRol.ToString()));
+                claims.Add(new Claim("Nombre", oLoginResponse.RolName.Nombre ?? "Administrador"));
+            }
 
             var token = new JwtSecurityToken(
-                configurationFile["Jwt:Issuer"],
-                configurationFile["Jwt:Audience"],
+                configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.UtcNow.AddMinutes(tiempoVida),
                 signingCredentials: signIn
             );
 
             return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
-
         }
         private Task<string> GenerateTokenEcommerce(LoginEcommerceResponse oLoginResponse)
         {
-            IConfigurationBuilder configurationBuild = new ConfigurationBuilder();
-            configurationBuild = configurationBuild.AddJsonFile("appsettings.json");
-            IConfiguration configurationFile = configurationBuild.Build();
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            int tiempoVida = int.Parse(configurationFile["Jwt:TimeJWTMin"]);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configurationFile["Jwt:Key"]));
+            int tiempoVida = int.Parse(configuration["Jwt:TimeJWTMin"]);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-{
-                     new Claim(JwtRegisteredClaimNames.Sub, configurationFile["Jwt:Subject"]),
-                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                     new Claim("UserId", oLoginResponse.Usuario?.IdUsuario.ToString()),
-                     new Claim("UserName", oLoginResponse.Usuario?.UserName),
-                     new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email.ToString()),
-                };
+
+            var claims = new List<Claim>
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
+    };
+
+            if (oLoginResponse.Usuario != null)
+            {
+                if (oLoginResponse.Usuario.IdUsuario != null)
+                {
+                    claims.Add(new Claim("UserId", oLoginResponse.Usuario.IdUsuario.ToString()));
+                }
+
+                if (oLoginResponse.Usuario.UserName != null)
+                {
+                    claims.Add(new Claim("UserName", oLoginResponse.Usuario.UserName));
+                }
+
+                if (oLoginResponse.Usuario.Email != null)
+                {
+                    claims.Add(new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email.ToString()));
+                }
+            }
 
             var token = new JwtSecurityToken(
-                configurationFile["Jwt:Issuer"],
-                configurationFile["Jwt:Audience"],
+                configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.UtcNow.AddMinutes(tiempoVida),
                 signingCredentials: signIn
             );
 
             return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
-
         }
         private Task<string> GenerateTokenMobile(LoginMobileResponse oLoginResponse)
         {
-            IConfigurationBuilder configurationBuild = new ConfigurationBuilder();
-            configurationBuild = configurationBuild.AddJsonFile("appsettings.json");
-            IConfiguration configurationFile = configurationBuild.Build();
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            int tiempoVida = int.Parse(configurationFile["Jwt:TimeJWTMin"]);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configurationFile["Jwt:Key"]));
+            int tiempoVida = int.Parse(configuration["Jwt:TimeJWTMin"]);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-{
-                     new Claim(JwtRegisteredClaimNames.Sub, configurationFile["Jwt:Subject"]),
-                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                     new Claim(ClaimTypes.Role, oLoginResponse.RolName?.IdRol.ToString()),
-                     new Claim("UserId", oLoginResponse.Usuario?.IdUsuario.ToString()),
-                     new Claim("UserName", oLoginResponse.Usuario?.UserName),
-                     new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email.ToString()),
-                     new Claim("RoleName", oLoginResponse.RolName?.Descripcion),
-                };
+
+            var claims = new List<Claim>
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
+    };
+
+            if (oLoginResponse.RolName != null && oLoginResponse.RolName.IdRol != null)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, oLoginResponse.RolName.IdRol.ToString()));
+                claims.Add(new Claim("RoleName", oLoginResponse.RolName.Descripcion ?? ""));
+            }
+
+            if (oLoginResponse.Usuario != null)
+            {
+                claims.Add(new Claim("UserId", oLoginResponse.Usuario.IdUsuario.ToString()));
+                claims.Add(new Claim("UserName", oLoginResponse.Usuario.UserName ?? ""));
+                claims.Add(new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email ?? ""));
+            }
 
             var token = new JwtSecurityToken(
-                configurationFile["Jwt:Issuer"],
-                configurationFile["Jwt:Audience"],
-                claims,
+                issuer: configuration["Jwt:Issuer"],
+                audience: configuration["Jwt:Audience"],
+                claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(tiempoVida),
                 signingCredentials: signIn
             );
 
             return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
-
         }
         #endregion
     }

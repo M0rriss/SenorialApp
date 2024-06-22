@@ -363,10 +363,13 @@ namespace Business.Schema_Usuarios.Usuarios
             return _mapper.Map<UsuarioResponse>(usuario);
         }
 
-       
-
         #endregion
+        public List<UsuarioUiRequest> GetUiUsuarios()
+        {
+            return _usuarioRepository.UiUsuarios();
+        }
 
+        
     }
 }
 

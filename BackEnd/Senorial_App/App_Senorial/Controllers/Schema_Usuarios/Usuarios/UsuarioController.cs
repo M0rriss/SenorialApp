@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Business.Schema_Usuarios.Usuarios;
 using IBusiness.Schema_Usuarios.Usuarios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
@@ -37,9 +39,23 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Get()
         {
-            var result = await _usuarioBusiness.GetAll();
+            var userClaims = User.Claims;
+            foreach (var claim in userClaims)
+            {
+                Console.WriteLine($"Claim Type: {claim.Type}, Value: {claim.Value}");
+            }
+            var result = _usuarioBusiness.GetUiUsuarios();
             return Ok(result);
         }
+        //[HttpPost]
+        //[ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<UsuarioResponse>))]
+        //[ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        //[ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        //public async Task<ActionResult> Create([FromBody] UsuarioCreateRequest request)
+        //{
+        //    var result = await _usuarioBusiness.CreateUsuario(request);
+        //    return Ok(result);
+        //}
         /// <summary>
         /// Actualizar a los usuarios
         /// </summary>

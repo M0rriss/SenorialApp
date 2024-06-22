@@ -1,6 +1,8 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth.Recuperacion;
+using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Request.Schema_Ventas.Cliente;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System;
 using System.Collections.Generic;
@@ -19,5 +21,8 @@ namespace IRepository.Schema_Usuarios.Usuarios
         Task<Usuario> RegistrarUsuarioMobile(Usuario usuario);
         Usuario ObtenerCodigoOtp(string email);
         Task<string> OneTimePass(string email, string codigo);
+        List<UsuarioUiRequest> UiUsuarios();
+
+        
     }
 }

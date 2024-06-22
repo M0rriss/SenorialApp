@@ -12,5 +12,7 @@ namespace IRepository.Schema_Almacen.Proveedores
     public interface IProveedorRepository : ICrudRepository<Proveedor>
     {
         public List<ProveedorUiRequest> UiProveedor();
+        public List<ProveedorUiRequest> UiProveedorActualizar(ProveedorUiRequest request);
+
     }
 }

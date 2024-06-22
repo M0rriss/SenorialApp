@@ -1,3 +1,4 @@
+using App_Senorial.Middleware;
 using DBSenorialModels.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,20 @@ using UtilityAutoMapper;
 using UtilitySecurity.OneTimePassword;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "origins",
+                      builder =>
+                      {
+                          //builder.WithOrigins("http://127.0.0.1:5500");
+                          builder.AllowAnyOrigin();
+                          builder.AllowAnyMethod();//get post put delete patch 
+                          builder.AllowAnyHeader();//
+                      });
+});
+
 
 // Add services to the container.
 
@@ -30,7 +45,8 @@ builder.Services
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ClockSkew = TimeSpan.FromMinutes(3),
+            ClockSkew = TimeSpan.Zero,
+            //ClockSkew = TimeSpan.FromMinutes(3),
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
@@ -70,7 +86,7 @@ builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfi
 
 
 
-
+//Migraciones
 var app = builder.Build();
 using( var scope = app.Services.CreateScope())
 {
@@ -91,6 +107,10 @@ app.UseAuthorization();
 
 app.UseAuthentication();
 
+app.UseMiddleware(typeof(ApiMiddleware));
+
 app.MapControllers();
+
+app.UseCors("origins");
 
 app.Run();

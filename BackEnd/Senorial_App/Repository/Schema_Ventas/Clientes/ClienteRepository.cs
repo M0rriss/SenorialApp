@@ -49,7 +49,7 @@ namespace Repository.Schema_Ventas.Clientes
                     p => p.IdPersona,
                     c => c.IdPersona,
                     (p, c) => new { p, c }
-    )
+                    )
                     .Join(
                     db.TipoDocumentos,
                     pc => pc.p.IdTipoDocumento,

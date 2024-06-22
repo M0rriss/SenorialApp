@@ -12,5 +12,6 @@ namespace IBusiness.Schema_Almacen.Proveedores
     public interface IProveedorBusiness : ICrudBusiness<ProveedorRequest, ProveedorResponse>
     {
         public List<ProveedorUiRequest> UiGetProveedor();
+        public List<ProveedorUiRequest> UiUpdateProveedor(ProveedorUiRequest proveedor);
     }
 }

@@ -40,8 +40,8 @@ namespace Business.Auth
             UsuarioResponse usuario = _usuarioBusiness.BuscarPorCorreo(request.Email);
             if (usuario == null) return result;
 
-            //string newPassword = _encriptar.AES_encriptar(request.Password);
-            //if (newPassword != usuario.Password) return result;
+            string newPassword = _encriptar.AES_encriptar(request.Password);
+            if (newPassword != usuario.Password) return result;
             if(usuario.Password == null) return result;
 
             result.Success = true;
@@ -70,6 +70,10 @@ namespace Business.Auth
             result.Message = "Login Correcto";
 
             result.Usuario = new UsuarioResponse { Email = request.Email };
+
+
+
+
             return result;
         }
 

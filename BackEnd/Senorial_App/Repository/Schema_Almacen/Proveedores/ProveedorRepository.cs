@@ -35,5 +35,10 @@ namespace Repository.Schema_Almacen.Proveedores
                         Distribuye = pro.Vende
                     }).ToList();
         }
+
+        public List<ProveedorUiRequest> UiProveedorActualizar(ProveedorUiRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

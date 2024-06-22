@@ -4,6 +4,7 @@ using Business.Schema_Ventas.Clientes;
 using IBusiness.Schema_Almacen.Proveedores;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RequestResponseModels.Request.Schema_Almacen.Proveedor;
 using RequestResponseModels.Response.Schema_Almacen.Proveedor;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using System.Net;
@@ -39,6 +40,15 @@ namespace App_Senorial.Controllers.Schema_Almacen.Proveedor
         public async Task<ActionResult> Get()
         {
             var result = _proveedorBusiness.UiGetProveedor();
+            return Ok(result);
+        }
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProveedorResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> Update([FromBody] ProveedorUiRequest request)
+        {
+            var result =  _proveedorBusiness.UiGetProveedor();
             return Ok(result);
         }
     }
