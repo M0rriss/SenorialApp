@@ -4,6 +4,7 @@ using Azure.Core;
 using DBSenorialModels.Senorial;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Vml.Office;
 using IBusiness.Schema_Usuarios.Personas;
 using IBusiness.Schema_Usuarios.Roles;
 using IBusiness.Schema_Usuarios.Usuarios;
@@ -369,7 +370,19 @@ namespace Business.Schema_Usuarios.Usuarios
             return _usuarioRepository.UiUsuarios();
         }
 
-        
+        public async Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request)
+        {
+            //var usuario = _mapper.Map<Usuario>(request);
+
+            //// Llama al método del repositorio para insertar o actualizar el usuario
+            //var result = await _usuarioRepository.InsertUiUsuarios(usuario);
+
+            //// Mapea el resultado de la entidad Usuario de nuevo a UsuarioUiRequest
+            //var response = _mapper.Map<UsuarioUiRequest>(usuario);
+
+            //return response;
+            throw new NotImplementedException();
+        }
     }
 }
 

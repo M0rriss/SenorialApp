@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240620055148_otro")]
-    partial class otro
+    [Migration("20240625173134_rmUb2")]
+    partial class rmUb2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1102,6 +1102,33 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("metodo_pago_id_pk");
 
                     b.ToTable("metodo_pago", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMetodo = 1,
+                            Descripcion = "Efectivo"
+                        },
+                        new
+                        {
+                            IdMetodo = 2,
+                            Descripcion = "Tarjeta"
+                        },
+                        new
+                        {
+                            IdMetodo = 3,
+                            Descripcion = "Transferencia"
+                        },
+                        new
+                        {
+                            IdMetodo = 4,
+                            Descripcion = "Descuento"
+                        },
+                        new
+                        {
+                            IdMetodo = 5,
+                            Descripcion = "Otros"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
@@ -1451,17 +1478,13 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("direccion");
 
-                    b.Property<int>("IdAmbiente")
+                    b.Property<int?>("IdAmbiente")
                         .HasColumnType("int")
                         .HasColumnName("id_ambiente");
 
-                    b.Property<int>("IdDocumento")
+                    b.Property<int?>("IdDocumento")
                         .HasColumnType("int")
                         .HasColumnName("id_documento");
-
-                    b.Property<int>("IdUbigeo")
-                        .HasColumnType("int")
-                        .HasColumnName("id_ubigeo");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -1475,9 +1498,21 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasIndex("IdDocumento");
 
-                    b.HasIndex("IdUbigeo");
-
                     b.ToTable("sucursal", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            IdSucursal = 1,
+                            Direccion = "",
+                            Nombre = "Pio Pata"
+                        },
+                        new
+                        {
+                            IdSucursal = 2,
+                            Direccion = "",
+                            Nombre = "Chilca"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.SucursalUsuario", b =>
@@ -1578,6 +1613,18 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("tipo_pedido_id_pk");
 
                     b.ToTable("tipo_pedido", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTipoPedido = 1,
+                            Descripcion = "Para Comer Aqui"
+                        },
+                        new
+                        {
+                            IdTipoPedido = 2,
+                            Descripcion = "Para Llevar"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoTransaccion", b =>
@@ -1603,41 +1650,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("tipo_transaccion_id_pk");
 
                     b.ToTable("tipo_transaccion", "Ventas");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Ubigeo", b =>
-                {
-                    b.Property<int>("IdUbigeo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_ubigeo");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUbigeo"));
-
-                    b.Property<string>("Codigo")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)")
-                        .HasColumnName("codigo");
-
-                    b.Property<string>("Departamento")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("departamento");
-
-                    b.Property<string>("Distrito")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("distrito");
-
-                    b.Property<string>("Provincia")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("provincia");
-
-                    b.HasKey("IdUbigeo")
-                        .HasName("ubigeo_id_pk");
-
-                    b.ToTable("ubigeo", "Generico");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.UnidadMedicion", b =>
@@ -1814,7 +1826,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 6, 20, 0, 51, 48, 323, DateTimeKind.Local).AddTicks(701),
+                            CreatedAt = new DateTime(2024, 6, 25, 12, 31, 33, 934, DateTimeKind.Local).AddTicks(6137),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -2354,26 +2366,16 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasOne("DBSenorialModels.Senorial.Ambiente", "IdAmbienteNavigation")
                         .WithMany("Sucursals")
                         .HasForeignKey("IdAmbiente")
-                        .IsRequired()
                         .HasConstraintName("ambientes_id_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Documento", "IdDocumentoNavigation")
                         .WithMany("Sucursals")
                         .HasForeignKey("IdDocumento")
-                        .IsRequired()
                         .HasConstraintName("documento_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.Ubigeo", "IdUbigeoNavigation")
-                        .WithMany("Sucursals")
-                        .HasForeignKey("IdUbigeo")
-                        .IsRequired()
-                        .HasConstraintName("ubigeo_id_fk");
 
                     b.Navigation("IdAmbienteNavigation");
 
                     b.Navigation("IdDocumentoNavigation");
-
-                    b.Navigation("IdUbigeoNavigation");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.SucursalUsuario", b =>
@@ -2692,11 +2694,6 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoTransaccion", b =>
                 {
                     b.Navigation("Vouchers");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Ubigeo", b =>
-                {
-                    b.Navigation("Sucursals");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.UnidadMedicion", b =>

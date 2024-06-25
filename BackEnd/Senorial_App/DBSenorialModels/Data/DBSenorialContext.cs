@@ -89,8 +89,6 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<TipoTransaccion> TipoTransaccions { get; set; }
 
-    public virtual DbSet<Ubigeo> Ubigeos { get; set; }
-
     public virtual DbSet<UnidadMedicion> UnidadMedicions { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
@@ -300,15 +298,15 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("unidad_medida_id_fk");
             entity.HasData(
-            new Insumo { IdInsumo = 1, Nombre = "Aceite", IdUnidad = 1 }, // Balde
-            new Insumo { IdInsumo = 2, Nombre = "Aceite", IdUnidad = 2 }, // Litro
-            new Insumo { IdInsumo = 3, Nombre = "Aceite Sésamo", IdUnidad = 3 }, // Unidad
-            new Insumo { IdInsumo = 4, Nombre = "Aji", IdUnidad = 4 }, // Kilo
-            new Insumo { IdInsumo = 5, Nombre = "Ajicero", IdUnidad = 5 }, // Ciento
-            new Insumo { IdInsumo = 6, Nombre = "Arroz con leche", IdUnidad = 3 }, // Unidad
-            new Insumo { IdInsumo = 7, Nombre = "Azucar Blanca", IdUnidad = 4 }, // Kilo
-            new Insumo { IdInsumo = 8, Nombre = "Azucar Rubia", IdUnidad = 4 }, // Kilo
-            new Insumo { IdInsumo = 9, Nombre = "Bolsa Basura", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 1,  Nombre = "Aceite", IdUnidad = 1 }, // Balde
+            new Insumo { IdInsumo = 2,  Nombre = "Aceite", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 3,  Nombre = "Aceite Sésamo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 4,  Nombre = "Aji", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 5,  Nombre = "Ajicero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 6,  Nombre = "Arroz con leche", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 7,  Nombre = "Azucar Blanca", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 8,  Nombre = "Azucar Rubia", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 9,  Nombre = "Bolsa Basura", IdUnidad = 5 }, // Ciento
             new Insumo { IdInsumo = 10, Nombre = "Bolsa Cuarto Pollo", IdUnidad = 5 }, // Ciento
             new Insumo { IdInsumo = 11, Nombre = "Bolsa Ensalada", IdUnidad = 5 }, // Ciento
             new Insumo { IdInsumo = 12, Nombre = "Bolsa Medio Pollo", IdUnidad = 5 }, // Ciento
@@ -400,6 +398,13 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<MetodoPago>(entity =>
         {
             entity.HasKey(e => e.IdMetodo).HasName("metodo_pago_id_pk");
+            entity.HasData(
+                new MetodoPago { IdMetodo = 1, Descripcion = "Efectivo" },
+                new MetodoPago { IdMetodo = 2, Descripcion = "Tarjeta" },
+                new MetodoPago { IdMetodo = 3, Descripcion = "Transferencia" },
+                new MetodoPago { IdMetodo = 4, Descripcion = "Descuento" },
+                new MetodoPago { IdMetodo = 5, Descripcion = "Otros" }
+            );
         });
         modelBuilder.Entity<TipoDocumento>(entity =>
         {
@@ -440,36 +445,6 @@ public partial class DBSenorialContext : DbContext
                 }
             );
         });
-
-        
-
-
-        //    modelBuilder.Entity<PersonaJuridica>(entity =>
-        //    {
-        //        entity.HasKey(e => e.IdPersona).HasName("persona_juridica_id_pk");
-
-        //        entity.Property(e => e.IdPersona).ValueGeneratedNever();
-
-        //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaJuridica)
-        //            .OnDelete(DeleteBehavior.ClientSetNull)
-        //            .HasConstraintName("persona_id_fk");
-        //    });
-
-        //    modelBuilder.Entity<PersonaNatural>(entity =>
-        //    {
-        //        entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
-
-        //        //entity.Property(e => e.IdPersona).ValueGeneratedNever();
-        //        entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
-
-
-        //        entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
-        //            .OnDelete(DeleteBehavior.ClientSetNull)
-        //            .HasConstraintName("personas_id_fk");
-        //        entity.HasData(
-        //    new PersonaNatural { IdPersona = 1, PrimerNombre = "Victor", ApellidoPaterno = "Abregu" }
-        //);
-        //    });
 
         modelBuilder.Entity<Produccion>(entity =>
         {
@@ -559,10 +534,11 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdDocumentoNavigation).WithMany(p => p.Sucursals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("documento_id_fk");
+            entity.HasData(
+                new Sucursal {IdSucursal = 1 , Nombre = "Pio Pata",Direccion = ""},
+                new Sucursal {IdSucursal = 2 , Nombre = "Chilca", Direccion = "" }
+                );
 
-            entity.HasOne(d => d.IdUbigeoNavigation).WithMany(p => p.Sucursals)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("ubigeo_id_fk");
         });
 
         modelBuilder.Entity<SucursalUsuario>(entity =>
@@ -586,6 +562,9 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<TipoPedido>(entity =>
         {
             entity.HasKey(e => e.IdTipoPedido).HasName("tipo_pedido_id_pk");
+            entity.HasData(
+            new TipoPedido { IdTipoPedido = 1, Descripcion = "Para Comer Aqui" },
+            new TipoPedido { IdTipoPedido = 2, Descripcion = "Para Llevar" });
         });
 
         modelBuilder.Entity<TipoTransaccion>(entity =>
@@ -593,10 +572,6 @@ public partial class DBSenorialContext : DbContext
             entity.HasKey(e => e.IdTipoTransaccion).HasName("tipo_transaccion_id_pk");
         });
 
-        modelBuilder.Entity<Ubigeo>(entity =>
-        {
-            entity.HasKey(e => e.IdUbigeo).HasName("ubigeo_id_pk");
-        });
 
         modelBuilder.Entity<UnidadMedicion>(entity =>
         {
@@ -655,38 +630,47 @@ public partial class DBSenorialContext : DbContext
             entity.Property(e => e.FechaVenta).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.IdAperturaNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdApertura) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("apertura_caja_id_fk");
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdCliente) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cliente_id_fk");
 
             entity.HasOne(d => d.IdComprobanteNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdComprobante) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("comprobante_id_fk");
 
             entity.HasOne(d => d.IdEmpleadoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdEmpleado) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("empleado_id_fk");
 
             entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdEstado) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("estado_id_fk");
 
             entity.HasOne(d => d.IdMetodoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdMetodo) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("metodo_id_fk");
 
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdSucursal) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sucursales_ventas_id_fk");
 
             entity.HasOne(d => d.IdTipoPedidoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdTipoPedido) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("tipo_pedido_id_fk");
 
             entity.HasOne(d => d.IdVoucherNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdVoucher) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("voucher_id_fk");
         });
@@ -696,10 +680,12 @@ public partial class DBSenorialContext : DbContext
             entity.HasKey(e => e.IdVoucher).HasName("voucher_id_pk");
 
             entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Vouchers)
+                .HasForeignKey(d => d.IdEstado) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("estados_id_fk");
 
             entity.HasOne(d => d.IdTipoTransaccionNavigation).WithMany(p => p.Vouchers)
+                .HasForeignKey(d => d.IdTipoTransaccion) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("tipo_transaccion_id_fk");
         });

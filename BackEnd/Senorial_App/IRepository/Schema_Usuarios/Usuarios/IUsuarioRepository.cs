@@ -23,6 +23,8 @@ namespace IRepository.Schema_Usuarios.Usuarios
         Task<string> OneTimePass(string email, string codigo);
         List<UsuarioUiRequest> UiUsuarios();
 
+       Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request);
+
         
     }
 }

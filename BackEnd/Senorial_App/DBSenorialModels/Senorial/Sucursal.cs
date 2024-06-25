@@ -14,7 +14,7 @@ public partial class Sucursal
     public int IdSucursal { get; set; }
 
     [Column("id_ambiente")]
-    public int IdAmbiente { get; set; }
+    public int? IdAmbiente { get; set; }
 
     [Column("nombre")]
     [StringLength(100)]
@@ -23,27 +23,20 @@ public partial class Sucursal
     [Column("direccion")]
     [StringLength(200)]
     public string? Direccion { get; set; }
-
-    [Column("id_ubigeo")]
-    public int IdUbigeo { get; set; }
-
+       
     [Column("id_documento")]
-    public int IdDocumento { get; set; }
+    public int? IdDocumento { get; set; }
 
     [InverseProperty("IdSucursalNavigation")]
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
 
     [ForeignKey("IdAmbiente")]
     [InverseProperty("Sucursals")]
-    public virtual Ambiente IdAmbienteNavigation { get; set; } = null!;
+    public virtual Ambiente? IdAmbienteNavigation { get; set; } = null!;
 
     [ForeignKey("IdDocumento")]
     [InverseProperty("Sucursals")]
-    public virtual Documento IdDocumentoNavigation { get; set; } = null!;
-
-    [ForeignKey("IdUbigeo")]
-    [InverseProperty("Sucursals")]
-    public virtual Ubigeo IdUbigeoNavigation { get; set; } = null!;
+    public virtual Documento? IdDocumentoNavigation { get; set; } = null!;
 
     [InverseProperty("IdSucursalNavigation")]
     public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();

@@ -96,7 +96,8 @@ namespace UtilityAutoMapper
             CreateMap<Usuario,UsuarioRequest>().ReverseMap();
             CreateMap<Usuario,UsuarioResponse>().ReverseMap();
             CreateMap<UsuarioRequest, UsuarioResponse>().ReverseMap();
-
+            CreateMap<Usuario,UsuarioUiRequest>().ReverseMap();
+            CreateMap<UsuarioUiRequest, Usuario>().ReverseMap();
             #endregion
             #region Roles
             CreateMap<Role, RolesRequest>().ReverseMap();

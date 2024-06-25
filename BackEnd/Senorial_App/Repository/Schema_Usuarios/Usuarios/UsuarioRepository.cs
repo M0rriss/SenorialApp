@@ -98,7 +98,7 @@ namespace Repository.Schema_Usuarios.Usuarios
         public List<UsuarioUiRequest> UiUsuarios()
         {
             var datos =  db.Usuarios
-                .Join(db.Personas,
+                . Join(db.Personas,
                       u => u.IdPersona,
                       p => p.IdPersona,
                       (u, p) => new { u, p })
@@ -120,6 +120,153 @@ namespace Repository.Schema_Usuarios.Usuarios
                 .ToList();
             return datos;
         }
-        
+
+        public async Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request)
+        {
+                // Dividir el campo Nombres en sus componentes individuales
+                var nombres = request.Nombres.Split(' ');
+                if (nombres.Length < 2)
+                {
+                    throw new ArgumentException("El campo Nombres debe contener al menos un nombre y un apellido.");
+                }
+
+                var primerNombre = nombres[0];
+                var segundoNombre = nombres.Length > 1 ? nombres[1] : "";
+                var apellido = nombres[nombres.Length - 1];
+
+                // Crear una nueva instancia de Persona
+                var nuevaPersona = new Persona
+                {
+                    PrimerNombre = primerNombre,
+                    SegundoNombre = segundoNombre,
+                    ApellidoPaterno = apellido,
+                    ApellidoMaterno = "",
+                    Email = request.Correo,
+                    Telefono = request.Telefono
+                };
+
+                // Agregar la nueva persona a la base de datos
+                await db.Personas.AddAsync(nuevaPersona);
+                await db.SaveChangesAsync();
+
+                // Obtener el IdPersona recién insertado
+                var idPersona = nuevaPersona.IdPersona;
+
+                // Obtener el IdRol basado en el nombre proporcionado
+                var rol = await db.Roles.FirstOrDefaultAsync(r => r.Nombre == request.Rol);
+                if (rol == null)
+                {
+                    throw new ArgumentException("Rol no encontrado.");
+                }
+
+                // Obtener el estado "Activo" por defecto
+                var estadoActivo = await db.Estados.FirstOrDefaultAsync(e => e.IdEstado == 2); // IdEstado = 2 para "Activo"
+
+                if (estadoActivo == null)
+                {
+                    throw new ArgumentException("Estado 'Activo' no encontrado.");
+                }
+
+                // Crear una nueva instancia de Usuario
+                var nuevoUsuario = new Usuario
+                {
+                    IdPersona = idPersona,
+                    IdRol = rol.IdRol,
+                    Email = request.Correo,
+                    UserName = request.Correo.ToLower(),
+                    CambiarPassword = "",
+                };
+
+                // Agregar el nuevo usuario a la base de datos
+                await db.Usuarios.AddAsync(nuevoUsuario);
+                await db.SaveChangesAsync();
+
+                // Crear y devolver el objeto de respuesta
+                return new UsuarioUiRequest
+                {
+                    Nombres = request.Nombres,
+                    Correo = request.Correo,
+                    Telefono = request.Telefono,
+                    Rol = request.Rol,
+                    Estado = estadoActivo.Nombre // Devolver el nombre del estado "Activo"
+                };
+            
+
+            //// Dividir el campo Nombres en sus componentes individuales
+            //var nombres = request.Nombres.Split(' ');
+            //if (nombres.Length < 2)
+            //{
+            //    throw new ArgumentException("El campo Nombres debe contener al menos un nombre y un apellido.");
+            //}
+
+            //var primerNombre = nombres[0];
+            //var segundoNombre = nombres.Length > 1 ? nombres[1] : "";
+            //var apellido = nombres[nombres.Length - 1];
+
+            //// Crear una nueva instancia de Persona
+            //var nuevaPersona = new Persona
+            //{
+            //    PrimerNombre = primerNombre,
+            //    SegundoNombre = segundoNombre,
+            //    ApellidoPaterno = apellido,
+            //    ApellidoMaterno = "",
+            //    Email = request.Correo,
+            //    Telefono = request.Telefono
+            //};
+
+            //// Agregar la nueva persona a la base de datos
+            //await db.Personas.AddAsync(nuevaPersona);
+            //await db.SaveChangesAsync();
+
+            //// Obtener el IdPersona recién insertado
+            //var idPersona = nuevaPersona.IdPersona;
+
+            //// Obtener el IdRol basado en el nombre proporcionado
+            //var rol = await db.Roles.FirstOrDefaultAsync(r => r.Nombre == request.Rol);
+            //if (rol == null)
+            //{
+            //    throw new ArgumentException("Rol no encontrado.");
+            //}
+
+            //// Crear una nueva instancia de Usuario
+            //var nuevoUsuario = new Usuario
+            //{
+            //    IdPersona = idPersona,
+            //    IdRol = rol.IdRol,
+            //    Email = request.Correo,
+            //    UserName = request.Correo.ToLower(),
+            //    CambiarPassword = "",
+            //};
+
+            //// Agregar el nuevo usuario a la base de datos
+            //await db.Usuarios.AddAsync(nuevoUsuario);
+            //await db.SaveChangesAsync();
+
+
+
+            //var datos = await db.Usuarios
+            //        .Join(db.Personas,
+            //              u => u.IdPersona,
+            //              p => p.IdPersona,
+            //              (u, p) => new { u, p })
+            //        .Join(db.Roles,
+            //              up => up.u.IdRol,
+            //              r => r.IdRol,
+            //              (up, r) => new { up.u, up.p, r })
+            //        .Join(db.Estados,
+            //              upr => upr.r.IdEstado,
+            //              e => e.IdEstado,
+            //              (upr, e) => new UsuarioUiRequest
+            //              {
+            //                  Nombres = upr.p.PrimerNombre + " " + upr.p.SegundoNombre + " " + upr.p.ApellidoPaterno + " " + upr.p.ApellidoMaterno,
+            //                  Correo = upr.p.Email,
+            //                  Telefono = upr.p.Telefono,
+            //                  Rol = upr.r.Nombre,
+            //                  Estado = e.Nombre
+            //              })
+            //        .FirstOrDefaultAsync();
+            //return datos;
+
+        }
     }
 }

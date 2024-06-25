@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class otro : Migration
+    public partial class rmUb2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -217,23 +217,6 @@ namespace DBSenorialModels.Data.Migraciones
                 constraints: table =>
                 {
                     table.PrimaryKey("tipo_transaccion_id_pk", x => x.id_tipo_transaccion);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ubigeo",
-                schema: "Generico",
-                columns: table => new
-                {
-                    id_ubigeo = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    codigo = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
-                    distrito = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    provincia = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    departamento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("ubigeo_id_pk", x => x.id_ubigeo);
                 });
 
             migrationBuilder.CreateTable(
@@ -484,11 +467,10 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_sucursal = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_ambiente = table.Column<int>(type: "int", nullable: false),
+                    id_ambiente = table.Column<int>(type: "int", nullable: true),
                     nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     direccion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    id_ubigeo = table.Column<int>(type: "int", nullable: false),
-                    id_documento = table.Column<int>(type: "int", nullable: false)
+                    id_documento = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -505,12 +487,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Ventas",
                         principalTable: "documentos",
                         principalColumn: "id_documento");
-                    table.ForeignKey(
-                        name: "ubigeo_id_fk",
-                        column: x => x.id_ubigeo,
-                        principalSchema: "Generico",
-                        principalTable: "ubigeo",
-                        principalColumn: "id_ubigeo");
                 });
 
             migrationBuilder.CreateTable(
@@ -1015,6 +991,29 @@ namespace DBSenorialModels.Data.Migraciones
                 values: new object[] { 1, null, null, "Actividad" });
 
             migrationBuilder.InsertData(
+                schema: "Ventas",
+                table: "metodo_pago",
+                columns: new[] { "id_metodo", "descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Efectivo" },
+                    { 2, "Tarjeta" },
+                    { 3, "Transferencia" },
+                    { 4, "Descuento" },
+                    { 5, "Otros" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Generico",
+                table: "sucursal",
+                columns: new[] { "id_sucursal", "direccion", "id_ambiente", "id_documento", "nombre" },
+                values: new object[,]
+                {
+                    { 1, "", null, null, "Pio Pata" },
+                    { 2, "", null, null, "Chilca" }
+                });
+
+            migrationBuilder.InsertData(
                 schema: "Usuarios",
                 table: "tipo_documento",
                 columns: new[] { "id_tipo_documento", "nombre" },
@@ -1023,6 +1022,16 @@ namespace DBSenorialModels.Data.Migraciones
                     { 1, "DNI" },
                     { 2, "Pasaporte" },
                     { 3, "Carnet de Extranjería" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Ventas",
+                table: "tipo_pedido",
+                columns: new[] { "id_tipo_pedido", "descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Para Comer Aqui" },
+                    { 2, "Para Llevar" }
                 });
 
             migrationBuilder.InsertData(
@@ -1160,7 +1169,7 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 6, 20, 0, 51, 48, 323, DateTimeKind.Local).AddTicks(701), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 6, 25, 12, 31, 33, 934, DateTimeKind.Local).AddTicks(6137), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1404,12 +1413,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Generico",
                 table: "sucursal",
                 column: "id_documento");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_sucursal_id_ubigeo",
-                schema: "Generico",
-                table: "sucursal",
-                column: "id_ubigeo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sucursal_usuario_id_usuario",
@@ -1680,10 +1683,6 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.DropTable(
                 name: "documentos",
                 schema: "Ventas");
-
-            migrationBuilder.DropTable(
-                name: "ubigeo",
-                schema: "Generico");
 
             migrationBuilder.DropTable(
                 name: "mesas",

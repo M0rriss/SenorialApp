@@ -25,6 +25,7 @@ namespace IBusiness.Schema_Usuarios.Usuarios
         Task<UsuarioResponse> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
         List<UsuarioUiRequest> GetUiUsuarios();
        
+        Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request);
 
 
     }

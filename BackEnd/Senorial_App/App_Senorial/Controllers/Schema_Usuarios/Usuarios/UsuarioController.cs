@@ -47,15 +47,19 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
             var result = _usuarioBusiness.GetUiUsuarios();
             return Ok(result);
         }
-        //[HttpPost]
-        //[ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<UsuarioResponse>))]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
-        //[ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        //public async Task<ActionResult> Create([FromBody] UsuarioCreateRequest request)
-        //{
-        //    var result = await _usuarioBusiness.CreateUsuario(request);
-        //    return Ok(result);
-        //}
+        /// <summary>
+        /// Crea a los usuarios
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<UsuarioResponse>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> Create([FromBody] UsuarioUiRequest request)
+        {
+            var result = await _usuarioBusiness.InsertUiUsuarios(request);
+            return Ok(result);
+        }
         /// <summary>
         /// Actualizar a los usuarios
         /// </summary>
