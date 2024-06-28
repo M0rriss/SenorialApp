@@ -40,28 +40,38 @@ builder.Services.AddSwaggerGen();
 //JWT 
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+   // options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.Authority = "https://localhost:7283";
+    //options.Authority = "https://localhost:7283";
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidateAudience = true,
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        //ValidateIssuerSigningKey = true,
+        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+
+        //ValidateIssuer = true,
+        //ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        //ValidateAudience = true,
+        //ValidAudience = builder.Configuration["Jwt:Audience"],
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-        //ClockSkew = TimeSpan.Zero
+        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+        ClockSkew = TimeSpan.Zero
     };
 });
+
+//=============================
 //builder.Services.AddAuthorization(options =>
 //{
 //    // Definir una política que permita a cualquier usuario autenticado
@@ -186,15 +196,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+//app.UseAuthentication();
 
+
+app.UseCors("origins");
 
 app.UseAuthorization();
 
 app.UseMiddleware(typeof(ApiMiddleware));
 
 app.MapControllers();
-
-app.UseCors("origins");
 
 app.Run();

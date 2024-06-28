@@ -45,28 +45,32 @@ namespace Business.Auth
         #region JWT
         public async Task<string> GenerateToken(LoginUserRequest oLoginResponse)
         {
-            
+            ClaimsIdentity claimsIdentity = new();
+            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, oLoginResponse.Email));
+
             int lifeTime = int.Parse(_configuration["Jwt:TimeJWT"]);
-            var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, oLoginResponse.Email),
+        //    var claims = new List<Claim>
+        //{
+        //    new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+        //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        //    new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()),
+        //    new Claim(JwtRegisteredClaimNames.Email, oLoginResponse.Email),
 
-        };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        //};
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:key"]);
 
-            var token = new JwtSecurityToken(
-            _configuration["Jwt:Issuer"],
-            _configuration["Jwt:Audience"],
-            claims,
-            expires: DateTime.UtcNow.AddMinutes(lifeTime),
-            signingCredentials: signIn
-        );
+            var signIn = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+
+            var tokend = new SecurityTokenDescriptor
+            {
+                Subject = claimsIdentity,
+                Expires = DateTime.UtcNow.AddMinutes(lifeTime),
+                SigningCredentials = signIn
+            };
             var tokenHandler = new JwtSecurityTokenHandler();
-            return await Task.FromResult(tokenHandler.WriteToken(token));
+            var createdToken = tokenHandler.CreateToken(tokend);
+            return await Task.FromResult(tokenHandler.WriteToken(createdToken));
         }
 
         #endregion
