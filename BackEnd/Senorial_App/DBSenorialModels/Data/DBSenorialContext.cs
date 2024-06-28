@@ -46,7 +46,7 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Entrada> Entradas { get; set; }
 
-    public virtual DbSet<Estado> Estados { get; set; }
+    //public virtual DbSet<Estado> Estados { get; set; }
 
     public virtual DbSet<Imagene> Imagenes { get; set; }
 
@@ -195,9 +195,9 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdDetInventario).HasName("detalle_inventario_id_pk");
 
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.DetalleInventarios)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estado_id_fk");
+            //entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.DetalleInventarios)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("estado_id_fk");
 
             entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleInventarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -273,17 +273,6 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("inventario_id_entrada_fk");
         });
 
-        modelBuilder.Entity<Estado>(entity =>
-        {
-            entity.HasKey(e => e.IdEstado).HasName("estado_id_pk");
-
-            entity.HasOne(d => d.IdEstadoPadreNavigation).WithMany(p => p.InverseIdEstadoPadreNavigation).HasConstraintName("estado_padre_fk");
-            entity.HasData(
-           new Estado { IdEstado = 1, Nombre = "Actividad", IdEstadoPadre = null },
-           new Estado { IdEstado = 2, Nombre = "Activo", IdEstadoPadre = 1 },
-           new Estado { IdEstado = 3, Nombre = "Inactivo", IdEstadoPadre = 1 }
-       );
-        });
 
         modelBuilder.Entity<Imagene>(entity =>
         {
@@ -493,16 +482,13 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.IdRol).HasName("roles_id_pk");
-
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Roles)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estado_id_fk");
+            
             entity.HasData(
-           new Role { IdRol = 1, Nombre = "Administrador", IdEstado = 2 }, // IdEstado para activo
-           new Role { IdRol = 2, Nombre = "Desarrollador", IdEstado = 2 }, // IdEstado para activo
-           new Role { IdRol = 3, Nombre = "Cajero", IdEstado = 2 }, // IdEstado para activo
-           new Role { IdRol = 4, Nombre = "Empleado", IdEstado = 2 }, // IdEstado para activo
-           new Role { IdRol = 5, Nombre = "Cliente", IdEstado = 2 } // IdEstado para activo
+           new Role { IdRol = 1, Nombre = "Administrador", Estado = "Activo" }, 
+           new Role { IdRol = 2, Nombre = "Desarrollador", Estado = "Activo" }, 
+           new Role { IdRol = 3, Nombre = "Cajero", Estado = "Inactivo" }, 
+           new Role { IdRol = 4, Nombre = "Empleado", Estado = "Activo" }, 
+           new Role { IdRol = 5, Nombre = "Cliente", Estado = "Activo" } 
        );
         });
 
@@ -617,7 +603,7 @@ public partial class DBSenorialContext : DbContext
                 Email = "admin@admin.com",
                 IdRol = 1, // Asigna el Id del rol de Administrador
                 IdPersona = 1, // Asigna el Id de la persona asociada al usuario
-                Password = "Admin-Victor1", // Asignación temporal para el ejemplo
+                Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", // Admin-Victor1
                 UserName = "admin"
             }
         );
@@ -649,11 +635,6 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("empleado_id_fk");
 
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdEstado) // Añadir clave foránea explícitamente
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estado_id_fk");
-
             entity.HasOne(d => d.IdMetodoNavigation).WithMany(p => p.Venta)
                 .HasForeignKey(d => d.IdMetodo) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -679,10 +660,10 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdVoucher).HasName("voucher_id_pk");
 
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Vouchers)
-                .HasForeignKey(d => d.IdEstado) // Añadir clave foránea explícitamente
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estados_id_fk");
+            //entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Vouchers)
+            //    .HasForeignKey(d => d.IdEstado) // Añadir clave foránea explícitamente
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("estados_id_fk");
 
             entity.HasOne(d => d.IdTipoTransaccionNavigation).WithMany(p => p.Vouchers)
                 .HasForeignKey(d => d.IdTipoTransaccion) // Añadir clave foránea explícitamente

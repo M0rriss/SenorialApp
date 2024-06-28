@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Usuarios.Roles;
+using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
@@ -16,6 +17,13 @@ namespace Repository.Schema_Usuarios.Roles
         public Task<GenericFilterResponse<Role>> GetByFilterAsync(GenericFilterRequest request)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Role> GetByRol(string rolName)
+        {
+            var rol = await dbset.FirstOrDefaultAsync(x => x.Nombre == rolName);
+            return rol;
+
         }
     }
 }

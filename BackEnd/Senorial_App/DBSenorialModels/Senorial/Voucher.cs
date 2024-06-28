@@ -33,8 +33,8 @@ public partial class Voucher
     [StringLength(50)]
     public string? ImporteTotal { get; set; }
 
-    [Column("id_estado")]
-    public int IdEstado { get; set; }
+    [Column("estado")]
+    public string Estado { get; set; }
 
     [Column("id_tipo_transaccion")]
     public int IdTipoTransaccion { get; set; }
@@ -42,9 +42,9 @@ public partial class Voucher
     [InverseProperty("IdVoucherNavigation")]
     public virtual ICollection<Compra> Compras { get; set; } = new List<Compra>();
 
-    [ForeignKey("IdEstado")]
-    [InverseProperty("Vouchers")]
-    public virtual Estado IdEstadoNavigation { get; set; } = null!;
+    //[ForeignKey("IdEstado")]
+    //[InverseProperty("Vouchers")]
+    //public virtual Estado IdEstadoNavigation { get; set; } = null!;
 
     [ForeignKey("IdTipoTransaccion")]
     [InverseProperty("Vouchers")]

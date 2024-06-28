@@ -43,7 +43,7 @@ namespace Repository.Schema_Ventas.Empleados
                 Telefono = epr.Persona.Telefono,
                 Identificacion = epr.Persona.NroDocumento,
                 Rol = epr.Rol.Nombre,
-                Estado = epr.Rol.IdEstadoNavigation.Nombre, // Si `Estado` es una propiedad de `Rol`
+                Estado = epr.Rol.Estado, // Si `Estado` es una propiedad de `Rol`
                 Sucursal = s.Nombre
             })
         .ToList();

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class rmUb2 : Migration
+    public partial class rmEstado2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,28 +61,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Almacen",
                         principalTable: "categorias",
                         principalColumn: "id_categoria");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "estado",
-                schema: "Generico",
-                columns: table => new
-                {
-                    id_estado = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    abreviacion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    id_estado_padre = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("estado_id_pk", x => x.id_estado);
-                    table.ForeignKey(
-                        name: "estado_padre_fk",
-                        column: x => x.id_estado_padre,
-                        principalSchema: "Generico",
-                        principalTable: "estado",
-                        principalColumn: "id_estado");
                 });
 
             migrationBuilder.CreateTable(
@@ -160,6 +138,22 @@ namespace DBSenorialModels.Data.Migraciones
                 constraints: table =>
                 {
                     table.PrimaryKey("produccion_id_pk", x => x.id_produccion);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "roles",
+                schema: "Usuarios",
+                columns: table => new
+                {
+                    id_rol = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    abreviacion = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("roles_id_pk", x => x.id_rol);
                 });
 
             migrationBuilder.CreateTable(
@@ -263,28 +257,6 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "roles",
-                schema: "Usuarios",
-                columns: table => new
-                {
-                    id_rol = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    abreviacion = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    id_estado = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("roles_id_pk", x => x.id_rol);
-                    table.ForeignKey(
-                        name: "estado_id_fk",
-                        column: x => x.id_estado,
-                        principalSchema: "Generico",
-                        principalTable: "estado",
-                        principalColumn: "id_estado");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "productos",
                 schema: "Ventas",
                 columns: table => new
@@ -326,6 +298,32 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Ventas",
                         principalTable: "mesas",
                         principalColumn: "id_mesa");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "detalle_dash_menu",
+                schema: "Usuarios",
+                columns: table => new
+                {
+                    id_menu = table.Column<int>(type: "int", nullable: false),
+                    id_rol = table.Column<int>(type: "int", nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("detalle_dash_menu_id_pk", x => new { x.id_menu, x.id_rol });
+                    table.ForeignKey(
+                        name: "menu_id_fk",
+                        column: x => x.id_menu,
+                        principalSchema: "Usuarios",
+                        principalTable: "menu_dash",
+                        principalColumn: "id_menu");
+                    table.ForeignKey(
+                        name: "rol_id_fk",
+                        column: x => x.id_rol,
+                        principalSchema: "Usuarios",
+                        principalTable: "roles",
+                        principalColumn: "id_rol");
                 });
 
             migrationBuilder.CreateTable(
@@ -392,18 +390,12 @@ namespace DBSenorialModels.Data.Migraciones
                     precio_unitario = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     igv = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     importe_total = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    id_estado = table.Column<int>(type: "int", nullable: false),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     id_tipo_transaccion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("voucher_id_pk", x => x.id_voucher);
-                    table.ForeignKey(
-                        name: "estados_id_fk",
-                        column: x => x.id_estado,
-                        principalSchema: "Generico",
-                        principalTable: "estado",
-                        principalColumn: "id_estado");
                     table.ForeignKey(
                         name: "tipo_transaccion_id_fk",
                         column: x => x.id_tipo_transaccion,
@@ -432,32 +424,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Generico",
                         principalTable: "unidad_medicion",
                         principalColumn: "id_unidad");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "detalle_dash_menu",
-                schema: "Usuarios",
-                columns: table => new
-                {
-                    id_menu = table.Column<int>(type: "int", nullable: false),
-                    id_rol = table.Column<int>(type: "int", nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("detalle_dash_menu_id_pk", x => new { x.id_menu, x.id_rol });
-                    table.ForeignKey(
-                        name: "menu_id_fk",
-                        column: x => x.id_menu,
-                        principalSchema: "Usuarios",
-                        principalTable: "menu_dash",
-                        principalColumn: "id_menu");
-                    table.ForeignKey(
-                        name: "rol_id_fk",
-                        column: x => x.id_rol,
-                        principalSchema: "Usuarios",
-                        principalTable: "roles",
-                        principalColumn: "id_rol");
                 });
 
             migrationBuilder.CreateTable(
@@ -732,7 +698,7 @@ namespace DBSenorialModels.Data.Migraciones
                     id_voucher = table.Column<int>(type: "int", nullable: false),
                     id_sucursal = table.Column<int>(type: "int", nullable: false),
                     id_cliente = table.Column<int>(type: "int", nullable: false),
-                    id_estado = table.Column<int>(type: "int", nullable: false),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     id_empleado = table.Column<int>(type: "int", nullable: false),
                     id_metodo = table.Column<int>(type: "int", nullable: false),
                     id_comprobante = table.Column<int>(type: "int", nullable: false),
@@ -774,12 +740,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalTable: "empleado",
                         principalColumn: "id_empleado");
                     table.ForeignKey(
-                        name: "estado_id_fk",
-                        column: x => x.id_estado,
-                        principalSchema: "Generico",
-                        principalTable: "estado",
-                        principalColumn: "id_estado");
-                    table.ForeignKey(
                         name: "metodo_id_fk",
                         column: x => x.id_metodo,
                         principalSchema: "Ventas",
@@ -815,7 +775,7 @@ namespace DBSenorialModels.Data.Migraciones
                     id_inventario = table.Column<int>(type: "int", nullable: false),
                     id_insumo = table.Column<int>(type: "int", nullable: false),
                     stock_total = table.Column<int>(type: "int", nullable: false),
-                    id_estado = table.Column<int>(type: "int", nullable: false)
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -826,12 +786,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Almacen",
                         principalTable: "insumo",
                         principalColumn: "id_insumo");
-                    table.ForeignKey(
-                        name: "estado_id_fk",
-                        column: x => x.id_estado,
-                        principalSchema: "Generico",
-                        principalTable: "estado",
-                        principalColumn: "id_estado");
                     table.ForeignKey(
                         name: "inventario_id_fk",
                         column: x => x.id_inventario,
@@ -985,12 +939,6 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.InsertData(
-                schema: "Generico",
-                table: "estado",
-                columns: new[] { "id_estado", "abreviacion", "id_estado_padre", "nombre" },
-                values: new object[] { 1, null, null, "Actividad" });
-
-            migrationBuilder.InsertData(
                 schema: "Ventas",
                 table: "metodo_pago",
                 columns: new[] { "id_metodo", "descripcion" },
@@ -1001,6 +949,19 @@ namespace DBSenorialModels.Data.Migraciones
                     { 3, "Transferencia" },
                     { 4, "Descuento" },
                     { 5, "Otros" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Usuarios",
+                table: "roles",
+                columns: new[] { "id_rol", "abreviacion", "estado", "nombre" },
+                values: new object[,]
+                {
+                    { 1, null, "Activo", "Administrador" },
+                    { 2, null, "Activo", "Desarrollador" },
+                    { 3, null, "Inactivo", "Cajero" },
+                    { 4, null, "Activo", "Empleado" },
+                    { 5, null, "Activo", "Cliente" }
                 });
 
             migrationBuilder.InsertData(
@@ -1051,16 +1012,6 @@ namespace DBSenorialModels.Data.Migraciones
                     { 9, "Bsa", "Bolsa" },
                     { 10, "Cja", "Caja" },
                     { 11, "B-20Kg", "Bolsa 20 kg" }
-                });
-
-            migrationBuilder.InsertData(
-                schema: "Generico",
-                table: "estado",
-                columns: new[] { "id_estado", "abreviacion", "id_estado_padre", "nombre" },
-                values: new object[,]
-                {
-                    { 2, null, 1, "Activo" },
-                    { 3, null, 1, "Inactivo" }
                 });
 
             migrationBuilder.InsertData(
@@ -1154,22 +1105,9 @@ namespace DBSenorialModels.Data.Migraciones
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
-                table: "roles",
-                columns: new[] { "id_rol", "abreviacion", "id_estado", "nombre" },
-                values: new object[,]
-                {
-                    { 1, null, 2, "Administrador" },
-                    { 2, null, 2, "Desarrollador" },
-                    { 3, null, 2, "Cajero" },
-                    { 4, null, 2, "Empleado" },
-                    { 5, null, 2, "Cliente" }
-                });
-
-            migrationBuilder.InsertData(
-                schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 6, 25, 12, 31, 33, 934, DateTimeKind.Local).AddTicks(6137), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 6, 26, 20, 3, 22, 537, DateTimeKind.Local).AddTicks(1077), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1225,12 +1163,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios",
                 table: "detalle_dash_menu",
                 column: "id_rol");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_detalle_inventario_id_estado",
-                schema: "Almacen",
-                table: "detalle_inventario",
-                column: "id_estado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_detalle_inventario_id_insumo",
@@ -1291,20 +1223,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Almacen",
                 table: "entradas",
                 column: "id_compra");
-
-            migrationBuilder.CreateIndex(
-                name: "estado_descripcion_uk",
-                schema: "Generico",
-                table: "estado",
-                column: "nombre",
-                unique: true,
-                filter: "[nombre] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_estado_id_estado_padre",
-                schema: "Generico",
-                table: "estado",
-                column: "id_estado_padre");
 
             migrationBuilder.CreateIndex(
                 name: "IX_insumo_id_unidad",
@@ -1383,12 +1301,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Almacen",
                 table: "proveedor",
                 column: "id_persona");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_roles_id_estado",
-                schema: "Usuarios",
-                table: "roles",
-                column: "id_estado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_salidas_id_produccion",
@@ -1479,12 +1391,6 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_empleado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ventas_id_estado",
-                schema: "Ventas",
-                table: "ventas",
-                column: "id_estado");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ventas_id_metodo",
                 schema: "Ventas",
                 table: "ventas",
@@ -1523,12 +1429,6 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "nro_serie",
                 unique: true,
                 filter: "[nro_serie] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_voucher_id_estado",
-                schema: "Ventas",
-                table: "voucher",
-                column: "id_estado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_voucher_id_tipo_transaccion",
@@ -1666,10 +1566,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             migrationBuilder.DropTable(
                 name: "sucursal",
-                schema: "Generico");
-
-            migrationBuilder.DropTable(
-                name: "estado",
                 schema: "Generico");
 
             migrationBuilder.DropTable(

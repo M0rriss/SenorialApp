@@ -5,7 +5,6 @@ using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
 using RequestResponseModels.Request.Schema_Almacen.Proveedor;
-using RequestResponseModels.Request.Schema_Generico.Estado;
 using RequestResponseModels.Request.Schema_Generico.Imagenes;
 using RequestResponseModels.Request.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
@@ -18,7 +17,6 @@ using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Almacen.Insumo;
 using RequestResponseModels.Response.Schema_Almacen.Proveedor;
-using RequestResponseModels.Response.Schema_Generico.Estado;
 using RequestResponseModels.Response.Schema_Generico.Imagenes;
 using RequestResponseModels.Response.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
@@ -73,11 +71,7 @@ namespace UtilityAutoMapper
 
             #endregion
             #region Schema_Generico
-            #region Estado
-            CreateMap<Estado, EstadoRequest>().ReverseMap();
-            CreateMap<Estado, EstadoResponse>().ReverseMap();
-            CreateMap<EstadoRequest, EstadoResponse>().ReverseMap();
-            #endregion
+            
             #region Imagenes
             CreateMap<Imagene, ImagenesRequest>().ReverseMap();
             CreateMap<Imagene, ImagenesResponse>().ReverseMap();

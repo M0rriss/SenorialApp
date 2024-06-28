@@ -45,6 +45,7 @@ namespace App_Senorial.Controllers.Authentication
         private readonly EncriptarDesencriptar _encriptar;
         private readonly IPersonaBusiness _personaBusiness;
         private readonly IRolesBusiness _rolesBusiness;
+       
         public AuthController(IMapper mapper) 
         {
             _mapper = mapper;
@@ -53,6 +54,7 @@ namespace App_Senorial.Controllers.Authentication
             _usuarioBusiness = new UsuarioBusiness(mapper);
             _personaBusiness = new PersonaBusiness(mapper);
             _rolesBusiness = new RolesBusiness(mapper);
+            
         }
         #region LOGIN
         /// <summary>
@@ -66,13 +68,13 @@ namespace App_Senorial.Controllers.Authentication
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> LoginDashboard([FromBody] LoginUserRequest request)
         {
-            var loginResponse = _authBusiness.LoginDashboard(request);
-
-            if (loginResponse.Success)
+            var loginResponse = await _authBusiness.LoginDashboard(request);
+            
+            if (!loginResponse.Success)
             {
-                loginResponse.Token = await GenerateTokenDashboard(loginResponse);
+                return BadRequest(loginResponse.Message);
             }
-
+            var token = _authBusiness.GenerateToken(request);
             return Ok(loginResponse);
         }
         /// <summary>
@@ -86,8 +88,7 @@ namespace App_Senorial.Controllers.Authentication
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> LoginEcommerce([FromBody] LoginUserRequest request)
         {
-            var loginResponse = _authBusiness.LoginEcommerce(request);
-            if (loginResponse.Success) loginResponse.Token = await GenerateTokenEcommerce(loginResponse);
+            var loginResponse = await _authBusiness.LoginEcommerce(request);
             return Ok(loginResponse);
         }
         /// <summary>
@@ -101,8 +102,7 @@ namespace App_Senorial.Controllers.Authentication
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> LoginMobile([FromBody] LoginUserRequest request)
         {
-            var loginResponse = _authBusiness.LoginMobile(request);
-            if (loginResponse.Success) loginResponse.Token = await GenerateTokenMobile(loginResponse);
+            var loginResponse = await _authBusiness.LoginMobile(request);
             return Ok(loginResponse);
         }
         #endregion
@@ -251,135 +251,6 @@ namespace App_Senorial.Controllers.Authentication
             });
         }
         #endregion
-
-
-        #region JWT
-        private Task<string> GenerateTokenDashboard(LoginDashboardResponse oLoginResponse)
-        {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            int tiempoVida = int.Parse(configuration["Jwt:TimeJWTMin"]);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim>
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
-    };
-
-            if (oLoginResponse.Usuario != null)
-            {
-                claims.Add(new Claim("UserId", oLoginResponse.Usuario.IdUsuario.ToString()));
-                claims.Add(new Claim("UserName", oLoginResponse.Usuario.UserName ?? ""));
-                claims.Add(new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email ?? "admin@admin.com"));
-            }
-
-            if (oLoginResponse.RolName != null)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, oLoginResponse.RolName.Nombre ?? "Administrador"));
-                claims.Add(new Claim("IdRole", oLoginResponse.RolName.IdRol.ToString()));
-                claims.Add(new Claim("Nombre", oLoginResponse.RolName.Nombre ?? "Administrador"));
-            }
-
-            var token = new JwtSecurityToken(
-                configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.UtcNow.AddMinutes(tiempoVida),
-                signingCredentials: signIn
-            );
-
-            return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
-        }
-        private Task<string> GenerateTokenEcommerce(LoginEcommerceResponse oLoginResponse)
-        {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            int tiempoVida = int.Parse(configuration["Jwt:TimeJWTMin"]);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim>
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
-    };
-
-            if (oLoginResponse.Usuario != null)
-            {
-                if (oLoginResponse.Usuario.IdUsuario != null)
-                {
-                    claims.Add(new Claim("UserId", oLoginResponse.Usuario.IdUsuario.ToString()));
-                }
-
-                if (oLoginResponse.Usuario.UserName != null)
-                {
-                    claims.Add(new Claim("UserName", oLoginResponse.Usuario.UserName));
-                }
-
-                if (oLoginResponse.Usuario.Email != null)
-                {
-                    claims.Add(new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email.ToString()));
-                }
-            }
-
-            var token = new JwtSecurityToken(
-                configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.UtcNow.AddMinutes(tiempoVida),
-                signingCredentials: signIn
-            );
-
-            return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
-        }
-        private Task<string> GenerateTokenMobile(LoginMobileResponse oLoginResponse)
-        {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            int tiempoVida = int.Parse(configuration["Jwt:TimeJWTMin"]);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim>
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString())
-    };
-
-            if (oLoginResponse.RolName != null && oLoginResponse.RolName.IdRol != null)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, oLoginResponse.RolName.IdRol.ToString()));
-                claims.Add(new Claim("RoleName", oLoginResponse.RolName.Descripcion ?? ""));
-            }
-
-            if (oLoginResponse.Usuario != null)
-            {
-                claims.Add(new Claim("UserId", oLoginResponse.Usuario.IdUsuario.ToString()));
-                claims.Add(new Claim("UserName", oLoginResponse.Usuario.UserName ?? ""));
-                claims.Add(new Claim(ClaimTypes.Email, oLoginResponse.Usuario.Email ?? ""));
-            }
-
-            var token = new JwtSecurityToken(
-                issuer: configuration["Jwt:Issuer"],
-                audience: configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(tiempoVida),
-                signingCredentials: signIn
-            );
-
-            return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
-        }
-        #endregion
+        
     }
 }

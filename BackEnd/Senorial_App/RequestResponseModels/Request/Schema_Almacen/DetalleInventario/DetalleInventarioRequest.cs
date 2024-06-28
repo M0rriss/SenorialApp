@@ -14,7 +14,7 @@ namespace RequestResponseModels.Request.Schema_Almacen.DetalleInventario
         public int IdInventario { get; set; }
         public int IdInsumo { get; set; }
         public int StockTotal { get; set; }
-        public int IdEstado { get; set; }
+        public string Estado { get; set; }
 
     }
 }

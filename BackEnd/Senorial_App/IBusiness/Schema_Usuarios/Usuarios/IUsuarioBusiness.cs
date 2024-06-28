@@ -14,18 +14,18 @@ namespace IBusiness.Schema_Usuarios.Usuarios
 {
     public interface IUsuarioBusiness : ICrudBusiness<UsuarioRequest, UsuarioResponse>
     {
-        UsuarioResponse BuscarPorCorreo(string email);
-        UsuarioResponse BuscarCorreoEcommerce(string email);
-        UsuarioResponse BuscarCorreoMobile(string email);
+        Task<UsuarioResponse> BuscarPorCorreo(string email);
+        Task<UsuarioResponse> BuscarCorreoEcommerce(string email);
+        Task<UsuarioResponse> BuscarCorreoMobile(string email);
         Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request);
         Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request);
         Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request);
         Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
         Task<UsuarioResponse> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
         Task<UsuarioResponse> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
-        List<UsuarioUiRequest> GetUiUsuarios();
+        Task<List<UsuarioUiRequest>> GetUiUsuarios();
        
-        Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request);
+        Task<UsuarioUiResponse> InsertUiUsuarios(UsuarioUiRequest request);
 
 
     }

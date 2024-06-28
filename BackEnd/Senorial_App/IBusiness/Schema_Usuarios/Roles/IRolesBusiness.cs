@@ -11,5 +11,6 @@ namespace IBusiness.Schema_Usuarios.Roles
 {
     public interface IRolesBusiness : ICrudBusiness<RolesRequest, RolesResponse>
     {
+        Task<RolesResponse> GetByRol(string rol);
     }
 }

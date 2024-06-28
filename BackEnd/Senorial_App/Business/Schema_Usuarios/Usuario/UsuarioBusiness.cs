@@ -125,21 +125,21 @@ namespace Business.Schema_Usuarios.Usuarios
         }
         #endregion
         #region LOGIN
-        public UsuarioResponse BuscarPorCorreo(string email)
+        public async Task<UsuarioResponse> BuscarPorCorreo(string email)
         {
             var usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerPorCorreo(email));
             return usuario;
 
         }
 
-        public UsuarioResponse BuscarCorreoEcommerce(string email)
+        public async Task<UsuarioResponse> BuscarCorreoEcommerce(string email)
         {
 
             var usuario =_mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerCorreoEccomerce(email));
             return usuario;
         }
 
-        public UsuarioResponse BuscarCorreoMobile(string email)
+        public async Task<UsuarioResponse> BuscarCorreoMobile(string email)
         {
             var usuarios = _usuarioRepository.ObtenerCorreoMobile(email);
             var usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerCorreoMobile(email));
@@ -298,7 +298,7 @@ namespace Business.Schema_Usuarios.Usuarios
             }
             string enviadoPorElUsuario = request.CodigoOtp;
            
-            var codigoDeComparacion = _usuarioRepository.ObtenerCodigoOtp(request.Email);// traer de la BD
+            var codigoDeComparacion = await _usuarioRepository.ObtenerCodigoOtp(request.Email);// traer de la BD
             if (enviadoPorElUsuario != codigoDeComparacion.CodigoRecuperacion)
             {
                 throw new ArgumentException("Los codigos no coinciden.");
@@ -339,7 +339,7 @@ namespace Business.Schema_Usuarios.Usuarios
             }
             string enviadoPorElUsuario = request.CodigoOtp;
 
-            var codigoDeComparacion = _usuarioRepository.ObtenerCodigoOtp(request.Email);// traer de la BD
+            var codigoDeComparacion = await _usuarioRepository.ObtenerCodigoOtp(request.Email);// traer de la BD
             if (enviadoPorElUsuario != codigoDeComparacion.CodigoRecuperacion)
             {
                 throw new ArgumentException("Los codigos no coinciden.");
@@ -365,23 +365,66 @@ namespace Business.Schema_Usuarios.Usuarios
         }
 
         #endregion
-        public List<UsuarioUiRequest> GetUiUsuarios()
+        public async Task<List<UsuarioUiRequest>> GetUiUsuarios()
         {
-            return _usuarioRepository.UiUsuarios();
+            return await _usuarioRepository.UiUsuarios();
         }
 
-        public async Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request)
+        public async Task<UsuarioUiResponse> InsertUiUsuarios(UsuarioUiRequest request)
         {
-            //var usuario = _mapper.Map<Usuario>(request);
+            // Ensure the request is not null
+            if (request == null)
+            {
+                throw new ArgumentException("La solicitud no puede ser nula");
+            }
 
-            //// Llama al método del repositorio para insertar o actualizar el usuario
-            //var result = await _usuarioRepository.InsertUiUsuarios(usuario);
+            // Create a new Persona entity
+            var persona = await _personaRepository.Create(new Persona
+            {
+                PrimerNombre = request.Nombres,
+                SegundoNombre = "",
+                ApellidoPaterno = request.Nombres, 
+                ApellidoMaterno = "",
+                Email = request.Correo,
+                Telefono = request.Telefono,
+                Direccion = "",
+                IdTipoDocumento = 1, // Adjust as necessary
+                Genero = "",
+                TipoPersona = "Natural",
+            });
 
-            //// Mapea el resultado de la entidad Usuario de nuevo a UsuarioUiRequest
-            //var response = _mapper.Map<UsuarioUiRequest>(usuario);
+            // Check if the role exists and is active
+            var buscarRol = await _rolesRepository.GetByRol(request.Rol);
+            if (buscarRol == null || buscarRol.Estado != "Activo")
+            {
+                throw new ArgumentException($"El rol '{request.Rol}' no existe o no está activo.");
+            }
 
-            //return response;
-            throw new NotImplementedException();
+            // Create a new Usuario entity
+            var nuevoUsuario = new Usuario
+            {
+                IdPersona = persona.IdPersona,
+                Email = request.Correo,
+                Password = _encriptar.AES_encriptar(request.Contrasena),
+                IdRol = buscarRol.IdRol,
+            };
+
+            // Register the new user
+            nuevoUsuario = await _usuarioRepository.RegistrarUsuarioMobile(nuevoUsuario);
+
+            // Map the result to the response model
+            var response = new UsuarioUiResponse
+            {
+                Nombres = persona.PrimerNombre + " " + persona.ApellidoPaterno, // Adjust as necessary
+                Correo = persona.Email,
+                Telefono = persona.Telefono,
+                Rol = buscarRol.Nombre, // Assuming Role entity has a Nombre property
+                Estado = "Activo", // Set as necessary
+                Contrasena = nuevoUsuario.Password,
+               
+            };
+
+            return response;
         }
     }
 }

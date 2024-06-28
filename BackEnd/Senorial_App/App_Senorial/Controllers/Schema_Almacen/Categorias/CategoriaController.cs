@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Categorias;
 using IBusiness.Schema_Almacen.Categorias;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
@@ -15,6 +16,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    
     public class CategoriaController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

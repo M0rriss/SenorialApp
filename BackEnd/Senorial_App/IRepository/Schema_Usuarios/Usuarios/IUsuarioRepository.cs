@@ -19,11 +19,11 @@ namespace IRepository.Schema_Usuarios.Usuarios
         Usuario ObtenerCorreoMobile(string email);
         Task<Usuario> RegistrarUsuarioEcommerce(Usuario usuario);
         Task<Usuario> RegistrarUsuarioMobile(Usuario usuario);
-        Usuario ObtenerCodigoOtp(string email);
+        Task<Usuario> ObtenerCodigoOtp(string email);
         Task<string> OneTimePass(string email, string codigo);
-        List<UsuarioUiRequest> UiUsuarios();
+        Task<List<UsuarioUiRequest>> UiUsuarios();
 
-       Task<UsuarioUiRequest> InsertUiUsuarios(UsuarioUiRequest request);
+        Task<Usuario> InsertUiUsuarios(Usuario request);
 
         
     }

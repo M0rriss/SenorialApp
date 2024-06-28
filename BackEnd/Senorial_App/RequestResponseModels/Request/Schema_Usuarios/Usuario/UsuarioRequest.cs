@@ -31,6 +31,8 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         public string Nombres { get; set; }
         [EmailAddress]
         public string Correo { get; set; }
+        [StrongPassword]
+        public string? Contrasena { get; set; }
         [PhoneValidation]
         public string Telefono { get; set; }
         public string Rol { get; set; }

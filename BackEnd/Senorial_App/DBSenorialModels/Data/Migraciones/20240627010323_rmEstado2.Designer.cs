@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240625173134_rmUb2")]
-    partial class rmUb2
+    [Migration("20240627010323_rmEstado2")]
+    partial class rmEstado2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,9 +266,10 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetInventario"));
 
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
 
                     b.Property<int>("IdInsumo")
                         .HasColumnType("int")
@@ -284,8 +285,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdDetInventario")
                         .HasName("detalle_inventario_id_pk");
-
-                    b.HasIndex("IdEstado");
 
                     b.HasIndex("IdInsumo");
 
@@ -438,60 +437,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdCompra");
 
                     b.ToTable("entradas", "Almacen");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Estado", b =>
-                {
-                    b.Property<int>("IdEstado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstado"));
-
-                    b.Property<string>("Abreviacion")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("abreviacion");
-
-                    b.Property<int?>("IdEstadoPadre")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado_padre");
-
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nombre");
-
-                    b.HasKey("IdEstado")
-                        .HasName("estado_id_pk");
-
-                    b.HasIndex("IdEstadoPadre");
-
-                    b.HasIndex(new[] { "Nombre" }, "estado_descripcion_uk")
-                        .IsUnique()
-                        .HasFilter("[nombre] IS NOT NULL");
-
-                    b.ToTable("estado", "Generico");
-
-                    b.HasData(
-                        new
-                        {
-                            IdEstado = 1,
-                            Nombre = "Actividad"
-                        },
-                        new
-                        {
-                            IdEstado = 2,
-                            IdEstadoPadre = 1,
-                            Nombre = "Activo"
-                        },
-                        new
-                        {
-                            IdEstado = 3,
-                            IdEstadoPadre = 1,
-                            Nombre = "Inactivo"
-                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
@@ -1387,9 +1332,10 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(10)")
                         .HasColumnName("abreviacion");
 
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -1399,39 +1345,37 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasKey("IdRol")
                         .HasName("roles_id_pk");
 
-                    b.HasIndex("IdEstado");
-
                     b.ToTable("roles", "Usuarios");
 
                     b.HasData(
                         new
                         {
                             IdRol = 1,
-                            IdEstado = 2,
+                            Estado = "Activo",
                             Nombre = "Administrador"
                         },
                         new
                         {
                             IdRol = 2,
-                            IdEstado = 2,
+                            Estado = "Activo",
                             Nombre = "Desarrollador"
                         },
                         new
                         {
                             IdRol = 3,
-                            IdEstado = 2,
+                            Estado = "Inactivo",
                             Nombre = "Cajero"
                         },
                         new
                         {
                             IdRol = 4,
-                            IdEstado = 2,
+                            Estado = "Activo",
                             Nombre = "Empleado"
                         },
                         new
                         {
                             IdRol = 5,
-                            IdEstado = 2,
+                            Estado = "Activo",
                             Nombre = "Cliente"
                         });
                 });
@@ -1826,7 +1770,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 6, 25, 12, 31, 33, 934, DateTimeKind.Local).AddTicks(6137),
+                            CreatedAt = new DateTime(2024, 6, 26, 20, 3, 22, 537, DateTimeKind.Local).AddTicks(1077),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -1847,6 +1791,11 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Property<decimal?>("CostoBase")
                         .HasColumnType("decimal(10, 2)")
                         .HasColumnName("costo_base");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
 
                     b.Property<DateTime?>("FechaVenta")
                         .ValueGeneratedOnAdd()
@@ -1869,10 +1818,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Property<int>("IdEmpleado")
                         .HasColumnType("int")
                         .HasColumnName("id_empleado");
-
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
 
                     b.Property<int>("IdMetodo")
                         .HasColumnType("int")
@@ -1928,8 +1873,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasIndex("IdEmpleado");
 
-                    b.HasIndex("IdEstado");
-
                     b.HasIndex("IdMetodo");
 
                     b.HasIndex("IdSucursal");
@@ -1963,14 +1906,15 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("cantidad");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
+
                     b.Property<string>("FechaEmision")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("fecha_emision");
-
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
 
                     b.Property<int>("IdTipoTransaccion")
                         .HasColumnType("int")
@@ -1993,8 +1937,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdVoucher")
                         .HasName("voucher_id_pk");
-
-                    b.HasIndex("IdEstado");
 
                     b.HasIndex("IdTipoTransaccion");
 
@@ -2103,12 +2045,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("DetalleInventarios")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estado_id_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.Insumo", "IdInsumoNavigation")
                         .WithMany("DetalleInventarios")
                         .HasForeignKey("IdInsumo")
@@ -2120,8 +2056,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasForeignKey("IdInventario")
                         .IsRequired()
                         .HasConstraintName("inventario_id_fk");
-
-                    b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdInsumoNavigation");
 
@@ -2223,16 +2157,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdInventarioNavigation");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Estado", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoPadreNavigation")
-                        .WithMany("InverseIdEstadoPadreNavigation")
-                        .HasForeignKey("IdEstadoPadre")
-                        .HasConstraintName("estado_padre_fk");
-
-                    b.Navigation("IdEstadoPadreNavigation");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.UnidadMedicion", "IdUnidadNavigation")
@@ -2321,17 +2245,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasConstraintName("proveedor_id_fk");
 
                     b.Navigation("IdPersonaNavigation");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Role", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("Roles")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estado_id_fk");
-
-                    b.Navigation("IdEstadoNavigation");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
@@ -2449,12 +2362,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .IsRequired()
                         .HasConstraintName("empleado_id_fk");
 
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("Venta")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estado_id_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.MetodoPago", "IdMetodoNavigation")
                         .WithMany("Venta")
                         .HasForeignKey("IdMetodo")
@@ -2487,8 +2394,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.Navigation("IdEmpleadoNavigation");
 
-                    b.Navigation("IdEstadoNavigation");
-
                     b.Navigation("IdMetodoNavigation");
 
                     b.Navigation("IdSucursalNavigation");
@@ -2500,19 +2405,11 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Voucher", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("Vouchers")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estados_id_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.TipoTransaccion", "IdTipoTransaccionNavigation")
                         .WithMany("Vouchers")
                         .HasForeignKey("IdTipoTransaccion")
                         .IsRequired()
                         .HasConstraintName("tipo_transaccion_id_fk");
-
-                    b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdTipoTransaccionNavigation");
                 });
@@ -2564,19 +2461,6 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.Empleado", b =>
                 {
                     b.Navigation("Venta");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Estado", b =>
-                {
-                    b.Navigation("DetalleInventarios");
-
-                    b.Navigation("InverseIdEstadoPadreNavigation");
-
-                    b.Navigation("Roles");
-
-                    b.Navigation("Venta");
-
-                    b.Navigation("Vouchers");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>

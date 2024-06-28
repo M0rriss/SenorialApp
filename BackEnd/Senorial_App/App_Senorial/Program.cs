@@ -1,11 +1,16 @@
 using App_Senorial.Middleware;
+using Business.Auth;
 using DBSenorialModels.Data;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Services.Gmail;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using UtilityAutoMapper;
 using UtilitySecurity.OneTimePassword;
@@ -18,8 +23,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "origins",
                       builder =>
                       {
-                          //builder.WithOrigins("http://127.0.0.1:5500");
-                          builder.AllowAnyOrigin();
+                          builder.WithOrigins("http://127.0.0.1:7283");
+                          //builder.AllowAnyOrigin();
                           builder.AllowAnyMethod();//get post put delete patch 
                           builder.AllowAnyHeader();//
                       });
@@ -33,25 +38,79 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //JWT 
-builder.Services
-    .AddHttpContextAccessor()
-    .AddAuthorization()
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = "https://localhost:7283";
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ClockSkew = TimeSpan.Zero,
-            //ClockSkew = TimeSpan.FromMinutes(3),
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        //ClockSkew = TimeSpan.Zero
+    };
+});
+//builder.Services.AddAuthorization(options =>
+//{
+//    // Definir una política que permita a cualquier usuario autenticado
+//    options.AddPolicy("RequireLoggedIn", policy =>
+//        policy.RequireAuthenticatedUser());
+//});
+//builder.Services.AddControllers();
+
+
+//builder.Services.AddHttpContextAccessor()
+//    .AddHttpContextAccessor()
+//    .AddAuthorization()
+//    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.Authority = "https://localhost:7283";
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+//            ValidateAudience = false,
+//            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+//            ValidateLifetime = true,
+//            ValidateIssuerSigningKey = true,
+//            ClockSkew = TimeSpan.Zero,
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+//        };
+//    });
+
+
+// Configurar políticas de autorización
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("AdminPolicy", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireClaim(ClaimTypes.Role, "Administador");
+//        policy.RequireClaim(ClaimTypes.Email, "admin@admin.com");
+//    });
+
+//    options.AddPolicy("UserPolicy", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireClaim(ClaimTypes.Role, "Cliente");
+//        policy.RequireClaim(ClaimTypes.Role, "Empleado");
+//        policy.RequireClaim(ClaimTypes.Role, "Cajero");
+//    });
+//});
+
 //SMTP CONFIG
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
@@ -70,6 +129,30 @@ builder.Services.AddSwaggerGen(c =>
             Name = "Mauricio Contreras",
             Email = "i2026200@continental.edu.pe",
         },
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter into field the word 'Bearer' followed by a space and the JWT value",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
     });
 
     // Include XML comments for better documentation
@@ -103,9 +186,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+
+
+app.UseAuthorization();
 
 app.UseMiddleware(typeof(ApiMiddleware));
 

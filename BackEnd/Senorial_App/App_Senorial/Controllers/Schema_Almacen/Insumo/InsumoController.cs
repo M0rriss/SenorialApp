@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Insumos;
 using IBusiness.Schema_Almacen.Insumos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
@@ -10,8 +12,10 @@ using System.Net;
 
 namespace App_Senorial.Controllers.Schema_Almacen.Insumo
 {
+    
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class InsumoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -32,7 +36,8 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
         /// RETORNA TODOS LOS REGISTROS DE LA TABLA Insumo
         /// </summary>
         /// <returns>List-InsumoResponse</returns>
-        [HttpGet]
+        
+        [HttpGet,Route("Listado")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<InsumoResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
@@ -60,7 +65,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
         /// </summary>
         /// <param name="request">InsumoRequest</param>
         /// <returns>InsumoResponse</returns>
-        [HttpPost]
+        [HttpPost,Route("Crear/Insumo")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
@@ -74,7 +79,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
         /// </summary>
         /// <param name="request">InsumoRequest</param>
         /// <returns>InsumoResponse</returns>
-        [HttpPut]
+        [HttpPut, Route("Actualizar/Insumo")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
