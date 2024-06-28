@@ -40,29 +40,26 @@ builder.Services.AddSwaggerGen();
 //JWT 
 
 builder.Services.AddHttpContextAccessor();
-//builder.Services.AddAuthorization();
-
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-   // options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    //options.Authority = "https://localhost:7283";
+    options.Audience = builder.Configuration["Jwt:Audience"];
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         //ValidateIssuerSigningKey = true,
         //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+
         ValidateIssuer = false,
         ValidateAudience = false,
 
         //ValidateIssuer = true,
-        //ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
         //ValidateAudience = true,
-        //ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
@@ -70,56 +67,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
-
-//=============================
-//builder.Services.AddAuthorization(options =>
-//{
-//    // Definir una política que permita a cualquier usuario autenticado
-//    options.AddPolicy("RequireLoggedIn", policy =>
-//        policy.RequireAuthenticatedUser());
-//});
-//builder.Services.AddControllers();
-
-
-//builder.Services.AddHttpContextAccessor()
-//    .AddHttpContextAccessor()
-//    .AddAuthorization()
-//    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.Authority = "https://localhost:7283";
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-//            ValidateAudience = false,
-//            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ClockSkew = TimeSpan.Zero,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
-//        };
-//    });
-
-
-// Configurar políticas de autorización
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("AdminPolicy", policy =>
-//    {
-//        policy.RequireAuthenticatedUser();
-//        policy.RequireClaim(ClaimTypes.Role, "Administador");
-//        policy.RequireClaim(ClaimTypes.Email, "admin@admin.com");
-//    });
-
-//    options.AddPolicy("UserPolicy", policy =>
-//    {
-//        policy.RequireAuthenticatedUser();
-//        policy.RequireClaim(ClaimTypes.Role, "Cliente");
-//        policy.RequireClaim(ClaimTypes.Role, "Empleado");
-//        policy.RequireClaim(ClaimTypes.Role, "Cajero");
-//    });
-//});
 
 //SMTP CONFIG
 builder.Configuration.AddJsonFile("appsettings.json");

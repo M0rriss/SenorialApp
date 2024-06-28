@@ -47,17 +47,10 @@ namespace Business.Auth
         {
             ClaimsIdentity claimsIdentity = new();
             claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, oLoginResponse.Email));
+            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Iat, Guid.NewGuid().ToString()));//agregue
+            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Jti, DateTime.UtcNow.ToString()));//agreuge
 
             int lifeTime = int.Parse(_configuration["Jwt:TimeJWT"]);
-        //    var claims = new List<Claim>
-        //{
-        //    new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-        //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        //    new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()),
-        //    new Claim(JwtRegisteredClaimNames.Email, oLoginResponse.Email),
-
-        //};
-            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:key"]);
 
             var signIn = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
