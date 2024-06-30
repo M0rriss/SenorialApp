@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
+using UtilitySecurity.Validations;
 
 namespace RequestResponseModels.Request.Schema_Ventas.Cliente
 {
@@ -14,17 +15,26 @@ namespace RequestResponseModels.Request.Schema_Ventas.Cliente
         public int IdCliente { get; set; }
         public int IdPersona { get; set; }
     }
-    public class ClienteFullRequest
-    {
-        public int IdCliente { get; set; }
-        public PersonaRequest Persona { get; set; }
-    }
+    
     public class ClienteUiRequest
+    {
+        public string Nombres { get; set; }
+        [EmailAddress]
+        public string Correo { get; set; }
+        [Phone]
+        public string Telefono { get; set; }
+        [DocumentType]
+        public string DNI { get; set; }
+    }
+    public class ClienteUpdateUiRequest
     {
         public int IdCliente { get; set; }
         public string Nombres { get; set; }
+        [EmailAddress]
         public string Correo { get; set; }
+        [Phone]
         public string Telefono { get; set; }
+        [DocumentType]
         public string DNI { get; set; }
     }
 }

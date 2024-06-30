@@ -3,6 +3,7 @@ using Azure;
 using Azure.Core;
 using DBSenorialModels.Senorial;
 using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Vml.Office;
 using IBusiness.Schema_Usuarios.Personas;
@@ -11,10 +12,12 @@ using IBusiness.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Usuarios.Personas;
 using IRepository.Schema_Usuarios.Roles;
 using IRepository.Schema_Usuarios.Usuarios;
+using IRepository.Schema_Ventas.Clientes;
 using Microsoft.Extensions.Logging;
 using Repository.Schema_Usuarios.Personas;
 using Repository.Schema_Usuarios.Roles;
 using Repository.Schema_Usuarios.Usuarios;
+using Repository.Schema_Ventas.Clientes;
 using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
@@ -37,6 +40,7 @@ namespace Business.Schema_Usuarios.Usuarios
         private readonly IMapper _mapper;
         private readonly EncriptarDesencriptar _encriptar;
         private readonly IPersonaRepository _personaRepository;
+        private readonly IClienteRepository _clienteRepository;
         private readonly IRolesRepository _rolesRepository;
         private readonly OtpGenerator _otpGenerator;
         private readonly SendEmailWithGoogleSMTP _sendEmailService;
@@ -47,6 +51,7 @@ namespace Business.Schema_Usuarios.Usuarios
             _usuarioRepository = new UsuarioRepository();
             _encriptar = new EncriptarDesencriptar();
             _personaRepository = new PersonaRepository();
+            _clienteRepository = new ClienteRepository();
             _rolesRepository = new RolesRepository();
             _otpGenerator = new OtpGenerator();
             _sendEmailService = new SendEmailWithGoogleSMTP();
@@ -146,7 +151,6 @@ namespace Business.Schema_Usuarios.Usuarios
             return usuario;
         }
         #endregion
-
         #region SIGN IN
         public async Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request)
         {
@@ -170,7 +174,16 @@ namespace Business.Schema_Usuarios.Usuarios
                 TipoPersona = "",
                 //falta la los nombres y apellidos
             });
-            var buscarRol = await _rolesRepository.GetById(5);
+            var buscarRol = await _rolesRepository.GetByRol("Cliente");
+            // 3. Crear el Cliente asociado a la Persona
+            var nuevoCliente = new Cliente
+            {
+                IdPersona = nuevaPersona.IdPersona,
+                // Completar otros campos de Cliente según sea necesario
+            };
+
+            // Guardar el Cliente en el repositorio
+            var clienteCreado = await _clienteRepository.Create(nuevoCliente);
             //idIMG
             //crear un funcion que retorne el id img |es necesario?
             var nuevoUsuario = new Usuario
@@ -185,7 +198,6 @@ namespace Business.Schema_Usuarios.Usuarios
             };
 
             nuevoUsuario = await _usuarioRepository.RegistrarUsuarioEcommerce(nuevoUsuario);
-
             return _mapper.Map<SignInEcommerceResponse>(nuevoUsuario);
         }
 
@@ -216,7 +228,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 
             });
             
-            var buscarRol = await _rolesRepository.GetById(4); 
+            var buscarRol = await _rolesRepository.GetByRol("Mozo"); 
 
             var nuevoUsuario = new Usuario
             {
@@ -233,7 +245,6 @@ namespace Business.Schema_Usuarios.Usuarios
             return response;
         }
         #endregion
-
         #region RECOVERY PASSWORD
 
         public async Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request)
@@ -365,6 +376,7 @@ namespace Business.Schema_Usuarios.Usuarios
         }
 
         #endregion
+        #region Insert,Update,Delete Usuarios
         public async Task<List<UsuarioUiRequest>> GetUiUsuarios()
         {
             return await _usuarioRepository.UiUsuarios();
@@ -372,35 +384,38 @@ namespace Business.Schema_Usuarios.Usuarios
 
         public async Task<UsuarioUiResponse> InsertUiUsuarios(UsuarioUiRequest request)
         {
-            // Ensure the request is not null
-            if (request == null)
+            var existingUser = _personaRepository.BuscarCorreo(request.Correo);
+            if (existingUser != null)
             {
-                throw new ArgumentException("La solicitud no puede ser nula");
+                throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
-            // Create a new Persona entity
+            var existingPersona = _personaRepository.BuscarTelefono(request.Telefono);
+            if (existingPersona != null)
+            {
+                throw new ArgumentException("El número de teléfono ya está registrado.");
+            }
+
+            // Crear persona
             var persona = await _personaRepository.Create(new Persona
             {
                 PrimerNombre = request.Nombres,
-                SegundoNombre = "",
-                ApellidoPaterno = request.Nombres, 
-                ApellidoMaterno = "",
+                ApellidoPaterno = "",
                 Email = request.Correo,
                 Telefono = request.Telefono,
-                Direccion = "",
-                IdTipoDocumento = 1, // Adjust as necessary
                 Genero = "",
-                TipoPersona = "Natural",
+                IdTipoDocumento = 1,
             });
-
-            // Check if the role exists and is active
-            var buscarRol = await _rolesRepository.GetByRol(request.Rol);
-            if (buscarRol == null || buscarRol.Estado != "Activo")
+            string role = request.Rol.ToLower() switch
             {
-                throw new ArgumentException($"El rol '{request.Rol}' no existe o no está activo.");
-            }
+                "cajero" => "Cajero",
+                "mozo" => "Mozo",
+                _ => throw new ArgumentException("Rol no válido. Debe ser 'Cajero' o 'Mozo'.")
+            };
+            // Buscar rol
+            var buscarRol = await _rolesRepository.GetByRol(role);
 
-            // Create a new Usuario entity
+            // Crear usuario
             var nuevoUsuario = new Usuario
             {
                 IdPersona = persona.IdPersona,
@@ -409,23 +424,98 @@ namespace Business.Schema_Usuarios.Usuarios
                 IdRol = buscarRol.IdRol,
             };
 
-            // Register the new user
-            nuevoUsuario = await _usuarioRepository.RegistrarUsuarioMobile(nuevoUsuario);
+            nuevoUsuario = await _usuarioRepository.InsertUiUsuarios(nuevoUsuario);
 
-            // Map the result to the response model
-            var response = new UsuarioUiResponse
-            {
-                Nombres = persona.PrimerNombre + " " + persona.ApellidoPaterno, // Adjust as necessary
-                Correo = persona.Email,
-                Telefono = persona.Telefono,
-                Rol = buscarRol.Nombre, // Assuming Role entity has a Nombre property
-                Estado = "Activo", // Set as necessary
-                Contrasena = nuevoUsuario.Password,
-               
-            };
+            // Mapear respuesta
+            var response = _mapper.Map<UsuarioUiResponse>(nuevoUsuario);
+            response.Persona = _mapper.Map<PersonaResponse>(persona);
 
             return response;
         }
+
+        public async Task<UsuarioUiResponse> UpdateUiUsuarios(UsuarioUiUpdateRequest request)
+        {
+            // Find the existing user
+            var existingUser = await _usuarioRepository.GetById(request.IdUsuario);
+            if (existingUser == null)
+            {
+                throw new ArgumentException("El usuario no existe.");
+            }
+
+            // Find the existing persona
+            var existingPersona = await _personaRepository.GetById(existingUser.IdPersona);
+            if (existingPersona == null)
+            {
+                throw new ArgumentException("La persona asociada no existe.");
+            }
+
+            // Check if the new email is already in use by another user
+            var userWithEmail = _personaRepository.BuscarCorreo(request.Correo);
+            if (userWithEmail != null && userWithEmail.IdPersona != existingUser.IdPersona)
+            {
+                throw new ArgumentException("El correo electrónico ya está registrado.");
+            }
+
+            // Check if the new phone number is already in use by another user
+            var userWithPhone = _personaRepository.BuscarTelefono(request.Telefono);
+            if (userWithPhone != null && userWithPhone.IdPersona != existingUser.IdPersona)
+            {
+                throw new ArgumentException("El número de teléfono ya está registrado.");
+            }
+
+            // Update persona details
+            existingPersona.PrimerNombre = request.Nombres;
+            existingPersona.Email = request.Correo;
+            existingPersona.Telefono = request.Telefono;
+            // Update other persona fields as needed
+
+            await _personaRepository.Update(existingPersona);
+
+            // Determine the role (Cajero or Empleado) and fetch its details
+            string role = request.Rol.ToLower() switch
+            {
+                "cajero" => "Cajero",
+                "mozo" => "Mozo",
+                _ => throw new ArgumentException("Rol no válido. Debe ser 'Cajero' o 'Mozo'.")
+            };
+
+            var buscarRol = await _rolesRepository.GetByRol(role);
+
+            // Update user details
+            existingUser.Email = request.Correo.ToLower();
+            existingUser.Password = _encriptar.AES_encriptar(request.Contrasena);
+            existingUser.IdRol = buscarRol.IdRol;
+            // Update other user fields as needed
+
+            await _usuarioRepository.Update(existingUser);
+
+            // Map the response
+            var response = _mapper.Map<UsuarioUiResponse>(existingUser);
+            response.Persona = _mapper.Map<PersonaResponse>(existingPersona);
+
+            return response;
+        }
+        public async Task DeleteUiUser(int idUsuario)
+        {
+            var usuario = await _usuarioRepository.GetById(idUsuario);
+            if (usuario == null)
+            {
+                throw new ArgumentException("El usuario no existe.");
+            }
+
+            var persona = await _personaRepository.GetById(usuario.IdPersona);
+            if (persona == null)
+            {
+                throw new ArgumentException("La persona asociada no existe.");
+            }
+
+            // Delete user
+            await _usuarioRepository.DeleteUiUsuarios(idUsuario);
+
+            // Delete associated person
+            await _personaRepository.DeletePersona(persona.IdPersona);
+        }
+        #endregion
     }
 }
 

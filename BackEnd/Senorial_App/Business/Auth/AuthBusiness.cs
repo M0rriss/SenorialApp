@@ -139,7 +139,7 @@ namespace Business.Auth
             result.Message = "Login Correcto";
 
             result.Usuario = new UsuarioResponse { Email = request.Email };
-            result.RolName = new RolesResponse { Nombre = "Empleado" };
+            result.RolName = new RolesResponse { Nombre = "Mozo" };
             result.Token = await GenerateToken(request);
             return result;
         }

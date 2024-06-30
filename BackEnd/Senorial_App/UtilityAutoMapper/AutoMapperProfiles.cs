@@ -67,11 +67,26 @@ namespace UtilityAutoMapper
             CreateMap<Proveedor, ProveedorResponse>().ReverseMap();
             CreateMap<ProveedorRequest,ProveedorResponse>().ReverseMap();
             CreateMap<ProveedorUiRequest,Proveedor>().ReverseMap();
+            CreateMap<ProveedorUiResponse,PersonaResponse>().ReverseMap();
+            CreateMap<Proveedor, ProveedorUiResponse>().ReverseMap();
+            CreateMap<Proveedor, ProveedorUiRequest>().ReverseMap();
+            CreateMap<Proveedor, ProveedorUpdateUiRequest>().ReverseMap();
+            CreateMap<Proveedor, PersonaResponse>().ReverseMap();
+            CreateMap<Proveedor, Persona>().ReverseMap();
+            CreateMap<ProveedorUiRequest, Proveedor>().ReverseMap();
+            CreateMap<ProveedorUiRequest, PersonaResponse>().ReverseMap();
+            CreateMap<ProveedorUiResponse,PersonaResponse>().ReverseMap();
+            CreateMap<ProveedorUiRequest, Persona>().ReverseMap();
+            CreateMap<ProveedorUiResponse,Persona>().ReverseMap();
+            CreateMap<ProveedorUiResponse, ProveedorUiRequest>().ReverseMap();
+
+
+
             #endregion
 
             #endregion
             #region Schema_Generico
-            
+
             #region Imagenes
             CreateMap<Imagene, ImagenesRequest>().ReverseMap();
             CreateMap<Imagene, ImagenesResponse>().ReverseMap();
@@ -91,7 +106,7 @@ namespace UtilityAutoMapper
             CreateMap<Usuario,UsuarioResponse>().ReverseMap();
             CreateMap<UsuarioRequest, UsuarioResponse>().ReverseMap();
             CreateMap<Usuario,UsuarioUiRequest>().ReverseMap();
-            CreateMap<UsuarioUiRequest, Usuario>().ReverseMap();
+            CreateMap<UsuarioUiResponse, Usuario>().ReverseMap();
             #endregion
             #region Roles
             CreateMap<Role, RolesRequest>().ReverseMap();
@@ -99,23 +114,59 @@ namespace UtilityAutoMapper
             CreateMap<RolesRequest, RolesResponse>().ReverseMap();
             #endregion
             #region Personas
+            CreateMap<Persona, ClienteUiResponse>().ReverseMap();
             CreateMap<Persona, PersonaRequest>().ReverseMap();
             CreateMap<Persona, PersonaResponse>().ReverseMap();
-            CreateMap<PersonaRequest, PersonaResponse>().ReverseMap();
+            CreateMap<Persona, LoginEcommerceResponse>().ReverseMap();
+            CreateMap<PersonaResponse, ClienteUiRequest>().ReverseMap();
+            CreateMap<PersonaResponse, ClienteUpdateUiRequest>().ReverseMap();
+            CreateMap<PersonaResponse, ClienteUiResponse>().ReverseMap();
+            CreateMap<Persona, ClienteUiRequest>().ReverseMap();
+            CreateMap<Persona, ClienteUpdateUiRequest>().ReverseMap();
+            CreateMap<Persona, Cliente>().ReverseMap();
+            CreateMap<Persona, ClienteUiResponse>().ReverseMap();
+            CreateMap<Persona, ClienteUiRequest>().ReverseMap();
+            CreateMap<Persona,ProveedorUiRequest>().ReverseMap();
+            CreateMap<Persona,ProveedorUiResponse>().ReverseMap();
+            CreateMap<Persona,ProveedorUpdateUiRequest>().ReverseMap();
+            CreateMap<PersonaResponse,ProveedorUiRequest>().ReverseMap();
+            CreateMap<PersonaResponse,ProveedorUiResponse>().ReverseMap();
+            CreateMap<PersonaResponse,ProveedorUpdateUiRequest>().ReverseMap();
+            CreateMap<Persona, ProveedorUiResponse>().ReverseMap();
+
+           
+
             #endregion
-            
+
             #endregion
             #region Schema_Ventas
-            #region Producto
-            CreateMap<Producto, ProductoRequest>().ReverseMap();
-            CreateMap<Producto, ProductoResponse>().ReverseMap();
-            CreateMap<ProductoRequest, ProductoResponse>().ReverseMap();
-            #endregion
             #region Cliente
             CreateMap<Cliente, ClienteRequest>().ReverseMap();
             CreateMap<Cliente, ClienteResponse>().ReverseMap();
             CreateMap<ClienteRequest, ClienteResponse>().ReverseMap();
             CreateMap<Cliente, ClienteUiRequest>().ReverseMap();
+            CreateMap<Cliente, ClienteUpdateUiRequest>().ReverseMap();
+            CreateMap<ClienteUiRequest, ClienteUpdateUiRequest>().ReverseMap();
+            CreateMap<Cliente, LoginEcommerceResponse>().ReverseMap();
+            CreateMap<ClienteRequest, ClienteUiRequest>().ReverseMap();
+            CreateMap<ClienteRequest, ClienteUiResponse>().ReverseMap();
+            CreateMap<ClienteResponse, ClienteUiRequest>().ReverseMap();
+            CreateMap<Cliente, ClienteUiResponse>().ReverseMap();
+            CreateMap<ClienteUiResponse, Persona>().ReverseMap();
+            CreateMap<ClienteUiResponse, PersonaRequest>().ReverseMap();
+            CreateMap<ClienteUiRequest, PersonaRequest>().ReverseMap();
+            CreateMap<ClienteUiRequest, PersonaResponse>().ReverseMap();
+            CreateMap<ClienteUiResponse, PersonaResponse>().ReverseMap();
+            CreateMap<ClienteRequest, Cliente>().ReverseMap();
+            CreateMap<ClienteUiRequest, Persona>().ReverseMap();
+            CreateMap<ClienteUpdateUiRequest, Persona>().ReverseMap();
+
+            #region Producto
+            CreateMap<Producto, ProductoRequest>().ReverseMap();
+            CreateMap<Producto, ProductoResponse>().ReverseMap();
+            CreateMap<ProductoRequest, ProductoResponse>().ReverseMap();
+            #endregion
+
             #endregion
             #region Empleado
             CreateMap<Empleado, EmpleadoRequest>().ReverseMap();

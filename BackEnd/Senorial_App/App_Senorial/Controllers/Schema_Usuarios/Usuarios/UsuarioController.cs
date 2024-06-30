@@ -39,11 +39,7 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Get()
         {
-            var userClaims = User.Claims;
-            foreach (var claim in userClaims)
-            {
-                Console.WriteLine($"Claim Type: {claim.Type}, Value: {claim.Value}");
-            }
+            //var userClaims = User.Claims;
             var result = _usuarioBusiness.GetUiUsuarios();
             return Ok(result);
         }
@@ -68,9 +64,9 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(UsuarioResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Update([FromBody] UsuarioRequest request)
+        public async Task<ActionResult> Update([FromBody] UsuarioUiUpdateRequest request)
         {
-            var result = await _usuarioBusiness.Update(request);
+            var result = await _usuarioBusiness.UpdateUiUsuarios(request);
             return Ok(result);
         }
         /// <summary>
@@ -83,8 +79,8 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Delete(int id)
         {
-            var result = await _usuarioBusiness.Delete(id);
-            return Ok(result);
+            await _usuarioBusiness.DeleteUiUser(id);
+            return Ok( "User deleted successfully.");
         }
     }
 }

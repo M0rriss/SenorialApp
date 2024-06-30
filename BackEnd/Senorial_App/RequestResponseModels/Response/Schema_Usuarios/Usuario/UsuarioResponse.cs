@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RequestResponseModels.Response.Schema_Usuarios.Persona;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,5 +32,6 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Usuario
         public string Rol { get; set; }
         public string Estado { get; set; }
         public string? Contrasena { get; set; }
+        public PersonaResponse Persona { get; set; }
     }
 }

@@ -3,11 +3,14 @@ using DBSenorialModels.Senorial;
 using DocumentFormat.OpenXml.Vml.Office;
 using IBusiness.Schema_Almacen.Proveedores;
 using IRepository.Schema_Almacen.Proveedores;
+using IRepository.Schema_Usuarios.Personas;
 using Repository.Schema_Almacen.Proveedores;
+using Repository.Schema_Usuarios.Personas;
 using RequestResponseModels.Request.Schema_Almacen.Proveedor;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.Proveedor;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
+using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +23,13 @@ namespace Business.Schema_Almacen.Proveedores
     {
         #region Dependency Injecction
         private readonly IProveedorRepository _proveedorRepository;
+        private readonly IPersonaRepository _personaRepository;
         private readonly IMapper _mapper;
         public ProveedorBusiness(IMapper mapper)
         {
             _mapper = mapper;
             _proveedorRepository = new ProveedorRepository();
+            _personaRepository = new PersonaRepository();
         }
         #endregion
         #region CRUD
@@ -99,14 +104,98 @@ namespace Business.Schema_Almacen.Proveedores
         }
 
         #endregion
-        public List<ProveedorUiRequest> UiGetProveedor()
+        #region Insert,Update,Delete Usuarios
+        public async Task<List<ProveedorUiRequest>> UiGetProveedor()
         {
-            return _proveedorRepository.UiProveedor();
+            return await _proveedorRepository.UiProveedor();
         }
 
-        public List<ProveedorUiRequest> UiUpdateProveedor(ProveedorUiRequest proveedor)
+        public async Task<ProveedorUiResponse> InsertUiProveedor(ProveedorUiRequest request)
         {
-            throw new NotImplementedException();
+            var existingEmail = _personaRepository.BuscarCorreo(request.Correo);
+            if (existingEmail != null)
+            {
+                throw new ArgumentException("El correo electrónico ya está registrado.");
+            }
+            var existingPhone = _personaRepository.BuscarTelefono(request.Telefono);
+            if (existingPhone != null)
+            {
+                throw new ArgumentException("El número de teléfono ya está registrado.");
+            }
+            var nombreCompleto = request.ProveedorNombre.Split(' ');
+            var primerNombre = nombreCompleto[0];
+            var apellidoPaterno = nombreCompleto.Length > 1 ? nombreCompleto[1] : "";
+            var persona = new Persona
+            {
+                PrimerNombre = request.ProveedorNombre.Split(' ')[0], // Primer nombre
+                ApellidoPaterno = request.ProveedorNombre.Split(' ')[1], // Apellido paterno
+                Email = request.Correo.ToLower(),
+                Telefono = request.Telefono,
+                NroDocumento = request.Dni,
+                Genero = "",
+                IdTipoDocumento = 1
+            };
+            var personaCreada = await _personaRepository.Create(persona);
+            var nuevoProveedor = new Proveedor
+            {
+                IdPersona = personaCreada.IdPersona,
+                Vende = request.Distribuye  
+            };
+            var proveedorCreado = await _proveedorRepository.Create(nuevoProveedor);
+            var response = _mapper.Map<ProveedorUiResponse>(proveedorCreado);
+            response.Persona = _mapper.Map<PersonaResponse>(persona);
+            return response;
         }
+
+        public async Task<ProveedorUiResponse> UpdateUiProveedor(ProveedorUpdateUiRequest request)
+        {
+            var existingProveedor = _proveedorRepository.BuscarporId(request.IdProveedor);
+            if(existingProveedor == null)
+            {
+                throw new ArgumentException(nameof(existingProveedor), "Proveedor not found");
+            }
+            var existingPersona = await _personaRepository.BuscarporId(existingProveedor.IdPersona);
+            if(existingPersona == null)
+            {
+                throw new ArgumentException(nameof(existingProveedor), "Persona not found");
+            }
+            var proveedorEmail = _personaRepository.BuscarCorreo(request.Correo);
+            if(proveedorEmail != null && proveedorEmail.IdPersona != existingProveedor.IdPersona)
+            {
+                throw new ArgumentException("El correo electrónico ya está registrado.");
+            }
+            var userWithPhone = _personaRepository.BuscarTelefono(request.Telefono);
+            if (userWithPhone != null && userWithPhone.IdPersona != existingProveedor.IdPersona)
+            {
+                throw new ArgumentException("El número de teléfono ya está registrado.");
+            }
+            existingPersona.PrimerNombre = request.ProveedorNombre.Split(' ')[0];
+            existingPersona.ApellidoPaterno = request.ProveedorNombre.Split(' ')[1];
+            existingPersona.Email = request.Correo.ToLower();
+            existingPersona.Telefono = request.Telefono;
+            existingPersona.NroDocumento = request.Dni;
+            var response = _mapper.Map<ProveedorUiResponse>(existingPersona);
+            response.Distribuye = existingProveedor.Vende;
+            response.Persona = _mapper.Map<PersonaResponse>(existingPersona);
+            return response;
+
+        }
+
+        public async Task<bool> DeleteUiProveedor(int idProveedor)
+        {
+            var proveedor = await _personaRepository.GetById(idProveedor);
+            if (proveedor == null)
+            {
+                throw new ArgumentNullException(nameof(proveedor), "Persona not found");
+            }
+            var persona = await _personaRepository.GetById(proveedor.IdPersona);
+            if (persona == null)
+            {
+                throw new ArgumentException("La persona asociada no existe.");
+            }
+            await _personaRepository.DeletePersona(idProveedor);
+            return true;
+        }
+        #endregion
     }
 }

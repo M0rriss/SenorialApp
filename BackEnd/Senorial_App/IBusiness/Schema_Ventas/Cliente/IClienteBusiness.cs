@@ -11,7 +11,9 @@ namespace IBusiness.Schema_Ventas.Cliente
 {
     public interface IClienteBusiness : ICrudBusiness<ClienteRequest, ClienteResponse>
     {
-        public List<ClienteFullRequest> GetFull();
-        public List<ClienteUiRequest> UiGetCliente();
+        Task<List<ClienteUiRequest>> UiGetCliente();
+        Task<ClienteUiResponse> InsertUiCliente(ClienteUiRequest cliente);
+        Task<ClienteUiResponse> UpdateUiCliente(ClienteUpdateUiRequest cliente);
+        Task<bool> DeleteUiCliente(int idCliente);
     }
 }

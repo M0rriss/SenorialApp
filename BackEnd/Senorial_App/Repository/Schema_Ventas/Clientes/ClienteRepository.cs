@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Ventas.Clientes;
+using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
@@ -21,30 +22,9 @@ namespace Repository.Schema_Ventas.Clientes
             throw new NotImplementedException();
         }
 
-        public List<ClienteFullRequest> GetFull()
+        public async Task<List<ClienteUiRequest>> UiCliente()
         {
-            return db.Personas.Join(
-                   db.Clientes,
-                   (p) => p.IdPersona,
-                   (c) => c.IdPersona,
-                   (p, c) => new ClienteFullRequest
-                   {
-                       Persona = new PersonaRequest
-                       {
-                           IdPersona = p.IdPersona,
-                           PrimerNombre = p.PrimerNombre,
-                           SegundoNombre = p.SegundoNombre,
-                           ApellidoMaterno = p.ApellidoMaterno,
-                           ApellidoPaterno = p.ApellidoPaterno,
-                       },
-                       IdCliente = c.IdCliente
-                   }
-               ).ToList();
-        }
-
-        public List<ClienteUiRequest> UiCliente()
-        {
-            return db.Personas.Join(
+            return await db.Personas.Join(
                     db.Clientes,
                     p => p.IdPersona,
                     c => c.IdPersona,
@@ -56,14 +36,47 @@ namespace Repository.Schema_Ventas.Clientes
                     tp => tp.IdTipoDocumento,
                     (pc, tp) => new ClienteUiRequest
                     {
-                        IdCliente = pc.c.IdCliente,
                         Nombres = pc.p.PrimerNombre + " " + pc.p.ApellidoPaterno,
                         Correo = pc.p.Email,
                         Telefono = pc.p.Telefono,
                         DNI = pc.p.NroDocumento,
                     }
                     )
-                    .ToList();
+                    .ToListAsync();
+        }
+        public async Task<Cliente> InsertUiCliente(Cliente cliente)
+        {
+            await dbset.AddAsync(cliente);
+            await db.SaveChangesAsync();
+            return cliente;
+        }
+        public async Task<Cliente> UpdateUiCliente(Cliente cliente)
+        {
+            dbset.Update(cliente);
+            await db.SaveChangesAsync();
+            return cliente;
+        }
+        public async Task<bool> DeleteUiCliente(int idCliente)
+        {
+            // Buscar la persona asociada al cliente
+            var cliente = await db.Clientes.FindAsync(idCliente);
+            if (cliente == null)
+            {
+                throw new ArgumentNullException(nameof(cliente), "cliente not found");
+            }
+
+            // Eliminar la persona y sus referencias
+            db.Remove(cliente);
+            await db.SaveChangesAsync();
+
+            // Eliminar cualquier otra referencia o entidad relacionada si es necesario
+
+            return true;
+        }
+        public Cliente BuscarporId(int id)
+        {
+            var cliente = dbset.Where(x => x.IdCliente == id).FirstOrDefault();
+            return cliente;
         }
     }
 }

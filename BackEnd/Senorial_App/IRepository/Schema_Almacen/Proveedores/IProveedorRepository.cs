@@ -11,8 +11,10 @@ namespace IRepository.Schema_Almacen.Proveedores
 {
     public interface IProveedorRepository : ICrudRepository<Proveedor>
     {
-        public List<ProveedorUiRequest> UiProveedor();
-        public List<ProveedorUiRequest> UiProveedorActualizar(ProveedorUiRequest request);
-
+        Task<List<ProveedorUiRequest>> UiProveedor();
+        Task<Proveedor> InsertUiProveedor(Proveedor proveedor);
+        Task<Proveedor> UpdateUiProveedor(Proveedor proveedor);
+        Task<bool> DeleteUiProveedor(int IdProvedor);
+        Proveedor BuscarporId(int id);
     }
 }

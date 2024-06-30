@@ -28,6 +28,7 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
     }
     public class UsuarioUiRequest
     {
+        //public int IdUsuario { get; set; }
         public string Nombres { get; set; }
         [EmailAddress]
         public string Correo { get; set; }
@@ -38,14 +39,27 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         public string Rol { get; set; }
         public string Estado { get; set; }
     }
-//    SELECT CONCAT(p.primer_nombre, ' ', p.segundo_nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno) AS Nombres,
-//      p.email AS Correo,
-//       p.telefono AS Telefono,
-//       r.nombre AS Rol,
-//       e.nombre AS Estado
-//FROM Usuarios.usuario u
-//INNER JOIN Usuarios.personas p ON u.id_persona = p.id_persona
-//INNER JOIN usuarios.roles r ON u.id_rol = r.id_rol
-//INNER JOIN generico.estado e ON r.id_estado = e.id_estado;
+    public class UsuarioUiUpdateRequest
+    {
+        public int IdUsuario { get; set; }
+        public string Nombres { get; set; }
+        [EmailAddress]
+        public string Correo { get; set; }
+        [StrongPassword]
+        public string? Contrasena { get; set; }
+        [PhoneValidation]
+        public string Telefono { get; set; }
+        public string Rol { get; set; }
+        public string Estado { get; set; }
+    }
+    //    SELECT CONCAT(p.primer_nombre, ' ', p.segundo_nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno) AS Nombres,
+    //      p.email AS Correo,
+    //       p.telefono AS Telefono,
+    //       r.nombre AS Rol,
+    //       e.nombre AS Estado
+    //FROM Usuarios.usuario u
+    //INNER JOIN Usuarios.personas p ON u.id_persona = p.id_persona
+    //INNER JOIN usuarios.roles r ON u.id_rol = r.id_rol
+    //INNER JOIN generico.estado e ON r.id_estado = e.id_estado;
 
 }

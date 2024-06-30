@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240627010323_rmEstado2")]
-    partial class rmEstado2
+    [Migration("20240630051309_employee")]
+    partial class employee
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1171,7 +1171,7 @@ namespace DBSenorialModels.Data.Migraciones
                             ApellidoMaterno = "",
                             ApellidoPaterno = "Abregu",
                             Direccion = "",
-                            Email = "admin@amin.com",
+                            Email = "admin@admin.com",
                             Genero = "Masculino",
                             IdTipoDocumento = 1,
                             NroDocumento = "",
@@ -1363,14 +1363,14 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdRol = 3,
-                            Estado = "Inactivo",
+                            Estado = "Activo",
                             Nombre = "Cajero"
                         },
                         new
                         {
                             IdRol = 4,
                             Estado = "Activo",
-                            Nombre = "Empleado"
+                            Nombre = "Mozo"
                         },
                         new
                         {
@@ -1770,11 +1770,11 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 6, 26, 20, 3, 22, 537, DateTimeKind.Local).AddTicks(1077),
+                            CreatedAt = new DateTime(2024, 6, 30, 0, 13, 8, 159, DateTimeKind.Local).AddTicks(1065),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
-                            Password = "Admin-Victor1",
+                            Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=",
                             UserName = "admin"
                         });
                 });

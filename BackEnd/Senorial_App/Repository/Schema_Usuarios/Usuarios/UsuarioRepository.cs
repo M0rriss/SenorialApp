@@ -126,5 +126,24 @@ namespace Repository.Schema_Usuarios.Usuarios
             await db.SaveChangesAsync();
             return usuario;
         }
+        public async Task<Usuario> UpdateUiUsuarios(Usuario usuario)
+        {
+            usuario.Email = usuario.Email.ToLower();
+            dbset.Update(usuario);
+            await db.SaveChangesAsync();
+            return usuario;
+        }
+        public async Task<bool> DeleteUiUsuarios(int id)
+        {
+            var entity = await dbset.FindAsync(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity not found");
+            }
+
+            dbset.Remove(entity);
+            await db.SaveChangesAsync();
+            return true;
+        }
     }
 }

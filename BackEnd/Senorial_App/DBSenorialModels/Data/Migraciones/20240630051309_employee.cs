@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class rmEstado2 : Migration
+    public partial class employee : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -959,8 +959,8 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     { 1, null, "Activo", "Administrador" },
                     { 2, null, "Activo", "Desarrollador" },
-                    { 3, null, "Inactivo", "Cajero" },
-                    { 4, null, "Activo", "Empleado" },
+                    { 3, null, "Activo", "Cajero" },
+                    { 4, null, "Activo", "Mozo" },
                     { 5, null, "Activo", "Cliente" }
                 });
 
@@ -1101,13 +1101,13 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios",
                 table: "personas",
                 columns: new[] { "id_persona", "apellido_materno", "apellido_paterno", "direccion", "email", "genero", "tipo_documento", "nro_Documento", "primer_nombre", "razon_social", "segundo_nombre", "telefono", "tipo_persona" },
-                values: new object[] { 1, "", "Abregu", "", "admin@amin.com", "Masculino", 1, "", "Victor", "Señorial", "", "985851866", "Natural" });
+                values: new object[] { 1, "", "Abregu", "", "admin@admin.com", "Masculino", 1, "", "Victor", "Señorial", "", "985851866", "Natural" });
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 6, 26, 20, 3, 22, 537, DateTimeKind.Local).AddTicks(1077), "admin@admin.com", null, 1, 1, "Admin-Victor1", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 6, 30, 0, 13, 8, 159, DateTimeKind.Local).AddTicks(1065), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",

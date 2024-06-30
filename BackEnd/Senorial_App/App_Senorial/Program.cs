@@ -50,19 +50,14 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        //ValidateIssuerSigningKey = true,
-        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
-
+        //ValidateAudience = true,
+        //ValidateIssuer = true,
         ValidateIssuer = false,
         ValidateAudience = false,
-
-        //ValidateIssuer = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        //ValidateAudience = true,
         ValidAudience = builder.Configuration["Jwt:Audience"],
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
         ClockSkew = TimeSpan.Zero
     };
@@ -143,14 +138,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthentication();
+
+app.UseAuthentication();
 
 
 app.UseCors("origins");
 
 app.UseAuthorization();
 
-app.UseMiddleware(typeof(ApiMiddleware));
+//app.UseMiddleware(typeof(ApiMiddleware));
 
 app.MapControllers();
 

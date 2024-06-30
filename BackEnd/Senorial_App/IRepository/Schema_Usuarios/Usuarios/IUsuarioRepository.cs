@@ -24,7 +24,8 @@ namespace IRepository.Schema_Usuarios.Usuarios
         Task<List<UsuarioUiRequest>> UiUsuarios();
 
         Task<Usuario> InsertUiUsuarios(Usuario request);
+        Task<Usuario> UpdateUiUsuarios(Usuario usuario);
+        Task<bool> DeleteUiUsuarios(int id);
 
-        
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Proveedores;
-using Business.Schema_Ventas.Clientes;
 using IBusiness.Schema_Almacen.Proveedores;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,17 +38,39 @@ namespace App_Senorial.Controllers.Schema_Almacen.Proveedor
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Get()
         {
-            var result = _proveedorBusiness.UiGetProveedor();
+            var result = await _proveedorBusiness.UiGetProveedor();
             return Ok(result);
         }
+        /// <summary>
+        /// Inserta un nuevo cliente.
+        /// </summary>
+        /// <param name="proveedor">Datos del Proveedor a insertar.</param>
+        /// <returns>ClienteUiRequest insertado.</returns>
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(ProveedorResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> Create([FromBody] ProveedorUiRequest request)
+        {
+            var proveedorInsertado = await _proveedorBusiness.InsertUiProveedor(request);
+            return Ok(proveedorInsertado);
+        }
+
+        /// <summary>
+        /// Actualiza un cliente existente.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id">ID del Proveedor a actualizar.</param>
+        /// <param name="proveedor">Datos actualizados del cliente.</param>
+        /// <returns>ClienteUiRequest actualizado.</returns>
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProveedorResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Update([FromBody] ProveedorUiRequest request)
+        public async Task<ActionResult> Update([FromBody] ProveedorUpdateUiRequest request)
         {
-            var result =  _proveedorBusiness.UiGetProveedor();
-            return Ok(result);
+            var proveedorActualizado = await _proveedorBusiness.UpdateUiProveedor(request);
+            return Ok(proveedorActualizado);
         }
     }
 }

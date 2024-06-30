@@ -424,7 +424,7 @@ public partial class DBSenorialContext : DbContext
                     ApellidoPaterno = "Abregu",
                     ApellidoMaterno = "",
                     NroDocumento = "",
-                    Email = "admin@amin.com",
+                    Email = "admin@admin.com",
                     Telefono = "985851866",
                     Direccion = "",
                     IdTipoDocumento = 1, // ID de tipo de documento según los datos de ejemplo
@@ -486,8 +486,8 @@ public partial class DBSenorialContext : DbContext
             entity.HasData(
            new Role { IdRol = 1, Nombre = "Administrador", Estado = "Activo" }, 
            new Role { IdRol = 2, Nombre = "Desarrollador", Estado = "Activo" }, 
-           new Role { IdRol = 3, Nombre = "Cajero", Estado = "Inactivo" }, 
-           new Role { IdRol = 4, Nombre = "Empleado", Estado = "Activo" }, 
+           new Role { IdRol = 3, Nombre = "Cajero", Estado = "Activo" }, 
+           new Role { IdRol = 4, Nombre = "Mozo", Estado = "Activo" }, 
            new Role { IdRol = 5, Nombre = "Cliente", Estado = "Activo" } 
        );
         });
