@@ -21,7 +21,8 @@ namespace Repository.Schema_Usuarios.Roles
 
         public async Task<Role> GetByRol(string rolName)
         {
-            var rol = await dbset.FirstOrDefaultAsync(x => x.Nombre == rolName);
+            var roles = await dbset.ToListAsync();
+            var rol = roles.FirstOrDefault(x => x.Nombre.Equals(rolName, StringComparison.OrdinalIgnoreCase));
             return rol;
 
         }

@@ -403,8 +403,9 @@ public partial class DBSenorialContext : DbContext
             // Datos de ejemplo para TipoDocumento
             entity.HasData(
                 new TipoDocumento { IdTipoDocumento = 1, Nombre = "DNI" },
-                new TipoDocumento { IdTipoDocumento = 2, Nombre = "Pasaporte" },
-                new TipoDocumento { IdTipoDocumento = 3, Nombre = "Carnet de Extranjería" }
+                new TipoDocumento { IdTipoDocumento = 2, Nombre = "RUC" },
+                new TipoDocumento { IdTipoDocumento = 3, Nombre = "Pasaporte" },
+                new TipoDocumento { IdTipoDocumento = 4, Nombre = "Carnet de Extranjería" }
             );
         });
         modelBuilder.Entity<Persona>(entity =>

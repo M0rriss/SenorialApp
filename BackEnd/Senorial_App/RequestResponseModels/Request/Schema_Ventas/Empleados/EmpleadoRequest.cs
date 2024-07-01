@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UtilitySecurity.Validations;
 
 namespace RequestResponseModels.Request.Schema_Ventas.Empleados
 {
@@ -15,13 +16,30 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
         public int IdPersona { get; set; }
         public int IdSucursal { get; set; }
     }
-    public class EmpleadoUiRequest
+    public class EmpleadosUiRequest
     {
-        public int IdEmpleado { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
+        public string Identificacion { get; set; }
+        public string Rol { get; set; }
+        public string Estado { get; set; }
+        public string Sucursal { get; set; } = null;
+
+
+
+    }
+    public class EmpleadoUpdateUiRequest
+    {
+        public int IdEmpleado { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        [EmailAddress]
+        public string Correo { get; set; }
+        [Phone]
+        public string Telefono { get; set; }
+        [DocumentType]
         public string Identificacion { get; set; }
         public string Rol { get; set; }
         public string Estado { get; set; }

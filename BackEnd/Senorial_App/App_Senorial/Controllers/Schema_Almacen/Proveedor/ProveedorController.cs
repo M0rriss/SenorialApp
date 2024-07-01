@@ -72,5 +72,19 @@ namespace App_Senorial.Controllers.Schema_Almacen.Proveedor
             var proveedorActualizado = await _proveedorBusiness.UpdateUiProveedor(request);
             return Ok(proveedorActualizado);
         }
+        /// <summary>
+        /// Elimina un empleado existente.
+        /// </summary>
+        /// <param name="idEmpleado">ID del Empleado a eliminar.</param>
+        /// <returns>ActionResult indicando el resultado de la eliminación.</returns>
+        [HttpDelete("{idProveedor}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(string))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> Delete(int idProveedor)
+        {
+            await _proveedorBusiness.DeleteUiProveedor(idProveedor);
+            return Ok("Empleado eliminado correctamente.");
+        }
     }
 }

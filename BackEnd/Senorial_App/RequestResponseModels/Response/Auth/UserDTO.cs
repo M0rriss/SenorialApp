@@ -9,16 +9,12 @@ using System.Threading.Tasks;
 
 namespace RequestResponseModels.Response.Auth
 {
-    public class LoginEcommerceResponse
+    public class UserDTO
     {
-        public bool Success { get; set; } = false;
-        public string Message { get; set; } = "user or password incorrect";
-        public string Token { get; set; } = "";
+        public string Email { get; set; } 
+        public string PasswordHash { get; set; }
         public string RefreshToken { get; set; } = "";
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
-        public UsuarioResponse Usuario { get; set; } = new UsuarioResponse();
-        public RolesResponse Roles { get; set; } = new RolesResponse();
-        public PersonaResponse Persona { get; set; } = new PersonaResponse();
     }
 }

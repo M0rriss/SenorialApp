@@ -14,8 +14,9 @@ namespace RequestResponseModels.Response.Auth
         public bool Success { get; set; } = false;
         public string Message { get; set; } = "user or password incorrect";
         public string Token { get; set; } = "";
-        public string ExpirationToken { get; set; } = "";
         public string RefreshToken { get; set; } = "";
+        public DateTime TokenCreated { get; set; }
+        public DateTime TokenExpires { get; set; }
         public UsuarioResponse Usuario { get; set; } = new UsuarioResponse();
         public RolesResponse Roles { get; set; } = new RolesResponse();
         public PersonaResponse Persona { get; set; } =new PersonaResponse();

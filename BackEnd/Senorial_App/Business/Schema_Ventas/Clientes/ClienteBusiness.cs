@@ -224,7 +224,8 @@ namespace Business.Schema_Ventas.Clientes
                 throw new ArgumentException("La persona asociada no existe.");
             }
             // Eliminar la persona y sus referencias
-            await _personaRepository.DeletePersona(idCliente);
+            await _clienteRepository.Delete(idCliente);
+            await _personaRepository.DeletePersona(cliente.IdPersona);
 
             // Eliminar cualquier otra referencia o entidad relacionada si es necesario
 

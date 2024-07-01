@@ -20,7 +20,7 @@ namespace Repository.Schema_Ventas.Empleados
             throw new NotImplementedException();
         }
 
-        public List<EmpleadoUiRequest> UiEmpleado()
+        public async Task<List<EmpleadosUiRequest>> UiEmpleado()
         {
             return db.Empleados
         .Join(db.Personas,
@@ -34,9 +34,8 @@ namespace Repository.Schema_Ventas.Empleados
         .Join(db.Sucursals,
             epr => epr.Empleado.IdSucursal,
             s => s.IdSucursal,
-            (epr, s) => new EmpleadoUiRequest
+            (epr, s) => new EmpleadosUiRequest
             {
-                IdEmpleado = epr.Empleado.IdPersona,
                 Nombres = epr.Persona.PrimerNombre + " " + epr.Persona.SegundoNombre,
                 Apellidos = epr.Persona.ApellidoPaterno + " " + epr.Persona.ApellidoMaterno,
                 Correo = epr.Persona.Email,
@@ -47,6 +46,34 @@ namespace Repository.Schema_Ventas.Empleados
                 Sucursal = s.Nombre
             })
         .ToList();
+        }
+        public async Task<Empleado> InsertUiEmpleado(Empleado empleado)
+        {
+            await dbset.AddAsync(empleado);
+            await db.SaveChangesAsync();
+            return empleado;
+        }
+        public async Task<Empleado> UpdateUiEmpleado(Empleado empleado)
+        {
+            dbset.Update(empleado);
+            await db.SaveChangesAsync();
+            return empleado;
+        }
+        public async Task<bool> DeleteUiEmpleado(int idEmpleado)
+        {
+            var empleado = await db.Empleados.FindAsync(idEmpleado);
+            if(empleado == null)
+            {
+                throw new ArgumentNullException(nameof(empleado), "Empleado no encontrado");
+            }
+            db.Remove(empleado);
+            await db.SaveChangesAsync();
+            return true;    
+        }
+        public Empleado BuscarporId(int id)
+        {
+            var empleado = dbset. Where(e => e.IdEmpleado == id).FirstOrDefault();
+            return empleado;
         }
     }
 }

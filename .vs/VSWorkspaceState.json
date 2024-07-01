@@ -12,6 +12,6 @@
     "\\BackEnd\\Senorial_App\\UtilSecurity",
     "\\BackEnd\\Senorial_App\\UtilSecurity\\CrearToken"
   ],
-  "SelectedNode": "\\BackEnd\\Senorial_App\\Senorial_App.sln",
+  "SelectedNode": "\\BackEnd\\Senorial_App\\Business\\Schema_Usuarios\\Usuario\\UsuarioBusiness.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -2,11 +2,13 @@
 using Azure;
 using Business.Schema_Usuarios.Roles;
 using Business.Schema_Usuarios.Usuarios;
+using CommonModels.Common;
 using DBSenorialModels.Senorial;
 using DocumentFormat.OpenXml.Spreadsheet;
 using IBusiness.Auth;
 using IBusiness.Schema_Usuarios.Roles;
 using IBusiness.Schema_Usuarios.Usuarios;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RequestResponseModels.Request.Auth;
@@ -18,12 +20,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using UtilitySecurity.CrearToken;
 using UtilitySecurity.Encriptar;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Business.Auth
 {
     public class AuthBusiness : IAuthBusiness
@@ -34,6 +38,8 @@ namespace Business.Auth
         private readonly IRolesBusiness _rolesBusiness;
         private readonly EncriptarDesencriptar _encriptar;
         private readonly IConfiguration _configuration;
+        private readonly LoginGenericResponse _userDTO;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public AuthBusiness(IMapper mapper)
         {
             _mapper = mapper;
@@ -41,6 +47,8 @@ namespace Business.Auth
             _encriptar = new EncriptarDesencriptar();
             _rolesBusiness = new RolesBusiness(mapper);
             _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            _userDTO = new LoginGenericResponse();
+            _httpContextAccessor = new HttpContextAccessor();
         }
         #region JWT
         public async Task<string> GenerateToken(LoginUserRequest oLoginResponse)
@@ -65,7 +73,30 @@ namespace Business.Auth
             var createdToken = tokenHandler.CreateToken(tokend);
             return await Task.FromResult(tokenHandler.WriteToken(createdToken));
         }
+        private async Task<RefreshToken> GenerateRefreshToken()
+        {
+            var refreshToken = new RefreshToken
+            {
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+            return refreshToken;
+        }
+        private async Task SetRefreshToken(RefreshToken newRefreshToken)
+        {
+            var httpContext = _httpContextAccessor.HttpContext;
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = newRefreshToken.Expires,
+            };
 
+            httpContext.Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
+
+            _userDTO.RefreshToken = newRefreshToken.Token;
+            _userDTO.TokenCreated = DateTime.UtcNow;
+            _userDTO.TokenExpires = newRefreshToken.Expires;
+        }
         #endregion
         #endregion
         #region Logica
@@ -92,10 +123,14 @@ namespace Business.Auth
             }
             // Generar token JWT
             result.Token = await GenerateToken(request);
+
+            var refreshToken = await GenerateRefreshToken();
+            await SetRefreshToken(refreshToken);
+
             // Login exitoso
             result.Success = true;
             result.Message = "Login correcto";
-
+            result.RefreshToken = refreshToken.Token;
             result.Usuario = new UsuarioResponse
             {
                 Email = usuario.Email,
@@ -103,7 +138,6 @@ namespace Business.Auth
             };
 
             return result;
-
         }
 
         public async Task<LoginEcommerceResponse> LoginEcommerce(LoginUserRequest request)
@@ -115,14 +149,15 @@ namespace Business.Auth
             string newPassword = _encriptar.AES_encriptar(request.Password);
             if (newPassword != usuario.Password) return result;
 
-            result.Success = true;
-            result.Message = "Login Correcto";
-
-            result.Usuario = new UsuarioResponse { Email = request.Email };
 
             result.Token = await GenerateToken(request);
+            var refreshToken = await GenerateRefreshToken();
+            await SetRefreshToken(refreshToken);
 
-
+            result.Success = true;
+            result.Message = "Login Correcto";
+            result.RefreshToken= refreshToken.Token;    
+            result.Usuario = new UsuarioResponse { Email = request.Email };
             return result;
         }
 
@@ -135,12 +170,14 @@ namespace Business.Auth
             string newPassword = _encriptar.AES_encriptar(request.Password);
             if (newPassword != usuario.Password) return result;
 
+            result.Token = await GenerateToken(request);
+            var refreshToken = await GenerateRefreshToken();
+            await SetRefreshToken(refreshToken);
             result.Success = true;
             result.Message = "Login Correcto";
-
+            result.RefreshToken = refreshToken.Token;
             result.Usuario = new UsuarioResponse { Email = request.Email };
             result.RolName = new RolesResponse { Nombre = "Mozo" };
-            result.Token = await GenerateToken(request);
             return result;
         }
 

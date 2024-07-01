@@ -11,6 +11,10 @@ namespace IRepository.Schema_Ventas.Empleados
 {
     public interface IEmpleadoRepository : ICrudRepository<Empleado>
     {
-        public List<EmpleadoUiRequest> UiEmpleado();
+        Task<List<EmpleadosUiRequest>> UiEmpleado();
+        Task<Empleado> InsertUiEmpleado(Empleado empleado);
+        Task<Empleado> UpdateUiEmpleado(Empleado empleado);
+        Task<bool> DeleteUiEmpleado(int idEmpleado);
+        Empleado BuscarporId(int id);
     }
 }

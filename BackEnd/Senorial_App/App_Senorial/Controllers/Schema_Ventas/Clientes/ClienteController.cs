@@ -77,19 +77,19 @@ namespace App_Senorial.Controllers.Schema_Ventas.Clientes
             return Ok(clienteActualizado);
         }
 
-        ///// <summary>
-        ///// Elimina un cliente existente por ID.
-        ///// </summary>
-        ///// <param name="id">ID del cliente a eliminar.</param>
-        ///// <returns>Respuesta de éxito.</returns>
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ClienteResponse))]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
-        //[ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        //public async Task<ActionResult<GenericResponse>> Delete(int id)
-        //{
-        //    await _clienteBusiness.DeleteUiCliente(id);
-        //    return Ok("Cliente deleted successfully.");
-        //}
+        /// <summary>
+        /// Elimina un cliente existente por ID.
+        /// </summary>
+        /// <param name="id">ID del cliente a eliminar.</param>
+        /// <returns>Respuesta de éxito.</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ClienteResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult<GenericResponse>> Delete(int id)
+        {
+            await _clienteBusiness.DeleteUiCliente(id);
+            return Ok("Cliente deleted successfully.");
+        }
     }
 }

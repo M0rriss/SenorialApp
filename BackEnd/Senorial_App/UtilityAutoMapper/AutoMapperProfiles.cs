@@ -172,7 +172,15 @@ namespace UtilityAutoMapper
             CreateMap<Empleado, EmpleadoRequest>().ReverseMap();
             CreateMap<Empleado, EmpleadoResponse>().ReverseMap();
             CreateMap<EmpleadoRequest, EmpleadoResponse>().ReverseMap();
-            CreateMap<Empleado, EmpleadoUiRequest>().ReverseMap();
+            CreateMap<Empleado, EmpleadosUiRequest>().ReverseMap();
+            CreateMap<Empleado, EmpleadosUiResponse>().ReverseMap();
+            CreateMap<EmpleadosUiResponse,EmpleadosUiRequest>().ReverseMap();
+            CreateMap<EmpleadosUiResponse, Persona>().ReverseMap();
+            CreateMap<EmpleadosUiRequest, Persona>().ReverseMap();
+            CreateMap<EmpleadosUiRequest,PersonaResponse>().ReverseMap();
+            CreateMap<EmpleadosUiResponse, PersonaResponse>().ReverseMap();
+            CreateMap<Empleado, Persona>().ReverseMap();
+
 
             #endregion
             #endregion

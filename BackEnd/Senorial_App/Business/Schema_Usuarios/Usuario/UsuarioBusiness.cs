@@ -13,11 +13,13 @@ using IRepository.Schema_Usuarios.Personas;
 using IRepository.Schema_Usuarios.Roles;
 using IRepository.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Ventas.Clientes;
+using IRepository.Schema_Ventas.Empleados;
 using Microsoft.Extensions.Logging;
 using Repository.Schema_Usuarios.Personas;
 using Repository.Schema_Usuarios.Roles;
 using Repository.Schema_Usuarios.Usuarios;
 using Repository.Schema_Ventas.Clientes;
+using Repository.Schema_Ventas.Empleados;
 using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Request.Auth.Recuperacion;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
@@ -27,6 +29,7 @@ using RequestResponseModels.Response.Auth;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Schema_Ventas.Empleados;
 using Services.Gmail;
 using UtilitySecurity.Encriptar;
 using UtilitySecurity.OneTimePassword;
@@ -41,6 +44,7 @@ namespace Business.Schema_Usuarios.Usuarios
         private readonly EncriptarDesencriptar _encriptar;
         private readonly IPersonaRepository _personaRepository;
         private readonly IClienteRepository _clienteRepository;
+        private readonly IEmpleadoRepository _empleadoRepository;
         private readonly IRolesRepository _rolesRepository;
         private readonly OtpGenerator _otpGenerator;
         private readonly SendEmailWithGoogleSMTP _sendEmailService;
@@ -56,6 +60,7 @@ namespace Business.Schema_Usuarios.Usuarios
             _otpGenerator = new OtpGenerator();
             _sendEmailService = new SendEmailWithGoogleSMTP();
             _otpStorage = new Dictionary<string, OtpData>();
+            _empleadoRepository = new EmpleadoRepository();
         }
         #endregion
         #region CRUD
@@ -212,6 +217,8 @@ namespace Business.Schema_Usuarios.Usuarios
             {
                 throw new ArgumentException("Las contraseñas no coinciden");
             }
+
+            // Crear Persona
             var persona = await _personaRepository.Create(new Persona
             {
                 PrimerNombre = request.Nombres,
@@ -225,11 +232,25 @@ namespace Business.Schema_Usuarios.Usuarios
                 IdTipoDocumento = 1,
                 Genero = "",
                 TipoPersona = "Natural",
-                
             });
-            
-            var buscarRol = await _rolesRepository.GetByRol("Mozo"); 
 
+            // Obtener Rol
+            var buscarRol = await _rolesRepository.GetByRol("Mozo");
+
+            // Crear y guardar Empleado
+            var nuevoEmpleado = new Empleado
+            {
+                IdPersona = persona.IdPersona,
+                IdSucursal = 1,
+                IdRol = buscarRol.IdRol,
+            };
+            var nuevoEmpleadoCreado = await _empleadoRepository.Create(nuevoEmpleado);
+            if (nuevoEmpleadoCreado == null)
+            {
+                // Loguear un mensaje de error o lanzar una excepción
+                throw new Exception("Error al crear el empleado");
+            }
+            // Crear y guardar Usuario
             var nuevoUsuario = new Usuario
             {
                 IdPersona = persona.IdPersona,
@@ -237,8 +258,9 @@ namespace Business.Schema_Usuarios.Usuarios
                 Password = _encriptar.AES_encriptar(request.Password),
                 IdRol = buscarRol.IdRol,
             };
-
             nuevoUsuario = await _usuarioRepository.RegistrarUsuarioMobile(nuevoUsuario);
+
+            // Mapear y devolver la respuesta
             var response = _mapper.Map<SignInMobileResponse>(nuevoUsuario);
             response.Persona = _mapper.Map<PersonaResponse>(persona);
 
@@ -495,7 +517,7 @@ namespace Business.Schema_Usuarios.Usuarios
 
             return response;
         }
-        public async Task DeleteUiUser(int idUsuario)
+        public async Task<bool> DeleteUiUser(int idUsuario)
         {
             var usuario = await _usuarioRepository.GetById(idUsuario);
             if (usuario == null)
@@ -514,6 +536,7 @@ namespace Business.Schema_Usuarios.Usuarios
 
             // Delete associated person
             await _personaRepository.DeletePersona(persona.IdPersona);
+            return true;
         }
         #endregion
     }

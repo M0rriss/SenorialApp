@@ -186,14 +186,19 @@ namespace Business.Schema_Almacen.Proveedores
             var proveedor = await _personaRepository.GetById(idProveedor);
             if (proveedor == null)
             {
-                throw new ArgumentNullException(nameof(proveedor), "Persona not found");
+                throw new ArgumentNullException(nameof(proveedor), "Proveedor not found");
             }
             var persona = await _personaRepository.GetById(proveedor.IdPersona);
             if (persona == null)
             {
                 throw new ArgumentException("La persona asociada no existe.");
             }
-            await _personaRepository.DeletePersona(idProveedor);
+            // Eliminar la persona asociada al proveedor
+            await _proveedorRepository.Delete(idProveedor);
+
+            // Eliminar el proveedor
+            await _personaRepository.DeletePersona(persona.IdPersona);
+
             return true;
         }
         #endregion

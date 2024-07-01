@@ -27,7 +27,7 @@ namespace IBusiness.Schema_Usuarios.Usuarios
        
         Task<UsuarioUiResponse> InsertUiUsuarios(UsuarioUiRequest request);
         Task<UsuarioUiResponse> UpdateUiUsuarios(UsuarioUiUpdateRequest usuario);
-        Task DeleteUiUser(int idUsuario);
+        Task<bool> DeleteUiUser(int idUsuario);
 
 
     }
