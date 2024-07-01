@@ -1,4 +1,4 @@
-﻿using RequestResponseModels.Response.Schema_Usuarios.PersonaNatural;
+﻿using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +14,39 @@ namespace RequestResponseModels.Response.Auth
         public string Dni { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
-        public PersonaNaturalResponse PersonaNatural { get; set; } = new PersonaNaturalResponse();
-        //public string NombresCompletos
-        //{
-        //    get
-        //    {
-        //        return $"{PersonaNatural.PrimerNombre} {PersonaNatural.SegundoNombre} {PersonaNatural.ApellidoPaterno} {PersonaNatural.ApellidoMaterno}".Trim();
-        //    }
-        //}
+        public PersonaResponse Persona { get; set; }
+        public string NombreCompleto
+        {
+
+            get
+            {
+                if (Persona == null)
+                {
+                    return string.Empty;
+                }
+
+                var primerNombre = Persona.PrimerNombre ?? string.Empty;
+                var segundoNombre = Persona.SegundoNombre ?? string.Empty;
+
+                return $"{primerNombre} {segundoNombre}";
+
+            }
+        }
+        public string ApellidosCompleto
+        {
+            get
+            {
+                if (Persona == null)
+                {
+                    return string.Empty;
+                }
+
+                var apellidoPaterno = Persona.ApellidoPaterno ?? string.Empty;
+                var apellidoMaterno = Persona.ApellidoMaterno ?? string.Empty;
+
+                return $"{apellidoPaterno} {apellidoMaterno}";
+            }
+        }
 
     }
 }

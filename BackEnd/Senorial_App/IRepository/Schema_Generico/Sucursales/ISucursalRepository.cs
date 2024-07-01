@@ -10,5 +10,6 @@ namespace IRepository.Schema_Generico.Sucursales
 {
     public interface ISucursalRepository : ICrudRepository<Sucursal>
     {
+        Task<Sucursal> GetBySucursalName(string sucursalName);
     }
 }

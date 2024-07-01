@@ -22,12 +22,12 @@ public partial class DetalleInventario
     [Column("stock_total")]
     public int StockTotal { get; set; }
 
-    [Column("id_estado")]
-    public int IdEstado { get; set; }
+    [Column("estado")]
+    public string Estado { get; set; }
 
-    [ForeignKey("IdEstado")]
-    [InverseProperty("DetalleInventarios")]
-    public virtual Estado IdEstadoNavigation { get; set; } = null!;
+    //[ForeignKey("IdEstado")]
+    //[InverseProperty("DetalleInventarios")]
+    //public virtual Estado IdEstadoNavigation { get; set; } = null!;
 
     [ForeignKey("IdInsumo")]
     [InverseProperty("DetalleInventarios")]

@@ -21,7 +21,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Voucher
         public string? Igv { get; set; }
         [StringLength(50)]
         public string? ImporteTotal { get; set; }
-        public int IdEstado { get; set; }
+        public string Estado { get; set; }
         public int IdTipoTransaccion { get; set; }
     }
 }

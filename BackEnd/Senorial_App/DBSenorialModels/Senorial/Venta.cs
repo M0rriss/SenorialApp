@@ -27,8 +27,8 @@ public partial class Venta
     [Column("id_cliente")]
     public int IdCliente { get; set; }
 
-    [Column("id_estado")]
-    public int IdEstado { get; set; }
+    [Column("estado")]
+    public string Estado { get; set; }
 
     [Column("id_empleado")]
     public int IdEmpleado { get; set; }
@@ -88,9 +88,9 @@ public partial class Venta
     [InverseProperty("Venta")]
     public virtual Empleado IdEmpleadoNavigation { get; set; } = null!;
 
-    [ForeignKey("IdEstado")]
-    [InverseProperty("Venta")]
-    public virtual Estado IdEstadoNavigation { get; set; } = null!;
+    //[ForeignKey("IdEstado")]
+    //[InverseProperty("Venta")]
+    //public virtual Estado IdEstadoNavigation { get; set; } = null!;
 
     [ForeignKey("IdMetodo")]
     [InverseProperty("Venta")]

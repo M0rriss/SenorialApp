@@ -17,6 +17,6 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Roles
         public string? Abreviacion { get; set; }
         [StringLength(100)]
         public string? Descripcion { get; set; }
-        public int IdEstado { get; set; }
+        public string Estado { get; set; }
     }
 }

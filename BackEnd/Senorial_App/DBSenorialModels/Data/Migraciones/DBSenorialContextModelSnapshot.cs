@@ -263,9 +263,10 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetInventario"));
 
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
 
                     b.Property<int>("IdInsumo")
                         .HasColumnType("int")
@@ -281,8 +282,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdDetInventario")
                         .HasName("detalle_inventario_id_pk");
-
-                    b.HasIndex("IdEstado");
 
                     b.HasIndex("IdInsumo");
 
@@ -437,41 +436,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.ToTable("entradas", "Almacen");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Estado", b =>
-                {
-                    b.Property<int>("IdEstado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstado"));
-
-                    b.Property<string>("Abreviacion")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("abreviacion");
-
-                    b.Property<int?>("IdEstadoPadre")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado_padre");
-
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nombre");
-
-                    b.HasKey("IdEstado")
-                        .HasName("estado_id_pk");
-
-                    b.HasIndex("IdEstadoPadre");
-
-                    b.HasIndex(new[] { "Nombre" }, "estado_descripcion_uk")
-                        .IsUnique()
-                        .HasFilter("[nombre] IS NOT NULL");
-
-                    b.ToTable("estado", "Generico");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
                 {
                     b.Property<int>("IdImg")
@@ -524,6 +488,458 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdUnidad");
 
                     b.ToTable("insumo", "Almacen");
+
+                    b.HasData(
+                        new
+                        {
+                            IdInsumo = 1,
+                            IdUnidad = 1,
+                            Nombre = "Aceite"
+                        },
+                        new
+                        {
+                            IdInsumo = 2,
+                            IdUnidad = 2,
+                            Nombre = "Aceite"
+                        },
+                        new
+                        {
+                            IdInsumo = 3,
+                            IdUnidad = 3,
+                            Nombre = "Aceite Sésamo"
+                        },
+                        new
+                        {
+                            IdInsumo = 4,
+                            IdUnidad = 4,
+                            Nombre = "Aji"
+                        },
+                        new
+                        {
+                            IdInsumo = 5,
+                            IdUnidad = 5,
+                            Nombre = "Ajicero"
+                        },
+                        new
+                        {
+                            IdInsumo = 6,
+                            IdUnidad = 3,
+                            Nombre = "Arroz con leche"
+                        },
+                        new
+                        {
+                            IdInsumo = 7,
+                            IdUnidad = 4,
+                            Nombre = "Azucar Blanca"
+                        },
+                        new
+                        {
+                            IdInsumo = 8,
+                            IdUnidad = 4,
+                            Nombre = "Azucar Rubia"
+                        },
+                        new
+                        {
+                            IdInsumo = 9,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Basura"
+                        },
+                        new
+                        {
+                            IdInsumo = 10,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Cuarto Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 11,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Ensalada"
+                        },
+                        new
+                        {
+                            IdInsumo = 12,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Medio Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 13,
+                            IdUnidad = 5,
+                            Nombre = "Bolsa Pollo Entero"
+                        },
+                        new
+                        {
+                            IdInsumo = 14,
+                            IdUnidad = 6,
+                            Nombre = "Bolsa Rollo Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 15,
+                            IdUnidad = 3,
+                            Nombre = "Café Sobre"
+                        },
+                        new
+                        {
+                            IdInsumo = 16,
+                            IdUnidad = 3,
+                            Nombre = "Caja ligas"
+                        },
+                        new
+                        {
+                            IdInsumo = 17,
+                            IdUnidad = 7,
+                            Nombre = "Carbón"
+                        },
+                        new
+                        {
+                            IdInsumo = 18,
+                            IdUnidad = 4,
+                            Nombre = "Cebolla"
+                        },
+                        new
+                        {
+                            IdInsumo = 19,
+                            IdUnidad = 8,
+                            Nombre = "Cebolla China"
+                        },
+                        new
+                        {
+                            IdInsumo = 20,
+                            IdUnidad = 3,
+                            Nombre = "Champiñon lata"
+                        },
+                        new
+                        {
+                            IdInsumo = 21,
+                            IdUnidad = 9,
+                            Nombre = "Chicha Morada"
+                        },
+                        new
+                        {
+                            IdInsumo = 22,
+                            IdUnidad = 3,
+                            Nombre = "Conserva Durazno"
+                        },
+                        new
+                        {
+                            IdInsumo = 23,
+                            IdUnidad = 8,
+                            Nombre = "Espinaca"
+                        },
+                        new
+                        {
+                            IdInsumo = 24,
+                            IdUnidad = 4,
+                            Nombre = "Fideo Spaguetti"
+                        },
+                        new
+                        {
+                            IdInsumo = 25,
+                            IdUnidad = 3,
+                            Nombre = "Fósforo"
+                        },
+                        new
+                        {
+                            IdInsumo = 26,
+                            IdUnidad = 3,
+                            Nombre = "Fresa"
+                        },
+                        new
+                        {
+                            IdInsumo = 27,
+                            IdUnidad = 3,
+                            Nombre = "Gas"
+                        },
+                        new
+                        {
+                            IdInsumo = 28,
+                            IdUnidad = 8,
+                            Nombre = "Hierba Buena"
+                        },
+                        new
+                        {
+                            IdInsumo = 29,
+                            IdUnidad = 3,
+                            Nombre = "Huevo"
+                        },
+                        new
+                        {
+                            IdInsumo = 30,
+                            IdUnidad = 4,
+                            Nombre = "Ketchup"
+                        },
+                        new
+                        {
+                            IdInsumo = 31,
+                            IdUnidad = 2,
+                            Nombre = "Leche"
+                        },
+                        new
+                        {
+                            IdInsumo = 32,
+                            IdUnidad = 3,
+                            Nombre = "Leche Evaporada"
+                        },
+                        new
+                        {
+                            IdInsumo = 33,
+                            IdUnidad = 2,
+                            Nombre = "Leche Fresca"
+                        },
+                        new
+                        {
+                            IdInsumo = 34,
+                            IdUnidad = 3,
+                            Nombre = "Lechuga"
+                        },
+                        new
+                        {
+                            IdInsumo = 35,
+                            IdUnidad = 3,
+                            Nombre = "Leña"
+                        },
+                        new
+                        {
+                            IdInsumo = 36,
+                            IdUnidad = 4,
+                            Nombre = "Limón"
+                        },
+                        new
+                        {
+                            IdInsumo = 37,
+                            IdUnidad = 4,
+                            Nombre = "Lonja"
+                        },
+                        new
+                        {
+                            IdInsumo = 38,
+                            IdUnidad = 3,
+                            Nombre = "Mates General"
+                        },
+                        new
+                        {
+                            IdInsumo = 39,
+                            IdUnidad = 4,
+                            Nombre = "Mayonesa"
+                        },
+                        new
+                        {
+                            IdInsumo = 40,
+                            IdUnidad = 3,
+                            Nombre = "Milo lata"
+                        },
+                        new
+                        {
+                            IdInsumo = 41,
+                            IdUnidad = 10,
+                            Nombre = "Mondadiente"
+                        },
+                        new
+                        {
+                            IdInsumo = 42,
+                            IdUnidad = 4,
+                            Nombre = "Mostaza"
+                        },
+                        new
+                        {
+                            IdInsumo = 43,
+                            IdUnidad = 3,
+                            Nombre = "Ostión"
+                        },
+                        new
+                        {
+                            IdInsumo = 44,
+                            IdUnidad = 3,
+                            Nombre = "Pan"
+                        },
+                        new
+                        {
+                            IdInsumo = 45,
+                            IdUnidad = 3,
+                            Nombre = "Panetón"
+                        },
+                        new
+                        {
+                            IdInsumo = 46,
+                            IdUnidad = 11,
+                            Nombre = "Papa"
+                        },
+                        new
+                        {
+                            IdInsumo = 47,
+                            IdUnidad = 3,
+                            Nombre = "Papaya"
+                        },
+                        new
+                        {
+                            IdInsumo = 48,
+                            IdUnidad = 5,
+                            Nombre = "Papel Manteca"
+                        },
+                        new
+                        {
+                            IdInsumo = 49,
+                            IdUnidad = 3,
+                            Nombre = "Pepino"
+                        },
+                        new
+                        {
+                            IdInsumo = 50,
+                            IdUnidad = 3,
+                            Nombre = "Pimenton"
+                        },
+                        new
+                        {
+                            IdInsumo = 51,
+                            IdUnidad = 3,
+                            Nombre = "Pisco"
+                        },
+                        new
+                        {
+                            IdInsumo = 52,
+                            IdUnidad = 3,
+                            Nombre = "Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 53,
+                            IdUnidad = 3,
+                            Nombre = "Plátano"
+                        },
+                        new
+                        {
+                            IdInsumo = 54,
+                            IdUnidad = 3,
+                            Nombre = "Queso molde"
+                        },
+                        new
+                        {
+                            IdInsumo = 55,
+                            IdUnidad = 3,
+                            Nombre = "Queso Parmesano"
+                        },
+                        new
+                        {
+                            IdInsumo = 56,
+                            IdUnidad = 9,
+                            Nombre = "Refresco Maracuya"
+                        },
+                        new
+                        {
+                            IdInsumo = 57,
+                            IdUnidad = 3,
+                            Nombre = "Ron"
+                        },
+                        new
+                        {
+                            IdInsumo = 58,
+                            IdUnidad = 3,
+                            Nombre = "Salsa de Tomate"
+                        },
+                        new
+                        {
+                            IdInsumo = 59,
+                            IdUnidad = 3,
+                            Nombre = "Sillao"
+                        },
+                        new
+                        {
+                            IdInsumo = 60,
+                            IdUnidad = 5,
+                            Nombre = "Taper 6 u 8 Ensalada"
+                        },
+                        new
+                        {
+                            IdInsumo = 61,
+                            IdUnidad = 5,
+                            Nombre = "Taper Cuarto Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 62,
+                            IdUnidad = 5,
+                            Nombre = "Taper Ensalada Entero"
+                        },
+                        new
+                        {
+                            IdInsumo = 63,
+                            IdUnidad = 5,
+                            Nombre = "Taper Medio Pollo"
+                        },
+                        new
+                        {
+                            IdInsumo = 64,
+                            IdUnidad = 5,
+                            Nombre = "Taper Pollo Entero"
+                        },
+                        new
+                        {
+                            IdInsumo = 65,
+                            IdUnidad = 4,
+                            Nombre = "Tomate"
+                        },
+                        new
+                        {
+                            IdInsumo = 66,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Plástico Flan"
+                        },
+                        new
+                        {
+                            IdInsumo = 67,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Plástico Gelatina"
+                        },
+                        new
+                        {
+                            IdInsumo = 68,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Vidrio Flan"
+                        },
+                        new
+                        {
+                            IdInsumo = 69,
+                            IdUnidad = 3,
+                            Nombre = "Vaso Vidrio Gelatina"
+                        },
+                        new
+                        {
+                            IdInsumo = 70,
+                            IdUnidad = 3,
+                            Nombre = "Vinagre"
+                        },
+                        new
+                        {
+                            IdInsumo = 71,
+                            IdUnidad = 4,
+                            Nombre = "Vinagreta"
+                        },
+                        new
+                        {
+                            IdInsumo = 72,
+                            IdUnidad = 3,
+                            Nombre = "Vino"
+                        },
+                        new
+                        {
+                            IdInsumo = 73,
+                            IdUnidad = 3,
+                            Nombre = "Whiski"
+                        },
+                        new
+                        {
+                            IdInsumo = 74,
+                            IdUnidad = 3,
+                            Nombre = "Yuquitas"
+                        },
+                        new
+                        {
+                            IdInsumo = 75,
+                            IdUnidad = 4,
+                            Nombre = "Zanahoria"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Inventario", b =>
@@ -628,6 +1044,33 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("metodo_pago_id_pk");
 
                     b.ToTable("metodo_pago", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMetodo = 1,
+                            Descripcion = "Efectivo"
+                        },
+                        new
+                        {
+                            IdMetodo = 2,
+                            Descripcion = "Tarjeta"
+                        },
+                        new
+                        {
+                            IdMetodo = 3,
+                            Descripcion = "Transferencia"
+                        },
+                        new
+                        {
+                            IdMetodo = 4,
+                            Descripcion = "Descuento"
+                        },
+                        new
+                        {
+                            IdMetodo = 5,
+                            Descripcion = "Otros"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
@@ -638,6 +1081,16 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("id_persona");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPersona"));
+
+                    b.Property<string>("ApellidoMaterno")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("apellido_materno");
+
+                    b.Property<string>("ApellidoPaterno")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("apellido_paterno");
 
                     b.Property<string>("Direccion")
                         .HasMaxLength(100)
@@ -655,21 +1108,34 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("genero");
 
+                    b.Property<int>("IdTipoDocumento")
+                        .HasColumnType("int")
+                        .HasColumnName("tipo_documento");
+
                     b.Property<string>("NroDocumento")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("nro_Documento");
+
+                    b.Property<string>("PrimerNombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("primer_nombre");
+
+                    b.Property<string>("RazonSocial")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("razon_social");
+
+                    b.Property<string>("SegundoNombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("segundo_nombre");
 
                     b.Property<string>("Telefono")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)")
                         .HasColumnName("telefono");
-
-                    b.Property<string>("TipoDocumento")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("tipo_documento");
 
                     b.Property<string>("TipoPersona")
                         .HasMaxLength(50)
@@ -678,6 +1144,8 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdPersona")
                         .HasName("persona_id_pk");
+
+                    b.HasIndex("IdTipoDocumento");
 
                     b.HasIndex(new[] { "Email" }, "personas_email_uk")
                         .IsUnique()
@@ -692,61 +1160,24 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasFilter("[telefono] IS NOT NULL");
 
                     b.ToTable("personas", "Usuarios");
-                });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaJuridica", b =>
-                {
-                    b.Property<int>("IdPersona")
-                        .HasColumnType("int")
-                        .HasColumnName("id_persona");
-
-                    b.Property<string>("NombreComercial")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("nombre_comercial");
-
-                    b.Property<string>("RazonSocial")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("razon_social");
-
-                    b.HasKey("IdPersona")
-                        .HasName("persona_juridica_id_pk");
-
-                    b.ToTable("persona_juridicas", "Usuarios");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaNatural", b =>
-                {
-                    b.Property<int>("IdPersona")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_persona");
-
-                    b.Property<string>("ApellidoMaterno")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("apellido_materno");
-
-                    b.Property<string>("ApellidoPaterno")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("apellido_paterno");
-
-                    b.Property<string>("PrimerNombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("primer_nombre");
-
-                    b.Property<string>("SegundoNombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("segundo_nombre");
-
-                    b.HasKey("IdPersona")
-                        .HasName("persona_natural_id_pk");
-
-                    b.ToTable("persona_natural", "Usuarios");
+                    b.HasData(
+                        new
+                        {
+                            IdPersona = 1,
+                            ApellidoMaterno = "",
+                            ApellidoPaterno = "Abregu",
+                            Direccion = "",
+                            Email = "admin@admin.com",
+                            Genero = "Masculino",
+                            IdTipoDocumento = 1,
+                            NroDocumento = "",
+                            PrimerNombre = "Victor",
+                            RazonSocial = "Señorial",
+                            SegundoNombre = "",
+                            Telefono = "985851866",
+                            TipoPersona = "Natural"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Produccion", b =>
@@ -898,9 +1329,10 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(10)")
                         .HasColumnName("abreviacion");
 
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -910,9 +1342,39 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasKey("IdRol")
                         .HasName("roles_id_pk");
 
-                    b.HasIndex("IdEstado");
-
                     b.ToTable("roles", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdRol = 1,
+                            Estado = "Activo",
+                            Nombre = "Administrador"
+                        },
+                        new
+                        {
+                            IdRol = 2,
+                            Estado = "Activo",
+                            Nombre = "Desarrollador"
+                        },
+                        new
+                        {
+                            IdRol = 3,
+                            Estado = "Activo",
+                            Nombre = "Cajero"
+                        },
+                        new
+                        {
+                            IdRol = 4,
+                            Estado = "Activo",
+                            Nombre = "Mozo"
+                        },
+                        new
+                        {
+                            IdRol = 5,
+                            Estado = "Activo",
+                            Nombre = "Cliente"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
@@ -957,17 +1419,13 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("direccion");
 
-                    b.Property<int>("IdAmbiente")
+                    b.Property<int?>("IdAmbiente")
                         .HasColumnType("int")
                         .HasColumnName("id_ambiente");
 
-                    b.Property<int>("IdDocumento")
+                    b.Property<int?>("IdDocumento")
                         .HasColumnType("int")
                         .HasColumnName("id_documento");
-
-                    b.Property<int>("IdUbigeo")
-                        .HasColumnType("int")
-                        .HasColumnName("id_ubigeo");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -981,9 +1439,21 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasIndex("IdDocumento");
 
-                    b.HasIndex("IdUbigeo");
-
                     b.ToTable("sucursal", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            IdSucursal = 1,
+                            Direccion = "",
+                            Nombre = "Pio Pata"
+                        },
+                        new
+                        {
+                            IdSucursal = 2,
+                            Direccion = "",
+                            Nombre = "Chilca"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.SucursalUsuario", b =>
@@ -1029,6 +1499,43 @@ namespace DBSenorialModels.Data.Migraciones
                     b.ToTable("tipo_comprobantes", "Ventas");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.TipoDocumento", b =>
+                {
+                    b.Property<int>("IdTipoDocumento")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_tipo_documento");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoDocumento"));
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("IdTipoDocumento")
+                        .HasName("tipo_documento_id_pk");
+
+                    b.ToTable("tipo_documento", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTipoDocumento = 1,
+                            Nombre = "DNI"
+                        },
+                        new
+                        {
+                            IdTipoDocumento = 2,
+                            Nombre = "Pasaporte"
+                        },
+                        new
+                        {
+                            IdTipoDocumento = 3,
+                            Nombre = "Carnet de Extranjería"
+                        });
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoPedido", b =>
                 {
                     b.Property<int>("IdTipoPedido")
@@ -1047,6 +1554,18 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("tipo_pedido_id_pk");
 
                     b.ToTable("tipo_pedido", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTipoPedido = 1,
+                            Descripcion = "Para Comer Aqui"
+                        },
+                        new
+                        {
+                            IdTipoPedido = 2,
+                            Descripcion = "Para Llevar"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoTransaccion", b =>
@@ -1074,41 +1593,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.ToTable("tipo_transaccion", "Ventas");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Ubigeo", b =>
-                {
-                    b.Property<int>("IdUbigeo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_ubigeo");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUbigeo"));
-
-                    b.Property<string>("Codigo")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)")
-                        .HasColumnName("codigo");
-
-                    b.Property<string>("Departamento")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("departamento");
-
-                    b.Property<string>("Distrito")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("distrito");
-
-                    b.Property<string>("Provincia")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("provincia");
-
-                    b.HasKey("IdUbigeo")
-                        .HasName("ubigeo_id_pk");
-
-                    b.ToTable("ubigeo", "Generico");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.UnidadMedicion", b =>
                 {
                     b.Property<int>("IdUnidad")
@@ -1132,6 +1616,74 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("unidad_medicion_id_pk");
 
                     b.ToTable("unidad_medicion", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            IdUnidad = 1,
+                            Abreviacion = "Balde",
+                            Descripcion = "Balde"
+                        },
+                        new
+                        {
+                            IdUnidad = 2,
+                            Abreviacion = "Lt",
+                            Descripcion = "Litro"
+                        },
+                        new
+                        {
+                            IdUnidad = 3,
+                            Abreviacion = "Und",
+                            Descripcion = "Unidad"
+                        },
+                        new
+                        {
+                            IdUnidad = 4,
+                            Abreviacion = "Kg",
+                            Descripcion = "Kilo"
+                        },
+                        new
+                        {
+                            IdUnidad = 5,
+                            Abreviacion = "Cto",
+                            Descripcion = "Ciento"
+                        },
+                        new
+                        {
+                            IdUnidad = 6,
+                            Abreviacion = "Rllo",
+                            Descripcion = "Rollo"
+                        },
+                        new
+                        {
+                            IdUnidad = 7,
+                            Abreviacion = "B-5Kg",
+                            Descripcion = "Bolsa 5 kg"
+                        },
+                        new
+                        {
+                            IdUnidad = 8,
+                            Abreviacion = "At",
+                            Descripcion = "Atado"
+                        },
+                        new
+                        {
+                            IdUnidad = 9,
+                            Abreviacion = "Bsa",
+                            Descripcion = "Bolsa"
+                        },
+                        new
+                        {
+                            IdUnidad = 10,
+                            Abreviacion = "Cja",
+                            Descripcion = "Caja"
+                        },
+                        new
+                        {
+                            IdUnidad = 11,
+                            Abreviacion = "B-20Kg",
+                            Descripcion = "Bolsa 20 kg"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Usuario", b =>
@@ -1144,10 +1696,15 @@ namespace DBSenorialModels.Data.Migraciones
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("CambiarPassword")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("cambiar_password");
+
+                    b.Property<string>("CodigoRecuperacion")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("codigo_recuperacion");
 
                     b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -1203,6 +1760,20 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasFilter("[user_name] IS NOT NULL");
 
                     b.ToTable("usuario", "Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdUsuario = 1,
+                            CambiarPassword = "",
+                            CodigoRecuperacion = "",
+                            CreatedAt = new DateTime(2024, 6, 30, 0, 13, 8, 159, DateTimeKind.Local).AddTicks(1065),
+                            Email = "admin@admin.com",
+                            IdPersona = 1,
+                            IdRol = 1,
+                            Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Venta", b =>
@@ -1217,6 +1788,11 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Property<decimal?>("CostoBase")
                         .HasColumnType("decimal(10, 2)")
                         .HasColumnName("costo_base");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
 
                     b.Property<DateTime?>("FechaVenta")
                         .ValueGeneratedOnAdd()
@@ -1239,10 +1815,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Property<int>("IdEmpleado")
                         .HasColumnType("int")
                         .HasColumnName("id_empleado");
-
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
 
                     b.Property<int>("IdMetodo")
                         .HasColumnType("int")
@@ -1298,8 +1870,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasIndex("IdEmpleado");
 
-                    b.HasIndex("IdEstado");
-
                     b.HasIndex("IdMetodo");
 
                     b.HasIndex("IdSucursal");
@@ -1333,14 +1903,15 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("cantidad");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("estado");
+
                     b.Property<string>("FechaEmision")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("fecha_emision");
-
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_estado");
 
                     b.Property<int>("IdTipoTransaccion")
                         .HasColumnType("int")
@@ -1363,8 +1934,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdVoucher")
                         .HasName("voucher_id_pk");
-
-                    b.HasIndex("IdEstado");
 
                     b.HasIndex("IdTipoTransaccion");
 
@@ -1473,12 +2042,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("DetalleInventarios")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estado_id_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.Insumo", "IdInsumoNavigation")
                         .WithMany("DetalleInventarios")
                         .HasForeignKey("IdInsumo")
@@ -1490,8 +2053,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasForeignKey("IdInventario")
                         .IsRequired()
                         .HasConstraintName("inventario_id_fk");
-
-                    b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdInsumoNavigation");
 
@@ -1593,16 +2154,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdInventarioNavigation");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Estado", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoPadreNavigation")
-                        .WithMany("InverseIdEstadoPadreNavigation")
-                        .HasForeignKey("IdEstadoPadre")
-                        .HasConstraintName("estado_padre_fk");
-
-                    b.Navigation("IdEstadoPadreNavigation");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.UnidadMedicion", "IdUnidadNavigation")
@@ -1625,26 +2176,15 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdSucursalNavigation");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaJuridica", b =>
+            modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Persona", "IdPersonaNavigation")
-                        .WithOne("PersonaJuridica")
-                        .HasForeignKey("DBSenorialModels.Senorial.PersonaJuridica", "IdPersona")
+                    b.HasOne("DBSenorialModels.Senorial.TipoDocumento", "IdTipoDocumentoNavigation")
+                        .WithMany("Personas")
+                        .HasForeignKey("IdTipoDocumento")
                         .IsRequired()
-                        .HasConstraintName("persona_id_fk");
+                        .HasConstraintName("tipo_documentos_id_fk");
 
-                    b.Navigation("IdPersonaNavigation");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.PersonaNatural", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Persona", "IdPersonaNavigation")
-                        .WithOne("PersonaNatural")
-                        .HasForeignKey("DBSenorialModels.Senorial.PersonaNatural", "IdPersona")
-                        .IsRequired()
-                        .HasConstraintName("personas_id_fk");
-
-                    b.Navigation("IdPersonaNavigation");
+                    b.Navigation("IdTipoDocumentoNavigation");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
@@ -1704,17 +2244,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdPersonaNavigation");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Role", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("Roles")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estado_id_fk");
-
-                    b.Navigation("IdEstadoNavigation");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.DetalleInventario", "IdDetInventarioNavigation")
@@ -1747,26 +2276,16 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasOne("DBSenorialModels.Senorial.Ambiente", "IdAmbienteNavigation")
                         .WithMany("Sucursals")
                         .HasForeignKey("IdAmbiente")
-                        .IsRequired()
                         .HasConstraintName("ambientes_id_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Documento", "IdDocumentoNavigation")
                         .WithMany("Sucursals")
                         .HasForeignKey("IdDocumento")
-                        .IsRequired()
                         .HasConstraintName("documento_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.Ubigeo", "IdUbigeoNavigation")
-                        .WithMany("Sucursals")
-                        .HasForeignKey("IdUbigeo")
-                        .IsRequired()
-                        .HasConstraintName("ubigeo_id_fk");
 
                     b.Navigation("IdAmbienteNavigation");
 
                     b.Navigation("IdDocumentoNavigation");
-
-                    b.Navigation("IdUbigeoNavigation");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.SucursalUsuario", b =>
@@ -1799,7 +2318,7 @@ namespace DBSenorialModels.Data.Migraciones
                         .WithMany("Usuarios")
                         .HasForeignKey("IdPersona")
                         .IsRequired()
-                        .HasConstraintName("personas_usuario_id_fk");
+                        .HasConstraintName("personas_usuarios_id_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Role", "IdRolNavigation")
                         .WithMany("Usuarios")
@@ -1840,12 +2359,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .IsRequired()
                         .HasConstraintName("empleado_id_fk");
 
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("Venta")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estado_id_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.MetodoPago", "IdMetodoNavigation")
                         .WithMany("Venta")
                         .HasForeignKey("IdMetodo")
@@ -1878,8 +2391,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.Navigation("IdEmpleadoNavigation");
 
-                    b.Navigation("IdEstadoNavigation");
-
                     b.Navigation("IdMetodoNavigation");
 
                     b.Navigation("IdSucursalNavigation");
@@ -1891,19 +2402,11 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Voucher", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Estado", "IdEstadoNavigation")
-                        .WithMany("Vouchers")
-                        .HasForeignKey("IdEstado")
-                        .IsRequired()
-                        .HasConstraintName("estados_id_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.TipoTransaccion", "IdTipoTransaccionNavigation")
                         .WithMany("Vouchers")
                         .HasForeignKey("IdTipoTransaccion")
                         .IsRequired()
                         .HasConstraintName("tipo_transaccion_id_fk");
-
-                    b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdTipoTransaccionNavigation");
                 });
@@ -1957,19 +2460,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Estado", b =>
-                {
-                    b.Navigation("DetalleInventarios");
-
-                    b.Navigation("InverseIdEstadoPadreNavigation");
-
-                    b.Navigation("Roles");
-
-                    b.Navigation("Venta");
-
-                    b.Navigation("Vouchers");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
                 {
                     b.Navigation("Productos");
@@ -2011,10 +2501,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Clientes");
 
                     b.Navigation("Empleados");
-
-                    b.Navigation("PersonaJuridica");
-
-                    b.Navigation("PersonaNatural");
 
                     b.Navigation("Proveedors");
 
@@ -2076,6 +2562,11 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Venta");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.TipoDocumento", b =>
+                {
+                    b.Navigation("Personas");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoPedido", b =>
                 {
                     b.Navigation("Venta");
@@ -2084,11 +2575,6 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoTransaccion", b =>
                 {
                     b.Navigation("Vouchers");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Ubigeo", b =>
-                {
-                    b.Navigation("Sucursals");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.UnidadMedicion", b =>

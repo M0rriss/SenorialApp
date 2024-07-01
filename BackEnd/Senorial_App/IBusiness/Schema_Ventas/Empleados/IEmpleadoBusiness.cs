@@ -11,5 +11,9 @@ namespace IBusiness.Schema_Ventas.Empleados
 {
     public interface IEmpleadoBusiness : ICrudBusiness<EmpleadoRequest, EmpleadoResponse>
     {
+        Task<List<EmpleadosUiRequest>> UiGetEmpleado();
+        Task<EmpleadosUiResponse> InsertUiEmpleado(EmpleadosUiRequest request);
+        Task<EmpleadosUiResponse> UpdateUiEmpleado(EmpleadoUpdateUiRequest request);
+        Task<bool> DeleteUiEmpleado (int idEmpleado);
     }
 }

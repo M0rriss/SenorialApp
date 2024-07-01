@@ -45,7 +45,10 @@ public partial class Usuario
 
     [Column("cambiar_password")]
     [StringLength(100)]
-    public string CambiarPassword { get; set; } = "";
+    public string? CambiarPassword { get; set; } = "";
+    [Column("codigo_recuperacion")]
+    [StringLength(10)]
+    public string CodigoRecuperacion { get; set; } = "";
 
     [ForeignKey("IdImg")]
     [InverseProperty("Usuarios")]

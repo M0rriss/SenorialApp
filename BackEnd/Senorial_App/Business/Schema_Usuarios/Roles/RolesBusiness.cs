@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using IBusiness.Schema_Usuarios.Roles;
 using IRepository.Schema_Usuarios.Roles;
 using Repository.Schema_Usuarios.Roles;
@@ -91,7 +92,12 @@ namespace Business.Schema_Usuarios.Roles
         {
             _rolesRepository.Dispose();
         }
-
         #endregion
+        public async Task<RolesResponse> GetByRol(string rol)
+        {
+            var roles = await _rolesRepository.GetByRol(rol);
+            var response = _mapper.Map<RolesResponse>(roles);
+            return response;
+        }
     }
 }

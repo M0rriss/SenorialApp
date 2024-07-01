@@ -21,18 +21,14 @@ public partial class Role
     [StringLength(10)]
     public string? Abreviacion { get; set; }
 
-    [Column("id_estado")]
-    public int IdEstado { get; set; }
+    [Column("estado")]
+    public string Estado { get; set; }
 
     [InverseProperty("IdRolNavigation")]
     public virtual ICollection<DetalleDashMenu> DetalleDashMenus { get; set; } = new List<DetalleDashMenu>();
 
     [InverseProperty("IdRolNavigation")]
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
-
-    [ForeignKey("IdEstado")]
-    [InverseProperty("Roles")]
-    public virtual Estado IdEstadoNavigation { get; set; } = null!;
 
     [InverseProperty("IdRolNavigation")]
     public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();

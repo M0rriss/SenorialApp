@@ -17,5 +17,37 @@ namespace Repository.Schema_Usuarios.Personas
         {
             throw new NotImplementedException();
         }
+        public async Task<Persona> BuscarporId(int id)
+        {
+            var persona = dbset.Where(x => x.IdPersona == id).FirstOrDefault();
+            return persona;
+        }
+        public Persona BuscarCorreo(string email)
+        {
+            var persona = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+            return persona;
+        }
+        public Persona BuscarDni(string documento)
+        {
+            var persona = dbset.Where(x => x.NroDocumento == documento).FirstOrDefault();
+            return persona;
+        }
+        public Persona BuscarTelefono(string phone)
+        {
+            var persona = dbset.Where(x => x.Telefono == phone).FirstOrDefault();
+            return persona;
+        }
+        public async Task<bool> DeletePersona(int id)
+        {
+            var entity = await dbset.FindAsync(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Person not found");
+            }
+
+            dbset.Remove(entity);
+            await db.SaveChangesAsync();
+            return true;
+        }
     }
 }

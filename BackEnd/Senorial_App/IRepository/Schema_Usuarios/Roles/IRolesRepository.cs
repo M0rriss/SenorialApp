@@ -10,5 +10,6 @@ namespace IRepository.Schema_Usuarios.Roles
 {
     public interface IRolesRepository : ICrudRepository<Role>
     {
+        Task<Role> GetByRol(string rol);
     }
 }

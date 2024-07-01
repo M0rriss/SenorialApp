@@ -46,7 +46,7 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Entrada> Entradas { get; set; }
 
-    public virtual DbSet<Estado> Estados { get; set; }
+    //public virtual DbSet<Estado> Estados { get; set; }
 
     public virtual DbSet<Imagene> Imagenes { get; set; }
 
@@ -62,9 +62,9 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Persona> Personas { get; set; }
 
-    public virtual DbSet<PersonaJuridica> PersonaJuridicas { get; set; }
+    //public virtual DbSet<PersonaJuridica> PersonaJuridicas { get; set; }
 
-    public virtual DbSet<PersonaNatural> PersonaNaturals { get; set; }
+    //public virtual DbSet<PersonaNatural> PersonaNaturals { get; set; }
 
     public virtual DbSet<Produccion> Produccions { get; set; }
 
@@ -85,10 +85,9 @@ public partial class DBSenorialContext : DbContext
     public virtual DbSet<TipoComprobante> TipoComprobantes { get; set; }
 
     public virtual DbSet<TipoPedido> TipoPedidos { get; set; }
+    public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
 
     public virtual DbSet<TipoTransaccion> TipoTransaccions { get; set; }
-
-    public virtual DbSet<Ubigeo> Ubigeos { get; set; }
 
     public virtual DbSet<UnidadMedicion> UnidadMedicions { get; set; }
 
@@ -174,6 +173,9 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleCompras)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("insumo_id_fk");
+            
+
+            
         });
 
         modelBuilder.Entity<DetalleDashMenu>(entity =>
@@ -193,9 +195,9 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdDetInventario).HasName("detalle_inventario_id_pk");
 
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.DetalleInventarios)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estado_id_fk");
+            //entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.DetalleInventarios)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("estado_id_fk");
 
             entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleInventarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -271,12 +273,6 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("inventario_id_entrada_fk");
         });
 
-        modelBuilder.Entity<Estado>(entity =>
-        {
-            entity.HasKey(e => e.IdEstado).HasName("estado_id_pk");
-
-            entity.HasOne(d => d.IdEstadoPadreNavigation).WithMany(p => p.InverseIdEstadoPadreNavigation).HasConstraintName("estado_padre_fk");
-        });
 
         modelBuilder.Entity<Imagene>(entity =>
         {
@@ -290,6 +286,83 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdUnidadNavigation).WithMany(p => p.Insumos)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("unidad_medida_id_fk");
+            entity.HasData(
+            new Insumo { IdInsumo = 1,  Nombre = "Aceite", IdUnidad = 1 }, // Balde
+            new Insumo { IdInsumo = 2,  Nombre = "Aceite", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 3,  Nombre = "Aceite Sésamo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 4,  Nombre = "Aji", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 5,  Nombre = "Ajicero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 6,  Nombre = "Arroz con leche", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 7,  Nombre = "Azucar Blanca", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 8,  Nombre = "Azucar Rubia", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 9,  Nombre = "Bolsa Basura", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 10, Nombre = "Bolsa Cuarto Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 11, Nombre = "Bolsa Ensalada", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 12, Nombre = "Bolsa Medio Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 13, Nombre = "Bolsa Pollo Entero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 14, Nombre = "Bolsa Rollo Pollo", IdUnidad = 6 }, // Rollo
+            new Insumo { IdInsumo = 15, Nombre = "Café Sobre", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 16, Nombre = "Caja ligas", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 17, Nombre = "Carbón", IdUnidad = 7 }, // Bolsa 5 kg
+            new Insumo { IdInsumo = 18, Nombre = "Cebolla", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 19, Nombre = "Cebolla China", IdUnidad = 8 }, // Atado
+            new Insumo { IdInsumo = 20, Nombre = "Champiñon lata", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 21, Nombre = "Chicha Morada", IdUnidad = 9 }, // Bolsa
+            new Insumo { IdInsumo = 22, Nombre = "Conserva Durazno", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 23, Nombre = "Espinaca", IdUnidad = 8 }, // Atado
+            new Insumo { IdInsumo = 24, Nombre = "Fideo Spaguetti", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 25, Nombre = "Fósforo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 26, Nombre = "Fresa", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 27, Nombre = "Gas", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 28, Nombre = "Hierba Buena", IdUnidad = 8 }, // Atado
+            new Insumo { IdInsumo = 29, Nombre = "Huevo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 30, Nombre = "Ketchup", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 31, Nombre = "Leche", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 32, Nombre = "Leche Evaporada", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 33, Nombre = "Leche Fresca", IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 34, Nombre = "Lechuga", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 35, Nombre = "Leña", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 36, Nombre = "Limón", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 37, Nombre = "Lonja", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 38, Nombre = "Mates General", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 39, Nombre = "Mayonesa", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 40, Nombre = "Milo lata", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 41, Nombre = "Mondadiente", IdUnidad = 10 }, // Caja
+            new Insumo { IdInsumo = 42, Nombre = "Mostaza", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 43, Nombre = "Ostión", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 44, Nombre = "Pan", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 45, Nombre = "Panetón", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 46, Nombre = "Papa", IdUnidad = 11 }, // Bolsa 20 kg
+            new Insumo { IdInsumo = 47, Nombre = "Papaya", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 48, Nombre = "Papel Manteca", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 49, Nombre = "Pepino", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 50, Nombre = "Pimenton", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 51, Nombre = "Pisco", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 52, Nombre = "Pollo", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 53, Nombre = "Plátano", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 54, Nombre = "Queso molde", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 55, Nombre = "Queso Parmesano", IdUnidad = 3 },// Unidad
+            new Insumo { IdInsumo = 56, Nombre = "Refresco Maracuya", IdUnidad = 9 }, // Bolsa
+            new Insumo { IdInsumo = 57, Nombre = "Ron", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 58, Nombre = "Salsa de Tomate", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 59, Nombre = "Sillao", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 60, Nombre = "Taper 6 u 8 Ensalada", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 61, Nombre = "Taper Cuarto Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 62, Nombre = "Taper Ensalada Entero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 63, Nombre = "Taper Medio Pollo", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 64, Nombre = "Taper Pollo Entero", IdUnidad = 5 }, // Ciento
+            new Insumo { IdInsumo = 65, Nombre = "Tomate", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 66, Nombre = "Vaso Plástico Flan", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 67, Nombre = "Vaso Plástico Gelatina", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 68, Nombre = "Vaso Vidrio Flan", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 69, Nombre = "Vaso Vidrio Gelatina", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 70, Nombre = "Vinagre", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 71, Nombre = "Vinagreta", IdUnidad = 4 }, // Kilo
+            new Insumo { IdInsumo = 72, Nombre = "Vino", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 73, Nombre = "Whiski", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 74, Nombre = "Yuquitas", IdUnidad = 3 }, // Unidad
+            new Insumo { IdInsumo = 75, Nombre = "Zanahoria", IdUnidad = 4 } // Kilo
+        );
         });
 
         modelBuilder.Entity<Inventario>(entity =>
@@ -314,37 +387,55 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<MetodoPago>(entity =>
         {
             entity.HasKey(e => e.IdMetodo).HasName("metodo_pago_id_pk");
+            entity.HasData(
+                new MetodoPago { IdMetodo = 1, Descripcion = "Efectivo" },
+                new MetodoPago { IdMetodo = 2, Descripcion = "Tarjeta" },
+                new MetodoPago { IdMetodo = 3, Descripcion = "Transferencia" },
+                new MetodoPago { IdMetodo = 4, Descripcion = "Descuento" },
+                new MetodoPago { IdMetodo = 5, Descripcion = "Otros" }
+            );
         });
+        modelBuilder.Entity<TipoDocumento>(entity =>
+        {
+            entity.ToTable("tipo_documento", "Usuarios"); // Tabla y esquema
+            entity.HasKey(e => e.IdTipoDocumento).HasName("tipo_documento_id_pk"); // Clave primaria
 
+            // Datos de ejemplo para TipoDocumento
+            entity.HasData(
+                new TipoDocumento { IdTipoDocumento = 1, Nombre = "DNI" },
+                new TipoDocumento { IdTipoDocumento = 2, Nombre = "RUC" },
+                new TipoDocumento { IdTipoDocumento = 3, Nombre = "Pasaporte" },
+                new TipoDocumento { IdTipoDocumento = 4, Nombre = "Carnet de Extranjería" }
+            );
+        });
         modelBuilder.Entity<Persona>(entity =>
         {
+            entity.ToTable("personas", "Usuarios"); // Tabla y esquema
             entity.HasKey(e => e.IdPersona).HasName("persona_id_pk");
+            entity.HasOne(e => e.IdTipoDocumentoNavigation).WithMany(p=> p.Personas)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("tipo_documentos_id_fk");
+
+            entity.HasData(
+                new Persona
+                {
+                    IdPersona = 1,
+                    PrimerNombre = "Victor",
+                    SegundoNombre = "",
+                    ApellidoPaterno = "Abregu",
+                    ApellidoMaterno = "",
+                    NroDocumento = "",
+                    Email = "admin@admin.com",
+                    Telefono = "985851866",
+                    Direccion = "",
+                    IdTipoDocumento = 1, // ID de tipo de documento según los datos de ejemplo
+                    Genero = "Masculino",
+                    TipoPersona = "Natural",
+                    RazonSocial = "Señorial"
+                }
+            );
         });
 
-        modelBuilder.Entity<PersonaJuridica>(entity =>
-        {
-            entity.HasKey(e => e.IdPersona).HasName("persona_juridica_id_pk");
-
-            entity.Property(e => e.IdPersona).ValueGeneratedNever();
-
-            entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaJuridica)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("persona_id_fk");
-        });
-
-        modelBuilder.Entity<PersonaNatural>(entity =>
-        {
-            entity.HasKey(e => e.IdPersona).HasName("persona_natural_id_pk");
-
-            //entity.Property(e => e.IdPersona).ValueGeneratedNever();
-            entity.Property(e => e.IdPersona).HasColumnName("id_persona").HasColumnType("int").IsRequired();
-
-
-            entity.HasOne(d => d.IdPersonaNavigation).WithOne(p => p.PersonaNatural)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("personas_id_fk");
-        });
-        
         modelBuilder.Entity<Produccion>(entity =>
         {
             entity.HasKey(e => e.IdProduccion).HasName("produccion_id_pk");
@@ -392,10 +483,14 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.IdRol).HasName("roles_id_pk");
-
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Roles)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estado_id_fk");
+            
+            entity.HasData(
+           new Role { IdRol = 1, Nombre = "Administrador", Estado = "Activo" }, 
+           new Role { IdRol = 2, Nombre = "Desarrollador", Estado = "Activo" }, 
+           new Role { IdRol = 3, Nombre = "Cajero", Estado = "Activo" }, 
+           new Role { IdRol = 4, Nombre = "Mozo", Estado = "Activo" }, 
+           new Role { IdRol = 5, Nombre = "Cliente", Estado = "Activo" } 
+       );
         });
 
         modelBuilder.Entity<Salida>(entity =>
@@ -426,10 +521,11 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdDocumentoNavigation).WithMany(p => p.Sucursals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("documento_id_fk");
+            entity.HasData(
+                new Sucursal {IdSucursal = 1 , Nombre = "Pio Pata",Direccion = ""},
+                new Sucursal {IdSucursal = 2 , Nombre = "Chilca", Direccion = "" }
+                );
 
-            entity.HasOne(d => d.IdUbigeoNavigation).WithMany(p => p.Sucursals)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("ubigeo_id_fk");
         });
 
         modelBuilder.Entity<SucursalUsuario>(entity =>
@@ -453,6 +549,9 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<TipoPedido>(entity =>
         {
             entity.HasKey(e => e.IdTipoPedido).HasName("tipo_pedido_id_pk");
+            entity.HasData(
+            new TipoPedido { IdTipoPedido = 1, Descripcion = "Para Comer Aqui" },
+            new TipoPedido { IdTipoPedido = 2, Descripcion = "Para Llevar" });
         });
 
         modelBuilder.Entity<TipoTransaccion>(entity =>
@@ -460,14 +559,23 @@ public partial class DBSenorialContext : DbContext
             entity.HasKey(e => e.IdTipoTransaccion).HasName("tipo_transaccion_id_pk");
         });
 
-        modelBuilder.Entity<Ubigeo>(entity =>
-        {
-            entity.HasKey(e => e.IdUbigeo).HasName("ubigeo_id_pk");
-        });
 
         modelBuilder.Entity<UnidadMedicion>(entity =>
         {
             entity.HasKey(e => e.IdUnidad).HasName("unidad_medicion_id_pk");
+            entity.HasData(
+        new UnidadMedicion { IdUnidad = 1, Abreviacion = "Balde", Descripcion = "Balde" },
+        new UnidadMedicion { IdUnidad = 2, Abreviacion = "Lt", Descripcion = "Litro" },
+        new UnidadMedicion { IdUnidad = 3, Abreviacion = "Und", Descripcion = "Unidad" },
+        new UnidadMedicion { IdUnidad = 4, Abreviacion = "Kg", Descripcion = "Kilo" },
+        new UnidadMedicion { IdUnidad = 5, Abreviacion = "Cto", Descripcion = "Ciento" },
+        new UnidadMedicion { IdUnidad = 6, Abreviacion = "Rllo", Descripcion = "Rollo" },
+        new UnidadMedicion { IdUnidad = 7, Abreviacion = "B-5Kg", Descripcion = "Bolsa 5 kg" },
+        new UnidadMedicion { IdUnidad = 8, Abreviacion = "At", Descripcion = "Atado" },
+        new UnidadMedicion { IdUnidad = 9, Abreviacion = "Bsa", Descripcion = "Bolsa" },
+        new UnidadMedicion { IdUnidad = 10, Abreviacion = "Cja", Descripcion = "Caja" },
+        new UnidadMedicion { IdUnidad = 11, Abreviacion = "B-20Kg", Descripcion = "Bolsa 20 kg" }
+    );
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -482,11 +590,24 @@ public partial class DBSenorialContext : DbContext
 
             entity.HasOne(d => d.IdPersonaNavigation).WithMany(p => p.Usuarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("personas_usuario_id_fk");
+                .HasConstraintName("personas_usuarios_id_fk");
 
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("roles_id_fk");
+            entity.HasData(
+            new Usuario
+            {
+                IdUsuario = 1,
+                CambiarPassword = "", // Asignación temporal para el ejemplo
+                CreatedAt = DateTime.Now,
+                Email = "admin@admin.com",
+                IdRol = 1, // Asigna el Id del rol de Administrador
+                IdPersona = 1, // Asigna el Id de la persona asociada al usuario
+                Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", // Admin-Victor1
+                UserName = "admin"
+            }
+        );
         });
 
         modelBuilder.Entity<Venta>(entity =>
@@ -496,38 +617,42 @@ public partial class DBSenorialContext : DbContext
             entity.Property(e => e.FechaVenta).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.IdAperturaNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdApertura) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("apertura_caja_id_fk");
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdCliente) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cliente_id_fk");
 
             entity.HasOne(d => d.IdComprobanteNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdComprobante) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("comprobante_id_fk");
 
             entity.HasOne(d => d.IdEmpleadoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdEmpleado) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("empleado_id_fk");
 
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Venta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estado_id_fk");
-
             entity.HasOne(d => d.IdMetodoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdMetodo) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("metodo_id_fk");
 
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdSucursal) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sucursales_ventas_id_fk");
 
             entity.HasOne(d => d.IdTipoPedidoNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdTipoPedido) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("tipo_pedido_id_fk");
 
             entity.HasOne(d => d.IdVoucherNavigation).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.IdVoucher) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("voucher_id_fk");
         });
@@ -536,11 +661,13 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdVoucher).HasName("voucher_id_pk");
 
-            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Vouchers)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("estados_id_fk");
+            //entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Vouchers)
+            //    .HasForeignKey(d => d.IdEstado) // Añadir clave foránea explícitamente
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("estados_id_fk");
 
             entity.HasOne(d => d.IdTipoTransaccionNavigation).WithMany(p => p.Vouchers)
+                .HasForeignKey(d => d.IdTipoTransaccion) // Añadir clave foránea explícitamente
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("tipo_transaccion_id_fk");
         });

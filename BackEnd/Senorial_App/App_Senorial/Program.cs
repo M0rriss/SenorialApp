@@ -1,15 +1,35 @@
+using App_Senorial.Middleware;
+using Business.Auth;
 using DBSenorialModels.Data;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Services.Gmail;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using UtilityAutoMapper;
 using UtilitySecurity.OneTimePassword;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "origins",
+                      builder =>
+                      {
+                          builder.WithOrigins("http://127.0.0.1:7283");
+                          //builder.AllowAnyOrigin();
+                          builder.AllowAnyMethod();//get post put delete patch 
+                          builder.AllowAnyHeader();//
+                      });
+});
+
 
 // Add services to the container.
 
@@ -18,24 +38,31 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //JWT 
-builder.Services
-    .AddHttpContextAccessor()
-    .AddAuthorization()
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Audience = builder.Configuration["Jwt:Audience"];
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ClockSkew = TimeSpan.FromMinutes(3),
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+        //ValidateAudience = true,
+        //ValidateIssuer = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
 //SMTP CONFIG
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
@@ -55,6 +82,30 @@ builder.Services.AddSwaggerGen(c =>
             Email = "i2026200@continental.edu.pe",
         },
     });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter into field the word 'Bearer' followed by a space and the JWT value",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 
     // Include XML comments for better documentation
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -70,7 +121,7 @@ builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfi
 
 
 
-
+//Migraciones
 var app = builder.Build();
 using( var scope = app.Services.CreateScope())
 {
@@ -87,7 +138,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
+
+
+app.UseCors("origins");
+
 app.UseAuthorization();
+
+//app.UseMiddleware(typeof(ApiMiddleware));
 
 app.MapControllers();
 
