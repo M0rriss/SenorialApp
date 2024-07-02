@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/text_formatter.dart';
+import 'package:flutter/services.dart';
 
 class MyInputText extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
   final Color fillColor;
-  final double width;  
-  final double height; 
+  final double width;
+  final double height;
+  final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
 
   const MyInputText({
     Key? key,
@@ -15,7 +19,9 @@ class MyInputText extends StatefulWidget {
     required this.obscureText,
     required this.fillColor,
     this.width = 398,
-    this.height = 57,           
+    this.height = 57,
+    this.maxLength, 
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -26,6 +32,7 @@ class _MyInputTextState extends State<MyInputText> {
   late FocusNode _focusNode;
   bool _hasFocus = false;
   bool _obscureText = true;
+  Color focusColor = const Color.fromRGBO(236, 236, 236, 1);
 
   @override
   void initState() {
@@ -54,54 +61,61 @@ class _MyInputTextState extends State<MyInputText> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Container(
-        width: widget.width,
-        height: widget.height, 
-        child: TextField(
-          focusNode: _focusNode,
-          controller: widget.controller,
-          obscureText: _obscureText,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: widget.width,
+            height: widget.height,
+            child: TextFormField(
+              focusNode: _focusNode,
+              controller: widget.controller,
+              obscureText: _obscureText,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: _hasFocus ? focusColor : widget.fillColor,
+                hintText: widget.hintText,
+                suffixIcon: widget.obscureText
+                    ? IconButton(
+                        icon: Icon(
+                          _obscureText ? Icons.visibility : Icons.visibility_off,
+                          color: Color.fromRGBO(180, 185, 202, 1),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      )
+                    : null,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              maxLength: widget.maxLength,
+              inputFormatters: widget.inputFormatters,
+              onChanged: (text) {
+                if (text.isNotEmpty) {
+                  widget.controller.selection = TextSelection.fromPosition(
+                    TextPosition(offset: text.length),
+                  );
+                }
+              },
+            ),
           ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: _hasFocus ? Colors.yellow : widget.fillColor,
-            hintText: widget.hintText,
-            suffixIcon: widget.obscureText 
-                ? IconButton(
-                    icon: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: Color.fromRGBO(180, 185, 202, 1),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                  )
-                : null,
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          onChanged: (text) {
-            if (text.isNotEmpty) {
-              widget.controller.selection = TextSelection.fromPosition(
-                TextPosition(offset: text.length),
-              );
-            }
-          },
-        ),
+        ],
       ),
     );
   }

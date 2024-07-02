@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Importa flutter_svg
 
-class SquareIcon extends StatelessWidget{
+class SquareIcon extends StatelessWidget {
   final String imagePath;
-  const SquareIcon({super.key, required this.imagePath});
+
+  const SquareIcon({Key? key, required this.imagePath}) : super(key: key);
 
   @override
-  Widget build (BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        border: Border.all(color:Colors.black),
-        borderRadius: BorderRadius.circular(16),
+      padding: const EdgeInsets.all(10),
+      child: SvgPicture.asset(
+        imagePath,
+        height: 82,
+        width: 82,
       ),
-      child: Image.asset(imagePath,height: 40,),
     );
   }
 }

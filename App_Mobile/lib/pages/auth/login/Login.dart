@@ -7,44 +7,98 @@ import 'package:m_senorial/components/my_text_title.dart';
 import 'package:m_senorial/components/square_icon.dart';
 
 class Login extends StatefulWidget {
-  Login({super.key});
+  Login({Key? key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _rememberMe = false;
 
+  ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+  }
+
+  @override
+  void dispose() {
+    emailController.removeListener(_validateForm);
+    passwordController.removeListener(_validateForm);
+    emailController.dispose();
+    passwordController.dispose();
+    isFormValid.dispose();
+    super.dispose();
+  }
+
+  void _validateForm() {
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    final isEmailValid = _isValidEmail(email);
+    final isPasswordValid = password.isNotEmpty;
+
+    isFormValid.value = isEmailValid && isPasswordValid;
+  }
+
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(
+      r'^[^@]+@[^@]+\.[^@]+$',
+    );
+    return emailRegex.hasMatch(email);
+  }
+
+  void signIn() {
+    if (isFormValid.value) {
+      // Navigate to home screen or perform sign-in action
+      context.go('/home');
+    } else {
+      String message = '';
+      if (emailController.text.isEmpty) {
+        message = 'Por favor ingrese su correo electrónico';
+      } else if (!_isValidEmail(emailController.text)) {
+        message = 'Por favor ingrese un correo electrónico válido';
+      } else if (passwordController.text.isEmpty) {
+        message = 'Por favor ingrese su contraseña';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  void signUpIn() {
+    context.go('/signup');
+  }
+
+  void forgotPassword() {
+    context.go('/forgotpassword');
+  }
+
   @override
   Widget build(BuildContext context) {
-    void signIn() {
-      context.go('/home');
-    }
-
-    void signUpIn() {
-      context.go('/signup');
-    }
-
-    void forgotPassword() {
-      context.go('/forgotpassword');
-    }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 110,),
+            const SizedBox(height: 90,),
             // Title
-            const MyTextTitle(contenText: "Login In"),
+            const MyTextTitle(contenText: "Login in"),
             const SizedBox(height: 55,),
             // Sub title
             const MyTextCenter(
               text: "Por favor ingrese con su cuenta existente"
             ),
-            const SizedBox(height: 100,),
+            const SizedBox(height: 110,),
             // Title form User
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
@@ -53,8 +107,8 @@ class _LoginState extends State<Login> {
                   Text(
                     "Ingrese su Email",
                     style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromRGBO(8, 13, 37, 1),
+                      fontSize: 14,
+                      color: Color.fromRGBO(100, 105, 130, 1),
                       fontWeight: FontWeight.normal,
                       fontFamily: 'Sen',
                     ),
@@ -65,23 +119,23 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 5,),
             // Input form
             MyInputText(
-              controller: usernameController,
+              controller: emailController,
               hintText: 'example@gmail.com',
               obscureText: false,
-              fillColor: Colors.grey[200] ?? Colors.grey,
+              fillColor:  Color.fromRGBO(236, 240, 244, 1) ?? Color.fromRGBO(     236, 240, 244, 1),
             ),
-            const SizedBox(height: 24,),
-            // Title password form
+            const SizedBox(height: 18,), 
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: Row(
                 children: [
+                  
                   Text(
                     "Ingrese su Password",
-                    style: TextStyle(
-                      fontSize: 16,
+                      style: TextStyle(
+                      fontSize: 14,
                       fontWeight: FontWeight.normal,
-                      color: Color.fromRGBO(100, 105, 130, 1),
+                      color:  Color.fromRGBO(100, 105, 130, 1),
                     ),
                   ),
                 ],
@@ -90,19 +144,23 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 5,),
             // Password form
             MyInputText(
+              //maxLength: 10,
               controller: passwordController,
               hintText: "* * * * * * * * * *",
               obscureText: true,
-              fillColor: Colors.grey[200] ?? Color.fromARGB(255, 224, 224, 224),
+              fillColor: Color.fromRGBO(236, 240, 244, 1),
             ),
-            const SizedBox(height: 25,),
+            const SizedBox(height: 5,),                                                                                                                     
             // Forgot Password
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Theme(
                         data: ThemeData(
@@ -111,9 +169,10 @@ class _LoginState extends State<Login> {
                               borderRadius: BorderRadius.circular(4.0),
                               side: BorderSide(color: Color.fromARGB(180, 213, 214, 209)),
                             ),
-                            fillColor: MaterialStateProperty.all<Color>(Color.fromRGBO(15, 14, 14, 1)), // Color del checkbox
+                            fillColor: MaterialStateProperty.all<Color>(Color.fromRGBO(15, 14, 14, 1)),
                           ),
                         ),
+                       // Espaciado entre el checkbox y el texto
                         child: Checkbox(
                           value: _rememberMe,
                           onChanged: (bool? value) {                                                                    
@@ -143,9 +202,18 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            const SizedBox(height: 40,),
+            const SizedBox(height: 30,),
             // Login button
-            MyButton(onTap: signIn, text: "Sign In"),
+            ValueListenableBuilder<bool>(
+              valueListenable: isFormValid,
+              builder: (context, value, child) {
+                return MyButton(
+                  onTap: signIn,
+                  text: "Sign In",
+                  isEnabled: value,
+                );
+              },
+            ),
             const SizedBox(height: 27,),
             // Sign Up
             Padding(
@@ -164,7 +232,7 @@ class _LoginState extends State<Login> {
                   InkWell(
                     onTap: () => signUpIn(),
                     child: const Text(
-                      "SING UP",
+                      "SIGN UP",
                       style: TextStyle(
                         color: Color.fromRGBO(255, 118, 34, 1),
                         fontSize: 16,
@@ -174,7 +242,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            const SizedBox(height: 24,),
+            const SizedBox(height: 20,),
             // Or
             const Padding(
               padding: EdgeInsets.all(0),
@@ -191,12 +259,12 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            const SizedBox(height: 24,),
+            const SizedBox(height: 10,),
             // Google icon
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SquareIcon(imagePath: 'lib/imagenes/google.png')
+                SquareIcon(imagePath: 'lib/imagenes/Google.svg')
               ],
             ),
           ],

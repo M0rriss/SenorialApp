@@ -5,12 +5,15 @@
   import 'package:m_senorial/pages/tables/sales-table/SalesTable.dart';
   import 'package:m_senorial/pages/auth/login/Login.dart';
   import 'package:m_senorial/pages/auth/signup/Signup.dart';
+  import 'package:m_senorial/pages/auth/recovery-password/Recoverypassword.dart';
+
+
   final GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => Verified(), 
+        builder: (context, state) => SignUp(), 
         routes: [
           GoRoute(
             path: 'singup',

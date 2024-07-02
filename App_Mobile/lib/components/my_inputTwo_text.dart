@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import necesario para TextInputFormatter
 
-class MyInputTwoText extends StatelessWidget{
+class MyInputTwoText extends StatelessWidget {
   final TextEditingController controller;
-  final String hintText;  
+  final Function()? onChangedx;
+  final String hintText;
   final bool obscureText;
   final double width;
   final double height;
+  final bool allowNext;
   final TextAlign textAlign;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool enable;
 
   const MyInputTwoText({
-    super.key,
+    Key? key,
     required this.controller,
+    required this.onChangedx,
     required this.hintText,
     required this.obscureText,
-    this.width = 65,
-    this.height = 65,
-    this.textAlign = TextAlign.center,   
-  });
+    this.width = 62,
+    this.height = 61.26,
+    required this.allowNext,
+    this.textAlign = TextAlign.center,
+    this.inputFormatters,
+    this.enable = true,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       width: width,
       height: height,
@@ -27,19 +36,37 @@ class MyInputTwoText extends StatelessWidget{
         controller: controller,
         obscureText: obscureText,
         textAlign: textAlign,
+        maxLength: 1, // Limita la longitud del campo a 1 carácter
+        keyboardType: TextInputType.number, // Establece el teclado numérico
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly, // Acepta solo dígitos
+          ...?inputFormatters, // Añade otros formateadores si existen
+        ],
+        enabled: enable,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color:  Colors.transparent),
-            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Color.fromARGB(0, 64, 49, 113)),
+            borderRadius: BorderRadius.circular(12),
           ),
-          fillColor: const Color.fromRGBO(236, 236, 236, 1),
           filled: true,
           hintText: hintText,
+          counterText: '', // Oculta el contador de caracteres
           border: OutlineInputBorder(),
-        )
-      )
+        ),
+        onChanged: (value) {
+          print("--->$allowNext ${value.length}");
+          if (allowNext && value.length == 1){
+            FocusScope.of(context).nextFocus();
+          }
+            if (allowNext && value.length == 0){
+            FocusScope.of(context).previousFocus();
+          }
+          onChangedx!();
+        },
+      ),
     );
   }
+}
 
 
-} 
+
