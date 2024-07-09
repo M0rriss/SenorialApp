@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import necesario para TextInputFormatter
+// Import necesario para TextInputFormatter
+import 'package:flutter/services.dart'; 
 import 'package:m_senorial/components/my_button.dart';
 import 'package:m_senorial/components/my_form_text.dart';
 import 'package:m_senorial/components/my_input_text.dart';
@@ -20,53 +21,6 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
-  bool _isButtonEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController.addListener(_validateForm);
-    dniController.addListener(_validateForm);
-    phoneController.addListener(_validateForm);
-    emailController.addListener(_validateForm);
-    passwordController.addListener(_validateForm);
-    confirmController.addListener(_validateForm);
-    _validateForm(); // Initial validation
-  }
-
-  void _validateForm() {
-    setState(() {
-      _isButtonEnabled = _isNameValid(nameController.text) &&
-          _isDniValid(dniController.text) &&
-          _isPhoneValid(phoneController.text) &&
-          _isEmailValid(emailController.text) &&
-          _arePasswordsValid(passwordController.text, confirmController.text);
-    });
-  }
-
-  bool _isNameValid(String name) {
-    return RegExp(r'^[a-zA-Z\s]+$').hasMatch(name);
-  }
-
-  bool _isDniValid(String dni) {
-    return RegExp(r'^\d{1,8}$').hasMatch(dni);
-  }
-
-  bool _isPhoneValid(String phone) {
-    return RegExp(r'^\d+$').hasMatch(phone);
-  }
-
-  bool _isEmailValid(String email) {
-    return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
-  }
-
-  bool _arePasswordsValid(String password, String confirmPassword) {
-    return password.isNotEmpty && password == confirmPassword;
-  }
-
-  void signUp() {
-    // Implement your sign up logic here
-  }
 
   @override
   void dispose() {
@@ -77,6 +31,60 @@ class _SignUpState extends State<SignUp> {
     passwordController.dispose();
     confirmController.dispose();
     super.dispose();
+  }
+
+  void signUp() {
+    final name = nameController.text;
+    final dni = dniController.text;
+    final phone = phoneController.text;
+    final email = emailController.text;
+    final password = passwordController.text;
+    final confirmPassword = confirmController.text;
+
+    List<String> errors = [];
+
+    if (name.isEmpty) errors.add('Nombre');
+    if (dni.isEmpty) errors.add('DNI');
+    if (phone.isEmpty) errors.add('Teléfono');
+    if (email.isEmpty) errors.add('Email');
+    if (password.isEmpty) errors.add('Contraseña');
+    if (confirmPassword.isEmpty) errors.add('Confirmar Contraseña');
+
+    if (errors.isNotEmpty) {
+      _showErrorDialog('Los siguientes campos son obligatorios:\n${errors.join(', ')}');
+      return;
+    }
+
+    if (password != confirmPassword) {
+      _showErrorDialog('Las contraseñas no coinciden.');
+      return;
+    }
+
+    print('Name: $name');
+    print('DNI: $dni');
+    print('Phone: $phone');
+    print('Email: $email');
+    print('Password: $password');
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -102,9 +110,8 @@ class _SignUpState extends State<SignUp> {
               obscureText: false,
               fillColor: Colors.grey[200] ?? Colors.grey,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))
+                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z\s]")),
               ],
-              
             ),
             const SizedBox(height: 15,),
             const MyFormText(text: "Ingresa su DNI"),
@@ -164,9 +171,9 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(height: 21,),
             //Button
             MyButton(
-              onTap: _isButtonEnabled ? signUp : null,
-              text: 'Sign In',
-              isEnabled: _isButtonEnabled,
+              onTap: signUp,
+              text: 'Sign up',
+              isEnabled: true,
             ),
           ],
         ),
@@ -174,3 +181,4 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
+

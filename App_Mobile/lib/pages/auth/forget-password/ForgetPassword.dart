@@ -4,6 +4,7 @@ import 'package:m_senorial/components/my_form_text.dart';
 import 'package:m_senorial/components/my_input_Text.dart';
 import 'package:m_senorial/components/my_text_center.dart';
 import 'package:m_senorial/components/my_text_title.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgetPassword extends StatefulWidget {
   ForgetPassword({super.key});
@@ -29,6 +30,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     isEmailValid.dispose();
     super.dispose();
   }
+   void verified() {
+    print("hola");
+    context.go('/forgetpassword/verified');
+     /* Navigator.pushNamed(context, '/Salestable'); */
+  }
 
   void _validateEmail() {
     final email = gmailController.text;
@@ -37,7 +43,40 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   }
 
   void forgotPassword() {
+    // Imprimir el correo en la consola
+    print('Email: ${gmailController.text}');
+    // Aquí puedes agregar la lógica para enviar el correo de recuperación de contraseña
+    // Supongamos que esta función verifica si el correo está registrado
+    bool emailRegistered = checkIfEmailRegistered(gmailController.text);
     
+    if (!emailRegistered) {
+      _showEmailNotRegisteredDialog();
+    }
+  }
+
+  bool checkIfEmailRegistered(String email) {
+    // Simular que sólo el correo 'test@example.com' está registrado
+    return email == 'yairnosde@gmail.com';
+  }
+
+  void _showEmailNotRegisteredDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Correo no registrado'),
+          content: Text('El correo ingresado no está registrado.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -69,7 +108,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               valueListenable: isEmailValid,
               builder: (context, value, child) {
                 return MyButton(
-                  onTap: value ? forgotPassword : null, // Enable/Disable the button
+                  onTap: () => verified(),
                   text: 'SEND CODE',
                   isEnabled: value, // Pasar el estado de habilitado
                 );
@@ -81,4 +120,5 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
 }
+
 

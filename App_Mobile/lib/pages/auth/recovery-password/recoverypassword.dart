@@ -29,13 +29,42 @@ class _RecoverypasswordState extends State<Recoverypassword> {
   void _validatePasswords() {
     setState(() {
       _isButtonEnabled = nuevopasswordController.text.isNotEmpty &&
-          confirmPasswordController.text.isNotEmpty &&
-          nuevopasswordController.text == confirmPasswordController.text;
+          confirmPasswordController.text.isNotEmpty;
     });
   }
 
   void signUp() {
-    // Implement your sign up logic here
+    // Imprimir las contraseñas en la consola
+    print('Nueva contraseña: ${nuevopasswordController.text}');
+    print('Confirmar contraseña: ${confirmPasswordController.text}');
+
+    // Verificar si las contraseñas coinciden
+    if (nuevopasswordController.text != confirmPasswordController.text) {
+      _showErrorDialog();
+    } else {
+      // Implementar la lógica de registro aquí
+      print('Contraseñas coinciden. Continuar con la lógica de registro.');
+    }
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Las contraseñas no coinciden.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -53,13 +82,13 @@ class _RecoverypasswordState extends State<Recoverypassword> {
         child: Column(
           children: [
             const SizedBox(height: 10,),
-            //title
+            // Title
             const MyTextTitle(contenText: 'Cambio de Contraseña'),
             const SizedBox(height: 53,),
-            //Sub title
+            // Sub title
             const MyTextCenter(text: 'Por favor ingrese su nueva contraseña'),
             const SizedBox(height: 25,),
-            //NewPassword
+            // New Password
             const MyFormText(text: "Ingrese su contraseña"),
             const SizedBox(height: 6,), 
             MyInputText(
@@ -69,7 +98,7 @@ class _RecoverypasswordState extends State<Recoverypassword> {
               fillColor: Colors.grey[200] ?? Colors.grey,
             ),
             const SizedBox(height: 21,),
-            //Confirm Password
+            // Confirm Password
             const MyFormText(text: "Confirme su contraseña"),
             const SizedBox(height: 6,), 
             MyInputText(
@@ -77,9 +106,9 @@ class _RecoverypasswordState extends State<Recoverypassword> {
               hintText: "* * * * * * * * * *",
               obscureText: true,
               fillColor: Colors.grey[200] ?? Colors.grey,
-            ),
+            ),  
             const SizedBox(height: 21,),
-            //Button
+            // Button
             MyButton(
               onTap: _isButtonEnabled ? signUp : null,
               text: 'SAVE CHANGES',
