@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:m_senorial/router/router.dart';
 
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  // await dotenv.load(fileName: "./modules/enviroment/enviroments.env");
+  runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

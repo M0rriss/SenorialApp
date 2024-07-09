@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:m_senorial/components/my_button.dart';
 import 'package:m_senorial/components/my_input_Text.dart';
@@ -19,8 +21,7 @@ class _LoginState extends State<Login> {
 
   ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
 
-  final String validEmail = 'yairnosde@gmail.com';
-  final String validPassword = 'password123';
+  // final String endpoint = dotenv.env['API_ENDPOINT']!;
 
   @override
   void initState() {
@@ -56,18 +57,16 @@ class _LoginState extends State<Login> {
     return emailRegex.hasMatch(email);
   }
 
-  void login()  {
-    /* final dio = Dio();
-      final response =  dio.post('https://localhost:7283/api/Auth/Login/Mobile',
-          data: {'email': 'yairnosde@gmail.com', 'password': 'Mauriciogey123'});
-      print(response); */
-   if (emailController.text == validEmail && passwordController.text == validPassword) {
-    
-      print('Email: ${emailController.text}');
-      print('Password: ${passwordController.text}');
+   void login() async {
+    final dio = Dio();
+    final response = await dio.post('https://localhost:7283/api/Auth/Login/Mobile',
+      data: {'email': emailController.text, 'password': passwordController.text},
+    );
 
+    //print(response.data);
 
-      // Navigate to home screen or perform sign-in action
+    if (response.data['success'] == true) {
+      // Navegar a la pantalla principal o realizar la acción de inicio de sesión
       context.go('/home');
     } else {
       String message = 'Correo electrónico o contraseña incorrectos';

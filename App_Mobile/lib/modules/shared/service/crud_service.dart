@@ -1,30 +1,60 @@
-import 'package:m_senorial/modules/shared/interface/crud_interface.dart';
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class CrudService<T> {
-  Dio dio;
-  String ruta = '';
-  CrudService({required this.ruta, required this.dio});
-  Future<List> getAll() async {
-    dio.options.headers["authorization"] = "token";
-    var res = await dio.get(ruta);
-    List data = res.data as List;
-    return data;
-  }
-  Future<Response> get() async{
-    dio.options.headers["authorization"] = "token";
-    var res = await dio.get(ruta);
-    return res.data;
-  }
-  Future<Response> post(T obj) async {
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["authorization"] = "token";
-    return await dio.post(ruta, data:obj);
+class ApiService<T> {
+  String endpoint = "https://localhost:7283/api/";
 
+  ApiService(this.endpoint);
+
+  Future<T> get(String path) async {
+    final response = await http.get(Uri.parse('$endpoint$path'));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
-  Future<Response> put(T obj) async{
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["authorization"] = "token"; 
-    return await dio.put(ruta, data:obj);
-  } 
+
+  Future<T> post(String path, dynamic data) async {
+    final response = await http.post(
+      Uri.parse('$endpoint$path'),
+      body: jsonEncode(data),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to save data');
+    }
+  }
+
+  Future<T> put(String path, dynamic data) async {
+    final response = await http.put(
+      Uri.parse('$endpoint$path'),
+      body: jsonEncode(data),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to edit data');
+    }
+  }
+
+  Future<T> delete(String path) async {
+    final response = await http.delete(Uri.parse('$endpoint$path'));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to delete data');
+    }
+  }
 }
