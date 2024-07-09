@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:m_senorial/router/router.dart';
 
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  // await dotenv.load(fileName: "./modules/enviroment/enviroments.env");
+  runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       
-      title: 'Señorial',
+      title: 'Señorial0',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

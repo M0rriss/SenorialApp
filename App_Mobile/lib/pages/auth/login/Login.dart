@@ -1,11 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:m_senorial/components/my_button.dart';
 import 'package:m_senorial/components/my_input_Text.dart';
 import 'package:m_senorial/components/my_text_center.dart';
 import 'package:m_senorial/components/my_text_title.dart';
 import 'package:m_senorial/components/square_icon.dart';
-
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
 
@@ -19,6 +20,8 @@ class _LoginState extends State<Login> {
   bool _rememberMe = false;
 
   ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
+
+  // final String endpoint = dotenv.env['API_ENDPOINT']!;
 
   @override
   void initState() {
@@ -54,34 +57,34 @@ class _LoginState extends State<Login> {
     return emailRegex.hasMatch(email);
   }
 
-  void signIn() {
-    if (isFormValid.value) {
-      // Navigate to home screen or perform sign-in action
+   void login() async {
+    final dio = Dio();
+    final response = await dio.post('https://localhost:7283/api/Auth/Login/Mobile',
+      data: {'email': emailController.text, 'password': passwordController.text},
+    );
+
+    //print(response.data);
+
+    if (response.data['success'] == true) {
+      // Navegar a la pantalla principal o realizar la acción de inicio de sesión
       context.go('/home');
     } else {
-      String message = '';
-      if (emailController.text.isEmpty) {
-        message = 'Por favor ingrese su correo electrónico';
-      } else if (!_isValidEmail(emailController.text)) {
-        message = 'Por favor ingrese un correo electrónico válido';
-      } else if (passwordController.text.isEmpty) {
-        message = 'Por favor ingrese su contraseña';
-      }
+      String message = 'Correo electrónico o contraseña incorrectos';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
           duration: Duration(seconds: 3),
         ),
       );
-    }
+    } 
   }
 
-  void signUpIn() {
+  void signUp() {
     context.go('/signup');
   }
 
   void forgotPassword() {
-    context.go('/forgotpassword');
+    context.go('/forgetpassword');
   }
 
   @override
@@ -92,7 +95,7 @@ class _LoginState extends State<Login> {
           children: [
             const SizedBox(height: 90,),
             // Title
-            const MyTextTitle(contenText: "Login in"),
+            const MyTextTitle(contenText: "Log in"),
             const SizedBox(height: 55,),
             // Sub title
             const MyTextCenter(
@@ -122,7 +125,7 @@ class _LoginState extends State<Login> {
               controller: emailController,
               hintText: 'example@gmail.com',
               obscureText: false,
-              fillColor:  Color.fromRGBO(236, 240, 244, 1) ?? Color.fromRGBO(     236, 240, 244, 1),
+              fillColor:  Color.fromRGBO(236, 240, 244, 1),
             ),
             const SizedBox(height: 18,), 
             const Padding(
@@ -144,7 +147,6 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 5,),
             // Password form
             MyInputText(
-              //maxLength: 10,
               controller: passwordController,
               hintText: "* * * * * * * * * *",
               obscureText: true,
@@ -208,8 +210,8 @@ class _LoginState extends State<Login> {
               valueListenable: isFormValid,
               builder: (context, value, child) {
                 return MyButton(
-                  onTap: signIn,
-                  text: "Sign In",
+                  onTap: login,
+                  text: "LOG IN",
                   isEnabled: value,
                 );
               },
@@ -230,7 +232,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(width: 10,),
                   InkWell(
-                    onTap: () => signUpIn(),
+                    onTap: () => signUp(),
                     child: const Text(
                       "SIGN UP",
                       style: TextStyle(
