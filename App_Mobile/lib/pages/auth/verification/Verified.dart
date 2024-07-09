@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:m_senorial/components/my_button.dart';
 import 'package:m_senorial/components/my_inputTwo_text.dart';
 import 'package:m_senorial/components/my_text_center.dart';
 import 'package:m_senorial/components/my_text_title.dart';
+import 'package:go_router/go_router.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Verified extends StatefulWidget {
   Verified({super.key});
@@ -20,7 +22,6 @@ class _VerifiedState extends State<Verified> {
   final TextEditingController codeController3 = TextEditingController();
   final TextEditingController codeController4 = TextEditingController();
   String Codigo = "";
-
 
   late Timer _timer;
   int _secondsRemaining = 50;
@@ -56,6 +57,11 @@ class _VerifiedState extends State<Verified> {
     codeController4.dispose();
     super.dispose();
   }
+ /*  void verified() {
+    print("hola");
+    context.go('/forgetpassword/recoverypassword');
+     /* Navigator.pushNamed(context, '/Salestable'); */
+  } */
 
   void Resend() {
     setState(() {
@@ -74,8 +80,50 @@ class _VerifiedState extends State<Verified> {
   }
 
   void Verificado() {
+    Codigo = codeController1.text + codeController2.text + codeController3.text + codeController4.text;
+    print('Código ingresado: $Codigo');
+    
+
     // Implementar la lógica para verificar el código
+    if (Codigo != "1234") {
+      _showErrorDialog();
+    } else {
+      // Código correcto, continuar con la lógica de verificación
+      print('Código verificado correctamente');
+    }
   }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Código incorrecto'),
+          content: Text('El código ingresado es incorrecto.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<http.Response> VerificarApi(String title) {
+  return http.put(
+    Uri.parse('https://localhost:7283/api/Auth/RecoveryPassword/movil'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'title': title,
+    }),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -145,12 +193,12 @@ class _VerifiedState extends State<Verified> {
                   onChangedx: () {
                     print("--->${codeController1.text}");
                     setState(() {
-                    Codigo = "${codeController1.text}";
+                      Codigo = "${codeController1.text}";
                     });
-                  print("--->${Codigo}");
+                    print("--->${Codigo}");
                   },
                   controller: codeController1,
-                  hintText: "a",
+                  hintText: "",
                   obscureText: false,
                   enable: _areFieldsEnabled,
                 ),
@@ -161,9 +209,11 @@ class _VerifiedState extends State<Verified> {
                     setState(() {
                       Codigo = "$Codigo${codeController2.text}";
                     });
+                    print("--->${codeController2.text}");
+                    print("--->${Codigo}");
                   },
                   controller: codeController2,
-                  hintText: "b",
+                  hintText: "",
                   obscureText: false,
                   enable: _areFieldsEnabled,
                 ),
@@ -172,11 +222,13 @@ class _VerifiedState extends State<Verified> {
                   allowNext: Codigo.length < 3,
                   onChangedx: () {
                     setState(() {
-                   Codigo = "$Codigo${codeController3.text}";   
+                      Codigo = "$Codigo${codeController3.text}";
                     });
+                    print("--->${codeController3.text}");
+                    print("--->${Codigo}");
                   },
                   controller: codeController3,
-                  hintText: "c",
+                  hintText: "",
                   obscureText: false,
                   enable: _areFieldsEnabled,
                 ),
@@ -187,9 +239,11 @@ class _VerifiedState extends State<Verified> {
                     setState(() {
                       Codigo = "$Codigo${codeController4.text}";
                     });
+                    print("--->${codeController4.text}");
+                    print("--->${Codigo}");
                   },
                   controller: codeController4,
-                  hintText: "d",
+                  hintText: "",
                   obscureText: false,
                   enable: _areFieldsEnabled,
                 ),
@@ -197,11 +251,24 @@ class _VerifiedState extends State<Verified> {
             ),
             const SizedBox(height: 40,),
             MyButton(
-               onTap: () {       
-                print("hola");      
-               print(Codigo);
-               },   
-               isEnabled: true,
+              onTap: () async {
+                 context.go('/forgetpassword/recoverypassword');
+                final response = await VerificarApi(Codigo);
+                if (response.statusCode == 201) {
+                  // If the server returns a 201 CREATED response,
+                  // then parse the JSON.
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Album created!')),
+                  );
+                } else {
+                  // If the server did not return a 201 CREATED response,
+                  // then throw an exception.
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to create album.')),
+                  );
+                }
+              },
+              isEnabled: true,
               text: 'VERIFY',
             ),
           ],
