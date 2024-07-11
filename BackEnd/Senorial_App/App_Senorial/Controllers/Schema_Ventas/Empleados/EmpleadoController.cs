@@ -61,7 +61,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// </summary>
         /// <param name="request">Datos actualizados del empleado.</param>
         /// <returns>EmpleadoUiResponse actualizado.</returns>
-        [HttpPut("{idEmpleado}")]
+        [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(EmpleadosUiResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]

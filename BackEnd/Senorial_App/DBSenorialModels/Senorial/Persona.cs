@@ -62,7 +62,7 @@ public partial class Persona
 
     [Column("genero")]
     [StringLength(20)]
-    public string Genero { get; set; } = null!;
+    public string? Genero { get; set; } = null!;
 
     [ForeignKey("IdTipoDocumento")]
     [InverseProperty("Personas")]

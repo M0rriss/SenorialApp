@@ -186,16 +186,21 @@ namespace Business.Schema_Ventas.Empleados
             {
                 throw new ArgumentException("No se encontró la persona asociada al empleado.");
             }
-            var EmpleadoEmail = _personaRepository.BuscarCorreo(request.Correo);
-            if (EmpleadoEmail == null)
+
+            // Verificar si el correo electrónico ya está registrado por otra persona
+            var empleadoConEmail =  _personaRepository.BuscarCorreo(request.Correo);
+            if (empleadoConEmail != null && empleadoConEmail.IdPersona != personaExistente.IdPersona)
             {
-                throw new ArgumentException("El correo electronico ya se encuentra registrado");
+                throw new ArgumentException("El correo electrónico ya se encuentra registrado.");
             }
-            var userWithPhone = _personaRepository.BuscarTelefono(request.Telefono);
-            if (userWithPhone != null && userWithPhone.IdPersona != empleadoExistente.IdPersona)
+
+            // Verificar si el número de teléfono ya está registrado por otra persona
+            var empleadoConTelefono =  _personaRepository.BuscarTelefono(request.Telefono);
+            if (empleadoConTelefono != null && empleadoConTelefono.IdPersona != personaExistente.IdPersona)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
+
             // Actualizar los nombres y apellidos si han cambiado
             var nombres = request.Nombres.Split(' ', 2);
             var apellidos = request.Apellidos.Split(' ', 2);
@@ -209,15 +214,27 @@ namespace Business.Schema_Ventas.Empleados
             personaExistente.NroDocumento = request.Identificacion;
 
             await _personaRepository.Update(personaExistente);
+
+            // Obtener la sucursal por nombre
             var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
             if (sucursal == null)
             {
                 throw new ArgumentException("La sucursal especificada no existe.");
             }
-            // Actualizar el empleado
-            empleadoExistente.IdRolNavigation.Nombre = request.Rol;
-            empleadoExistente.IdSucursalNavigation.Nombre = request.Sucursal;
+
+            // Actualizar el rol del empleado y la sucursal
+            var rol = await _rolesRepository.GetByRol(request.Rol);
+            if (rol == null)
+            {
+                throw new ArgumentException("El rol especificado no existe.");
+            }
+
+            empleadoExistente.IdRol = rol.IdRol;
+            empleadoExistente.IdSucursal = sucursal.IdSucursal;
+
             await _empleadoRepository.Update(empleadoExistente);
+
+            // Mapear y devolver la respuesta
             var response = _mapper.Map<EmpleadosUiResponse>(empleadoExistente);
             response.Persona = _mapper.Map<PersonaResponse>(personaExistente);
             response.Sucursal = sucursal.Nombre;

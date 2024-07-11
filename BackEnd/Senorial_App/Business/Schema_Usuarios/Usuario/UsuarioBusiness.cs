@@ -218,21 +218,30 @@ namespace Business.Schema_Usuarios.Usuarios
                 throw new ArgumentException("Las contraseñas no coinciden");
             }
 
+            // Separar nombres y apellido paterno
+            string[] nombresSeparados = request.Nombres.Split(' ');
+            string primerNombre = nombresSeparados[0];
+            string apellidoPaterno = nombresSeparados.Length > 1 ? nombresSeparados[nombresSeparados.Length - 1] : string.Empty;
+
             // Crear Persona
-            var persona = await _personaRepository.Create(new Persona
+            var persona = new Persona
             {
-                PrimerNombre = request.Nombres,
-                SegundoNombre = "",
-                ApellidoPaterno = request.Apellidos,
-                ApellidoMaterno = "",
+                PrimerNombre = primerNombre,
+                ApellidoPaterno = apellidoPaterno,
                 NroDocumento = request.Dni,
                 Email = request.Email,
                 Telefono = request.Telefono,
-                Direccion = "",
-                IdTipoDocumento = 1,
+                IdTipoDocumento = 1, // Este valor es arbitrario, ajústalo según sea necesario
                 Genero = "",
                 TipoPersona = "Natural",
-            });
+            };
+
+            persona = await _personaRepository.Create(persona);
+
+            if (persona == null || persona.IdPersona == 0)
+            {
+                throw new Exception("Error al crear la persona");
+            }
 
             // Obtener Rol
             var buscarRol = await _rolesRepository.GetByRol("Mozo");
@@ -241,15 +250,16 @@ namespace Business.Schema_Usuarios.Usuarios
             var nuevoEmpleado = new Empleado
             {
                 IdPersona = persona.IdPersona,
-                IdSucursal = 1,
+                IdSucursal = 1, // Este valor es arbitrario, ajústalo según sea necesario
                 IdRol = buscarRol.IdRol,
             };
+
             var nuevoEmpleadoCreado = await _empleadoRepository.Create(nuevoEmpleado);
             if (nuevoEmpleadoCreado == null)
             {
-                // Loguear un mensaje de error o lanzar una excepción
                 throw new Exception("Error al crear el empleado");
             }
+
             // Crear y guardar Usuario
             var nuevoUsuario = new Usuario
             {
@@ -258,6 +268,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 Password = _encriptar.AES_encriptar(request.Password),
                 IdRol = buscarRol.IdRol,
             };
+
             nuevoUsuario = await _usuarioRepository.RegistrarUsuarioMobile(nuevoUsuario);
 
             // Mapear y devolver la respuesta
