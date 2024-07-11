@@ -61,6 +61,18 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
         ClockSkew = TimeSpan.Zero
     };
+})
+.AddGoogle("GoogleWeb", options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = builder.Configuration["Authentication:Google:WebCallbackPath"];
+})
+.AddGoogle("GoogleMobile", options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = builder.Configuration["Authentication:Google:MobileCallbackPath"];
 });
 
 //SMTP CONFIG

@@ -6,6 +6,7 @@ using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Vml.Office;
+using Google.Apis.Auth;
 using IBusiness.Schema_Usuarios.Personas;
 using IBusiness.Schema_Usuarios.Roles;
 using IBusiness.Schema_Usuarios.Usuarios;
@@ -277,6 +278,106 @@ namespace Business.Schema_Usuarios.Usuarios
 
             return response;
         }
+
+        public async Task<UsuarioResponse> AutenticarConGoogleEcommerce(string tokenId)
+        {
+            var payload = await GoogleJsonWebSignature.ValidateAsync(tokenId);
+            if (payload == null)
+            {
+                throw new ArgumentException("Invalid Google token.");
+            }
+
+            string email = payload.Email;
+            string nombre = payload.Name;
+
+            // Verifica si el usuario ya existe en tu base de datos
+            var usuarioExistente = _usuarioRepository.ObtenerPorCorreo(email);
+            if (usuarioExistente != null)
+            {
+                return _mapper.Map<UsuarioResponse>(usuarioExistente);
+            }
+
+            // Si el usuario no existe, procede a registrarlo
+            var nuevaPersona = await _personaRepository.Create(new Persona
+            {
+                PrimerNombre = nombre.Split(' ')[0],
+                ApellidoPaterno = nombre.Split(' ').Length > 1 ? nombre.Split(' ')[1] : "",
+                Email = email,
+                // Otros campos necesarios
+            });
+
+            var nuevoCliente = new Cliente
+            {
+                IdPersona = nuevaPersona.IdPersona,
+                // Completar otros campos de Cliente según sea necesario
+            };
+
+            await _clienteRepository.Create(nuevoCliente);
+
+            var nuevoUsuario = new Usuario
+            {
+                IdPersona = nuevaPersona.IdPersona,
+                Email = email,
+                UserName = email,
+                Password = _encriptar.AES_encriptar(Guid.NewGuid().ToString()), // Genera una contraseña aleatoria
+                IdRol = (await _rolesRepository.GetByRol("Cliente")).IdRol // Asigna el rol de cliente
+            };
+
+            nuevoUsuario = await _usuarioRepository.RegistrarUsuarioEcommerce(nuevoUsuario);
+
+            return _mapper.Map<UsuarioResponse>(nuevoUsuario);
+        }
+        public async Task<UsuarioResponse> AutenticarConGoogleMobile(string tokenId)
+        {
+            var payload = await GoogleJsonWebSignature.ValidateAsync(tokenId);
+            if (payload == null)
+            {
+                throw new ArgumentException("Invalid Google token.");
+            }
+
+            string email = payload.Email;
+            string nombre = payload.Name;
+
+            // Verifica si el usuario ya existe en tu base de datos
+            var usuarioExistente = _usuarioRepository.ObtenerPorCorreo(email);
+            if (usuarioExistente != null)
+            {
+                return _mapper.Map<UsuarioResponse>(usuarioExistente);
+            }
+
+            // Si el usuario no existe, procede a registrarlo
+            var nuevaPersona = await _personaRepository.Create(new Persona
+            {
+                PrimerNombre = nombre.Split(' ')[0],
+                ApellidoPaterno = nombre.Split(' ').Length > 1 ? nombre.Split(' ')[1] : "",
+                Email = email,
+                // Otros campos necesarios
+            });
+
+            var nuevoEmpleado = new Empleado
+            {
+                IdPersona = nuevaPersona.IdPersona,
+                IdSucursal = 1, // Este valor es arbitrario, ajústalo según sea necesario
+                IdRol = (await _rolesRepository.GetByRol("Mozo")).IdRol
+            };
+
+            await _empleadoRepository.Create(nuevoEmpleado);
+
+            var nuevoUsuario = new Usuario
+            {
+                IdPersona = nuevaPersona.IdPersona,
+                Email = email,
+                UserName = email,
+                Password = _encriptar.AES_encriptar(Guid.NewGuid().ToString()), // Genera una contraseña aleatoria
+                IdRol = (await _rolesRepository.GetByRol("Mozo")).IdRol // Asigna el rol de mozo
+            };
+
+            nuevoUsuario = await _usuarioRepository.RegistrarUsuarioMobile(nuevoUsuario);
+
+            return _mapper.Map<UsuarioResponse>(nuevoUsuario);
+        }
+
+
         #endregion
         #region RECOVERY PASSWORD
 

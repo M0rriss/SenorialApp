@@ -127,6 +127,19 @@ namespace App_Senorial.Controllers.Authentication
 
             return Ok(response); 
         }
+        [HttpPost("google-signin/ecommerce")]
+        public async Task<IActionResult> GoogleSignInEcommerce([FromBody] GoogleSignInRequest request)
+        {
+            var usuarioResponse = await _usuarioBusiness.AutenticarConGoogleEcommerce(request.TokenId);
+            return Ok(usuarioResponse);
+        }
+
+        [HttpPost("google-signin/mobile")]
+        public async Task<IActionResult> GoogleSignInMobile([FromBody] GoogleSignInRequest request)
+        {
+            var usuarioResponse = await _usuarioBusiness.AutenticarConGoogleMobile(request.TokenId);
+            return Ok(usuarioResponse);
+        }
         /// <summary>
         /// Metodo para realizar el registro en el Mobile
         /// </summary>
