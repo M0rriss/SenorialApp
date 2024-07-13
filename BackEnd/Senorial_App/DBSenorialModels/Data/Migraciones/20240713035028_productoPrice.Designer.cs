@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240630051309_employee")]
-    partial class employee
+    [Migration("20240713035028_productoPrice")]
+    partial class productoPrice
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -97,6 +97,10 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("decimal(10, 2)")
                         .HasColumnName("sobrante");
 
+                    b.Property<decimal?>("TotalContado")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("total_contado");
+
                     b.HasKey("IdApertura")
                         .HasName("apertura_caja_id_pk");
 
@@ -135,6 +139,11 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCategoria"));
 
+                    b.Property<bool>("Estado")
+                        .HasMaxLength(100)
+                        .HasColumnType("bit")
+                        .HasColumnName("estado");
+
                     b.Property<int?>("IdCategoriaPadre")
                         .HasColumnType("int")
                         .HasColumnName("id_categoria_padre");
@@ -154,6 +163,108 @@ namespace DBSenorialModels.Data.Migraciones
                         .IsUnique();
 
                     b.ToTable("categorias", "Almacen");
+
+                    b.HasData(
+                        new
+                        {
+                            IdCategoria = 1,
+                            Estado = true,
+                            Nombre = "Hamburguesas"
+                        },
+                        new
+                        {
+                            IdCategoria = 2,
+                            Estado = true,
+                            Nombre = "Parrillas y Pollos"
+                        },
+                        new
+                        {
+                            IdCategoria = 3,
+                            Estado = true,
+                            Nombre = "Platos de Fondo"
+                        },
+                        new
+                        {
+                            IdCategoria = 4,
+                            Estado = true,
+                            Nombre = "Bebidas"
+                        },
+                        new
+                        {
+                            IdCategoria = 5,
+                            Estado = true,
+                            Nombre = "Complementos"
+                        },
+                        new
+                        {
+                            IdCategoria = 6,
+                            Estado = true,
+                            IdCategoriaPadre = 2,
+                            Nombre = "Pollos"
+                        },
+                        new
+                        {
+                            IdCategoria = 7,
+                            Estado = true,
+                            IdCategoriaPadre = 2,
+                            Nombre = "Parrillas"
+                        },
+                        new
+                        {
+                            IdCategoria = 8,
+                            Estado = true,
+                            IdCategoriaPadre = 2,
+                            Nombre = "Otros"
+                        },
+                        new
+                        {
+                            IdCategoria = 9,
+                            Estado = true,
+                            IdCategoriaPadre = 4,
+                            Nombre = "Bebidas Calientes"
+                        },
+                        new
+                        {
+                            IdCategoria = 10,
+                            Estado = true,
+                            IdCategoriaPadre = 4,
+                            Nombre = "Bebidas Frías"
+                        },
+                        new
+                        {
+                            IdCategoria = 11,
+                            Estado = true,
+                            IdCategoriaPadre = 4,
+                            Nombre = "Licores"
+                        },
+                        new
+                        {
+                            IdCategoria = 12,
+                            Estado = true,
+                            IdCategoriaPadre = 4,
+                            Nombre = "Cócteles"
+                        },
+                        new
+                        {
+                            IdCategoria = 13,
+                            Estado = true,
+                            IdCategoriaPadre = 5,
+                            Nombre = "Piqueos de la Casa"
+                        },
+                        new
+                        {
+                            IdCategoria = 14,
+                            Estado = true,
+                            IdCategoriaPadre = 5,
+                            Nombre = "Postres"
+                        },
+                        new
+                        {
+                            IdCategoria = 15,
+                            Estado = true,
+                            IdCategoriaPadre = 5,
+                            Nombre = "Jugos y Milkshakes"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Cliente", b =>
@@ -202,6 +313,35 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdVoucher");
 
                     b.ToTable("compra", "Almacen");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.ConteoDinero", b =>
+                {
+                    b.Property<int>("IdConteo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_conteo");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdConteo"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int")
+                        .HasColumnName("cantidad");
+
+                    b.Property<decimal>("Denominacion")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("denominacion");
+
+                    b.Property<int>("IdApertura")
+                        .HasColumnType("int")
+                        .HasColumnName("id_apertura");
+
+                    b.HasKey("IdConteo")
+                        .HasName("conteo_dinero_id_pk");
+
+                    b.HasIndex("IdApertura");
+
+                    b.ToTable("conteo_dinero", "Ventas");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleCompra", b =>
@@ -1018,6 +1158,11 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMesa"));
 
+                    b.Property<bool?>("Estado")
+                        .HasMaxLength(100)
+                        .HasColumnType("bit")
+                        .HasColumnName("estado");
+
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
@@ -1043,6 +1188,11 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("descripcion");
 
+                    b.Property<bool>("Estado")
+                        .HasMaxLength(100)
+                        .HasColumnType("bit")
+                        .HasColumnName("estado");
+
                     b.HasKey("IdMetodo")
                         .HasName("metodo_pago_id_pk");
 
@@ -1052,27 +1202,32 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdMetodo = 1,
-                            Descripcion = "Efectivo"
+                            Descripcion = "Efectivo",
+                            Estado = true
                         },
                         new
                         {
                             IdMetodo = 2,
-                            Descripcion = "Tarjeta"
+                            Descripcion = "Tarjeta",
+                            Estado = true
                         },
                         new
                         {
                             IdMetodo = 3,
-                            Descripcion = "Transferencia"
+                            Descripcion = "Transferencia",
+                            Estado = true
                         },
                         new
                         {
                             IdMetodo = 4,
-                            Descripcion = "Descuento"
+                            Descripcion = "Descuento",
+                            Estado = true
                         },
                         new
                         {
                             IdMetodo = 5,
-                            Descripcion = "Otros"
+                            Descripcion = "Otros",
+                            Estado = true
                         });
                 });
 
@@ -1106,7 +1261,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("email");
 
                     b.Property<string>("Genero")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("genero");
@@ -1228,21 +1382,610 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("descripcion");
 
-                    b.Property<int>("IdImg")
+                    b.Property<int>("IdCategoria")
+                        .HasColumnType("int")
+                        .HasColumnName("id_categoria");
+
+                    b.Property<int?>("IdImg")
                         .HasColumnType("int")
                         .HasColumnName("id_img");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("nombre");
 
+                    b.Property<decimal?>("PrecioVenta")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("precio");
+
                     b.HasKey("IdProducto")
                         .HasName("producto_id_pk");
+
+                    b.HasIndex("IdCategoria");
 
                     b.HasIndex("IdImg");
 
                     b.ToTable("productos", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdProducto = 1,
+                            Derivar = "Horno",
+                            Descripcion = "Hamburguesa clásica",
+                            IdCategoria = 1,
+                            Nombre = "Hamburguesa clásica"
+                        },
+                        new
+                        {
+                            IdProducto = 2,
+                            Derivar = "Horno",
+                            Descripcion = "Hamburguesa queso tocino",
+                            IdCategoria = 1,
+                            Nombre = "Hamburguesa queso tocino"
+                        },
+                        new
+                        {
+                            IdProducto = 3,
+                            Derivar = "Horno",
+                            Descripcion = "Hamburguesa señorial",
+                            IdCategoria = 1,
+                            Nombre = "Hamburguesa señorial"
+                        },
+                        new
+                        {
+                            IdProducto = 4,
+                            Derivar = "Horno",
+                            Descripcion = "1/4 de pollo a la brasa",
+                            IdCategoria = 6,
+                            Nombre = "1/4 de pollo a la brasa"
+                        },
+                        new
+                        {
+                            IdProducto = 5,
+                            Derivar = "Horno",
+                            Descripcion = "1/4 de pollo broaster",
+                            IdCategoria = 6,
+                            Nombre = "1/4 de pollo broaster"
+                        },
+                        new
+                        {
+                            IdProducto = 6,
+                            Derivar = "Horno",
+                            Descripcion = "Parrilla de pollo",
+                            IdCategoria = 7,
+                            Nombre = "Parrilla de pollo"
+                        },
+                        new
+                        {
+                            IdProducto = 7,
+                            Derivar = "Horno",
+                            Descripcion = "Parrilla de pollo al ajo",
+                            IdCategoria = 7,
+                            Nombre = "Parrilla de pollo al ajo"
+                        },
+                        new
+                        {
+                            IdProducto = 8,
+                            Derivar = "Horno",
+                            Descripcion = "Parrilla de pollo dietética",
+                            IdCategoria = 7,
+                            Nombre = "Parrilla de pollo dietética"
+                        },
+                        new
+                        {
+                            IdProducto = 9,
+                            Derivar = "Horno",
+                            Descripcion = "Parrilla mixta",
+                            IdCategoria = 7,
+                            Nombre = "Parrilla mixta"
+                        },
+                        new
+                        {
+                            IdProducto = 10,
+                            Derivar = "Horno",
+                            Descripcion = "Brochetas de pollo",
+                            IdCategoria = 8,
+                            Nombre = "Brochetas de pollo"
+                        },
+                        new
+                        {
+                            IdProducto = 11,
+                            Derivar = "Horno",
+                            Descripcion = "Pollo a la pizzarola",
+                            IdCategoria = 8,
+                            Nombre = "Pollo a la pizzarola"
+                        },
+                        new
+                        {
+                            IdProducto = 12,
+                            Derivar = "Horno",
+                            Descripcion = "Bisteck a la parrilla",
+                            IdCategoria = 8,
+                            Nombre = "Bisteck a la parrilla"
+                        },
+                        new
+                        {
+                            IdProducto = 13,
+                            Derivar = "Horno",
+                            Descripcion = "Chorizo a la parrilla",
+                            IdCategoria = 8,
+                            Nombre = "Chorizo a la parrilla"
+                        },
+                        new
+                        {
+                            IdProducto = 14,
+                            Derivar = "Horno",
+                            Descripcion = "Chicharrón señorial",
+                            IdCategoria = 3,
+                            Nombre = "Chicharrón señorial"
+                        },
+                        new
+                        {
+                            IdProducto = 15,
+                            Derivar = "Horno",
+                            Descripcion = "Lonjitas",
+                            IdCategoria = 3,
+                            Nombre = "Lonjitas"
+                        },
+                        new
+                        {
+                            IdProducto = 16,
+                            Derivar = "Cocina",
+                            Descripcion = "Chaufa especial",
+                            IdCategoria = 3,
+                            Nombre = "Chaufa especial"
+                        },
+                        new
+                        {
+                            IdProducto = 17,
+                            Derivar = "Cocina",
+                            Descripcion = "Chaufa mixto",
+                            IdCategoria = 3,
+                            Nombre = "Chaufa mixto"
+                        },
+                        new
+                        {
+                            IdProducto = 18,
+                            Derivar = "Cocina",
+                            Descripcion = "Spaguetti a lo alfredo",
+                            IdCategoria = 3,
+                            Nombre = "Spaguetti a lo alfredo"
+                        },
+                        new
+                        {
+                            IdProducto = 19,
+                            Derivar = "Cocina",
+                            Descripcion = "Café pasado",
+                            IdCategoria = 9,
+                            Nombre = "Café pasado"
+                        },
+                        new
+                        {
+                            IdProducto = 20,
+                            Derivar = "Cocina",
+                            Descripcion = "Chocolate con panetón",
+                            IdCategoria = 9,
+                            Nombre = "Chocolate con panetón"
+                        },
+                        new
+                        {
+                            IdProducto = 21,
+                            Derivar = "Cocina",
+                            Descripcion = "Leche fresca",
+                            IdCategoria = 9,
+                            Nombre = "Leche fresca"
+                        },
+                        new
+                        {
+                            IdProducto = 22,
+                            Derivar = "Cocina",
+                            Descripcion = "Milo",
+                            IdCategoria = 9,
+                            Nombre = "Milo"
+                        },
+                        new
+                        {
+                            IdProducto = 23,
+                            Derivar = "Cocina",
+                            Descripcion = "Café con leche",
+                            IdCategoria = 9,
+                            Nombre = "Café con leche"
+                        },
+                        new
+                        {
+                            IdProducto = 24,
+                            Derivar = "Cocina",
+                            Descripcion = "Mates",
+                            IdCategoria = 9,
+                            Nombre = "Mates"
+                        },
+                        new
+                        {
+                            IdProducto = 25,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa de 3lts",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa de 3lts"
+                        },
+                        new
+                        {
+                            IdProducto = 26,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa de 2.25lts",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa de 2.25lts"
+                        },
+                        new
+                        {
+                            IdProducto = 27,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa de 1.5lts",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa de 1.5lts"
+                        },
+                        new
+                        {
+                            IdProducto = 28,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa de 1lts",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa de 1lts"
+                        },
+                        new
+                        {
+                            IdProducto = 29,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa de 1/2lt",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa de 1/2lt"
+                        },
+                        new
+                        {
+                            IdProducto = 30,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa personal",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa personal"
+                        },
+                        new
+                        {
+                            IdProducto = 31,
+                            Derivar = "Cocina",
+                            Descripcion = "Gaseosa pirañita",
+                            IdCategoria = 10,
+                            Nombre = "Gaseosa pirañita"
+                        },
+                        new
+                        {
+                            IdProducto = 32,
+                            Derivar = "Cocina",
+                            Descripcion = "Refresco de maracuya (Jarra)",
+                            IdCategoria = 10,
+                            Nombre = "Refresco de maracuya (Jarra)"
+                        },
+                        new
+                        {
+                            IdProducto = 33,
+                            Derivar = "Cocina",
+                            Descripcion = "Chicha morada (Jarra)",
+                            IdCategoria = 10,
+                            Nombre = "Chicha morada (Jarra)"
+                        },
+                        new
+                        {
+                            IdProducto = 34,
+                            Derivar = "Cocina",
+                            Descripcion = "Limonada Frozen (Jarra)",
+                            IdCategoria = 10,
+                            Nombre = "Limonada Frozen (Jarra)"
+                        },
+                        new
+                        {
+                            IdProducto = 35,
+                            Derivar = "Cocina",
+                            Descripcion = "Limonada Americana (Jarra)",
+                            IdCategoria = 10,
+                            Nombre = "Limonada Americana (Jarra)"
+                        },
+                        new
+                        {
+                            IdProducto = 36,
+                            Derivar = "Cocina",
+                            Descripcion = "Caliente de pisco",
+                            IdCategoria = 11,
+                            Nombre = "Caliente de pisco"
+                        },
+                        new
+                        {
+                            IdProducto = 37,
+                            Derivar = "Cocina",
+                            Descripcion = "Caliente de vino",
+                            IdCategoria = 11,
+                            Nombre = "Caliente de vino"
+                        },
+                        new
+                        {
+                            IdProducto = 38,
+                            Derivar = "Cocina",
+                            Descripcion = "Caliente de ron",
+                            IdCategoria = 11,
+                            Nombre = "Caliente de ron"
+                        },
+                        new
+                        {
+                            IdProducto = 39,
+                            Derivar = "Cocina",
+                            Descripcion = "Caliente de whisky",
+                            IdCategoria = 11,
+                            Nombre = "Caliente de whisky"
+                        },
+                        new
+                        {
+                            IdProducto = 40,
+                            Derivar = "Cocina",
+                            Descripcion = "Cerveza en lata",
+                            IdCategoria = 11,
+                            Nombre = "Cerveza en lata"
+                        },
+                        new
+                        {
+                            IdProducto = 41,
+                            Derivar = "Cocina",
+                            Descripcion = "Cerveza negra",
+                            IdCategoria = 11,
+                            Nombre = "Cerveza negra"
+                        },
+                        new
+                        {
+                            IdProducto = 42,
+                            Derivar = "Cocina",
+                            Descripcion = "Cerveza de trigo",
+                            IdCategoria = 11,
+                            Nombre = "Cerveza de trigo"
+                        },
+                        new
+                        {
+                            IdProducto = 43,
+                            Derivar = "Cocina",
+                            Descripcion = "Vino queirolo (Vaso)",
+                            IdCategoria = 11,
+                            Nombre = "Vino queirolo (Vaso)"
+                        },
+                        new
+                        {
+                            IdProducto = 44,
+                            Derivar = "Cocina",
+                            Descripcion = "Whisky (Vaso)",
+                            IdCategoria = 11,
+                            Nombre = "Whisky (Vaso)"
+                        },
+                        new
+                        {
+                            IdProducto = 45,
+                            Derivar = "Cocina",
+                            Descripcion = "Pisco Vargas (Vaso)",
+                            IdCategoria = 11,
+                            Nombre = "Pisco Vargas (Vaso)"
+                        },
+                        new
+                        {
+                            IdProducto = 46,
+                            Derivar = "Cocina",
+                            Descripcion = "Mojito",
+                            IdCategoria = 12,
+                            Nombre = "Mojito"
+                        },
+                        new
+                        {
+                            IdProducto = 47,
+                            Derivar = "Cocina",
+                            Descripcion = "Machu Picchu",
+                            IdCategoria = 12,
+                            Nombre = "Machu Picchu"
+                        },
+                        new
+                        {
+                            IdProducto = 48,
+                            Derivar = "Cocina",
+                            Descripcion = "Daikiri",
+                            IdCategoria = 12,
+                            Nombre = "Daikiri"
+                        },
+                        new
+                        {
+                            IdProducto = 49,
+                            Derivar = "Cocina",
+                            Descripcion = "Piña colada",
+                            IdCategoria = 12,
+                            Nombre = "Piña colada"
+                        },
+                        new
+                        {
+                            IdProducto = 50,
+                            Derivar = "Cocina",
+                            Descripcion = "Pisco sour",
+                            IdCategoria = 12,
+                            Nombre = "Pisco sour"
+                        },
+                        new
+                        {
+                            IdProducto = 51,
+                            Derivar = "Cocina",
+                            Descripcion = "Naranjita",
+                            IdCategoria = 12,
+                            Nombre = "Naranjita"
+                        },
+                        new
+                        {
+                            IdProducto = 52,
+                            Derivar = "Horno",
+                            Descripcion = "Alitas en salsa BBQ",
+                            IdCategoria = 13,
+                            Nombre = "Alitas en salsa BBQ"
+                        },
+                        new
+                        {
+                            IdProducto = 53,
+                            Derivar = "Horno",
+                            Descripcion = "Alitas broaster",
+                            IdCategoria = 13,
+                            Nombre = "Alitas broaster"
+                        },
+                        new
+                        {
+                            IdProducto = 54,
+                            Derivar = "Cocina",
+                            Descripcion = "Tequeños especiales",
+                            IdCategoria = 13,
+                            Nombre = "Tequeños especiales"
+                        },
+                        new
+                        {
+                            IdProducto = 55,
+                            Derivar = "Cocina",
+                            Descripcion = "Durazno en almíbar",
+                            IdCategoria = 14,
+                            Nombre = "Durazno en almíbar"
+                        },
+                        new
+                        {
+                            IdProducto = 56,
+                            Derivar = "Cocina",
+                            Descripcion = "Helado 02 bolas",
+                            IdCategoria = 14,
+                            Nombre = "Helado 02 bolas"
+                        },
+                        new
+                        {
+                            IdProducto = 57,
+                            Derivar = "Cocina",
+                            Descripcion = "Helado 03 bolas",
+                            IdCategoria = 14,
+                            Nombre = "Helado 03 bolas"
+                        },
+                        new
+                        {
+                            IdProducto = 58,
+                            Derivar = "Cocina",
+                            Descripcion = "Gelatina",
+                            IdCategoria = 14,
+                            Nombre = "Gelatina"
+                        },
+                        new
+                        {
+                            IdProducto = 59,
+                            Derivar = "Cocina",
+                            Descripcion = "Flan",
+                            IdCategoria = 14,
+                            Nombre = "Flan"
+                        },
+                        new
+                        {
+                            IdProducto = 60,
+                            Derivar = "Cocina",
+                            Descripcion = "Jugo de papaya",
+                            IdCategoria = 15,
+                            Nombre = "Jugo de papaya"
+                        },
+                        new
+                        {
+                            IdProducto = 61,
+                            Derivar = "Cocina",
+                            Descripcion = "Jugo de fresa con leche",
+                            IdCategoria = 15,
+                            Nombre = "Jugo de fresa con leche"
+                        },
+                        new
+                        {
+                            IdProducto = 62,
+                            Derivar = "Cocina",
+                            Descripcion = "Jugo de plátano",
+                            IdCategoria = 15,
+                            Nombre = "Jugo de plátano"
+                        },
+                        new
+                        {
+                            IdProducto = 63,
+                            Derivar = "Cocina",
+                            Descripcion = "Jugo surtido",
+                            IdCategoria = 15,
+                            Nombre = "Jugo surtido"
+                        },
+                        new
+                        {
+                            IdProducto = 64,
+                            Derivar = "Cocina",
+                            Descripcion = "Ensalada de frutas",
+                            IdCategoria = 15,
+                            Nombre = "Ensalada de frutas"
+                        },
+                        new
+                        {
+                            IdProducto = 65,
+                            Derivar = "Cocina",
+                            Descripcion = "Milkshake de Oreo",
+                            IdCategoria = 15,
+                            Nombre = "Milkshake de Oreo"
+                        },
+                        new
+                        {
+                            IdProducto = 66,
+                            Derivar = "Cocina",
+                            Descripcion = "Milkshake de durazno",
+                            IdCategoria = 15,
+                            Nombre = "Milkshake de durazno"
+                        },
+                        new
+                        {
+                            IdProducto = 67,
+                            Derivar = "Cocina",
+                            Descripcion = "Milkshake de fresa",
+                            IdCategoria = 15,
+                            Nombre = "Milkshake de fresa"
+                        },
+                        new
+                        {
+                            IdProducto = 68,
+                            Derivar = "Horno",
+                            Descripcion = "Salchipapa clásica",
+                            IdCategoria = 3,
+                            Nombre = "Salchipapa clásica"
+                        },
+                        new
+                        {
+                            IdProducto = 69,
+                            Derivar = "Horno",
+                            Descripcion = "Salchipapa ayacuchana",
+                            IdCategoria = 3,
+                            Nombre = "Salchipapa ayacuchana"
+                        },
+                        new
+                        {
+                            IdProducto = 70,
+                            Derivar = "Horno",
+                            Descripcion = "Salchipiernita",
+                            IdCategoria = 3,
+                            Nombre = "Salchipiernita"
+                        },
+                        new
+                        {
+                            IdProducto = 71,
+                            Derivar = "Cocina",
+                            Descripcion = "Mounstruo",
+                            IdCategoria = 3,
+                            Nombre = "Mounstruo"
+                        },
+                        new
+                        {
+                            IdProducto = 72,
+                            Derivar = "Cocina",
+                            Descripcion = "Mounstrito",
+                            IdCategoria = 3,
+                            Nombre = "Mounstrito"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.ProductoSucursal", b =>
@@ -1279,7 +2022,7 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("precio");
 
                     b.HasKey("IdProductoSucursal")
-                        .HasName("producto_local_id_pk");
+                        .HasName("producto_sucursal_id_pk");
 
                     b.HasIndex("IdCategoria");
 
@@ -1530,11 +2273,16 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdTipoDocumento = 2,
-                            Nombre = "Pasaporte"
+                            Nombre = "RUC"
                         },
                         new
                         {
                             IdTipoDocumento = 3,
+                            Nombre = "Pasaporte"
+                        },
+                        new
+                        {
+                            IdTipoDocumento = 4,
                             Nombre = "Carnet de Extranjería"
                         });
                 });
@@ -1770,7 +2518,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 6, 30, 0, 13, 8, 159, DateTimeKind.Local).AddTicks(1065),
+                            CreatedAt = new DateTime(2024, 7, 12, 22, 50, 27, 389, DateTimeKind.Local).AddTicks(6783),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -1792,9 +2540,9 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("decimal(10, 2)")
                         .HasColumnName("costo_base");
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<bool?>("Estado")
+                        .HasMaxLength(100)
+                        .HasColumnType("bit")
                         .HasColumnName("estado");
 
                     b.Property<DateTime?>("FechaVenta")
@@ -1967,12 +2715,12 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Categoria", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Categoria", "IdCategoriaPadreNavigation")
-                        .WithMany("InverseIdCategoriaPadreNavigation")
+                    b.HasOne("DBSenorialModels.Senorial.Categoria", "CategoriaPadre")
+                        .WithMany("SubCategorias")
                         .HasForeignKey("IdCategoriaPadre")
                         .HasConstraintName("categorias_padre_fk");
 
-                    b.Navigation("IdCategoriaPadreNavigation");
+                    b.Navigation("CategoriaPadre");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Cliente", b =>
@@ -2003,6 +2751,17 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdProveedorNavigation");
 
                     b.Navigation("IdVoucherNavigation");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.ConteoDinero", b =>
+                {
+                    b.HasOne("DBSenorialModels.Senorial.AperturaCaja", "AperturaCaja")
+                        .WithMany("Conteos")
+                        .HasForeignKey("IdApertura")
+                        .IsRequired()
+                        .HasConstraintName("conteo_dinero_apertura_fk");
+
+                    b.Navigation("AperturaCaja");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleCompra", b =>
@@ -2093,7 +2852,7 @@ namespace DBSenorialModels.Data.Migraciones
                         .WithMany("DetalleVenta")
                         .HasForeignKey("IdVenta")
                         .IsRequired()
-                        .HasConstraintName("venta_id_fk");
+                        .HasConstraintName("venta_detalle_venta_fk");
 
                     b.Navigation("IdProductoSucursalNavigation");
 
@@ -2192,11 +2951,18 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
                 {
+                    b.HasOne("DBSenorialModels.Senorial.Categoria", "Categoria")
+                        .WithMany("Productos")
+                        .HasForeignKey("IdCategoria")
+                        .IsRequired()
+                        .HasConstraintName("producto_categoria_fk");
+
                     b.HasOne("DBSenorialModels.Senorial.Imagene", "IdImgNavigation")
                         .WithMany("Productos")
                         .HasForeignKey("IdImg")
-                        .IsRequired()
                         .HasConstraintName("img_id_fk");
+
+                    b.Navigation("Categoria");
 
                     b.Navigation("IdImgNavigation");
                 });
@@ -2421,6 +3187,8 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.AperturaCaja", b =>
                 {
+                    b.Navigation("Conteos");
+
                     b.Navigation("Venta");
                 });
 
@@ -2431,9 +3199,11 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Categoria", b =>
                 {
-                    b.Navigation("InverseIdCategoriaPadreNavigation");
-
                     b.Navigation("ProductoSucursals");
+
+                    b.Navigation("Productos");
+
+                    b.Navigation("SubCategorias");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Cliente", b =>

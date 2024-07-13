@@ -18,26 +18,27 @@ public partial class Venta
     [Column("id_apertura")]
     public int IdApertura { get; set; }
 
+    [Column("id_cliente")]
+    public int IdCliente { get; set; }
+    [Column("id_empleado")]
+    public int IdEmpleado { get; set; }
+    [Column("id_comprobante")]
+    public int IdComprobante { get; set; }
     [Column("id_voucher")]
     public int IdVoucher { get; set; }
 
     [Column("id_sucursal")]
     public int IdSucursal { get; set; }
 
-    [Column("id_cliente")]
-    public int IdCliente { get; set; }
 
     [Column("estado")]
-    public string Estado { get; set; }
+    [StringLength(100)]
+    public bool? Estado { get; set; }
 
-    [Column("id_empleado")]
-    public int IdEmpleado { get; set; }
 
     [Column("id_metodo")]
     public int IdMetodo { get; set; }
 
-    [Column("id_comprobante")]
-    public int IdComprobante { get; set; }
 
     [Column("nro_documento")]
     [StringLength(50)]

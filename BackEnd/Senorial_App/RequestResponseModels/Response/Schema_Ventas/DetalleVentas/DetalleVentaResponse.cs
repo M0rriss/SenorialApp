@@ -11,7 +11,8 @@ namespace RequestResponseModels.Response.Schema_Ventas.DetalleVentas
         public int IdDetVenta { get; set; }
         public int? Cantidad { get; set; }
         public decimal? PrecioUnitario { get; set; }
-        public int IdVenta { get; set; }
+        //public int IdVenta { get; set; }
         public int IdProductoSucursal { get; set; }
+        public string ProductoNombre { get; set; }
     }
 }

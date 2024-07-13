@@ -12,5 +12,13 @@ namespace RequestResponseModels.Response.Schema_Almacen.Categorias
         public int IdCategoria { get; set; }
         public string Nombre { get; set; }
         public int? IdCategoriaPadre { get; set; }
+        public bool Estado { get; set; }
+        public string EstadoDescripcion
+        {
+            get
+            {
+                return Estado ? "Activo" : "Inactivo";
+            }
+        }
     }
 }

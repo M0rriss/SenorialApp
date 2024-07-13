@@ -13,5 +13,26 @@ namespace RequestResponseModels.Request.Schema_Ventas.MetodoPago
         public int IdMetodo { get; set; }
         [StringLength(100)]
         public string? Descripcion { get; set; }
+        [StringLength(100)]
+        public bool Estado { get; set; }
+
+        public class MetodoPagoUiRequest
+        {
+
+            [StringLength(100)]
+            public string? Descripcion { get; set; }
+
+            public bool Estado { get; set; }
+        }
+
+        public class MetodoPagoUpdateUiRequest
+        {
+            public int IdMetodo { get; set; }
+
+            [StringLength(100)]
+            public string? Descripcion { get; set; }
+
+            public bool Estado { get; set; }
+        }
     }
 }

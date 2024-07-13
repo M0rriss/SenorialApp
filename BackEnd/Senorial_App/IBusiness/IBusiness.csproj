@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DBSenorialModels\DBSenorialModels.csproj" />
     <ProjectReference Include="..\RequestResponseModels\RequestResponseModels.csproj" />
   </ItemGroup>
 

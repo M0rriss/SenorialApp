@@ -10,6 +10,8 @@ using RequestResponseModels.Request.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
 using RequestResponseModels.Request.Schema_Usuarios.Roles;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Request.Schema_Ventas.AperturaCaja.HistorialCaja;
+using RequestResponseModels.Request.Schema_Ventas.AperturaCaja;
 using RequestResponseModels.Request.Schema_Ventas.Cliente;
 using RequestResponseModels.Request.Schema_Ventas.Empleados;
 using RequestResponseModels.Request.Schema_Ventas.Productos;
@@ -22,15 +24,23 @@ using RequestResponseModels.Response.Schema_Generico.UnidadMedicion;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Usuarios.Roles;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Schema_Ventas.AperturaCaja.Historial;
+using RequestResponseModels.Response.Schema_Ventas.AperturaCaja;
 using RequestResponseModels.Response.Schema_Ventas.Cliente;
+using RequestResponseModels.Response.Schema_Ventas.DetalleVentas;
 using RequestResponseModels.Response.Schema_Ventas.Empleados;
 using RequestResponseModels.Response.Schema_Ventas.Productos;
+using RequestResponseModels.Response.Schema_Ventas.Ventas.Detalle;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RequestResponseModels.Request.Schema_Ventas.AperturaCaja.Cierre;
+using RequestResponseModels.Request.Schema_Ventas.MetodoPago;
+using RequestResponseModels.Response.Schema_Ventas.MetodoPago;
+using static RequestResponseModels.Request.Schema_Ventas.MetodoPago.MetodoPagoRequest;
 
 namespace UtilityAutoMapper
 {
@@ -61,6 +71,11 @@ namespace UtilityAutoMapper
             CreateMap<Insumo, InsumoRequest>().ReverseMap();
             CreateMap<Insumo, InsumoResponse>().ReverseMap();
             CreateMap<InsumoRequest, InsumoResponse>().ReverseMap();
+            CreateMap<Insumo, InsumoRequest>().ReverseMap();
+            CreateMap<Insumo, InsumoResponse>().ReverseMap();
+            CreateMap<Insumo, InsumoUiRequest>().ReverseMap();
+            CreateMap<Insumo, InsumoUiResponse>().ReverseMap();
+            CreateMap<Insumo, InsumoUpdateUiRequest>().ReverseMap();
             #endregion
             #region Proveedor
             CreateMap<Proveedor, ProveedorRequest>().ReverseMap();
@@ -182,6 +197,39 @@ namespace UtilityAutoMapper
             CreateMap<Empleado, Persona>().ReverseMap();
 
 
+            #endregion
+            #region Caja_Apertura_Cierre_Historial
+            // Mapeo de AperturaCajaRequest a AperturaCaja y viceversa
+            CreateMap<AperturaCajaRequest, AperturaCaja>().ReverseMap();
+
+            // Mapeo de AperturaCaja a AperturaCajaResponse y viceversa
+            CreateMap<AperturaCaja, AperturaCajaResponse>().ReverseMap();
+
+            // Mapeo de Venta a VentaDetalleResponse y viceversa
+            CreateMap<Venta, VentaDetalleResponse>().ReverseMap();
+
+            // Mapeo de DetalleVenta a DetalleVentaResponse y viceversa
+            CreateMap<DetalleVenta, DetalleVentaResponse>().ReverseMap();
+
+            // Mapeo de HistorialAperturaRequest a HistorialAperturaResponse y viceversa
+            CreateMap<HistorialAperturaRequest, HistorialAperturaResponse>().ReverseMap();
+
+            // Mapeo de ConteoDinero a ConteoDineroResponse (si es necesario) y viceversa
+            CreateMap<ConteoDinero, ConteoDineroRequest>().ReverseMap();
+
+            // Mapeo de Usuario a UsuarioResponse (si es necesario) y viceversa
+            CreateMap<Usuario, UsuarioResponse>().ReverseMap();
+
+            // Mapeo de Empleado a EmpleadoResponse (si es necesario) y viceversa
+            CreateMap<Empleado, EmpleadoResponse>().ReverseMap();
+            #endregion
+            #region MetodoPago
+            CreateMap<MetodoPago, MetodoPagoRequest>().ReverseMap();
+            CreateMap<MetodoPago, MetodoPagoResponse>().ReverseMap();
+            // Mapeo de MetodoPago para UI
+            CreateMap<MetodoPago, MetodoPagoUiRequest>().ReverseMap();
+            CreateMap<MetodoPago, MetodoPagoUiResponse>().ReverseMap();
+            CreateMap<MetodoPago, MetodoPagoUpdateUiRequest>().ReverseMap();
             #endregion
             #endregion
 

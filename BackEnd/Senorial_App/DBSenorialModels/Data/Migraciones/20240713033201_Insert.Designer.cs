@@ -4,6 +4,7 @@ using DBSenorialModels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    partial class DBSenorialContextModelSnapshot : ModelSnapshot
+    [Migration("20240713033201_Insert")]
+    partial class Insert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1393,10 +1396,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("nombre");
 
-                    b.Property<decimal?>("PrecioVenta")
-                        .HasColumnType("decimal(10, 2)")
-                        .HasColumnName("precio");
-
                     b.HasKey("IdProducto")
                         .HasName("producto_id_pk");
 
@@ -2515,7 +2514,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 7, 12, 22, 50, 27, 389, DateTimeKind.Local).AddTicks(6783),
+                            CreatedAt = new DateTime(2024, 7, 12, 22, 32, 1, 453, DateTimeKind.Local).AddTicks(3855),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,

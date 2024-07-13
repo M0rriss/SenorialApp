@@ -13,17 +13,17 @@ public partial class DetalleVenta
     [Column("id_det_venta")]
     public int IdDetVenta { get; set; }
 
+    [Column("id_venta")]
+    public int IdVenta { get; set; }
+    [Column("id_producto_sucursal")]
+    public int IdProductoSucursal { get; set; }
     [Column("cantidad")]
     public int? Cantidad { get; set; }
 
     [Column("precio_unitario", TypeName = "decimal(10, 2)")]
     public decimal? PrecioUnitario { get; set; }
 
-    [Column("id_venta")]
-    public int IdVenta { get; set; }
 
-    [Column("id_producto_sucursal")]
-    public int IdProductoSucursal { get; set; }
 
     [ForeignKey("IdProductoSucursal")]
     [InverseProperty("DetalleVenta")]

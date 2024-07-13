@@ -17,17 +17,23 @@ public partial class Categoria
     [Column("nombre")]
     [StringLength(100)]
     public string Nombre { get; set; } = null!;
-
+    [Column("estado")]
+    [StringLength(100)]
+    public bool Estado { get; set; }
     [Column("id_categoria_padre")]
     public int? IdCategoriaPadre { get; set; }
 
     [ForeignKey("IdCategoriaPadre")]
-    [InverseProperty("InverseIdCategoriaPadreNavigation")]
-    public virtual Categoria? IdCategoriaPadreNavigation { get; set; }
+    [InverseProperty("SubCategorias")]
+    public virtual Categoria? CategoriaPadre { get; set; }
 
-    [InverseProperty("IdCategoriaPadreNavigation")]
-    public virtual ICollection<Categoria> InverseIdCategoriaPadreNavigation { get; set; } = new List<Categoria>();
-
+    [InverseProperty("CategoriaPadre")]
+    public virtual ICollection<Categoria> SubCategorias { get; set; } = new List<Categoria>();
+    [InverseProperty("Categoria")]
+    public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
     [InverseProperty("IdCategoriaNavigation")]
     public virtual ICollection<ProductoSucursal> ProductoSucursals { get; set; } = new List<ProductoSucursal>();
+    [NotMapped]
+    // Propiedad calculada para obtener el estado como cadena
+    public string EstadoDescripcion => Estado ? "Activo" : "Inactivo";
 }

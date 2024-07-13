@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class employee : Migration
+    public partial class Insert : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,7 @@ namespace DBSenorialModels.Data.Migraciones
                     id_categoria = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: false),
                     id_categoria_padre = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -104,7 +105,8 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_mesa = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,7 +120,8 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_metodo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,6 +244,7 @@ namespace DBSenorialModels.Data.Migraciones
                     hora_fecha_inicio = table.Column<DateTime>(type: "datetime", nullable: false),
                     activo = table.Column<bool>(type: "bit", nullable: false),
                     monto_cierre = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
+                    total_contado = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     sobrante = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     faltante = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     hora_fecha_cierre = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -263,10 +267,11 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_producto = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     derivar = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    id_img = table.Column<int>(type: "int", nullable: false)
+                    id_img = table.Column<int>(type: "int", nullable: true),
+                    id_categoria = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -277,6 +282,12 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Generico",
                         principalTable: "imagenes",
                         principalColumn: "id_img");
+                    table.ForeignKey(
+                        name: "producto_categoria_fk",
+                        column: x => x.id_categoria,
+                        principalSchema: "Almacen",
+                        principalTable: "categorias",
+                        principalColumn: "id_categoria");
                 });
 
             migrationBuilder.CreateTable(
@@ -365,7 +376,7 @@ namespace DBSenorialModels.Data.Migraciones
                     tipo_documento = table.Column<int>(type: "int", nullable: false),
                     tipo_persona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     razon_social = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    genero = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    genero = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -424,6 +435,28 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Generico",
                         principalTable: "unidad_medicion",
                         principalColumn: "id_unidad");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "conteo_dinero",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_conteo = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_apertura = table.Column<int>(type: "int", nullable: false),
+                    denominacion = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("conteo_dinero_id_pk", x => x.id_conteo);
+                    table.ForeignKey(
+                        name: "conteo_dinero_apertura_fk",
+                        column: x => x.id_apertura,
+                        principalSchema: "Ventas",
+                        principalTable: "apertura_cajas",
+                        principalColumn: "id_apertura");
                 });
 
             migrationBuilder.CreateTable(
@@ -607,7 +640,7 @@ namespace DBSenorialModels.Data.Migraciones
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("producto_local_id_pk", x => x.id_producto_sucursal);
+                    table.PrimaryKey("producto_sucursal_id_pk", x => x.id_producto_sucursal);
                     table.ForeignKey(
                         name: "categorias_id_fk",
                         column: x => x.id_categoria,
@@ -695,13 +728,13 @@ namespace DBSenorialModels.Data.Migraciones
                     id_venta = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     id_apertura = table.Column<int>(type: "int", nullable: false),
+                    id_cliente = table.Column<int>(type: "int", nullable: false),
+                    id_empleado = table.Column<int>(type: "int", nullable: false),
+                    id_comprobante = table.Column<int>(type: "int", nullable: false),
                     id_voucher = table.Column<int>(type: "int", nullable: false),
                     id_sucursal = table.Column<int>(type: "int", nullable: false),
-                    id_cliente = table.Column<int>(type: "int", nullable: false),
-                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    id_empleado = table.Column<int>(type: "int", nullable: false),
+                    estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: true),
                     id_metodo = table.Column<int>(type: "int", nullable: false),
-                    id_comprobante = table.Column<int>(type: "int", nullable: false),
                     nro_documento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     nro_serie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     id_tipo_pedido = table.Column<int>(type: "int", nullable: false),
@@ -883,10 +916,10 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_det_venta = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    cantidad = table.Column<int>(type: "int", nullable: true),
-                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     id_venta = table.Column<int>(type: "int", nullable: false),
-                    id_producto_sucursal = table.Column<int>(type: "int", nullable: false)
+                    id_producto_sucursal = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: true),
+                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -898,7 +931,7 @@ namespace DBSenorialModels.Data.Migraciones
                         principalTable: "producto_sucursal",
                         principalColumn: "id_producto_sucursal");
                     table.ForeignKey(
-                        name: "venta_id_fk",
+                        name: "venta_detalle_venta_fk",
                         column: x => x.id_venta,
                         principalSchema: "Ventas",
                         principalTable: "ventas",
@@ -939,16 +972,29 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.InsertData(
-                schema: "Ventas",
-                table: "metodo_pago",
-                columns: new[] { "id_metodo", "descripcion" },
+                schema: "Almacen",
+                table: "categorias",
+                columns: new[] { "id_categoria", "estado", "id_categoria_padre", "nombre" },
                 values: new object[,]
                 {
-                    { 1, "Efectivo" },
-                    { 2, "Tarjeta" },
-                    { 3, "Transferencia" },
-                    { 4, "Descuento" },
-                    { 5, "Otros" }
+                    { 1, true, null, "Hamburguesas" },
+                    { 2, true, null, "Parrillas y Pollos" },
+                    { 3, true, null, "Platos de Fondo" },
+                    { 4, true, null, "Bebidas" },
+                    { 5, true, null, "Complementos" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Ventas",
+                table: "metodo_pago",
+                columns: new[] { "id_metodo", "descripcion", "estado" },
+                values: new object[,]
+                {
+                    { 1, "Efectivo", true },
+                    { 2, "Tarjeta", true },
+                    { 3, "Transferencia", true },
+                    { 4, "Descuento", true },
+                    { 5, "Otros", true }
                 });
 
             migrationBuilder.InsertData(
@@ -981,8 +1027,9 @@ namespace DBSenorialModels.Data.Migraciones
                 values: new object[,]
                 {
                     { 1, "DNI" },
-                    { 2, "Pasaporte" },
-                    { 3, "Carnet de Extranjería" }
+                    { 2, "RUC" },
+                    { 3, "Pasaporte" },
+                    { 4, "Carnet de Extranjería" }
                 });
 
             migrationBuilder.InsertData(
@@ -1012,6 +1059,24 @@ namespace DBSenorialModels.Data.Migraciones
                     { 9, "Bsa", "Bolsa" },
                     { 10, "Cja", "Caja" },
                     { 11, "B-20Kg", "Bolsa 20 kg" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "Almacen",
+                table: "categorias",
+                columns: new[] { "id_categoria", "estado", "id_categoria_padre", "nombre" },
+                values: new object[,]
+                {
+                    { 6, true, 2, "Pollos" },
+                    { 7, true, 2, "Parrillas" },
+                    { 8, true, 2, "Otros" },
+                    { 9, true, 4, "Bebidas Calientes" },
+                    { 10, true, 4, "Bebidas Frías" },
+                    { 11, true, 4, "Licores" },
+                    { 12, true, 4, "Cócteles" },
+                    { 13, true, 5, "Piqueos de la Casa" },
+                    { 14, true, 5, "Postres" },
+                    { 15, true, 5, "Jugos y Milkshakes" }
                 });
 
             migrationBuilder.InsertData(
@@ -1104,10 +1169,90 @@ namespace DBSenorialModels.Data.Migraciones
                 values: new object[] { 1, "", "Abregu", "", "admin@admin.com", "Masculino", 1, "", "Victor", "Señorial", "", "985851866", "Natural" });
 
             migrationBuilder.InsertData(
+                schema: "Ventas",
+                table: "productos",
+                columns: new[] { "id_producto", "derivar", "descripcion", "id_categoria", "id_img", "nombre" },
+                values: new object[,]
+                {
+                    { 1, "Horno", "Hamburguesa clásica", 1, null, "Hamburguesa clásica" },
+                    { 2, "Horno", "Hamburguesa queso tocino", 1, null, "Hamburguesa queso tocino" },
+                    { 3, "Horno", "Hamburguesa señorial", 1, null, "Hamburguesa señorial" },
+                    { 14, "Horno", "Chicharrón señorial", 3, null, "Chicharrón señorial" },
+                    { 15, "Horno", "Lonjitas", 3, null, "Lonjitas" },
+                    { 16, "Cocina", "Chaufa especial", 3, null, "Chaufa especial" },
+                    { 17, "Cocina", "Chaufa mixto", 3, null, "Chaufa mixto" },
+                    { 18, "Cocina", "Spaguetti a lo alfredo", 3, null, "Spaguetti a lo alfredo" },
+                    { 68, "Horno", "Salchipapa clásica", 3, null, "Salchipapa clásica" },
+                    { 69, "Horno", "Salchipapa ayacuchana", 3, null, "Salchipapa ayacuchana" },
+                    { 70, "Horno", "Salchipiernita", 3, null, "Salchipiernita" },
+                    { 71, "Cocina", "Mounstruo", 3, null, "Mounstruo" },
+                    { 72, "Cocina", "Mounstrito", 3, null, "Mounstrito" },
+                    { 4, "Horno", "1/4 de pollo a la brasa", 6, null, "1/4 de pollo a la brasa" },
+                    { 5, "Horno", "1/4 de pollo broaster", 6, null, "1/4 de pollo broaster" },
+                    { 6, "Horno", "Parrilla de pollo", 7, null, "Parrilla de pollo" },
+                    { 7, "Horno", "Parrilla de pollo al ajo", 7, null, "Parrilla de pollo al ajo" },
+                    { 8, "Horno", "Parrilla de pollo dietética", 7, null, "Parrilla de pollo dietética" },
+                    { 9, "Horno", "Parrilla mixta", 7, null, "Parrilla mixta" },
+                    { 10, "Horno", "Brochetas de pollo", 8, null, "Brochetas de pollo" },
+                    { 11, "Horno", "Pollo a la pizzarola", 8, null, "Pollo a la pizzarola" },
+                    { 12, "Horno", "Bisteck a la parrilla", 8, null, "Bisteck a la parrilla" },
+                    { 13, "Horno", "Chorizo a la parrilla", 8, null, "Chorizo a la parrilla" },
+                    { 19, "Cocina", "Café pasado", 9, null, "Café pasado" },
+                    { 20, "Cocina", "Chocolate con panetón", 9, null, "Chocolate con panetón" },
+                    { 21, "Cocina", "Leche fresca", 9, null, "Leche fresca" },
+                    { 22, "Cocina", "Milo", 9, null, "Milo" },
+                    { 23, "Cocina", "Café con leche", 9, null, "Café con leche" },
+                    { 24, "Cocina", "Mates", 9, null, "Mates" },
+                    { 25, "Cocina", "Gaseosa de 3lts", 10, null, "Gaseosa de 3lts" },
+                    { 26, "Cocina", "Gaseosa de 2.25lts", 10, null, "Gaseosa de 2.25lts" },
+                    { 27, "Cocina", "Gaseosa de 1.5lts", 10, null, "Gaseosa de 1.5lts" },
+                    { 28, "Cocina", "Gaseosa de 1lts", 10, null, "Gaseosa de 1lts" },
+                    { 29, "Cocina", "Gaseosa de 1/2lt", 10, null, "Gaseosa de 1/2lt" },
+                    { 30, "Cocina", "Gaseosa personal", 10, null, "Gaseosa personal" },
+                    { 31, "Cocina", "Gaseosa pirañita", 10, null, "Gaseosa pirañita" },
+                    { 32, "Cocina", "Refresco de maracuya (Jarra)", 10, null, "Refresco de maracuya (Jarra)" },
+                    { 33, "Cocina", "Chicha morada (Jarra)", 10, null, "Chicha morada (Jarra)" },
+                    { 34, "Cocina", "Limonada Frozen (Jarra)", 10, null, "Limonada Frozen (Jarra)" },
+                    { 35, "Cocina", "Limonada Americana (Jarra)", 10, null, "Limonada Americana (Jarra)" },
+                    { 36, "Cocina", "Caliente de pisco", 11, null, "Caliente de pisco" },
+                    { 37, "Cocina", "Caliente de vino", 11, null, "Caliente de vino" },
+                    { 38, "Cocina", "Caliente de ron", 11, null, "Caliente de ron" },
+                    { 39, "Cocina", "Caliente de whisky", 11, null, "Caliente de whisky" },
+                    { 40, "Cocina", "Cerveza en lata", 11, null, "Cerveza en lata" },
+                    { 41, "Cocina", "Cerveza negra", 11, null, "Cerveza negra" },
+                    { 42, "Cocina", "Cerveza de trigo", 11, null, "Cerveza de trigo" },
+                    { 43, "Cocina", "Vino queirolo (Vaso)", 11, null, "Vino queirolo (Vaso)" },
+                    { 44, "Cocina", "Whisky (Vaso)", 11, null, "Whisky (Vaso)" },
+                    { 45, "Cocina", "Pisco Vargas (Vaso)", 11, null, "Pisco Vargas (Vaso)" },
+                    { 46, "Cocina", "Mojito", 12, null, "Mojito" },
+                    { 47, "Cocina", "Machu Picchu", 12, null, "Machu Picchu" },
+                    { 48, "Cocina", "Daikiri", 12, null, "Daikiri" },
+                    { 49, "Cocina", "Piña colada", 12, null, "Piña colada" },
+                    { 50, "Cocina", "Pisco sour", 12, null, "Pisco sour" },
+                    { 51, "Cocina", "Naranjita", 12, null, "Naranjita" },
+                    { 52, "Horno", "Alitas en salsa BBQ", 13, null, "Alitas en salsa BBQ" },
+                    { 53, "Horno", "Alitas broaster", 13, null, "Alitas broaster" },
+                    { 54, "Cocina", "Tequeños especiales", 13, null, "Tequeños especiales" },
+                    { 55, "Cocina", "Durazno en almíbar", 14, null, "Durazno en almíbar" },
+                    { 56, "Cocina", "Helado 02 bolas", 14, null, "Helado 02 bolas" },
+                    { 57, "Cocina", "Helado 03 bolas", 14, null, "Helado 03 bolas" },
+                    { 58, "Cocina", "Gelatina", 14, null, "Gelatina" },
+                    { 59, "Cocina", "Flan", 14, null, "Flan" },
+                    { 60, "Cocina", "Jugo de papaya", 15, null, "Jugo de papaya" },
+                    { 61, "Cocina", "Jugo de fresa con leche", 15, null, "Jugo de fresa con leche" },
+                    { 62, "Cocina", "Jugo de plátano", 15, null, "Jugo de plátano" },
+                    { 63, "Cocina", "Jugo surtido", 15, null, "Jugo surtido" },
+                    { 64, "Cocina", "Ensalada de frutas", 15, null, "Ensalada de frutas" },
+                    { 65, "Cocina", "Milkshake de Oreo", 15, null, "Milkshake de Oreo" },
+                    { 66, "Cocina", "Milkshake de durazno", 15, null, "Milkshake de durazno" },
+                    { 67, "Cocina", "Milkshake de fresa", 15, null, "Milkshake de fresa" }
+                });
+
+            migrationBuilder.InsertData(
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 6, 30, 0, 13, 8, 159, DateTimeKind.Local).AddTicks(1065), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 7, 12, 22, 32, 1, 453, DateTimeKind.Local).AddTicks(3855), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1151,6 +1296,12 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Almacen",
                 table: "compra",
                 column: "id_voucher");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_conteo_dinero_id_apertura",
+                schema: "Ventas",
+                table: "conteo_dinero",
+                column: "id_apertura");
 
             migrationBuilder.CreateIndex(
                 name: "IX_detalle_compra_id_insumo",
@@ -1289,6 +1440,12 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Ventas",
                 table: "producto_sucursal",
                 column: "id_unidad");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_productos_id_categoria",
+                schema: "Ventas",
+                table: "productos",
+                column: "id_categoria");
 
             migrationBuilder.CreateIndex(
                 name: "IX_productos_id_img",
@@ -1441,6 +1598,10 @@ namespace DBSenorialModels.Data.Migraciones
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "conteo_dinero",
+                schema: "Ventas");
+
+            migrationBuilder.DropTable(
                 name: "detalle_compra",
                 schema: "Almacen");
 
@@ -1497,10 +1658,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "categorias",
-                schema: "Almacen");
-
-            migrationBuilder.DropTable(
                 name: "productos",
                 schema: "Ventas");
 
@@ -1543,6 +1700,10 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.DropTable(
                 name: "imagenes",
                 schema: "Generico");
+
+            migrationBuilder.DropTable(
+                name: "categorias",
+                schema: "Almacen");
 
             migrationBuilder.DropTable(
                 name: "cajas",

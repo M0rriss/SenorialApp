@@ -10,5 +10,7 @@ namespace IRepository.Schema_Ventas.AperturaCajas
 {
     public interface IAperturaCajaRepository : ICrudRepository<AperturaCaja>
     {
+        Task<ConteoDinero> RegistrarConteoDinero(ConteoDinero conteo);
+        Task<AperturaCaja> ObtenerAperturaPorId(int id);
     }
 }

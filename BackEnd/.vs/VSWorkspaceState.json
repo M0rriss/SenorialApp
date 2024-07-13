@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Senorial_App"
+    "\\Senorial_App",
+    "\\Senorial_App\\App_Senorial",
+    "\\Senorial_App\\App_Senorial\\Controllers",
+    "\\Senorial_App\\App_Senorial\\Controllers\\Authentication"
   ],
   "SelectedNode": "\\Senorial_App\\Senorial_App.sln",
   "PreviewInSolutionExplorer": false

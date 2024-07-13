@@ -28,8 +28,14 @@ public partial class AperturaCaja
     [Column("activo")]
     public bool Activo { get; set; }
 
+
+
+    //CIERRE DE CAJA
+
     [Column("monto_cierre", TypeName = "decimal(10, 2)")]
     public decimal? MontoCierre { get; set; }
+    [Column("total_contado", TypeName = "decimal(10, 2)")]
+    public decimal? TotalContado { get; set; }
     [Column("sobrante", TypeName = "decimal(10, 2)")]
     public decimal? Sobrante { get; set; }
     [Column("faltante", TypeName = "decimal(10, 2)")]
@@ -44,4 +50,7 @@ public partial class AperturaCaja
 
     [InverseProperty("IdAperturaNavigation")]
     public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
+
+    [InverseProperty("AperturaCaja")]
+    public virtual ICollection<ConteoDinero> Conteos { get; set; } = new List<ConteoDinero>();
 }

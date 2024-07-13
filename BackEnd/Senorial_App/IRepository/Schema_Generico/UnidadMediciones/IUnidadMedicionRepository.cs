@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 namespace IRepository.Schema_Generico.UnidadMediciones
 {
     public interface IUnidadMedicionRepository : ICrudRepository<UnidadMedicion>
+ 
     {
+        Task<UnidadMedicion> ObtenerUnidadMedidaPorNombre(string nombre);
+        Task<UnidadMedicion> BuscarporId(int id);
     }
 }

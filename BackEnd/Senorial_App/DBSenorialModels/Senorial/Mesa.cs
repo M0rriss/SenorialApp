@@ -16,6 +16,9 @@ public partial class Mesa
     [Column("nombre")]
     [StringLength(100)]
     public string? Nombre { get; set; }
+    [Column("estado")]
+    [StringLength(100)]
+    public bool? Estado { get; set; }
 
     [InverseProperty("IdMesaNavigation")]
     public virtual ICollection<Ambiente> Ambientes { get; set; } = new List<Ambiente>();
