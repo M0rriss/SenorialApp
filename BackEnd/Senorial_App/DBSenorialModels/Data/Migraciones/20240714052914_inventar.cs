@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class Insert : Migration
+    public partial class inventar : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,9 +21,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             migrationBuilder.EnsureSchema(
                 name: "Usuarios");
-
-            migrationBuilder.EnsureSchema(
-                name: "Produccion");
 
             migrationBuilder.EnsureSchema(
                 name: "Generico");
@@ -126,21 +123,6 @@ namespace DBSenorialModels.Data.Migraciones
                 constraints: table =>
                 {
                     table.PrimaryKey("metodo_pago_id_pk", x => x.id_metodo);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "produccion",
-                schema: "Produccion",
-                columns: table => new
-                {
-                    id_produccion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cantidad_total = table.Column<int>(type: "int", nullable: false),
-                    motivo = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("produccion_id_pk", x => x.id_produccion);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,6 +252,7 @@ namespace DBSenorialModels.Data.Migraciones
                     nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     derivar = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    precio = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     id_img = table.Column<int>(type: "int", nullable: true),
                     id_categoria = table.Column<int>(type: "int", nullable: false)
                 },
@@ -611,7 +594,8 @@ namespace DBSenorialModels.Data.Migraciones
                 {
                     id_inventario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_sucursal = table.Column<int>(type: "int", nullable: false)
+                    id_sucursal = table.Column<int>(type: "int", nullable: false),
+                    fecha_actualizacion = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -665,33 +649,6 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Generico",
                         principalTable: "unidad_medicion",
                         principalColumn: "id_unidad");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "compra",
-                schema: "Almacen",
-                columns: table => new
-                {
-                    id_compra = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_proveedor = table.Column<int>(type: "int", nullable: false),
-                    id_voucher = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("compra_id_pk", x => x.id_compra);
-                    table.ForeignKey(
-                        name: "provedor_id_fk",
-                        column: x => x.id_proveedor,
-                        principalSchema: "Almacen",
-                        principalTable: "proveedor",
-                        principalColumn: "id_proveedor");
-                    table.ForeignKey(
-                        name: "voucher_id_fk",
-                        column: x => x.id_voucher,
-                        principalSchema: "Ventas",
-                        principalTable: "voucher",
-                        principalColumn: "id_voucher");
                 });
 
             migrationBuilder.CreateTable(
@@ -808,7 +765,8 @@ namespace DBSenorialModels.Data.Migraciones
                     id_inventario = table.Column<int>(type: "int", nullable: false),
                     id_insumo = table.Column<int>(type: "int", nullable: false),
                     stock_total = table.Column<int>(type: "int", nullable: false),
-                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    precio_compra = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    precio_venta = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -828,79 +786,20 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "detalle_produccion",
-                schema: "Produccion",
-                columns: table => new
-                {
-                    id_produccion = table.Column<int>(type: "int", nullable: false),
-                    id_producto_sucursal = table.Column<int>(type: "int", nullable: false),
-                    cantidad_salida = table.Column<int>(type: "int", nullable: true),
-                    fecha_salida = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("detalle_produccion_id_pk", x => new { x.id_produccion, x.id_producto_sucursal });
-                    table.ForeignKey(
-                        name: "produccion_id_fk",
-                        column: x => x.id_produccion,
-                        principalSchema: "Produccion",
-                        principalTable: "produccion",
-                        principalColumn: "id_produccion");
-                    table.ForeignKey(
-                        name: "sucurusal_id_fk",
-                        column: x => x.id_producto_sucursal,
-                        principalSchema: "Ventas",
-                        principalTable: "producto_sucursal",
-                        principalColumn: "id_producto_sucursal");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "detalle_compra",
+                name: "Entrada",
                 schema: "Almacen",
                 columns: table => new
                 {
-                    id_compra = table.Column<int>(type: "int", nullable: false),
-                    id_insumo = table.Column<int>(type: "int", nullable: false),
-                    cantidad = table.Column<int>(type: "int", nullable: true),
-                    precio_compra = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
-                    fecha_expiracion = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("detalle_compra_id_pk", x => new { x.id_compra, x.id_insumo });
-                    table.ForeignKey(
-                        name: "compra_id_fk",
-                        column: x => x.id_compra,
-                        principalSchema: "Almacen",
-                        principalTable: "compra",
-                        principalColumn: "id_compra");
-                    table.ForeignKey(
-                        name: "insumo_id_fk",
-                        column: x => x.id_insumo,
-                        principalSchema: "Almacen",
-                        principalTable: "insumo",
-                        principalColumn: "id_insumo");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "entradas",
-                schema: "Almacen",
-                columns: table => new
-                {
+                    id_entrada = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     id_inventario = table.Column<int>(type: "int", nullable: false),
-                    id_compra = table.Column<int>(type: "int", nullable: false),
-                    fecha_Ingreso = table.Column<DateTime>(type: "datetime", nullable: true),
-                    cantidad = table.Column<int>(type: "int", nullable: true)
+                    fecha_ingreso = table.Column<DateTime>(type: "datetime", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    motivo = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("entrada_id_pk", x => new { x.id_inventario, x.id_compra });
-                    table.ForeignKey(
-                        name: "compras_id_fk",
-                        column: x => x.id_compra,
-                        principalSchema: "Almacen",
-                        principalTable: "compra",
-                        principalColumn: "id_compra");
+                    table.PrimaryKey("entrada_id_pk", x => x.id_entrada);
                     table.ForeignKey(
                         name: "inventario_id_entrada_fk",
                         column: x => x.id_inventario,
@@ -939,36 +838,40 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "salidas",
-                schema: "Produccion",
+                name: "Salida",
+                schema: "Almacen",
                 columns: table => new
                 {
+                    id_salida = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_inventario = table.Column<int>(type: "int", nullable: false),
                     id_det_inventario = table.Column<int>(type: "int", nullable: false),
-                    id_produccion = table.Column<int>(type: "int", nullable: false),
-                    id_sucursal = table.Column<int>(type: "int", nullable: false),
-                    cantidad = table.Column<int>(type: "int", nullable: true)
+                    fecha_salida = table.Column<DateTime>(type: "datetime", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    motivo = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    SucursalIdSucursal = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("salida_id_pk", x => new { x.id_det_inventario, x.id_produccion, x.id_sucursal });
+                    table.PrimaryKey("salida_id_pk", x => x.id_salida);
                     table.ForeignKey(
-                        name: "det_inventario_id_fk",
+                        name: "FK_Salida_sucursal_SucursalIdSucursal",
+                        column: x => x.SucursalIdSucursal,
+                        principalSchema: "Generico",
+                        principalTable: "sucursal",
+                        principalColumn: "id_sucursal");
+                    table.ForeignKey(
+                        name: "detalle_inventario_id_fk",
                         column: x => x.id_det_inventario,
                         principalSchema: "Almacen",
                         principalTable: "detalle_inventario",
                         principalColumn: "id_det_inventario");
                     table.ForeignKey(
-                        name: "produccion_salida_id_fk",
-                        column: x => x.id_produccion,
-                        principalSchema: "Produccion",
-                        principalTable: "produccion",
-                        principalColumn: "id_produccion");
-                    table.ForeignKey(
-                        name: "sucursal_id_fk",
-                        column: x => x.id_sucursal,
-                        principalSchema: "Generico",
-                        principalTable: "sucursal",
-                        principalColumn: "id_sucursal");
+                        name: "inventario_id_salida_fk",
+                        column: x => x.id_inventario,
+                        principalSchema: "Almacen",
+                        principalTable: "inventario",
+                        principalColumn: "id_inventario");
                 });
 
             migrationBuilder.InsertData(
@@ -1070,13 +973,14 @@ namespace DBSenorialModels.Data.Migraciones
                     { 6, true, 2, "Pollos" },
                     { 7, true, 2, "Parrillas" },
                     { 8, true, 2, "Otros" },
-                    { 9, true, 4, "Bebidas Calientes" },
-                    { 10, true, 4, "Bebidas Frías" },
-                    { 11, true, 4, "Licores" },
-                    { 12, true, 4, "Cócteles" },
-                    { 13, true, 5, "Piqueos de la Casa" },
-                    { 14, true, 5, "Postres" },
-                    { 15, true, 5, "Jugos y Milkshakes" }
+                    { 9, true, 1, "Comida Rápida" },
+                    { 10, true, 4, "Bebidas Calientes" },
+                    { 11, true, 4, "Bebidas Frías" },
+                    { 12, true, 4, "Licores" },
+                    { 13, true, 4, "Cócteles" },
+                    { 14, true, 3, "Piqueos de la Casa" },
+                    { 15, true, 5, "Postres" },
+                    { 16, true, 5, "Jugos y Milkshakes" }
                 });
 
             migrationBuilder.InsertData(
@@ -1171,88 +1075,88 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.InsertData(
                 schema: "Ventas",
                 table: "productos",
-                columns: new[] { "id_producto", "derivar", "descripcion", "id_categoria", "id_img", "nombre" },
+                columns: new[] { "id_producto", "derivar", "descripcion", "id_categoria", "id_img", "nombre", "precio" },
                 values: new object[,]
                 {
-                    { 1, "Horno", "Hamburguesa clásica", 1, null, "Hamburguesa clásica" },
-                    { 2, "Horno", "Hamburguesa queso tocino", 1, null, "Hamburguesa queso tocino" },
-                    { 3, "Horno", "Hamburguesa señorial", 1, null, "Hamburguesa señorial" },
-                    { 14, "Horno", "Chicharrón señorial", 3, null, "Chicharrón señorial" },
-                    { 15, "Horno", "Lonjitas", 3, null, "Lonjitas" },
-                    { 16, "Cocina", "Chaufa especial", 3, null, "Chaufa especial" },
-                    { 17, "Cocina", "Chaufa mixto", 3, null, "Chaufa mixto" },
-                    { 18, "Cocina", "Spaguetti a lo alfredo", 3, null, "Spaguetti a lo alfredo" },
-                    { 68, "Horno", "Salchipapa clásica", 3, null, "Salchipapa clásica" },
-                    { 69, "Horno", "Salchipapa ayacuchana", 3, null, "Salchipapa ayacuchana" },
-                    { 70, "Horno", "Salchipiernita", 3, null, "Salchipiernita" },
-                    { 71, "Cocina", "Mounstruo", 3, null, "Mounstruo" },
-                    { 72, "Cocina", "Mounstrito", 3, null, "Mounstrito" },
-                    { 4, "Horno", "1/4 de pollo a la brasa", 6, null, "1/4 de pollo a la brasa" },
-                    { 5, "Horno", "1/4 de pollo broaster", 6, null, "1/4 de pollo broaster" },
-                    { 6, "Horno", "Parrilla de pollo", 7, null, "Parrilla de pollo" },
-                    { 7, "Horno", "Parrilla de pollo al ajo", 7, null, "Parrilla de pollo al ajo" },
-                    { 8, "Horno", "Parrilla de pollo dietética", 7, null, "Parrilla de pollo dietética" },
-                    { 9, "Horno", "Parrilla mixta", 7, null, "Parrilla mixta" },
-                    { 10, "Horno", "Brochetas de pollo", 8, null, "Brochetas de pollo" },
-                    { 11, "Horno", "Pollo a la pizzarola", 8, null, "Pollo a la pizzarola" },
-                    { 12, "Horno", "Bisteck a la parrilla", 8, null, "Bisteck a la parrilla" },
-                    { 13, "Horno", "Chorizo a la parrilla", 8, null, "Chorizo a la parrilla" },
-                    { 19, "Cocina", "Café pasado", 9, null, "Café pasado" },
-                    { 20, "Cocina", "Chocolate con panetón", 9, null, "Chocolate con panetón" },
-                    { 21, "Cocina", "Leche fresca", 9, null, "Leche fresca" },
-                    { 22, "Cocina", "Milo", 9, null, "Milo" },
-                    { 23, "Cocina", "Café con leche", 9, null, "Café con leche" },
-                    { 24, "Cocina", "Mates", 9, null, "Mates" },
-                    { 25, "Cocina", "Gaseosa de 3lts", 10, null, "Gaseosa de 3lts" },
-                    { 26, "Cocina", "Gaseosa de 2.25lts", 10, null, "Gaseosa de 2.25lts" },
-                    { 27, "Cocina", "Gaseosa de 1.5lts", 10, null, "Gaseosa de 1.5lts" },
-                    { 28, "Cocina", "Gaseosa de 1lts", 10, null, "Gaseosa de 1lts" },
-                    { 29, "Cocina", "Gaseosa de 1/2lt", 10, null, "Gaseosa de 1/2lt" },
-                    { 30, "Cocina", "Gaseosa personal", 10, null, "Gaseosa personal" },
-                    { 31, "Cocina", "Gaseosa pirañita", 10, null, "Gaseosa pirañita" },
-                    { 32, "Cocina", "Refresco de maracuya (Jarra)", 10, null, "Refresco de maracuya (Jarra)" },
-                    { 33, "Cocina", "Chicha morada (Jarra)", 10, null, "Chicha morada (Jarra)" },
-                    { 34, "Cocina", "Limonada Frozen (Jarra)", 10, null, "Limonada Frozen (Jarra)" },
-                    { 35, "Cocina", "Limonada Americana (Jarra)", 10, null, "Limonada Americana (Jarra)" },
-                    { 36, "Cocina", "Caliente de pisco", 11, null, "Caliente de pisco" },
-                    { 37, "Cocina", "Caliente de vino", 11, null, "Caliente de vino" },
-                    { 38, "Cocina", "Caliente de ron", 11, null, "Caliente de ron" },
-                    { 39, "Cocina", "Caliente de whisky", 11, null, "Caliente de whisky" },
-                    { 40, "Cocina", "Cerveza en lata", 11, null, "Cerveza en lata" },
-                    { 41, "Cocina", "Cerveza negra", 11, null, "Cerveza negra" },
-                    { 42, "Cocina", "Cerveza de trigo", 11, null, "Cerveza de trigo" },
-                    { 43, "Cocina", "Vino queirolo (Vaso)", 11, null, "Vino queirolo (Vaso)" },
-                    { 44, "Cocina", "Whisky (Vaso)", 11, null, "Whisky (Vaso)" },
-                    { 45, "Cocina", "Pisco Vargas (Vaso)", 11, null, "Pisco Vargas (Vaso)" },
-                    { 46, "Cocina", "Mojito", 12, null, "Mojito" },
-                    { 47, "Cocina", "Machu Picchu", 12, null, "Machu Picchu" },
-                    { 48, "Cocina", "Daikiri", 12, null, "Daikiri" },
-                    { 49, "Cocina", "Piña colada", 12, null, "Piña colada" },
-                    { 50, "Cocina", "Pisco sour", 12, null, "Pisco sour" },
-                    { 51, "Cocina", "Naranjita", 12, null, "Naranjita" },
-                    { 52, "Horno", "Alitas en salsa BBQ", 13, null, "Alitas en salsa BBQ" },
-                    { 53, "Horno", "Alitas broaster", 13, null, "Alitas broaster" },
-                    { 54, "Cocina", "Tequeños especiales", 13, null, "Tequeños especiales" },
-                    { 55, "Cocina", "Durazno en almíbar", 14, null, "Durazno en almíbar" },
-                    { 56, "Cocina", "Helado 02 bolas", 14, null, "Helado 02 bolas" },
-                    { 57, "Cocina", "Helado 03 bolas", 14, null, "Helado 03 bolas" },
-                    { 58, "Cocina", "Gelatina", 14, null, "Gelatina" },
-                    { 59, "Cocina", "Flan", 14, null, "Flan" },
-                    { 60, "Cocina", "Jugo de papaya", 15, null, "Jugo de papaya" },
-                    { 61, "Cocina", "Jugo de fresa con leche", 15, null, "Jugo de fresa con leche" },
-                    { 62, "Cocina", "Jugo de plátano", 15, null, "Jugo de plátano" },
-                    { 63, "Cocina", "Jugo surtido", 15, null, "Jugo surtido" },
-                    { 64, "Cocina", "Ensalada de frutas", 15, null, "Ensalada de frutas" },
-                    { 65, "Cocina", "Milkshake de Oreo", 15, null, "Milkshake de Oreo" },
-                    { 66, "Cocina", "Milkshake de durazno", 15, null, "Milkshake de durazno" },
-                    { 67, "Cocina", "Milkshake de fresa", 15, null, "Milkshake de fresa" }
+                    { 1, "Horno", "Hamburguesa clásica", 1, null, "Hamburguesa clásica", 9.00m },
+                    { 2, "Horno", "Hamburguesa queso tocino", 1, null, "Hamburguesa queso tocino", 12.00m },
+                    { 3, "Horno", "Hamburguesa señorial", 1, null, "Hamburguesa señorial", 15.00m },
+                    { 14, "Horno", "Chicharrón señorial", 3, null, "Chicharrón señorial", 15.00m },
+                    { 15, "Horno", "Lonjitas", 3, null, "Lonjitas", 6.00m },
+                    { 16, "Cocina", "Chaufa especial", 3, null, "Chaufa especial", 10.00m },
+                    { 17, "Cocina", "Chaufa mixto", 3, null, "Chaufa mixto", 12.00m },
+                    { 18, "Cocina", "Spaguetti a lo alfredo", 3, null, "Spaguetti a lo alfredo", 14.00m },
+                    { 4, "Horno", "1/4 de pollo a la brasa", 6, null, "1/4 de pollo a la brasa", 12.00m },
+                    { 5, "Horno", "1/4 de pollo broaster", 6, null, "1/4 de pollo broaster", 15.00m },
+                    { 6, "Horno", "Parrilla de pollo", 7, null, "Parrilla de pollo", 15.00m },
+                    { 7, "Horno", "Parrilla de pollo al ajo", 7, null, "Parrilla de pollo al ajo", 16.00m },
+                    { 8, "Horno", "Parrilla de pollo dietética", 7, null, "Parrilla de pollo dietética", 16.00m },
+                    { 9, "Horno", "Parrilla mixta", 7, null, "Parrilla mixta", 20.00m },
+                    { 10, "Horno", "Brochetas de pollo", 8, null, "Brochetas de pollo", 15.00m },
+                    { 11, "Horno", "Pollo a la pizzarola", 8, null, "Pollo a la pizzarola", 20.00m },
+                    { 12, "Horno", "Bisteck a la parrilla", 8, null, "Bisteck a la parrilla", 18.00m },
+                    { 13, "Horno", "Chorizo a la parrilla", 8, null, "Chorizo a la parrilla", 11.00m },
+                    { 19, "Cocina", "Café pasado", 10, null, "Café pasado", 2.50m },
+                    { 20, "Cocina", "Chocolate con panetón", 10, null, "Chocolate con panetón", 5.00m },
+                    { 21, "Cocina", "Leche fresca", 10, null, "Leche fresca", 3.00m },
+                    { 22, "Cocina", "Milo", 10, null, "Milo", 3.00m },
+                    { 23, "Cocina", "Café con leche", 10, null, "Café con leche", 4.00m },
+                    { 24, "Cocina", "Mates", 10, null, "Mates", 2.00m },
+                    { 25, "Cocina", "Gaseosa de 3lts", 11, null, "Gaseosa de 3lts", 14.00m },
+                    { 26, "Cocina", "Gaseosa de 2.25lts", 11, null, "Gaseosa de 2.25lts", 11.00m },
+                    { 27, "Cocina", "Gaseosa de 1.5lts", 11, null, "Gaseosa de 1.5lts", 9.00m },
+                    { 28, "Cocina", "Gaseosa de 1lts", 11, null, "Gaseosa de 1lts", 7.00m },
+                    { 29, "Cocina", "Gaseosa de 1/2lt", 11, null, "Gaseosa de 1/2lt", 4.00m },
+                    { 30, "Cocina", "Gaseosa personal", 11, null, "Gaseosa personal", 2.50m },
+                    { 31, "Cocina", "Gaseosa pirañita", 11, null, "Gaseosa pirañita", 1.50m },
+                    { 32, "Cocina", "Refresco de maracuya (Jarra)", 11, null, "Refresco de maracuya (Jarra)", 8.00m },
+                    { 33, "Cocina", "Chicha morada (Jarra)", 11, null, "Chicha morada (Jarra)", 8.00m },
+                    { 34, "Cocina", "Limonada Frozen (Jarra)", 11, null, "Limonada Frozen (Jarra)", 12.00m },
+                    { 35, "Cocina", "Limonada Americana (Jarra)", 11, null, "Limonada Americana (Jarra)", 11.00m },
+                    { 36, "Cocina", "Caliente de pisco", 12, null, "Caliente de pisco", 30.00m },
+                    { 37, "Cocina", "Caliente de vino", 12, null, "Caliente de vino", 40.00m },
+                    { 38, "Cocina", "Caliente de ron", 12, null, "Caliente de ron", 35.00m },
+                    { 39, "Cocina", "Caliente de whisky", 12, null, "Caliente de whisky", 45.00m },
+                    { 40, "Cocina", "Cerveza en lata", 12, null, "Cerveza en lata", 6.00m },
+                    { 41, "Cocina", "Cerveza negra", 12, null, "Cerveza negra", 10.00m },
+                    { 42, "Cocina", "Cerveza de trigo", 12, null, "Cerveza de trigo", 10.00m },
+                    { 43, "Cocina", "Vino queirolo (Vaso)", 12, null, "Vino queirolo (Vaso)", 10.00m },
+                    { 44, "Cocina", "Whisky (Vaso)", 12, null, "Whisky (Vaso)", 10.00m },
+                    { 45, "Cocina", "Pisco Vargas (Vaso)", 12, null, "Pisco Vargas (Vaso)", 10.00m },
+                    { 46, "Cocina", "Mojito", 13, null, "Mojito", 15.90m },
+                    { 47, "Cocina", "Machu Picchu", 13, null, "Machu Picchu", 17.90m },
+                    { 48, "Cocina", "Daikiri", 13, null, "Daikiri", 15.90m },
+                    { 49, "Cocina", "Piña colada", 13, null, "Piña colada", 16.90m },
+                    { 50, "Cocina", "Pisco sour", 13, null, "Pisco sour", 15.90m },
+                    { 51, "Cocina", "Naranjita", 13, null, "Naranjita", 15.00m },
+                    { 52, "Horno", "Alitas en salsa BBQ", 14, null, "Alitas en salsa BBQ", 35.00m },
+                    { 53, "Horno", "Alitas broaster", 14, null, "Alitas broaster", 35.00m },
+                    { 54, "Cocina", "Tequeños especiales", 14, null, "Tequeños especiales", 20.00m },
+                    { 55, "Cocina", "Durazno en almíbar", 15, null, "Durazno en almíbar", 5.00m },
+                    { 56, "Cocina", "Helado 02 bolas", 15, null, "Helado 02 bolas", 4.00m },
+                    { 57, "Cocina", "Helado 03 bolas", 15, null, "Helado 03 bolas", 6.00m },
+                    { 58, "Cocina", "Gelatina", 15, null, "Gelatina", 3.00m },
+                    { 59, "Cocina", "Flan", 15, null, "Flan", 5.00m },
+                    { 60, "Cocina", "Jugo de papaya", 16, null, "Jugo de papaya", 5.00m },
+                    { 61, "Cocina", "Jugo de fresa con leche", 16, null, "Jugo de fresa con leche", 8.00m },
+                    { 62, "Cocina", "Jugo de plátano", 16, null, "Jugo de plátano", 5.00m },
+                    { 63, "Cocina", "Jugo surtido", 16, null, "Jugo surtido", 5.00m },
+                    { 64, "Cocina", "Ensalada de frutas", 16, null, "Ensalada de frutas", 7.00m },
+                    { 65, "Cocina", "Milkshake de Oreo", 16, null, "Milkshake de Oreo", 11.90m },
+                    { 66, "Cocina", "Milkshake de durazno", 16, null, "Milkshake de durazno", 11.90m },
+                    { 67, "Cocina", "Milkshake de fresa", 16, null, "Milkshake de fresa", 11.90m },
+                    { 68, "Horno", "Salchipapa clásica", 9, null, "Salchipapa clásica", 7.00m },
+                    { 69, "Horno", "Salchipapa ayacuchana", 9, null, "Salchipapa ayacuchana", 9.00m },
+                    { 70, "Horno", "Salchipiernita", 9, null, "Salchipiernita", 11.00m },
+                    { 71, "Cocina", "Mounstruo", 9, null, "Mounstruo", 18.00m },
+                    { 72, "Cocina", "Mounstrito", 9, null, "Mounstrito", 10.00m }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 7, 12, 22, 32, 1, 453, DateTimeKind.Local).AddTicks(3855), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 7, 14, 0, 29, 13, 65, DateTimeKind.Local).AddTicks(708), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1286,28 +1190,10 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_persona");
 
             migrationBuilder.CreateIndex(
-                name: "IX_compra_id_proveedor",
-                schema: "Almacen",
-                table: "compra",
-                column: "id_proveedor");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_compra_id_voucher",
-                schema: "Almacen",
-                table: "compra",
-                column: "id_voucher");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_conteo_dinero_id_apertura",
                 schema: "Ventas",
                 table: "conteo_dinero",
                 column: "id_apertura");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_detalle_compra_id_insumo",
-                schema: "Almacen",
-                table: "detalle_compra",
-                column: "id_insumo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_detalle_dash_menu_id_rol",
@@ -1326,12 +1212,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Almacen",
                 table: "detalle_inventario",
                 column: "id_inventario");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_detalle_produccion_id_producto_sucursal",
-                schema: "Produccion",
-                table: "detalle_produccion",
-                column: "id_producto_sucursal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_detalle_ventas_id_producto_sucursal",
@@ -1370,10 +1250,10 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_sucursal");
 
             migrationBuilder.CreateIndex(
-                name: "IX_entradas_id_compra",
+                name: "IX_Entrada_id_inventario",
                 schema: "Almacen",
-                table: "entradas",
-                column: "id_compra");
+                table: "Entrada",
+                column: "id_inventario");
 
             migrationBuilder.CreateIndex(
                 name: "IX_insumo_id_unidad",
@@ -1460,16 +1340,22 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_persona");
 
             migrationBuilder.CreateIndex(
-                name: "IX_salidas_id_produccion",
-                schema: "Produccion",
-                table: "salidas",
-                column: "id_produccion");
+                name: "IX_Salida_id_det_inventario",
+                schema: "Almacen",
+                table: "Salida",
+                column: "id_det_inventario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_salidas_id_sucursal",
-                schema: "Produccion",
-                table: "salidas",
-                column: "id_sucursal");
+                name: "IX_Salida_id_inventario",
+                schema: "Almacen",
+                table: "Salida",
+                column: "id_inventario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Salida_SucursalIdSucursal",
+                schema: "Almacen",
+                table: "Salida",
+                column: "SucursalIdSucursal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sucursal_id_ambiente",
@@ -1602,28 +1488,24 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
-                name: "detalle_compra",
-                schema: "Almacen");
-
-            migrationBuilder.DropTable(
                 name: "detalle_dash_menu",
                 schema: "Usuarios");
-
-            migrationBuilder.DropTable(
-                name: "detalle_produccion",
-                schema: "Produccion");
 
             migrationBuilder.DropTable(
                 name: "detalle_ventas",
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
-                name: "entradas",
+                name: "Entrada",
                 schema: "Almacen");
 
             migrationBuilder.DropTable(
-                name: "salidas",
-                schema: "Produccion");
+                name: "proveedor",
+                schema: "Almacen");
+
+            migrationBuilder.DropTable(
+                name: "Salida",
+                schema: "Almacen");
 
             migrationBuilder.DropTable(
                 name: "sucursal_usuario",
@@ -1642,16 +1524,8 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
-                name: "compra",
-                schema: "Almacen");
-
-            migrationBuilder.DropTable(
                 name: "detalle_inventario",
                 schema: "Almacen");
-
-            migrationBuilder.DropTable(
-                name: "produccion",
-                schema: "Produccion");
 
             migrationBuilder.DropTable(
                 name: "usuario",
@@ -1682,10 +1556,6 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
-                name: "proveedor",
-                schema: "Almacen");
-
-            migrationBuilder.DropTable(
                 name: "voucher",
                 schema: "Ventas");
 
@@ -1710,11 +1580,11 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
-                name: "roles",
+                name: "personas",
                 schema: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "personas",
+                name: "roles",
                 schema: "Usuarios");
 
             migrationBuilder.DropTable(

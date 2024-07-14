@@ -9,6 +9,7 @@ namespace DBSenorialModels.Senorial;
 [Table("inventario", Schema = "Almacen")]
 public partial class Inventario
 {
+
     [Key]
     [Column("id_inventario")]
     public int IdInventario { get; set; }
@@ -16,13 +17,19 @@ public partial class Inventario
     [Column("id_sucursal")]
     public int IdSucursal { get; set; }
 
-    [InverseProperty("IdInventarioNavigation")]
-    public virtual ICollection<DetalleInventario> DetalleInventarios { get; set; } = new List<DetalleInventario>();
-
-    [InverseProperty("IdInventarioNavigation")]
-    public virtual ICollection<Entrada> Entrada { get; set; } = new List<Entrada>();
+    [Column("fecha_actualizacion", TypeName = "datetime")]
+    public DateTime FechaActualizacion { get; set; } = DateTime.Now;
 
     [ForeignKey("IdSucursal")]
-    [InverseProperty("Inventarios")]
-    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
+    public virtual Sucursal Sucursal { get; set; }
+
+    [InverseProperty("Inventario")]
+    public virtual ICollection<DetalleInventario> Detalles { get; set; } = new List<DetalleInventario>();
+
+    [InverseProperty("Inventario")]
+    public virtual ICollection<Entrada> Entradas { get; set; } = new List<Entrada>();
+
+    [InverseProperty("Inventario")]
+    public virtual ICollection<Salida> Salidas { get; set; } = new List<Salida>();
 }
+

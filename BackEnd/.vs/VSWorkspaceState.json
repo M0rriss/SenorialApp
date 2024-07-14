@@ -4,8 +4,9 @@
     "\\Senorial_App",
     "\\Senorial_App\\App_Senorial",
     "\\Senorial_App\\App_Senorial\\Controllers",
-    "\\Senorial_App\\App_Senorial\\Controllers\\Authentication"
+    "\\Senorial_App\\App_Senorial\\Controllers\\Authentication",
+    "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\Senorial_App.sln",
+  "SelectedNode": "\\Senorial_App\\UtilityAutoMapper\\AutoMapperProfiles.cs",
   "PreviewInSolutionExplorer": false
 }

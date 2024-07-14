@@ -1,5 +1,5 @@
 ﻿using IBusiness.Schema_Generico.CRUD;
-using RequestResponseModels.Request.Schema_Almacen.DetalleInventario;
+using RequestResponseModels.Request.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Response.Schema_Almacen.DetalleCompra;
 using System;
 using System.Collections.Generic;

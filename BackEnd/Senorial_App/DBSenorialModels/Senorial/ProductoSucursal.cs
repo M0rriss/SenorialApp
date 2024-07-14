@@ -31,8 +31,8 @@ public partial class ProductoSucursal
     [Column("cantidad")]
     public int? Cantidad { get; set; }
 
-    [InverseProperty("IdProductoSucursalNavigation")]
-    public virtual ICollection<DetalleProduccion> DetalleProduccions { get; set; } = new List<DetalleProduccion>();
+    //[InverseProperty("IdProductoSucursalNavigation")]
+    //public virtual ICollection<DetalleProduccion> DetalleProduccions { get; set; } = new List<DetalleProduccion>();
 
     [InverseProperty("IdProductoSucursalNavigation")]
     public virtual ICollection<DetalleVenta> DetalleVenta { get; set; } = new List<DetalleVenta>();

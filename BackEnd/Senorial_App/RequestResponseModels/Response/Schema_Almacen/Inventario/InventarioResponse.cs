@@ -10,5 +10,6 @@ namespace RequestResponseModels.Response.Schema_Almacen.Inventario
     {
         public int IdInventario { get; set; }
         public int IdSucursal { get; set; }
+        public DateTime FechaActualizacion { get; set; }
     }
 }

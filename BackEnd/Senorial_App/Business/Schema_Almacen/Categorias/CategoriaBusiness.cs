@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RequestResponseModels.Response.Schema_Almacen.Categorias.CategoriaResponse;
 
 namespace Business.Schema_Almacen.Categorias
 {
@@ -97,6 +98,52 @@ namespace Business.Schema_Almacen.Categorias
             _categoriaRepository.Dispose();
         }
 
+        #endregion
+        #region UI CRUD
+        public async Task<List<CategoriaUiResponse>> UiGetCategoria()
+        {
+            return await _categoriaRepository.UiCategoria();
+        }
+
+        public async Task<CategoriaUiResponse> InsertUiCategoria(CategoriaUiRequest request)
+        {
+            var existingCategoria = await _categoriaRepository.BuscarPorNombre(request.Categoria);
+            if (existingCategoria != null)
+            {
+                throw new ArgumentException("La categoría ya está registrada.");
+            }
+
+            var categoria = _mapper.Map<Categoria>(request);
+            var categoriaCreada = await _categoriaRepository.Create(categoria);
+            var response = _mapper.Map<CategoriaUiResponse>(categoriaCreada);
+            return response;
+        }
+
+        public async Task<CategoriaUiResponse> UpdateUiCategoria(CategoriaUpdateUiRequest request)
+        {
+            var existingCategoria = await _categoriaRepository.GetById(request.IdCategoria);
+            if (existingCategoria == null)
+            {
+                throw new ArgumentException("La categoría especificada no existe.");
+            }
+
+            _mapper.Map(request, existingCategoria);
+            await _categoriaRepository.Update(existingCategoria);
+            var response = _mapper.Map<CategoriaUiResponse>(existingCategoria);
+            return response;
+        }
+
+        public async Task<bool> DeleteUiCategoria(int id)
+        {
+            var categoria = await _categoriaRepository.GetById(id);
+            if (categoria == null)
+            {
+                throw new ArgumentException("La categoría especificada no existe.");
+            }
+
+            await _categoriaRepository.Delete(id);
+            return true;
+        }
         #endregion
     }
 }

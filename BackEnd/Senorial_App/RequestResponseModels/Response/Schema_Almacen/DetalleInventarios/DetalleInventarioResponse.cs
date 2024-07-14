@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RequestResponseModels.Response.Schema_Almacen.DetalleInventario
+namespace RequestResponseModels.Response.Schema_Almacen.DetalleInventarios
 {
     public class DetalleInventarioResponse
     {
@@ -12,6 +12,8 @@ namespace RequestResponseModels.Response.Schema_Almacen.DetalleInventario
         public int IdInventario { get; set; }
         public int IdInsumo { get; set; }
         public int StockTotal { get; set; }
-        public string Estado { get; set; }
+        public decimal PrecioCompra { get; set; }
+        public decimal PrecioVenta { get; set; }
+        public string EstadoStock { get; set; }
     }
 }

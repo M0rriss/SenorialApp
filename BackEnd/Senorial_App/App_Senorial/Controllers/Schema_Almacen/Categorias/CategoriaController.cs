@@ -8,6 +8,7 @@ using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using System.Net;
+using static RequestResponseModels.Response.Schema_Almacen.Categorias.CategoriaResponse;
 
 namespace App_Senorial.Controllers.Schema_Almacen.Categorias
 {
@@ -88,20 +89,48 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
             var result = await _categoriaBusiness.Update(request);
             return Ok(result);
         }
-        /// <summary>
-        /// ELIMINA EL REGISTRO DE LA TABLA FILTRADO POR EL PRIMARY KEY
-        /// </summary>
-        /// <param name="id">PRIMARY KEY</param>
-        /// <returns>cantidad de registros eliminados</returns>
-        [HttpDelete("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(CategoriaResponse))]
+        
+        #endregion CRUD METHODS
+        #region UI Methods
+        [HttpGet, Route("Listado")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<CategoriaUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<IActionResult> UiGetCategoria()
         {
-            var result = await _categoriaBusiness.Delete(id);
-            return Ok(result);
+            var response = await _categoriaBusiness.UiGetCategoria();
+            return Ok(response);
         }
-        #endregion CRUD METHODS
+
+        [HttpPost, Route("Crear")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(CategoriaUiResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<IActionResult> InsertUiCategoria([FromBody] CategoriaUiRequest request)
+        {
+            var response = await _categoriaBusiness.InsertUiCategoria(request);
+            return Ok(response);
+        }
+
+        [HttpPut, Route("Actualizar")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(CategoriaUiResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<IActionResult> UpdateUiCategoria([FromBody] CategoriaUpdateUiRequest request)
+        {
+            var response = await _categoriaBusiness.UpdateUiCategoria(request);
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(bool))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<IActionResult> DeleteUiCategoria(int id)
+        {
+            var response = await _categoriaBusiness.DeleteUiCategoria(id);
+            return Ok(response);
+        }
+        #endregion
     }
 }

@@ -41,6 +41,15 @@ using RequestResponseModels.Request.Schema_Ventas.AperturaCaja.Cierre;
 using RequestResponseModels.Request.Schema_Ventas.MetodoPago;
 using RequestResponseModels.Response.Schema_Ventas.MetodoPago;
 using static RequestResponseModels.Request.Schema_Ventas.MetodoPago.MetodoPagoRequest;
+using static RequestResponseModels.Response.Schema_Almacen.Categorias.CategoriaResponse;
+using RequestResponseModels.Request.Schema_Almacen.DetalleInventarios;
+using RequestResponseModels.Request.Schema_Almacen.Entradas;
+using RequestResponseModels.Request.Schema_Almacen.Inventario;
+using RequestResponseModels.Request.Schema_Produccion.Salidas;
+using RequestResponseModels.Response.Schema_Almacen.DetalleInventarios;
+using RequestResponseModels.Response.Schema_Almacen.Entradas;
+using RequestResponseModels.Response.Schema_Almacen.Inventario;
+using RequestResponseModels.Response.Schema_Produccion.Salidas;
 
 namespace UtilityAutoMapper
 {
@@ -66,6 +75,9 @@ namespace UtilityAutoMapper
             CreateMap<Categoria, CategoriaRequest>().ReverseMap();
             CreateMap<Categoria,CategoriaResponse>().ReverseMap();
             CreateMap<CategoriaRequest,CategoriaResponse>().ReverseMap();
+            CreateMap<Categoria, CategoriaUiRequest>().ReverseMap();
+            CreateMap<Categoria, CategoriaUiResponse>().ReverseMap();
+            CreateMap<Categoria, CategoriaUpdateUiRequest>().ReverseMap();
             #endregion
             #region Insumo
             CreateMap<Insumo, InsumoRequest>().ReverseMap();
@@ -99,6 +111,19 @@ namespace UtilityAutoMapper
 
             #endregion
 
+            #region Inventario
+            CreateMap<Inventario, InventarioRequest>().ReverseMap();
+            CreateMap<Inventario, InventarioResponse>().ReverseMap();
+
+            CreateMap<DetalleInventario, DetalleInventarioRequest>().ReverseMap();
+            CreateMap<DetalleInventario, DetalleInventarioResponse>().ReverseMap();
+
+            CreateMap<Entrada, EntradaRequest>().ReverseMap();
+            CreateMap<Entrada, EntradaResponse>().ReverseMap();
+
+            CreateMap<Salida, SalidaRequest>().ReverseMap();
+            CreateMap<Salida, SalidaResponse>().ReverseMap();
+            #endregion
             #endregion
             #region Schema_Generico
 
@@ -230,6 +255,11 @@ namespace UtilityAutoMapper
             CreateMap<MetodoPago, MetodoPagoUiRequest>().ReverseMap();
             CreateMap<MetodoPago, MetodoPagoUiResponse>().ReverseMap();
             CreateMap<MetodoPago, MetodoPagoUpdateUiRequest>().ReverseMap();
+            #endregion
+            #region Producto
+            CreateMap<Producto, ProductoUiRequest>().ReverseMap();
+            CreateMap<Producto, ProductoUpdateUiRequest>().ReverseMap();
+            CreateMap<Producto, ProductoUiResponse>().ReverseMap();
             #endregion
             #endregion
 

@@ -11,8 +11,8 @@ namespace RequestResponseModels.Request.Schema_Almacen.Entradas
     public class EntradaRequest
     {
         public int IdInventario { get; set; }
-        public int IdCompra { get; set; }
-        public DateTime? FechaIngreso { get; set; }
-        public int? Cantidad { get; set; }
+        public DateTime FechaIngreso { get; set; }
+        public int Cantidad { get; set; }
+        public string Motivo { get; set; }
     }
 }

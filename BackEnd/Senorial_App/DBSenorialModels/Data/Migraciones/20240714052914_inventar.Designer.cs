@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240713035028_productoPrice")]
-    partial class productoPrice
+    [Migration("20240714052914_inventar")]
+    partial class inventar
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -220,47 +220,54 @@ namespace DBSenorialModels.Data.Migraciones
                         {
                             IdCategoria = 9,
                             Estado = true,
-                            IdCategoriaPadre = 4,
-                            Nombre = "Bebidas Calientes"
+                            IdCategoriaPadre = 1,
+                            Nombre = "Comida Rápida"
                         },
                         new
                         {
                             IdCategoria = 10,
                             Estado = true,
                             IdCategoriaPadre = 4,
-                            Nombre = "Bebidas Frías"
+                            Nombre = "Bebidas Calientes"
                         },
                         new
                         {
                             IdCategoria = 11,
                             Estado = true,
                             IdCategoriaPadre = 4,
-                            Nombre = "Licores"
+                            Nombre = "Bebidas Frías"
                         },
                         new
                         {
                             IdCategoria = 12,
                             Estado = true,
                             IdCategoriaPadre = 4,
-                            Nombre = "Cócteles"
+                            Nombre = "Licores"
                         },
                         new
                         {
                             IdCategoria = 13,
                             Estado = true,
-                            IdCategoriaPadre = 5,
-                            Nombre = "Piqueos de la Casa"
+                            IdCategoriaPadre = 4,
+                            Nombre = "Cócteles"
                         },
                         new
                         {
                             IdCategoria = 14,
+                            Estado = true,
+                            IdCategoriaPadre = 3,
+                            Nombre = "Piqueos de la Casa"
+                        },
+                        new
+                        {
+                            IdCategoria = 15,
                             Estado = true,
                             IdCategoriaPadre = 5,
                             Nombre = "Postres"
                         },
                         new
                         {
-                            IdCategoria = 15,
+                            IdCategoria = 16,
                             Estado = true,
                             IdCategoriaPadre = 5,
                             Nombre = "Jugos y Milkshakes"
@@ -286,33 +293,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdPersona");
 
                     b.ToTable("cliente", "Ventas");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Compra", b =>
-                {
-                    b.Property<int>("IdCompra")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_compra");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCompra"));
-
-                    b.Property<int>("IdProveedor")
-                        .HasColumnType("int")
-                        .HasColumnName("id_proveedor");
-
-                    b.Property<int>("IdVoucher")
-                        .HasColumnType("int")
-                        .HasColumnName("id_voucher");
-
-                    b.HasKey("IdCompra")
-                        .HasName("compra_id_pk");
-
-                    b.HasIndex("IdProveedor");
-
-                    b.HasIndex("IdVoucher");
-
-                    b.ToTable("compra", "Almacen");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.ConteoDinero", b =>
@@ -342,36 +322,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdApertura");
 
                     b.ToTable("conteo_dinero", "Ventas");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleCompra", b =>
-                {
-                    b.Property<int>("IdCompra")
-                        .HasColumnType("int")
-                        .HasColumnName("id_compra");
-
-                    b.Property<int>("IdInsumo")
-                        .HasColumnType("int")
-                        .HasColumnName("id_insumo");
-
-                    b.Property<int?>("Cantidad")
-                        .HasColumnType("int")
-                        .HasColumnName("cantidad");
-
-                    b.Property<DateTime?>("FechaExpiracion")
-                        .HasColumnType("datetime")
-                        .HasColumnName("fecha_expiracion");
-
-                    b.Property<decimal?>("PrecioCompra")
-                        .HasColumnType("decimal(10, 2)")
-                        .HasColumnName("precio_compra");
-
-                    b.HasKey("IdCompra", "IdInsumo")
-                        .HasName("detalle_compra_id_pk");
-
-                    b.HasIndex("IdInsumo");
-
-                    b.ToTable("detalle_compra", "Almacen");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleDashMenu", b =>
@@ -406,11 +356,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetInventario"));
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("estado");
-
                     b.Property<int>("IdInsumo")
                         .HasColumnType("int")
                         .HasColumnName("id_insumo");
@@ -418,6 +363,14 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Property<int>("IdInventario")
                         .HasColumnType("int")
                         .HasColumnName("id_inventario");
+
+                    b.Property<decimal>("PrecioCompra")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("precio_compra");
+
+                    b.Property<decimal>("PrecioVenta")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("precio_venta");
 
                     b.Property<int>("StockTotal")
                         .HasColumnType("int")
@@ -431,32 +384,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdInventario");
 
                     b.ToTable("detalle_inventario", "Almacen");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleProduccion", b =>
-                {
-                    b.Property<int>("IdProduccion")
-                        .HasColumnType("int")
-                        .HasColumnName("id_produccion");
-
-                    b.Property<int>("IdProductoSucursal")
-                        .HasColumnType("int")
-                        .HasColumnName("id_producto_sucursal");
-
-                    b.Property<int?>("CantidadSalida")
-                        .HasColumnType("int")
-                        .HasColumnName("cantidad_salida");
-
-                    b.Property<DateTime?>("FechaSalida")
-                        .HasColumnType("datetime")
-                        .HasColumnName("fecha_salida");
-
-                    b.HasKey("IdProduccion", "IdProductoSucursal")
-                        .HasName("detalle_produccion_id_pk");
-
-                    b.HasIndex("IdProductoSucursal");
-
-                    b.ToTable("detalle_produccion", "Produccion");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleVenta", b =>
@@ -555,28 +482,37 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Entrada", b =>
                 {
+                    b.Property<int>("IdEntrada")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_entrada");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEntrada"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int")
+                        .HasColumnName("cantidad");
+
+                    b.Property<DateTime>("FechaIngreso")
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha_ingreso");
+
                     b.Property<int>("IdInventario")
                         .HasColumnType("int")
                         .HasColumnName("id_inventario");
 
-                    b.Property<int>("IdCompra")
-                        .HasColumnType("int")
-                        .HasColumnName("id_compra");
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("motivo");
 
-                    b.Property<int?>("Cantidad")
-                        .HasColumnType("int")
-                        .HasColumnName("cantidad");
-
-                    b.Property<DateTime?>("FechaIngreso")
-                        .HasColumnType("datetime")
-                        .HasColumnName("fecha_Ingreso");
-
-                    b.HasKey("IdInventario", "IdCompra")
+                    b.HasKey("IdEntrada")
                         .HasName("entrada_id_pk");
 
-                    b.HasIndex("IdCompra");
+                    b.HasIndex("IdInventario");
 
-                    b.ToTable("entradas", "Almacen");
+                    b.ToTable("Entrada", "Almacen");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
@@ -1094,6 +1030,10 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdInventario"));
 
+                    b.Property<DateTime>("FechaActualizacion")
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha_actualizacion");
+
                     b.Property<int>("IdSucursal")
                         .HasColumnType("int")
                         .HasColumnName("id_sucursal");
@@ -1337,31 +1277,6 @@ namespace DBSenorialModels.Data.Migraciones
                         });
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Produccion", b =>
-                {
-                    b.Property<int>("IdProduccion")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_produccion");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProduccion"));
-
-                    b.Property<int>("CantidadTotal")
-                        .HasColumnType("int")
-                        .HasColumnName("cantidad_total");
-
-                    b.Property<string>("Motivo")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("motivo");
-
-                    b.HasKey("IdProduccion")
-                        .HasName("produccion_id_pk");
-
-                    b.ToTable("produccion", "Produccion");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
                 {
                     b.Property<int>("IdProducto")
@@ -1416,7 +1331,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa clásica",
                             IdCategoria = 1,
-                            Nombre = "Hamburguesa clásica"
+                            Nombre = "Hamburguesa clásica",
+                            PrecioVenta = 9.00m
                         },
                         new
                         {
@@ -1424,7 +1340,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa queso tocino",
                             IdCategoria = 1,
-                            Nombre = "Hamburguesa queso tocino"
+                            Nombre = "Hamburguesa queso tocino",
+                            PrecioVenta = 12.00m
                         },
                         new
                         {
@@ -1432,7 +1349,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa señorial",
                             IdCategoria = 1,
-                            Nombre = "Hamburguesa señorial"
+                            Nombre = "Hamburguesa señorial",
+                            PrecioVenta = 15.00m
                         },
                         new
                         {
@@ -1440,7 +1358,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo a la brasa",
                             IdCategoria = 6,
-                            Nombre = "1/4 de pollo a la brasa"
+                            Nombre = "1/4 de pollo a la brasa",
+                            PrecioVenta = 12.00m
                         },
                         new
                         {
@@ -1448,7 +1367,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo broaster",
                             IdCategoria = 6,
-                            Nombre = "1/4 de pollo broaster"
+                            Nombre = "1/4 de pollo broaster",
+                            PrecioVenta = 15.00m
                         },
                         new
                         {
@@ -1456,7 +1376,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo",
                             IdCategoria = 7,
-                            Nombre = "Parrilla de pollo"
+                            Nombre = "Parrilla de pollo",
+                            PrecioVenta = 15.00m
                         },
                         new
                         {
@@ -1464,7 +1385,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo al ajo",
                             IdCategoria = 7,
-                            Nombre = "Parrilla de pollo al ajo"
+                            Nombre = "Parrilla de pollo al ajo",
+                            PrecioVenta = 16.00m
                         },
                         new
                         {
@@ -1472,7 +1394,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo dietética",
                             IdCategoria = 7,
-                            Nombre = "Parrilla de pollo dietética"
+                            Nombre = "Parrilla de pollo dietética",
+                            PrecioVenta = 16.00m
                         },
                         new
                         {
@@ -1480,7 +1403,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla mixta",
                             IdCategoria = 7,
-                            Nombre = "Parrilla mixta"
+                            Nombre = "Parrilla mixta",
+                            PrecioVenta = 20.00m
                         },
                         new
                         {
@@ -1488,7 +1412,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Brochetas de pollo",
                             IdCategoria = 8,
-                            Nombre = "Brochetas de pollo"
+                            Nombre = "Brochetas de pollo",
+                            PrecioVenta = 15.00m
                         },
                         new
                         {
@@ -1496,7 +1421,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Pollo a la pizzarola",
                             IdCategoria = 8,
-                            Nombre = "Pollo a la pizzarola"
+                            Nombre = "Pollo a la pizzarola",
+                            PrecioVenta = 20.00m
                         },
                         new
                         {
@@ -1504,7 +1430,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Bisteck a la parrilla",
                             IdCategoria = 8,
-                            Nombre = "Bisteck a la parrilla"
+                            Nombre = "Bisteck a la parrilla",
+                            PrecioVenta = 18.00m
                         },
                         new
                         {
@@ -1512,7 +1439,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Chorizo a la parrilla",
                             IdCategoria = 8,
-                            Nombre = "Chorizo a la parrilla"
+                            Nombre = "Chorizo a la parrilla",
+                            PrecioVenta = 11.00m
                         },
                         new
                         {
@@ -1520,7 +1448,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Chicharrón señorial",
                             IdCategoria = 3,
-                            Nombre = "Chicharrón señorial"
+                            Nombre = "Chicharrón señorial",
+                            PrecioVenta = 15.00m
                         },
                         new
                         {
@@ -1528,7 +1457,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Lonjitas",
                             IdCategoria = 3,
-                            Nombre = "Lonjitas"
+                            Nombre = "Lonjitas",
+                            PrecioVenta = 6.00m
                         },
                         new
                         {
@@ -1536,7 +1466,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chaufa especial",
                             IdCategoria = 3,
-                            Nombre = "Chaufa especial"
+                            Nombre = "Chaufa especial",
+                            PrecioVenta = 10.00m
                         },
                         new
                         {
@@ -1544,7 +1475,8 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chaufa mixto",
                             IdCategoria = 3,
-                            Nombre = "Chaufa mixto"
+                            Nombre = "Chaufa mixto",
+                            PrecioVenta = 12.00m
                         },
                         new
                         {
@@ -1552,439 +1484,494 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Spaguetti a lo alfredo",
                             IdCategoria = 3,
-                            Nombre = "Spaguetti a lo alfredo"
+                            Nombre = "Spaguetti a lo alfredo",
+                            PrecioVenta = 14.00m
                         },
                         new
                         {
                             IdProducto = 19,
                             Derivar = "Cocina",
                             Descripcion = "Café pasado",
-                            IdCategoria = 9,
-                            Nombre = "Café pasado"
+                            IdCategoria = 10,
+                            Nombre = "Café pasado",
+                            PrecioVenta = 2.50m
                         },
                         new
                         {
                             IdProducto = 20,
                             Derivar = "Cocina",
                             Descripcion = "Chocolate con panetón",
-                            IdCategoria = 9,
-                            Nombre = "Chocolate con panetón"
+                            IdCategoria = 10,
+                            Nombre = "Chocolate con panetón",
+                            PrecioVenta = 5.00m
                         },
                         new
                         {
                             IdProducto = 21,
                             Derivar = "Cocina",
                             Descripcion = "Leche fresca",
-                            IdCategoria = 9,
-                            Nombre = "Leche fresca"
+                            IdCategoria = 10,
+                            Nombre = "Leche fresca",
+                            PrecioVenta = 3.00m
                         },
                         new
                         {
                             IdProducto = 22,
                             Derivar = "Cocina",
                             Descripcion = "Milo",
-                            IdCategoria = 9,
-                            Nombre = "Milo"
+                            IdCategoria = 10,
+                            Nombre = "Milo",
+                            PrecioVenta = 3.00m
                         },
                         new
                         {
                             IdProducto = 23,
                             Derivar = "Cocina",
                             Descripcion = "Café con leche",
-                            IdCategoria = 9,
-                            Nombre = "Café con leche"
+                            IdCategoria = 10,
+                            Nombre = "Café con leche",
+                            PrecioVenta = 4.00m
                         },
                         new
                         {
                             IdProducto = 24,
                             Derivar = "Cocina",
                             Descripcion = "Mates",
-                            IdCategoria = 9,
-                            Nombre = "Mates"
+                            IdCategoria = 10,
+                            Nombre = "Mates",
+                            PrecioVenta = 2.00m
                         },
                         new
                         {
                             IdProducto = 25,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 3lts",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa de 3lts"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa de 3lts",
+                            PrecioVenta = 14.00m
                         },
                         new
                         {
                             IdProducto = 26,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 2.25lts",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa de 2.25lts"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa de 2.25lts",
+                            PrecioVenta = 11.00m
                         },
                         new
                         {
                             IdProducto = 27,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1.5lts",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa de 1.5lts"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa de 1.5lts",
+                            PrecioVenta = 9.00m
                         },
                         new
                         {
                             IdProducto = 28,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1lts",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa de 1lts"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa de 1lts",
+                            PrecioVenta = 7.00m
                         },
                         new
                         {
                             IdProducto = 29,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1/2lt",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa de 1/2lt"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa de 1/2lt",
+                            PrecioVenta = 4.00m
                         },
                         new
                         {
                             IdProducto = 30,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa personal",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa personal"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa personal",
+                            PrecioVenta = 2.50m
                         },
                         new
                         {
                             IdProducto = 31,
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa pirañita",
-                            IdCategoria = 10,
-                            Nombre = "Gaseosa pirañita"
+                            IdCategoria = 11,
+                            Nombre = "Gaseosa pirañita",
+                            PrecioVenta = 1.50m
                         },
                         new
                         {
                             IdProducto = 32,
                             Derivar = "Cocina",
                             Descripcion = "Refresco de maracuya (Jarra)",
-                            IdCategoria = 10,
-                            Nombre = "Refresco de maracuya (Jarra)"
+                            IdCategoria = 11,
+                            Nombre = "Refresco de maracuya (Jarra)",
+                            PrecioVenta = 8.00m
                         },
                         new
                         {
                             IdProducto = 33,
                             Derivar = "Cocina",
                             Descripcion = "Chicha morada (Jarra)",
-                            IdCategoria = 10,
-                            Nombre = "Chicha morada (Jarra)"
+                            IdCategoria = 11,
+                            Nombre = "Chicha morada (Jarra)",
+                            PrecioVenta = 8.00m
                         },
                         new
                         {
                             IdProducto = 34,
                             Derivar = "Cocina",
                             Descripcion = "Limonada Frozen (Jarra)",
-                            IdCategoria = 10,
-                            Nombre = "Limonada Frozen (Jarra)"
+                            IdCategoria = 11,
+                            Nombre = "Limonada Frozen (Jarra)",
+                            PrecioVenta = 12.00m
                         },
                         new
                         {
                             IdProducto = 35,
                             Derivar = "Cocina",
                             Descripcion = "Limonada Americana (Jarra)",
-                            IdCategoria = 10,
-                            Nombre = "Limonada Americana (Jarra)"
+                            IdCategoria = 11,
+                            Nombre = "Limonada Americana (Jarra)",
+                            PrecioVenta = 11.00m
                         },
                         new
                         {
                             IdProducto = 36,
                             Derivar = "Cocina",
                             Descripcion = "Caliente de pisco",
-                            IdCategoria = 11,
-                            Nombre = "Caliente de pisco"
+                            IdCategoria = 12,
+                            Nombre = "Caliente de pisco",
+                            PrecioVenta = 30.00m
                         },
                         new
                         {
                             IdProducto = 37,
                             Derivar = "Cocina",
                             Descripcion = "Caliente de vino",
-                            IdCategoria = 11,
-                            Nombre = "Caliente de vino"
+                            IdCategoria = 12,
+                            Nombre = "Caliente de vino",
+                            PrecioVenta = 40.00m
                         },
                         new
                         {
                             IdProducto = 38,
                             Derivar = "Cocina",
                             Descripcion = "Caliente de ron",
-                            IdCategoria = 11,
-                            Nombre = "Caliente de ron"
+                            IdCategoria = 12,
+                            Nombre = "Caliente de ron",
+                            PrecioVenta = 35.00m
                         },
                         new
                         {
                             IdProducto = 39,
                             Derivar = "Cocina",
                             Descripcion = "Caliente de whisky",
-                            IdCategoria = 11,
-                            Nombre = "Caliente de whisky"
+                            IdCategoria = 12,
+                            Nombre = "Caliente de whisky",
+                            PrecioVenta = 45.00m
                         },
                         new
                         {
                             IdProducto = 40,
                             Derivar = "Cocina",
                             Descripcion = "Cerveza en lata",
-                            IdCategoria = 11,
-                            Nombre = "Cerveza en lata"
+                            IdCategoria = 12,
+                            Nombre = "Cerveza en lata",
+                            PrecioVenta = 6.00m
                         },
                         new
                         {
                             IdProducto = 41,
                             Derivar = "Cocina",
                             Descripcion = "Cerveza negra",
-                            IdCategoria = 11,
-                            Nombre = "Cerveza negra"
+                            IdCategoria = 12,
+                            Nombre = "Cerveza negra",
+                            PrecioVenta = 10.00m
                         },
                         new
                         {
                             IdProducto = 42,
                             Derivar = "Cocina",
                             Descripcion = "Cerveza de trigo",
-                            IdCategoria = 11,
-                            Nombre = "Cerveza de trigo"
+                            IdCategoria = 12,
+                            Nombre = "Cerveza de trigo",
+                            PrecioVenta = 10.00m
                         },
                         new
                         {
                             IdProducto = 43,
                             Derivar = "Cocina",
                             Descripcion = "Vino queirolo (Vaso)",
-                            IdCategoria = 11,
-                            Nombre = "Vino queirolo (Vaso)"
+                            IdCategoria = 12,
+                            Nombre = "Vino queirolo (Vaso)",
+                            PrecioVenta = 10.00m
                         },
                         new
                         {
                             IdProducto = 44,
                             Derivar = "Cocina",
                             Descripcion = "Whisky (Vaso)",
-                            IdCategoria = 11,
-                            Nombre = "Whisky (Vaso)"
+                            IdCategoria = 12,
+                            Nombre = "Whisky (Vaso)",
+                            PrecioVenta = 10.00m
                         },
                         new
                         {
                             IdProducto = 45,
                             Derivar = "Cocina",
                             Descripcion = "Pisco Vargas (Vaso)",
-                            IdCategoria = 11,
-                            Nombre = "Pisco Vargas (Vaso)"
+                            IdCategoria = 12,
+                            Nombre = "Pisco Vargas (Vaso)",
+                            PrecioVenta = 10.00m
                         },
                         new
                         {
                             IdProducto = 46,
                             Derivar = "Cocina",
                             Descripcion = "Mojito",
-                            IdCategoria = 12,
-                            Nombre = "Mojito"
+                            IdCategoria = 13,
+                            Nombre = "Mojito",
+                            PrecioVenta = 15.90m
                         },
                         new
                         {
                             IdProducto = 47,
                             Derivar = "Cocina",
                             Descripcion = "Machu Picchu",
-                            IdCategoria = 12,
-                            Nombre = "Machu Picchu"
+                            IdCategoria = 13,
+                            Nombre = "Machu Picchu",
+                            PrecioVenta = 17.90m
                         },
                         new
                         {
                             IdProducto = 48,
                             Derivar = "Cocina",
                             Descripcion = "Daikiri",
-                            IdCategoria = 12,
-                            Nombre = "Daikiri"
+                            IdCategoria = 13,
+                            Nombre = "Daikiri",
+                            PrecioVenta = 15.90m
                         },
                         new
                         {
                             IdProducto = 49,
                             Derivar = "Cocina",
                             Descripcion = "Piña colada",
-                            IdCategoria = 12,
-                            Nombre = "Piña colada"
+                            IdCategoria = 13,
+                            Nombre = "Piña colada",
+                            PrecioVenta = 16.90m
                         },
                         new
                         {
                             IdProducto = 50,
                             Derivar = "Cocina",
                             Descripcion = "Pisco sour",
-                            IdCategoria = 12,
-                            Nombre = "Pisco sour"
+                            IdCategoria = 13,
+                            Nombre = "Pisco sour",
+                            PrecioVenta = 15.90m
                         },
                         new
                         {
                             IdProducto = 51,
                             Derivar = "Cocina",
                             Descripcion = "Naranjita",
-                            IdCategoria = 12,
-                            Nombre = "Naranjita"
+                            IdCategoria = 13,
+                            Nombre = "Naranjita",
+                            PrecioVenta = 15.00m
                         },
                         new
                         {
                             IdProducto = 52,
                             Derivar = "Horno",
                             Descripcion = "Alitas en salsa BBQ",
-                            IdCategoria = 13,
-                            Nombre = "Alitas en salsa BBQ"
+                            IdCategoria = 14,
+                            Nombre = "Alitas en salsa BBQ",
+                            PrecioVenta = 35.00m
                         },
                         new
                         {
                             IdProducto = 53,
                             Derivar = "Horno",
                             Descripcion = "Alitas broaster",
-                            IdCategoria = 13,
-                            Nombre = "Alitas broaster"
+                            IdCategoria = 14,
+                            Nombre = "Alitas broaster",
+                            PrecioVenta = 35.00m
                         },
                         new
                         {
                             IdProducto = 54,
                             Derivar = "Cocina",
                             Descripcion = "Tequeños especiales",
-                            IdCategoria = 13,
-                            Nombre = "Tequeños especiales"
+                            IdCategoria = 14,
+                            Nombre = "Tequeños especiales",
+                            PrecioVenta = 20.00m
                         },
                         new
                         {
                             IdProducto = 55,
                             Derivar = "Cocina",
                             Descripcion = "Durazno en almíbar",
-                            IdCategoria = 14,
-                            Nombre = "Durazno en almíbar"
+                            IdCategoria = 15,
+                            Nombre = "Durazno en almíbar",
+                            PrecioVenta = 5.00m
                         },
                         new
                         {
                             IdProducto = 56,
                             Derivar = "Cocina",
                             Descripcion = "Helado 02 bolas",
-                            IdCategoria = 14,
-                            Nombre = "Helado 02 bolas"
+                            IdCategoria = 15,
+                            Nombre = "Helado 02 bolas",
+                            PrecioVenta = 4.00m
                         },
                         new
                         {
                             IdProducto = 57,
                             Derivar = "Cocina",
                             Descripcion = "Helado 03 bolas",
-                            IdCategoria = 14,
-                            Nombre = "Helado 03 bolas"
+                            IdCategoria = 15,
+                            Nombre = "Helado 03 bolas",
+                            PrecioVenta = 6.00m
                         },
                         new
                         {
                             IdProducto = 58,
                             Derivar = "Cocina",
                             Descripcion = "Gelatina",
-                            IdCategoria = 14,
-                            Nombre = "Gelatina"
+                            IdCategoria = 15,
+                            Nombre = "Gelatina",
+                            PrecioVenta = 3.00m
                         },
                         new
                         {
                             IdProducto = 59,
                             Derivar = "Cocina",
                             Descripcion = "Flan",
-                            IdCategoria = 14,
-                            Nombre = "Flan"
+                            IdCategoria = 15,
+                            Nombre = "Flan",
+                            PrecioVenta = 5.00m
                         },
                         new
                         {
                             IdProducto = 60,
                             Derivar = "Cocina",
                             Descripcion = "Jugo de papaya",
-                            IdCategoria = 15,
-                            Nombre = "Jugo de papaya"
+                            IdCategoria = 16,
+                            Nombre = "Jugo de papaya",
+                            PrecioVenta = 5.00m
                         },
                         new
                         {
                             IdProducto = 61,
                             Derivar = "Cocina",
                             Descripcion = "Jugo de fresa con leche",
-                            IdCategoria = 15,
-                            Nombre = "Jugo de fresa con leche"
+                            IdCategoria = 16,
+                            Nombre = "Jugo de fresa con leche",
+                            PrecioVenta = 8.00m
                         },
                         new
                         {
                             IdProducto = 62,
                             Derivar = "Cocina",
                             Descripcion = "Jugo de plátano",
-                            IdCategoria = 15,
-                            Nombre = "Jugo de plátano"
+                            IdCategoria = 16,
+                            Nombre = "Jugo de plátano",
+                            PrecioVenta = 5.00m
                         },
                         new
                         {
                             IdProducto = 63,
                             Derivar = "Cocina",
                             Descripcion = "Jugo surtido",
-                            IdCategoria = 15,
-                            Nombre = "Jugo surtido"
+                            IdCategoria = 16,
+                            Nombre = "Jugo surtido",
+                            PrecioVenta = 5.00m
                         },
                         new
                         {
                             IdProducto = 64,
                             Derivar = "Cocina",
                             Descripcion = "Ensalada de frutas",
-                            IdCategoria = 15,
-                            Nombre = "Ensalada de frutas"
+                            IdCategoria = 16,
+                            Nombre = "Ensalada de frutas",
+                            PrecioVenta = 7.00m
                         },
                         new
                         {
                             IdProducto = 65,
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de Oreo",
-                            IdCategoria = 15,
-                            Nombre = "Milkshake de Oreo"
+                            IdCategoria = 16,
+                            Nombre = "Milkshake de Oreo",
+                            PrecioVenta = 11.90m
                         },
                         new
                         {
                             IdProducto = 66,
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de durazno",
-                            IdCategoria = 15,
-                            Nombre = "Milkshake de durazno"
+                            IdCategoria = 16,
+                            Nombre = "Milkshake de durazno",
+                            PrecioVenta = 11.90m
                         },
                         new
                         {
                             IdProducto = 67,
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de fresa",
-                            IdCategoria = 15,
-                            Nombre = "Milkshake de fresa"
+                            IdCategoria = 16,
+                            Nombre = "Milkshake de fresa",
+                            PrecioVenta = 11.90m
                         },
                         new
                         {
                             IdProducto = 68,
                             Derivar = "Horno",
                             Descripcion = "Salchipapa clásica",
-                            IdCategoria = 3,
-                            Nombre = "Salchipapa clásica"
+                            IdCategoria = 9,
+                            Nombre = "Salchipapa clásica",
+                            PrecioVenta = 7.00m
                         },
                         new
                         {
                             IdProducto = 69,
                             Derivar = "Horno",
                             Descripcion = "Salchipapa ayacuchana",
-                            IdCategoria = 3,
-                            Nombre = "Salchipapa ayacuchana"
+                            IdCategoria = 9,
+                            Nombre = "Salchipapa ayacuchana",
+                            PrecioVenta = 9.00m
                         },
                         new
                         {
                             IdProducto = 70,
                             Derivar = "Horno",
                             Descripcion = "Salchipiernita",
-                            IdCategoria = 3,
-                            Nombre = "Salchipiernita"
+                            IdCategoria = 9,
+                            Nombre = "Salchipiernita",
+                            PrecioVenta = 11.00m
                         },
                         new
                         {
                             IdProducto = 71,
                             Derivar = "Cocina",
                             Descripcion = "Mounstruo",
-                            IdCategoria = 3,
-                            Nombre = "Mounstruo"
+                            IdCategoria = 9,
+                            Nombre = "Mounstruo",
+                            PrecioVenta = 18.00m
                         },
                         new
                         {
                             IdProducto = 72,
                             Derivar = "Cocina",
                             Descripcion = "Mounstrito",
-                            IdCategoria = 3,
-                            Nombre = "Mounstrito"
+                            IdCategoria = 9,
+                            Nombre = "Mounstrito",
+                            PrecioVenta = 10.00m
                         });
                 });
 
@@ -2125,30 +2112,48 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
                 {
+                    b.Property<int>("IdSalida")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_salida");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSalida"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int")
+                        .HasColumnName("cantidad");
+
+                    b.Property<DateTime>("FechaSalida")
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha_salida");
+
                     b.Property<int>("IdDetInventario")
                         .HasColumnType("int")
                         .HasColumnName("id_det_inventario");
 
-                    b.Property<int>("IdProduccion")
+                    b.Property<int>("IdInventario")
                         .HasColumnType("int")
-                        .HasColumnName("id_produccion");
+                        .HasColumnName("id_inventario");
 
-                    b.Property<int>("IdSucursal")
-                        .HasColumnType("int")
-                        .HasColumnName("id_sucursal");
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("motivo");
 
-                    b.Property<int?>("Cantidad")
-                        .HasColumnType("int")
-                        .HasColumnName("cantidad");
+                    b.Property<int?>("SucursalIdSucursal")
+                        .HasColumnType("int");
 
-                    b.HasKey("IdDetInventario", "IdProduccion", "IdSucursal")
+                    b.HasKey("IdSalida")
                         .HasName("salida_id_pk");
 
-                    b.HasIndex("IdProduccion");
+                    b.HasIndex("IdDetInventario");
 
-                    b.HasIndex("IdSucursal");
+                    b.HasIndex("IdInventario");
 
-                    b.ToTable("salidas", "Produccion");
+                    b.HasIndex("SucursalIdSucursal");
+
+                    b.ToTable("Salida", "Almacen");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Sucursal", b =>
@@ -2518,7 +2523,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 7, 12, 22, 50, 27, 389, DateTimeKind.Local).AddTicks(6783),
+                            CreatedAt = new DateTime(2024, 7, 14, 0, 29, 13, 65, DateTimeKind.Local).AddTicks(708),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -2734,25 +2739,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("IdPersonaNavigation");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Compra", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Proveedor", "IdProveedorNavigation")
-                        .WithMany("Compras")
-                        .HasForeignKey("IdProveedor")
-                        .IsRequired()
-                        .HasConstraintName("provedor_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.Voucher", "IdVoucherNavigation")
-                        .WithMany("Compras")
-                        .HasForeignKey("IdVoucher")
-                        .IsRequired()
-                        .HasConstraintName("voucher_id_fk");
-
-                    b.Navigation("IdProveedorNavigation");
-
-                    b.Navigation("IdVoucherNavigation");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.ConteoDinero", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.AperturaCaja", "AperturaCaja")
@@ -2762,25 +2748,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasConstraintName("conteo_dinero_apertura_fk");
 
                     b.Navigation("AperturaCaja");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleCompra", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Compra", "IdCompraNavigation")
-                        .WithMany("DetalleCompras")
-                        .HasForeignKey("IdCompra")
-                        .IsRequired()
-                        .HasConstraintName("compra_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.Insumo", "IdInsumoNavigation")
-                        .WithMany("DetalleCompras")
-                        .HasForeignKey("IdInsumo")
-                        .IsRequired()
-                        .HasConstraintName("insumo_id_fk");
-
-                    b.Navigation("IdCompraNavigation");
-
-                    b.Navigation("IdInsumoNavigation");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleDashMenu", b =>
@@ -2804,40 +2771,21 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Insumo", "IdInsumoNavigation")
+                    b.HasOne("DBSenorialModels.Senorial.Insumo", "Insumo")
                         .WithMany("DetalleInventarios")
                         .HasForeignKey("IdInsumo")
                         .IsRequired()
                         .HasConstraintName("det_insumo_id_fk");
 
-                    b.HasOne("DBSenorialModels.Senorial.Inventario", "IdInventarioNavigation")
-                        .WithMany("DetalleInventarios")
+                    b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
+                        .WithMany("Detalles")
                         .HasForeignKey("IdInventario")
                         .IsRequired()
                         .HasConstraintName("inventario_id_fk");
 
-                    b.Navigation("IdInsumoNavigation");
+                    b.Navigation("Insumo");
 
-                    b.Navigation("IdInventarioNavigation");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleProduccion", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.Produccion", "IdProduccionNavigation")
-                        .WithMany("DetalleProduccions")
-                        .HasForeignKey("IdProduccion")
-                        .IsRequired()
-                        .HasConstraintName("produccion_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.ProductoSucursal", "IdProductoSucursalNavigation")
-                        .WithMany("DetalleProduccions")
-                        .HasForeignKey("IdProductoSucursal")
-                        .IsRequired()
-                        .HasConstraintName("sucurusal_id_fk");
-
-                    b.Navigation("IdProduccionNavigation");
-
-                    b.Navigation("IdProductoSucursalNavigation");
+                    b.Navigation("Inventario");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleVenta", b =>
@@ -2899,21 +2847,13 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Entrada", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Compra", "IdCompraNavigation")
-                        .WithMany("Entrada")
-                        .HasForeignKey("IdCompra")
-                        .IsRequired()
-                        .HasConstraintName("compras_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.Inventario", "IdInventarioNavigation")
-                        .WithMany("Entrada")
+                    b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
+                        .WithMany("Entradas")
                         .HasForeignKey("IdInventario")
                         .IsRequired()
                         .HasConstraintName("inventario_id_entrada_fk");
 
-                    b.Navigation("IdCompraNavigation");
-
-                    b.Navigation("IdInventarioNavigation");
+                    b.Navigation("Inventario");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
@@ -2929,13 +2869,13 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Inventario", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Sucursal", "IdSucursalNavigation")
+                    b.HasOne("DBSenorialModels.Senorial.Sucursal", "Sucursal")
                         .WithMany("Inventarios")
                         .HasForeignKey("IdSucursal")
                         .IsRequired()
                         .HasConstraintName("sucursal_id_fk");
 
-                    b.Navigation("IdSucursalNavigation");
+                    b.Navigation("Sucursal");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
@@ -3015,29 +2955,25 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.DetalleInventario", "IdDetInventarioNavigation")
-                        .WithMany("Salida")
+                    b.HasOne("DBSenorialModels.Senorial.DetalleInventario", "DetalleInventario")
+                        .WithMany("Salidas")
                         .HasForeignKey("IdDetInventario")
                         .IsRequired()
-                        .HasConstraintName("det_inventario_id_fk");
+                        .HasConstraintName("detalle_inventario_id_fk");
 
-                    b.HasOne("DBSenorialModels.Senorial.Produccion", "IdProduccionNavigation")
-                        .WithMany("Salida")
-                        .HasForeignKey("IdProduccion")
+                    b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
+                        .WithMany("Salidas")
+                        .HasForeignKey("IdInventario")
                         .IsRequired()
-                        .HasConstraintName("produccion_salida_id_fk");
+                        .HasConstraintName("inventario_id_salida_fk");
 
-                    b.HasOne("DBSenorialModels.Senorial.Sucursal", "IdSucursalNavigation")
+                    b.HasOne("DBSenorialModels.Senorial.Sucursal", null)
                         .WithMany("Salida")
-                        .HasForeignKey("IdSucursal")
-                        .IsRequired()
-                        .HasConstraintName("sucursal_id_fk");
+                        .HasForeignKey("SucursalIdSucursal");
 
-                    b.Navigation("IdDetInventarioNavigation");
+                    b.Navigation("DetalleInventario");
 
-                    b.Navigation("IdProduccionNavigation");
-
-                    b.Navigation("IdSucursalNavigation");
+                    b.Navigation("Inventario");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Sucursal", b =>
@@ -3211,16 +3147,9 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Compra", b =>
-                {
-                    b.Navigation("DetalleCompras");
-
-                    b.Navigation("Entrada");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
-                    b.Navigation("Salida");
+                    b.Navigation("Salidas");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Documento", b =>
@@ -3242,16 +3171,16 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
                 {
-                    b.Navigation("DetalleCompras");
-
                     b.Navigation("DetalleInventarios");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Inventario", b =>
                 {
-                    b.Navigation("DetalleInventarios");
+                    b.Navigation("Detalles");
 
-                    b.Navigation("Entrada");
+                    b.Navigation("Entradas");
+
+                    b.Navigation("Salidas");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.MenuDash", b =>
@@ -3280,13 +3209,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Usuarios");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.Produccion", b =>
-                {
-                    b.Navigation("DetalleProduccions");
-
-                    b.Navigation("Salida");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
                 {
                     b.Navigation("ProductoSucursals");
@@ -3294,14 +3216,7 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.ProductoSucursal", b =>
                 {
-                    b.Navigation("DetalleProduccions");
-
                     b.Navigation("DetalleVenta");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.Proveedor", b =>
-                {
-                    b.Navigation("Compras");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Role", b =>
@@ -3369,8 +3284,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Voucher", b =>
                 {
-                    b.Navigation("Compras");
-
                     b.Navigation("Venta");
                 });
 #pragma warning restore 612, 618

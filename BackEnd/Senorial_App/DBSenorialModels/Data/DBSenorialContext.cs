@@ -28,16 +28,16 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Cliente> Clientes { get; set; }
 
-    public virtual DbSet<Compra> Compras { get; set; }
+    //public virtual DbSet<Compra> Compras { get; set; }
     public virtual DbSet<ConteoDinero> ConteoDinero { get; set; }
 
-    public virtual DbSet<DetalleCompra> DetalleCompras { get; set; }
+    //public virtual DbSet<DetalleCompra> DetalleCompras { get; set; }
 
     public virtual DbSet<DetalleDashMenu> DetalleDashMenus { get; set; }
 
     public virtual DbSet<DetalleInventario> DetalleInventarios { get; set; }
 
-    public virtual DbSet<DetalleProduccion> DetalleProduccions { get; set; }
+    //public virtual DbSet<DetalleProduccion> DetalleProduccions { get; set; }
 
     public virtual DbSet<DetalleVenta> DetalleVentas { get; set; }
 
@@ -67,7 +67,7 @@ public partial class DBSenorialContext : DbContext
 
     //public virtual DbSet<PersonaNatural> PersonaNaturals { get; set; }
 
-    public virtual DbSet<Produccion> Produccions { get; set; }
+    //public virtual DbSet<Produccion> Produccions { get; set; }
 
     public virtual DbSet<Producto> Productos { get; set; }
 
@@ -162,24 +162,26 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("categoria_producto_fk");
             entity.HasData(
-            new Categoria { IdCategoria = 1, Nombre = "Hamburguesas",       Estado = true },
-            new Categoria { IdCategoria = 2, Nombre = "Parrillas y Pollos", Estado = true },
-            new Categoria { IdCategoria = 3, Nombre = "Platos de Fondo",    Estado = true },
-            new Categoria { IdCategoria = 4, Nombre = "Bebidas",            Estado = true },
-            new Categoria { IdCategoria = 5, Nombre = "Complementos",       Estado = true }
-        ); 
-            entity.HasData(
-            new Categoria { IdCategoria = 6, Nombre = "Pollos",              Estado = true, IdCategoriaPadre = 2 },
-            new Categoria { IdCategoria = 7, Nombre = "Parrillas",           Estado = true, IdCategoriaPadre = 2 },
-            new Categoria { IdCategoria = 8, Nombre = "Otros",               Estado = true, IdCategoriaPadre = 2 },
-            new Categoria { IdCategoria = 9, Nombre = "Bebidas Calientes",   Estado = true, IdCategoriaPadre = 4 },
-            new Categoria { IdCategoria = 10, Nombre = "Bebidas Frías",      Estado = true, IdCategoriaPadre = 4 },
-            new Categoria { IdCategoria = 11, Nombre = "Licores",            Estado = true, IdCategoriaPadre = 4 },
-            new Categoria { IdCategoria = 12, Nombre = "Cócteles",           Estado = true, IdCategoriaPadre = 4 },
-            new Categoria { IdCategoria = 13, Nombre = "Piqueos de la Casa", Estado = true, IdCategoriaPadre = 5 },
-            new Categoria { IdCategoria = 14, Nombre = "Postres",            Estado = true, IdCategoriaPadre = 5 },
-            new Categoria { IdCategoria = 15, Nombre = "Jugos y Milkshakes", Estado = true, IdCategoriaPadre = 5 }
-        );
+        new Categoria { IdCategoria = 1, Nombre = "Hamburguesas",       Estado = true },
+        new Categoria { IdCategoria = 2, Nombre = "Parrillas y Pollos", Estado = true },
+        new Categoria { IdCategoria = 3, Nombre = "Platos de Fondo",    Estado = true },
+        new Categoria { IdCategoria = 4, Nombre = "Bebidas",            Estado = true },
+        new Categoria { IdCategoria = 5, Nombre = "Complementos",       Estado = true }
+    );
+
+    entity.HasData(
+        new Categoria { IdCategoria =  6, Nombre = "Pollos",              Estado = true, IdCategoriaPadre = 2 },
+        new Categoria { IdCategoria =  7, Nombre = "Parrillas",           Estado = true, IdCategoriaPadre = 2 },
+        new Categoria { IdCategoria =  8, Nombre = "Otros",               Estado = true, IdCategoriaPadre = 2 },
+        new Categoria { IdCategoria =  9, Nombre = "Comida Rápida",       Estado = true, IdCategoriaPadre = 1 },
+        new Categoria { IdCategoria = 10, Nombre = "Bebidas Calientes",   Estado = true, IdCategoriaPadre = 4 },
+        new Categoria { IdCategoria = 11, Nombre = "Bebidas Frías",       Estado = true, IdCategoriaPadre = 4 },
+        new Categoria { IdCategoria = 12, Nombre = "Licores",             Estado = true, IdCategoriaPadre = 4 },
+        new Categoria { IdCategoria = 13, Nombre = "Cócteles",            Estado = true, IdCategoriaPadre = 4 },
+        new Categoria { IdCategoria = 14, Nombre = "Piqueos de la Casa",  Estado = true, IdCategoriaPadre = 3 },
+        new Categoria { IdCategoria = 15, Nombre = "Postres",             Estado = true, IdCategoriaPadre = 5 },
+        new Categoria { IdCategoria = 16, Nombre = "Jugos y Milkshakes",  Estado = true, IdCategoriaPadre = 5 }
+    );
         });
 
         modelBuilder.Entity<Cliente>(entity =>
@@ -191,18 +193,18 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("persona_id_fk");
         });
 
-        modelBuilder.Entity<Compra>(entity =>
-        {
-            entity.HasKey(e => e.IdCompra).HasName("compra_id_pk");
+        //modelBuilder.Entity<Compra>(entity =>
+        //{
+        //    entity.HasKey(e => e.IdCompra).HasName("compra_id_pk");
 
-            entity.HasOne(d => d.IdProveedorNavigation).WithMany(p => p.Compras)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("provedor_id_fk");
+        //    entity.HasOne(d => d.IdProveedorNavigation).WithMany(p => p.Compras)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("provedor_id_fk");
 
-            entity.HasOne(d => d.IdVoucherNavigation).WithMany(p => p.Compras)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("voucher_id_fk");
-        });
+        //    entity.HasOne(d => d.IdVoucherNavigation).WithMany(p => p.Compras)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("voucher_id_fk");
+        //});
         modelBuilder.Entity<ConteoDinero>(entity =>
         {
             entity.HasKey(e => e.IdConteo).HasName("conteo_dinero_id_pk");
@@ -214,21 +216,21 @@ public partial class DBSenorialContext : DbContext
                   .HasConstraintName("conteo_dinero_apertura_fk");
         });
 
-        modelBuilder.Entity<DetalleCompra>(entity =>
-        {
-            entity.HasKey(e => new { e.IdCompra, e.IdInsumo }).HasName("detalle_compra_id_pk");
+        //modelBuilder.Entity<DetalleCompra>(entity =>
+        //{
+        //    entity.HasKey(e => new { e.IdCompra, e.IdInsumo }).HasName("detalle_compra_id_pk");
 
-            entity.HasOne(d => d.IdCompraNavigation).WithMany(p => p.DetalleCompras)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("compra_id_fk");
+        //    entity.HasOne(d => d.IdCompraNavigation).WithMany(p => p.DetalleCompras)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("compra_id_fk");
 
-            entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleCompras)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("insumo_id_fk");
+        //    entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleCompras)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("insumo_id_fk");
             
 
             
-        });
+        //});
 
         modelBuilder.Entity<DetalleDashMenu>(entity =>
         {
@@ -247,31 +249,31 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdDetInventario).HasName("detalle_inventario_id_pk");
 
-            //entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.DetalleInventarios)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("estado_id_fk");
-
-            entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleInventarios)
+            entity.HasOne(d => d.Insumo)
+                .WithMany(p => p.DetalleInventarios)
+                .HasForeignKey(d => d.IdInsumo)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("det_insumo_id_fk");
 
-            entity.HasOne(d => d.IdInventarioNavigation).WithMany(p => p.DetalleInventarios)
+            entity.HasOne(d => d.Inventario)
+                .WithMany(p => p.Detalles)
+                .HasForeignKey(d => d.IdInventario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("inventario_id_fk");
         });
 
-        modelBuilder.Entity<DetalleProduccion>(entity =>
-        {
-            entity.HasKey(e => new { e.IdProduccion, e.IdProductoSucursal }).HasName("detalle_produccion_id_pk");
+        //modelBuilder.Entity<DetalleProduccion>(entity =>
+        //{
+        //    entity.HasKey(e => new { e.IdProduccion, e.IdProductoSucursal }).HasName("detalle_produccion_id_pk");
 
-            entity.HasOne(d => d.IdProduccionNavigation).WithMany(p => p.DetalleProduccions)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("produccion_id_fk");
+        //    entity.HasOne(d => d.IdProduccionNavigation).WithMany(p => p.DetalleProduccions)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("produccion_id_fk");
 
-            entity.HasOne(d => d.IdProductoSucursalNavigation).WithMany(p => p.DetalleProduccions)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("sucurusal_id_fk");
-        });
+        //    entity.HasOne(d => d.IdProductoSucursalNavigation).WithMany(p => p.DetalleProduccions)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("sucurusal_id_fk");
+        //});
 
         modelBuilder.Entity<DetalleVenta>(entity =>
         {
@@ -318,13 +320,11 @@ public partial class DBSenorialContext : DbContext
 
         modelBuilder.Entity<Entrada>(entity =>
         {
-            entity.HasKey(e => new { e.IdInventario, e.IdCompra }).HasName("entrada_id_pk");
+            entity.HasKey(e => e.IdEntrada).HasName("entrada_id_pk");
 
-            entity.HasOne(d => d.IdCompraNavigation).WithMany(p => p.Entrada)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("compras_id_fk");
-
-            entity.HasOne(d => d.IdInventarioNavigation).WithMany(p => p.Entrada)
+            entity.HasOne(d => d.Inventario)
+                .WithMany(p => p.Entradas)
+                .HasForeignKey(d => d.IdInventario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("inventario_id_entrada_fk");
         });
@@ -383,12 +383,12 @@ public partial class DBSenorialContext : DbContext
             new Insumo { IdInsumo = 38, Nombre = "Mates General",         IdUnidad = 3 }, // Unidad
             new Insumo { IdInsumo = 39, Nombre = "Mayonesa",              IdUnidad = 4 }, // Kilo
             new Insumo { IdInsumo = 40, Nombre = "Milo lata",             IdUnidad = 3 }, // Unidad
-            new Insumo { IdInsumo = 41, Nombre = "Mondadiente",           IdUnidad = 10 }, // Caja
+            new Insumo { IdInsumo = 41, Nombre = "Mondadiente",           IdUnidad = 10}, // Caja
             new Insumo { IdInsumo = 42, Nombre = "Mostaza",               IdUnidad = 4 }, // Kilo
             new Insumo { IdInsumo = 43, Nombre = "Ostión",                IdUnidad = 3 }, // Unidad
             new Insumo { IdInsumo = 44, Nombre = "Pan",                   IdUnidad = 3 }, // Unidad
             new Insumo { IdInsumo = 45, Nombre = "Panetón",               IdUnidad = 3 }, // Unidad
-            new Insumo { IdInsumo = 46, Nombre = "Papa",                  IdUnidad = 11 }, // Bolsa 20 kg
+            new Insumo { IdInsumo = 46, Nombre = "Papa",                  IdUnidad = 11}, // Bolsa 20 kg
             new Insumo { IdInsumo = 47, Nombre = "Papaya",                IdUnidad = 3 }, // Unidad
             new Insumo { IdInsumo = 48, Nombre = "Papel Manteca",         IdUnidad = 5 }, // Ciento
             new Insumo { IdInsumo = 49, Nombre = "Pepino",                IdUnidad = 3 }, // Unidad
@@ -425,7 +425,9 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdInventario).HasName("inventario_id_pk");
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Inventarios)
+            entity.HasOne(d => d.Sucursal)
+                .WithMany(p => p.Inventarios)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sucursal_id_fk");
         });
@@ -494,10 +496,10 @@ public partial class DBSenorialContext : DbContext
             );
         });
 
-        modelBuilder.Entity<Produccion>(entity =>
-        {
-            entity.HasKey(e => e.IdProduccion).HasName("produccion_id_pk");
-        });
+        //modelBuilder.Entity<Produccion>(entity =>
+        //{
+        //    entity.HasKey(e => e.IdProduccion).HasName("produccion_id_pk");
+        //});
 
         modelBuilder.Entity<Producto>(entity =>
         {
@@ -520,79 +522,101 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("img_id_fk");
             entity.HasData(
-        new Producto { IdProducto = 1,  Nombre = "Hamburguesa clásica",         Descripcion = "Hamburguesa clásica",         Derivar = "Horno" , IdCategoria = 1,  },
-        new Producto { IdProducto = 2,  Nombre = "Hamburguesa queso tocino",    Descripcion = "Hamburguesa queso tocino",    Derivar = "Horno" , IdCategoria = 1,  },
-        new Producto { IdProducto = 3,  Nombre = "Hamburguesa señorial",        Descripcion = "Hamburguesa señorial",        Derivar = "Horno" , IdCategoria = 1,  },
-        new Producto { IdProducto = 4,  Nombre = "1/4 de pollo a la brasa",     Descripcion = "1/4 de pollo a la brasa",     Derivar = "Horno" , IdCategoria = 6,  },
-        new Producto { IdProducto = 5,  Nombre = "1/4 de pollo broaster",       Descripcion = "1/4 de pollo broaster",       Derivar = "Horno" , IdCategoria = 6,  },
-        new Producto { IdProducto = 6,  Nombre = "Parrilla de pollo",           Descripcion = "Parrilla de pollo",           Derivar = "Horno" , IdCategoria = 7,  },
-        new Producto { IdProducto = 7,  Nombre = "Parrilla de pollo al ajo",    Descripcion = "Parrilla de pollo al ajo",    Derivar = "Horno" , IdCategoria = 7,  },
-        new Producto { IdProducto = 8,  Nombre = "Parrilla de pollo dietética", Descripcion = "Parrilla de pollo dietética", Derivar = "Horno" , IdCategoria = 7,  },
-        new Producto { IdProducto = 9,  Nombre = "Parrilla mixta",              Descripcion = "Parrilla mixta",              Derivar = "Horno" , IdCategoria = 7,  },
-        new Producto { IdProducto = 10, Nombre = "Brochetas de pollo",          Descripcion = "Brochetas de pollo",          Derivar = "Horno" , IdCategoria = 8,  },
-        new Producto { IdProducto = 11, Nombre = "Pollo a la pizzarola",        Descripcion = "Pollo a la pizzarola",        Derivar = "Horno" , IdCategoria = 8,  },
-        new Producto { IdProducto = 12, Nombre = "Bisteck a la parrilla",       Descripcion = "Bisteck a la parrilla",       Derivar = "Horno" , IdCategoria = 8,  },
-        new Producto { IdProducto = 13, Nombre = "Chorizo a la parrilla",       Descripcion = "Chorizo a la parrilla",       Derivar = "Horno" , IdCategoria = 8,  },
-        new Producto { IdProducto = 14, Nombre = "Chicharrón señorial",         Descripcion = "Chicharrón señorial",         Derivar = "Horno" , IdCategoria = 3,  },
-        new Producto { IdProducto = 15, Nombre = "Lonjitas",                    Descripcion = "Lonjitas",                    Derivar = "Horno" , IdCategoria = 3,  },
-        new Producto { IdProducto = 16, Nombre = "Chaufa especial",             Descripcion = "Chaufa especial",             Derivar = "Cocina", IdCategoria = 3,  },
-        new Producto { IdProducto = 17, Nombre = "Chaufa mixto",                Descripcion = "Chaufa mixto",                Derivar = "Cocina", IdCategoria = 3,  },
-        new Producto { IdProducto = 18, Nombre = "Spaguetti a lo alfredo",      Descripcion = "Spaguetti a lo alfredo",      Derivar = "Cocina", IdCategoria = 3,  },
-        new Producto { IdProducto = 19, Nombre = "Café pasado",                 Descripcion = "Café pasado",                 Derivar = "Cocina", IdCategoria = 9,  },
-        new Producto { IdProducto = 20, Nombre = "Chocolate con panetón",       Descripcion = "Chocolate con panetón",       Derivar = "Cocina", IdCategoria = 9,  },
-        new Producto { IdProducto = 21, Nombre = "Leche fresca",                Descripcion = "Leche fresca",                Derivar = "Cocina", IdCategoria = 9,  },
-        new Producto { IdProducto = 22, Nombre = "Milo",                        Descripcion = "Milo",                        Derivar = "Cocina", IdCategoria = 9,  },
-        new Producto { IdProducto = 23, Nombre = "Café con leche",              Descripcion = "Café con leche",              Derivar = "Cocina", IdCategoria = 9,  },
-        new Producto { IdProducto = 24, Nombre = "Mates",                       Descripcion = "Mates",                       Derivar = "Cocina", IdCategoria = 9,  },
-        new Producto { IdProducto = 25, Nombre = "Gaseosa de 3lts",             Descripcion = "Gaseosa de 3lts",             Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 26, Nombre = "Gaseosa de 2.25lts",          Descripcion = "Gaseosa de 2.25lts",          Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 27, Nombre = "Gaseosa de 1.5lts",           Descripcion = "Gaseosa de 1.5lts",           Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 28, Nombre = "Gaseosa de 1lts",             Descripcion = "Gaseosa de 1lts",             Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 29, Nombre = "Gaseosa de 1/2lt",            Descripcion = "Gaseosa de 1/2lt",            Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 30, Nombre = "Gaseosa personal",            Descripcion = "Gaseosa personal",            Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 31, Nombre = "Gaseosa pirañita",            Descripcion = "Gaseosa pirañita",            Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 32, Nombre = "Refresco de maracuya (Jarra)",Descripcion = "Refresco de maracuya (Jarra)",Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 33, Nombre = "Chicha morada (Jarra)",       Descripcion = "Chicha morada (Jarra)",       Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 34, Nombre = "Limonada Frozen (Jarra)",     Descripcion = "Limonada Frozen (Jarra)",     Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 35, Nombre = "Limonada Americana (Jarra)",  Descripcion = "Limonada Americana (Jarra)",  Derivar = "Cocina", IdCategoria = 10, },
-        new Producto { IdProducto = 36, Nombre = "Caliente de pisco",           Descripcion = "Caliente de pisco",           Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 37, Nombre = "Caliente de vino",            Descripcion = "Caliente de vino",            Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 38, Nombre = "Caliente de ron",             Descripcion = "Caliente de ron",             Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 39, Nombre = "Caliente de whisky",          Descripcion = "Caliente de whisky",          Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 40, Nombre = "Cerveza en lata",             Descripcion = "Cerveza en lata",             Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 41, Nombre = "Cerveza negra",               Descripcion = "Cerveza negra",               Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 42, Nombre = "Cerveza de trigo",            Descripcion = "Cerveza de trigo",            Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 43, Nombre = "Vino queirolo (Vaso)",        Descripcion = "Vino queirolo (Vaso)",        Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 44, Nombre = "Whisky (Vaso)",               Descripcion = "Whisky (Vaso)",               Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 45, Nombre = "Pisco Vargas (Vaso)",         Descripcion = "Pisco Vargas (Vaso)",         Derivar = "Cocina", IdCategoria = 11, },
-        new Producto { IdProducto = 46, Nombre = "Mojito",                      Descripcion = "Mojito",                      Derivar = "Cocina", IdCategoria = 12, },
-        new Producto { IdProducto = 47, Nombre = "Machu Picchu",                Descripcion = "Machu Picchu",                Derivar = "Cocina", IdCategoria = 12, },
-        new Producto { IdProducto = 48, Nombre = "Daikiri",                     Descripcion = "Daikiri",                     Derivar = "Cocina", IdCategoria = 12, },
-        new Producto { IdProducto = 49, Nombre = "Piña colada",                 Descripcion = "Piña colada",                 Derivar = "Cocina", IdCategoria = 12, },
-        new Producto { IdProducto = 50, Nombre = "Pisco sour",                  Descripcion = "Pisco sour",                  Derivar = "Cocina", IdCategoria = 12, },
-        new Producto { IdProducto = 51, Nombre = "Naranjita",                   Descripcion = "Naranjita",                   Derivar = "Cocina", IdCategoria = 12, },
-        new Producto { IdProducto = 52, Nombre = "Alitas en salsa BBQ",         Descripcion = "Alitas en salsa BBQ",         Derivar = "Horno" , IdCategoria = 13, },
-        new Producto { IdProducto = 53, Nombre = "Alitas broaster",             Descripcion = "Alitas broaster",             Derivar = "Horno" , IdCategoria = 13, },
-        new Producto { IdProducto = 54, Nombre = "Tequeños especiales",         Descripcion = "Tequeños especiales",         Derivar = "Cocina", IdCategoria = 13, },
-        new Producto { IdProducto = 55, Nombre = "Durazno en almíbar",          Descripcion = "Durazno en almíbar",          Derivar = "Cocina", IdCategoria = 14, },
-        new Producto { IdProducto = 56, Nombre = "Helado 02 bolas",             Descripcion = "Helado 02 bolas",             Derivar = "Cocina", IdCategoria = 14, },
-        new Producto { IdProducto = 57, Nombre = "Helado 03 bolas",             Descripcion = "Helado 03 bolas",             Derivar = "Cocina", IdCategoria = 14, },
-        new Producto { IdProducto = 58, Nombre = "Gelatina",                    Descripcion = "Gelatina",                    Derivar = "Cocina", IdCategoria = 14, },
-        new Producto { IdProducto = 59, Nombre = "Flan",                        Descripcion = "Flan",                        Derivar = "Cocina", IdCategoria = 14, },
-        new Producto { IdProducto = 60, Nombre = "Jugo de papaya",              Descripcion = "Jugo de papaya",              Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 61, Nombre = "Jugo de fresa con leche",     Descripcion = "Jugo de fresa con leche",     Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 62, Nombre = "Jugo de plátano",             Descripcion = "Jugo de plátano",             Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 63, Nombre = "Jugo surtido",                Descripcion = "Jugo surtido",                Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 64, Nombre = "Ensalada de frutas",          Descripcion = "Ensalada de frutas",          Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 65, Nombre = "Milkshake de Oreo",           Descripcion = "Milkshake de Oreo",           Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 66, Nombre = "Milkshake de durazno",        Descripcion = "Milkshake de durazno",        Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 67, Nombre = "Milkshake de fresa",          Descripcion = "Milkshake de fresa",          Derivar = "Cocina", IdCategoria = 15, },
-        new Producto { IdProducto = 68, Nombre = "Salchipapa clásica",          Descripcion = "Salchipapa clásica",          Derivar = "Horno" , IdCategoria = 3,  },
-        new Producto { IdProducto = 69, Nombre = "Salchipapa ayacuchana",       Descripcion = "Salchipapa ayacuchana",       Derivar = "Horno" , IdCategoria = 3,  },
-        new Producto { IdProducto = 70, Nombre = "Salchipiernita",              Descripcion = "Salchipiernita",              Derivar = "Horno" , IdCategoria = 3,  },
-        new Producto { IdProducto = 71, Nombre = "Mounstruo",                   Descripcion = "Mounstruo",                   Derivar = "Cocina", IdCategoria = 3,  },
-        new Producto { IdProducto = 72, Nombre = "Mounstrito",                  Descripcion = "Mounstrito",                  Derivar = "Cocina", IdCategoria = 3,  }
-    );
+    // Hamburguesas
+    new Producto { IdProducto =  1, Nombre = "Hamburguesa clásica",           Descripcion = "Hamburguesa clásica",           Derivar = "Horno",  IdCategoria = 1, PrecioVenta =  9.00M },
+    new Producto { IdProducto =  2, Nombre = "Hamburguesa queso tocino",      Descripcion = "Hamburguesa queso tocino",      Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 12.00M },
+    new Producto { IdProducto =  3, Nombre = "Hamburguesa señorial",          Descripcion = "Hamburguesa señorial",          Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 15.00M },
+
+    // Pollos y Parrillas
+    new Producto { IdProducto =  4, Nombre = "1/4 de pollo a la brasa",       Descripcion = "1/4 de pollo a la brasa",       Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 12.00M },
+    new Producto { IdProducto =  5, Nombre = "1/4 de pollo broaster",         Descripcion = "1/4 de pollo broaster",         Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 15.00M },
+    new Producto { IdProducto =  6, Nombre = "Parrilla de pollo",             Descripcion = "Parrilla de pollo",             Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 15.00M },
+    new Producto { IdProducto =  7, Nombre = "Parrilla de pollo al ajo",      Descripcion = "Parrilla de pollo al ajo",      Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 16.00M },
+    new Producto { IdProducto =  8, Nombre = "Parrilla de pollo dietética",   Descripcion = "Parrilla de pollo dietética",   Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 16.00M },
+    new Producto { IdProducto =  9, Nombre = "Parrilla mixta",                Descripcion = "Parrilla mixta",                Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 20.00M },
+    new Producto { IdProducto = 10, Nombre = "Brochetas de pollo",            Descripcion = "Brochetas de pollo",            Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 15.00M },
+    new Producto { IdProducto = 11, Nombre = "Pollo a la pizzarola",          Descripcion = "Pollo a la pizzarola",          Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 20.00M },
+    new Producto { IdProducto = 12, Nombre = "Bisteck a la parrilla",         Descripcion = "Bisteck a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 18.00M },
+    new Producto { IdProducto = 13, Nombre = "Chorizo a la parrilla",         Descripcion = "Chorizo a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 11.00M },
+
+    // Platos de Fondo
+    new Producto { IdProducto = 14, Nombre = "Chicharrón señorial",           Descripcion = "Chicharrón señorial",           Derivar = "Horno",  IdCategoria = 3, PrecioVenta = 15.00M },
+    new Producto { IdProducto = 15, Nombre = "Lonjitas",                      Descripcion = "Lonjitas",                      Derivar = "Horno",  IdCategoria = 3, PrecioVenta =  6.00M },
+    new Producto { IdProducto = 16, Nombre = "Chaufa especial",               Descripcion = "Chaufa especial",               Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 10.00M },
+    new Producto { IdProducto = 17, Nombre = "Chaufa mixto",                  Descripcion = "Chaufa mixto",                  Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 12.00M },
+    new Producto { IdProducto = 18, Nombre = "Spaguetti a lo alfredo",        Descripcion = "Spaguetti a lo alfredo",        Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 14.00M },
+
+    // Bebidas Calientes
+    new Producto { IdProducto = 19, Nombre = "Café pasado",                   Descripcion = "Café pasado",                   Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.50M },
+    new Producto { IdProducto = 20, Nombre = "Chocolate con panetón",         Descripcion = "Chocolate con panetón",         Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  5.00M },
+    new Producto { IdProducto = 21, Nombre = "Leche fresca",                  Descripcion = "Leche fresca",                  Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  3.00M },
+    new Producto { IdProducto = 22, Nombre = "Milo",                          Descripcion = "Milo",                          Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  3.00M },
+    new Producto { IdProducto = 23, Nombre = "Café con leche",                Descripcion = "Café con leche",                Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  4.00M },
+    new Producto { IdProducto = 24, Nombre = "Mates",                         Descripcion = "Mates",                         Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.00M },
+
+    // Bebidas Frías
+    new Producto { IdProducto = 25, Nombre = "Gaseosa de 3lts",               Descripcion = "Gaseosa de 3lts",               Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 14.00M },
+    new Producto { IdProducto = 26, Nombre = "Gaseosa de 2.25lts",            Descripcion = "Gaseosa de 2.25lts",            Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 11.00M },
+    new Producto { IdProducto = 27, Nombre = "Gaseosa de 1.5lts",             Descripcion = "Gaseosa de 1.5lts",             Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  9.00M },
+    new Producto { IdProducto = 28, Nombre = "Gaseosa de 1lts",               Descripcion = "Gaseosa de 1lts",               Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  7.00M },
+    new Producto { IdProducto = 29, Nombre = "Gaseosa de 1/2lt",              Descripcion = "Gaseosa de 1/2lt",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  4.00M },
+    new Producto { IdProducto = 30, Nombre = "Gaseosa personal",              Descripcion = "Gaseosa personal",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  2.50M },
+    new Producto { IdProducto = 31, Nombre = "Gaseosa pirañita",              Descripcion = "Gaseosa pirañita",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  1.50M },
+    new Producto { IdProducto = 32, Nombre = "Refresco de maracuya (Jarra)",  Descripcion = "Refresco de maracuya (Jarra)",  Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  8.00M },
+    new Producto { IdProducto = 33, Nombre = "Chicha morada (Jarra)",         Descripcion = "Chicha morada (Jarra)",         Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  8.00M },
+    new Producto { IdProducto = 34, Nombre = "Limonada Frozen (Jarra)",       Descripcion = "Limonada Frozen (Jarra)",       Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 12.00M },
+    new Producto { IdProducto = 35, Nombre = "Limonada Americana (Jarra)",    Descripcion = "Limonada Americana (Jarra)",    Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 11.00M },
+
+    // Licores
+    new Producto { IdProducto = 36, Nombre = "Caliente de pisco",             Descripcion = "Caliente de pisco",             Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 30.00M },
+    new Producto { IdProducto = 37, Nombre = "Caliente de vino",              Descripcion = "Caliente de vino",              Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 40.00M },
+    new Producto { IdProducto = 38, Nombre = "Caliente de ron",               Descripcion = "Caliente de ron",               Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 35.00M },
+    new Producto { IdProducto = 39, Nombre = "Caliente de whisky",            Descripcion = "Caliente de whisky",            Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 45.00M },
+    new Producto { IdProducto = 40, Nombre = "Cerveza en lata",               Descripcion = "Cerveza en lata",               Derivar = "Cocina", IdCategoria = 12, PrecioVenta =  6.00M },
+    new Producto { IdProducto = 41, Nombre = "Cerveza negra",                 Descripcion = "Cerveza negra",                 Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
+    new Producto { IdProducto = 42, Nombre = "Cerveza de trigo",              Descripcion = "Cerveza de trigo",              Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
+    new Producto { IdProducto = 43, Nombre = "Vino queirolo (Vaso)",          Descripcion = "Vino queirolo (Vaso)",          Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
+    new Producto { IdProducto = 44, Nombre = "Whisky (Vaso)",                 Descripcion = "Whisky (Vaso)",                 Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
+    new Producto { IdProducto = 45, Nombre = "Pisco Vargas (Vaso)",           Descripcion = "Pisco Vargas (Vaso)",           Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
+
+    // Cócteles
+    new Producto { IdProducto = 46, Nombre = "Mojito",                        Descripcion = "Mojito",                        Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M },
+    new Producto { IdProducto = 47, Nombre = "Machu Picchu",                  Descripcion = "Machu Picchu",                  Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 17.90M },
+    new Producto { IdProducto = 48, Nombre = "Daikiri",                       Descripcion = "Daikiri",                       Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M },
+    new Producto { IdProducto = 49, Nombre = "Piña colada",                   Descripcion = "Piña colada",                   Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 16.90M },
+    new Producto { IdProducto = 50, Nombre = "Pisco sour",                    Descripcion = "Pisco sour",                    Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M },
+    new Producto { IdProducto = 51, Nombre = "Naranjita",                     Descripcion = "Naranjita",                     Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.00M },
+
+    // Piqueos de la Casa
+    new Producto { IdProducto = 52, Nombre = "Alitas en salsa BBQ",           Descripcion = "Alitas en salsa BBQ",           Derivar = "Horno",  IdCategoria = 14, PrecioVenta = 35.00M },
+    new Producto { IdProducto = 53, Nombre = "Alitas broaster",               Descripcion = "Alitas broaster",               Derivar = "Horno",  IdCategoria = 14, PrecioVenta = 35.00M },
+    new Producto { IdProducto = 54, Nombre = "Tequeños especiales",           Descripcion = "Tequeños especiales",           Derivar = "Cocina", IdCategoria = 14, PrecioVenta = 20.00M },
+
+    // Postres
+    new Producto { IdProducto = 55, Nombre = "Durazno en almíbar",            Descripcion = "Durazno en almíbar",            Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  5.00M },
+    new Producto { IdProducto = 56, Nombre = "Helado 02 bolas",               Descripcion = "Helado 02 bolas",               Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  4.00M },
+    new Producto { IdProducto = 57, Nombre = "Helado 03 bolas",               Descripcion = "Helado 03 bolas",               Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  6.00M },
+    new Producto { IdProducto = 58, Nombre = "Gelatina",                      Descripcion = "Gelatina",                      Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  3.00M },
+    new Producto { IdProducto = 59, Nombre = "Flan",                          Descripcion = "Flan",                          Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  5.00M },
+
+    // Jugos y Milkshakes
+    new Producto { IdProducto = 60, Nombre = "Jugo de papaya",                Descripcion = "Jugo de papaya",                Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M },
+    new Producto { IdProducto = 61, Nombre = "Jugo de fresa con leche",       Descripcion = "Jugo de fresa con leche",       Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  8.00M },
+    new Producto { IdProducto = 62, Nombre = "Jugo de plátano",               Descripcion = "Jugo de plátano",               Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M },
+    new Producto { IdProducto = 63, Nombre = "Jugo surtido",                  Descripcion = "Jugo surtido",                  Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M },
+    new Producto { IdProducto = 64, Nombre = "Ensalada de frutas",            Descripcion = "Ensalada de frutas",            Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  7.00M },
+    new Producto { IdProducto = 65, Nombre = "Milkshake de Oreo",             Descripcion = "Milkshake de Oreo",             Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M },
+    new Producto { IdProducto = 66, Nombre = "Milkshake de durazno",          Descripcion = "Milkshake de durazno",          Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M },
+    new Producto { IdProducto = 67, Nombre = "Milkshake de fresa",            Descripcion = "Milkshake de fresa",            Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M },
+
+    // Comida Rápida
+    new Producto { IdProducto = 68, Nombre = "Salchipapa clásica",            Descripcion = "Salchipapa clásica",            Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  7.00M },
+    new Producto { IdProducto = 69, Nombre = "Salchipapa ayacuchana",         Descripcion = "Salchipapa ayacuchana",         Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  9.00M },
+    new Producto { IdProducto = 70, Nombre = "Salchipiernita",                Descripcion = "Salchipiernita",                Derivar = "Horno",  IdCategoria = 9, PrecioVenta = 11.00M },
+    new Producto { IdProducto = 71, Nombre = "Mounstruo",                     Descripcion = "Mounstruo",                     Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 18.00M },
+    new Producto { IdProducto = 72, Nombre = "Mounstrito",                    Descripcion = "Mounstrito",                    Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 10.00M }
+);
+
         });
 
         modelBuilder.Entity<ProductoSucursal>(entity =>
@@ -655,19 +679,19 @@ public partial class DBSenorialContext : DbContext
 
         modelBuilder.Entity<Salida>(entity =>
         {
-            entity.HasKey(e => new { e.IdDetInventario, e.IdProduccion, e.IdSucursal }).HasName("salida_id_pk");
+            entity.HasKey(e => e.IdSalida).HasName("salida_id_pk");
 
-            entity.HasOne(d => d.IdDetInventarioNavigation).WithMany(p => p.Salida)
+            entity.HasOne(d => d.Inventario)
+                .WithMany(p => p.Salidas)
+                .HasForeignKey(d => d.IdInventario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("det_inventario_id_fk");
+                .HasConstraintName("inventario_id_salida_fk");
 
-            entity.HasOne(d => d.IdProduccionNavigation).WithMany(p => p.Salida)
+            entity.HasOne(d => d.DetalleInventario)
+                .WithMany(p => p.Salidas)
+                .HasForeignKey(d => d.IdDetInventario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("produccion_salida_id_fk");
-
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Salida)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("sucursal_id_fk");
+                .HasConstraintName("detalle_inventario_id_fk");
         });
 
         modelBuilder.Entity<Sucursal>(entity =>
@@ -724,17 +748,17 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdUnidad).HasName("unidad_medicion_id_pk");
             entity.HasData(
-        new UnidadMedicion { IdUnidad = 1, Abreviacion = "Balde",   Descripcion = "Balde" },
-        new UnidadMedicion { IdUnidad = 2, Abreviacion = "Lt",      Descripcion = "Litro" },
-        new UnidadMedicion { IdUnidad = 3, Abreviacion = "Und",     Descripcion = "Unidad" },
-        new UnidadMedicion { IdUnidad = 4, Abreviacion = "Kg",      Descripcion = "Kilo" },
-        new UnidadMedicion { IdUnidad = 5, Abreviacion = "Cto",     Descripcion = "Ciento" },
-        new UnidadMedicion { IdUnidad = 6, Abreviacion = "Rllo",    Descripcion = "Rollo" },
-        new UnidadMedicion { IdUnidad = 7, Abreviacion = "B-5Kg",   Descripcion = "Bolsa 5 kg" },
-        new UnidadMedicion { IdUnidad = 8, Abreviacion = "At",      Descripcion = "Atado" },
-        new UnidadMedicion { IdUnidad = 9, Abreviacion = "Bsa",     Descripcion = "Bolsa" },
-        new UnidadMedicion { IdUnidad = 10, Abreviacion = "Cja",    Descripcion = "Caja" },
-        new UnidadMedicion { IdUnidad = 11, Abreviacion = "B-20Kg", Descripcion = "Bolsa 20 kg" }
+        new UnidadMedicion { IdUnidad =  1,  Abreviacion = "Balde",   Descripcion = "Balde" },
+        new UnidadMedicion { IdUnidad =  2,  Abreviacion = "Lt",      Descripcion = "Litro" },
+        new UnidadMedicion { IdUnidad =  3,  Abreviacion = "Und",     Descripcion = "Unidad" },
+        new UnidadMedicion { IdUnidad =  4,  Abreviacion = "Kg",      Descripcion = "Kilo" },
+        new UnidadMedicion { IdUnidad =  5,  Abreviacion = "Cto",     Descripcion = "Ciento" },
+        new UnidadMedicion { IdUnidad =  6,  Abreviacion = "Rllo",    Descripcion = "Rollo" },
+        new UnidadMedicion { IdUnidad =  7,  Abreviacion = "B-5Kg",   Descripcion = "Bolsa 5 kg" },
+        new UnidadMedicion { IdUnidad =  8,  Abreviacion = "At",      Descripcion = "Atado" },
+        new UnidadMedicion { IdUnidad =  9,  Abreviacion = "Bsa",     Descripcion = "Bolsa" },
+        new UnidadMedicion { IdUnidad = 10,  Abreviacion = "Cja",     Descripcion = "Caja" },
+        new UnidadMedicion { IdUnidad = 11,  Abreviacion = "B-20Kg",  Descripcion = "Bolsa 20 kg" }
     );
         });
 

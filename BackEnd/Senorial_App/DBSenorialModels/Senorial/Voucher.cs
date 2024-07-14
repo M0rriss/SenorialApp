@@ -39,8 +39,8 @@ public partial class Voucher
     [Column("id_tipo_transaccion")]
     public int IdTipoTransaccion { get; set; }
 
-    [InverseProperty("IdVoucherNavigation")]
-    public virtual ICollection<Compra> Compras { get; set; } = new List<Compra>();
+    //[InverseProperty("IdVoucherNavigation")]
+    //public virtual ICollection<Compra> Compras { get; set; } = new List<Compra>();
 
     //[ForeignKey("IdEstado")]
     //[InverseProperty("Vouchers")]

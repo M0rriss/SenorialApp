@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Almacen.Categorias;
+using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RequestResponseModels.Response.Schema_Almacen.Categorias.CategoriaResponse;
 
 namespace Repository.Schema_Almacen.Categorias
 {
@@ -17,5 +19,30 @@ namespace Repository.Schema_Almacen.Categorias
         {
             throw new NotImplementedException();
         }
+        public async Task<List<CategoriaUiResponse>> UiCategoria()
+        {
+            var result = await (from c1 in dbset
+                                join c2 in dbset on c1.IdCategoria equals c2.IdCategoriaPadre into subcategories
+                                from sub in subcategories.DefaultIfEmpty()
+                                where c1.IdCategoriaPadre == null && c1.Estado
+                                group sub by new { c1.Nombre, c1.Estado } into grouped
+                                select new CategoriaUiResponse
+                                {
+                                    Categoria = grouped.Key.Nombre,
+                                    Subcategorias = string.Join(", ", grouped.Where(s => s != null && s.Estado).Select(s => s.Nombre)),
+                                    Estado = grouped.Key.Estado ? "Activo" : "Inactivo"
+                                })
+                         .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<Categoria> BuscarPorNombre(string nombre)
+        {
+            return await db.Categorias
+                .Where(c => c.Nombre.ToLower() == nombre.ToLower())
+                .FirstOrDefaultAsync();
+        }
+       
     }
 }
