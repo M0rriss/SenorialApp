@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RequestResponseModels.Response.Schema_Ventas.DetalleVentas
+namespace RequestResponseModels.Response.Schema_Ventas.DetallePedidos
 {
-    public class DetalleVentaResponse
+    public class DetallePedidoResponse
     {
-        public int IdDetalleVenta { get; set; }
+        public int IdDetallePedido { get; set; }
+        public int IdProducto { get; set; }
         public string ProductoNombre { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-    
     }
 }

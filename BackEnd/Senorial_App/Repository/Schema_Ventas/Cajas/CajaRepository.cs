@@ -48,7 +48,7 @@ namespace Repository.Schema_Ventas.Cajas
 
             var response = await query.Include(a => a.Venta)
                              .ThenInclude(v => v.DetalleVenta)
-                             .ThenInclude(dv => dv.IdProductoSucursalNavigation)
+                             .ThenInclude(dv => dv.IdProductoSucursal)
                              .ToListAsync();
             return response;
         }

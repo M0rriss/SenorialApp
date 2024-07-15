@@ -6,30 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DBSenorialModels.Senorial;
 
-[Table("detalle_ventas", Schema = "Ventas")]
+[Table("detalle_venta", Schema = "Ventas")]
 public partial class DetalleVenta
 {
     [Key]
-    [Column("id_det_venta")]
-    public int IdDetVenta { get; set; }
+    [Column("id_detalle_venta")]
+    public int IdDetalleVenta { get; set; }
+    [Column("id_producto_sucursal")]
+    public int IdProductoSucursal { get; set; }
 
     [Column("id_venta")]
     public int IdVenta { get; set; }
-    [Column("id_producto_sucursal")]
-    public int IdProductoSucursal { get; set; }
+
+    [Column("id_producto")]
+    public int IdProducto { get; set; }
+
     [Column("cantidad")]
-    public int? Cantidad { get; set; }
+    public int Cantidad { get; set; }
 
     [Column("precio_unitario", TypeName = "decimal(10, 2)")]
-    public decimal? PrecioUnitario { get; set; }
-
-
-
-    [ForeignKey("IdProductoSucursal")]
-    [InverseProperty("DetalleVenta")]
-    public virtual ProductoSucursal IdProductoSucursalNavigation { get; set; } = null!;
+    public decimal PrecioUnitario { get; set; }
 
     [ForeignKey("IdVenta")]
-    [InverseProperty("DetalleVenta")]
-    public virtual Venta IdVentaNavigation { get; set; } = null!;
+    public virtual Venta Venta { get; set; }
+
+    [ForeignKey("IdProducto")]
+    public virtual Producto Producto { get; set; }
+    [ForeignKey("IdProductoSucursal")]
+    public virtual ProductoSucursal ProductoSucursal { get; set; }
+
 }
+

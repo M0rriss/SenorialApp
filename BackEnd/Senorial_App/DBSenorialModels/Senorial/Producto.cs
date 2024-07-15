@@ -35,6 +35,11 @@ public partial class Producto
     [ForeignKey("IdCategoria")]
     [InverseProperty("Productos")]
     public virtual Categoria Categoria { get; set; } = null!;
+    [InverseProperty("Producto")]
+    public virtual ICollection<DetallePedido> DetallePedidos { get; set; } = new List<DetallePedido>();
+
+    [InverseProperty("Producto")]
+    public virtual ICollection<DetalleVenta> DetalleVentas { get; set; } = new List<DetalleVenta>();
 
     [ForeignKey("IdImg")]
     [InverseProperty("Productos")]

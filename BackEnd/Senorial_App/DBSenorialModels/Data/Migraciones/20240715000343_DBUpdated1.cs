@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class inventar : Migration
+    public partial class DBUpdated1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -295,6 +295,30 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
+                name: "pedidos",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_pedido = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_mesa = table.Column<int>(type: "int", nullable: false),
+                    fecha_pedido = table.Column<DateTime>(type: "datetime", nullable: false),
+                    estado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    total = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    tipo_pedido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pedido_id_pk", x => x.id_pedido);
+                    table.ForeignKey(
+                        name: "mesa_pedido_fk",
+                        column: x => x.id_mesa,
+                        principalSchema: "Ventas",
+                        principalTable: "mesas",
+                        principalColumn: "id_mesa");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "detalle_dash_menu",
                 schema: "Usuarios",
                 columns: table => new
@@ -440,6 +464,35 @@ namespace DBSenorialModels.Data.Migraciones
                         principalSchema: "Ventas",
                         principalTable: "apertura_cajas",
                         principalColumn: "id_apertura");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "detalle_pedido",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_detalle_pedido = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_pedido = table.Column<int>(type: "int", nullable: false),
+                    id_producto = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("detalle_pedido_id_pk", x => x.id_detalle_pedido);
+                    table.ForeignKey(
+                        name: "pedido_detalle_pedido_fk",
+                        column: x => x.id_pedido,
+                        principalSchema: "Ventas",
+                        principalTable: "pedidos",
+                        principalColumn: "id_pedido");
+                    table.ForeignKey(
+                        name: "producto_detalle_pedido_fk",
+                        column: x => x.id_producto,
+                        principalSchema: "Ventas",
+                        principalTable: "productos",
+                        principalColumn: "id_producto");
                 });
 
             migrationBuilder.CreateTable(
@@ -695,7 +748,7 @@ namespace DBSenorialModels.Data.Migraciones
                     nro_documento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     nro_serie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     id_tipo_pedido = table.Column<int>(type: "int", nullable: false),
-                    fecha_venta = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    fecha_venta = table.Column<DateTime>(type: "datetime", nullable: true),
                     costo_base = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     igv = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     monto_total = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
@@ -809,22 +862,29 @@ namespace DBSenorialModels.Data.Migraciones
                 });
 
             migrationBuilder.CreateTable(
-                name: "detalle_ventas",
+                name: "detalle_venta",
                 schema: "Ventas",
                 columns: table => new
                 {
-                    id_det_venta = table.Column<int>(type: "int", nullable: false)
+                    id_detalle_venta = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_venta = table.Column<int>(type: "int", nullable: false),
                     id_producto_sucursal = table.Column<int>(type: "int", nullable: false),
-                    cantidad = table.Column<int>(type: "int", nullable: true),
-                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: true)
+                    id_venta = table.Column<int>(type: "int", nullable: false),
+                    id_producto = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("detalle_venta_id_pk", x => x.id_det_venta);
+                    table.PrimaryKey("detalle_venta_id_pk", x => x.id_detalle_venta);
                     table.ForeignKey(
-                        name: "producto_sucursal_id_fk",
+                        name: "producto_detalle_venta_fk",
+                        column: x => x.id_producto,
+                        principalSchema: "Ventas",
+                        principalTable: "productos",
+                        principalColumn: "id_producto");
+                    table.ForeignKey(
+                        name: "producto_sucursal_detalle_venta_fk",
                         column: x => x.id_producto_sucursal,
                         principalSchema: "Ventas",
                         principalTable: "producto_sucursal",
@@ -1156,7 +1216,7 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "IdImg", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 7, 14, 0, 29, 13, 65, DateTimeKind.Local).AddTicks(708), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 7, 14, 19, 3, 43, 439, DateTimeKind.Local).AddTicks(2930), "admin@admin.com", null, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1214,15 +1274,33 @@ namespace DBSenorialModels.Data.Migraciones
                 column: "id_inventario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_detalle_ventas_id_producto_sucursal",
+                name: "IX_detalle_pedido_id_pedido",
                 schema: "Ventas",
-                table: "detalle_ventas",
+                table: "detalle_pedido",
+                column: "id_pedido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_detalle_pedido_id_producto",
+                schema: "Ventas",
+                table: "detalle_pedido",
+                column: "id_producto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_detalle_venta_id_producto",
+                schema: "Ventas",
+                table: "detalle_venta",
+                column: "id_producto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_detalle_venta_id_producto_sucursal",
+                schema: "Ventas",
+                table: "detalle_venta",
                 column: "id_producto_sucursal");
 
             migrationBuilder.CreateIndex(
-                name: "IX_detalle_ventas_id_venta",
+                name: "IX_detalle_venta_id_venta",
                 schema: "Ventas",
-                table: "detalle_ventas",
+                table: "detalle_venta",
                 column: "id_venta");
 
             migrationBuilder.CreateIndex(
@@ -1266,6 +1344,12 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Almacen",
                 table: "inventario",
                 column: "id_sucursal");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pedidos_id_mesa",
+                schema: "Ventas",
+                table: "pedidos",
+                column: "id_mesa");
 
             migrationBuilder.CreateIndex(
                 name: "IX_personas_tipo_documento",
@@ -1492,7 +1576,11 @@ namespace DBSenorialModels.Data.Migraciones
                 schema: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "detalle_ventas",
+                name: "detalle_pedido",
+                schema: "Ventas");
+
+            migrationBuilder.DropTable(
+                name: "detalle_venta",
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
@@ -1514,6 +1602,10 @@ namespace DBSenorialModels.Data.Migraciones
             migrationBuilder.DropTable(
                 name: "menu_dash",
                 schema: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "pedidos",
+                schema: "Ventas");
 
             migrationBuilder.DropTable(
                 name: "producto_sucursal",

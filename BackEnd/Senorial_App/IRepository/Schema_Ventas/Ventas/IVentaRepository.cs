@@ -10,5 +10,10 @@ namespace IRepository.Schema_Ventas.Ventas
 {
     public interface IVentaRepository : ICrudRepository<Venta>
     {
+        Task<Venta> GetVentaById(int id);
+        Task<List<Venta>> GetAllVentas();
+        Task<Venta> CreateVenta(Venta venta);
+        Task<Venta> UpdateVenta(Venta venta);
+        Task<bool> DeleteVenta(int id);
     }
 }

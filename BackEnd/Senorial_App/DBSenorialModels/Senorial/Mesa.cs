@@ -22,4 +22,6 @@ public partial class Mesa
 
     [InverseProperty("IdMesaNavigation")]
     public virtual ICollection<Ambiente> Ambientes { get; set; } = new List<Ambiente>();
+    [InverseProperty("Mesa")]
+    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
 }

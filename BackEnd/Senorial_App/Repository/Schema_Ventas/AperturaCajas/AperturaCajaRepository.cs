@@ -21,13 +21,8 @@ namespace Repository.Schema_Ventas.AperturaCajas
 
         public async Task<AperturaCaja> ObtenerAperturaPorId(int id)
         {
-           var response = await db.AperturaCajas
-                              .Include(a => a.Conteos)
-                             .Include(a => a.Venta)
-                             .ThenInclude(v => v.DetalleVenta)
-                             .ThenInclude(dv => dv.IdProductoSucursalNavigation)
-                             .SingleOrDefaultAsync(a => a.IdApertura == id);
-            return response;
+            return await db.AperturaCajas.Include(a => a.Conteos).Include(a => a.Venta).ThenInclude(v => v.DetalleVenta)
+                .ThenInclude(dv => dv.Producto).SingleOrDefaultAsync(a => a.IdApertura == id);
         }
 
         public async Task<ConteoDinero> RegistrarConteoDinero(ConteoDinero conteo)

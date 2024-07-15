@@ -5,8 +5,10 @@
     "\\Senorial_App\\App_Senorial",
     "\\Senorial_App\\App_Senorial\\Controllers",
     "\\Senorial_App\\App_Senorial\\Controllers\\Authentication",
+    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Almacen",
+    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Almacen\\Inventario",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\UtilityAutoMapper\\AutoMapperProfiles.cs",
+  "SelectedNode": "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Almacen\\Inventario\\InventarioController.cs",
   "PreviewInSolutionExplorer": false
 }

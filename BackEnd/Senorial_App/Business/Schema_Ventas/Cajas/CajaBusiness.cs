@@ -118,7 +118,7 @@ namespace Business.Schema_Ventas.Cajas
             _cajaRepository.Dispose();
         }
 
-    #endregion
+        #endregion
         public async Task<AperturaCajaResponse> AperturarCaja(AperturaCajaRequest request)
         {
             // Obtener el correo del usuario autenticado
@@ -171,11 +171,11 @@ namespace Business.Schema_Ventas.Cajas
                     Empleado = $"{v.IdEmpleadoNavigation.IdPersonaNavigation.PrimerNombre} {v.IdEmpleadoNavigation.IdPersonaNavigation.ApellidoPaterno}",
                     Detalles = v.DetalleVenta.Select(dv => new DetalleVentaResponse
                     {
-                        IdDetVenta = dv.IdDetVenta,
+                        IdDetalleVenta = dv.IdDetalleVenta,
                         Cantidad = dv.Cantidad,
                         PrecioUnitario = dv.PrecioUnitario,
-                        IdProductoSucursal = dv.IdProductoSucursal,
-                        ProductoNombre = dv.IdProductoSucursalNavigation.IdProductoNavigation.Nombre
+                        //IdProductoSucursal = dv.IdProductoSucursal,
+                        ProductoNombre = dv.Producto.Nombre
                     }).ToList()
                 }).ToList()
             }).ToList();

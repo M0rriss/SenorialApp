@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 
 namespace IBusiness.Schema_Ventas.Ventas
 {
-    public interface IVentaBusiness : ICrudBusiness<VentasRequest, VentasResponse>
+    public interface IVentaBusiness 
     {
+        Task<VentasResponse> GetVentaById(int id);
+        Task<List<VentasResponse>> GetAllVentas();
+        Task<VentasResponse> CreateVenta(VentasRequest ventaRequest);
+        Task<VentasResponse> UpdateVenta(VentasRequest ventaRequest);
+        Task<bool> DeleteVenta(int id);
     }
 }

@@ -50,6 +50,13 @@ using RequestResponseModels.Response.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Response.Schema_Almacen.Entradas;
 using RequestResponseModels.Response.Schema_Almacen.Inventario;
 using RequestResponseModels.Response.Schema_Produccion.Salidas;
+using RequestResponseModels.Request.Schema_Ventas.DetallePedidos;
+using RequestResponseModels.Request.Schema_Ventas.Pedidos;
+using RequestResponseModels.Response.Schema_Ventas.DetallePedidos;
+using RequestResponseModels.Response.Schema_Ventas.Pedidos;
+using RequestResponseModels.Request.Schema_Ventas.DetalleVentas;
+using RequestResponseModels.Request.Schema_Ventas.Ventas;
+using RequestResponseModels.Response.Schema_Ventas.Ventas;
 
 namespace UtilityAutoMapper
 {
@@ -247,6 +254,14 @@ namespace UtilityAutoMapper
 
             // Mapeo de Empleado a EmpleadoResponse (si es necesario) y viceversa
             CreateMap<Empleado, EmpleadoResponse>().ReverseMap();
+
+            CreateMap<AperturaCaja, AperturaCajaRequest>().ReverseMap();
+            CreateMap<AperturaCaja, AperturaCajaResponse>().ReverseMap();
+            CreateMap<CierreCajaRequest, ConteoDinero>().ReverseMap();
+            CreateMap<Venta, VentasRequest>().ReverseMap();
+            CreateMap<Venta, VentasResponse>().ReverseMap();
+            CreateMap<DetalleVenta, DetalleVentaRequest>().ReverseMap();
+            CreateMap<DetalleVenta, DetalleVentaResponse>().ReverseMap();
             #endregion
             #region MetodoPago
             CreateMap<MetodoPago, MetodoPagoRequest>().ReverseMap();
@@ -261,6 +276,21 @@ namespace UtilityAutoMapper
             CreateMap<Producto, ProductoUpdateUiRequest>().ReverseMap();
             CreateMap<Producto, ProductoUiResponse>().ReverseMap();
             #endregion
+            #region Pedidos
+            CreateMap<Pedido, PedidoRequest>().ReverseMap();
+            CreateMap<Pedido, PedidoResponse>().ReverseMap();
+            CreateMap<DetallePedido, DetallePedidoRequest>().ReverseMap();
+            CreateMap<DetallePedido, DetallePedidoResponse>().ReverseMap();
+
+            #endregion
+
+            #region Venta
+            CreateMap<Venta, VentasRequest>().ReverseMap();
+            CreateMap<Venta, VentasResponse>().ReverseMap();
+            CreateMap<DetalleVenta, DetalleVentaRequest>().ReverseMap();
+            CreateMap<DetalleVenta, DetalleVentaResponse>().ReverseMap();
+            #endregion
+
             #endregion
 
         }

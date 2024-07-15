@@ -39,6 +39,7 @@ public partial class DBSenorialContext : DbContext
 
     //public virtual DbSet<DetalleProduccion> DetalleProduccions { get; set; }
 
+    public virtual DbSet<DetallePedido> DetallePedidos { get; set; }
     public virtual DbSet<DetalleVenta> DetalleVentas { get; set; }
 
     public virtual DbSet<Documento> Documentos { get; set; }
@@ -74,6 +75,7 @@ public partial class DBSenorialContext : DbContext
     public virtual DbSet<ProductoSucursal> ProductoSucursals { get; set; }
 
     public virtual DbSet<Proveedor> Proveedors { get; set; }
+    public virtual DbSet<Pedido> Pedidos { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -275,22 +277,22 @@ public partial class DBSenorialContext : DbContext
         //        .HasConstraintName("sucurusal_id_fk");
         //});
 
-        modelBuilder.Entity<DetalleVenta>(entity =>
-        {
-            entity.HasKey(e => e.IdDetVenta).HasName("detalle_venta_id_pk");
+        //modelBuilder.Entity<DetalleVenta>(entity =>
+        //{
+        //    entity.HasKey(e => e.IdDetVenta).HasName("detalle_venta_id_pk");
 
-            entity.HasOne(d => d.IdProductoSucursalNavigation)
-                .WithMany(p => p.DetalleVenta)
-                .HasForeignKey(d => d.IdProductoSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("producto_sucursal_id_fk");
+        //    entity.HasOne(d => d.IdProductoSucursalNavigation)
+        //        .WithMany(p => p.DetalleVenta)
+        //        .HasForeignKey(d => d.IdProductoSucursal)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("producto_sucursal_id_fk");
 
-            entity.HasOne(d => d.IdVentaNavigation)
-                .WithMany(p => p.DetalleVenta)
-                .HasForeignKey(d => d.IdVenta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("venta_id_fk");
-        });
+        //    entity.HasOne(d => d.IdVentaNavigation)
+        //        .WithMany(p => p.DetalleVenta)
+        //        .HasForeignKey(d => d.IdVenta)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("venta_id_fk");
+        //});
 
         modelBuilder.Entity<Documento>(entity =>
         {
@@ -468,6 +470,39 @@ public partial class DBSenorialContext : DbContext
                 new TipoDocumento { IdTipoDocumento = 4, Nombre = "Carnet de Extranjería" }
             );
         });
+        modelBuilder.Entity<DetallePedido>(entity =>
+        {
+            entity.HasKey(e => e.IdDetallePedido).HasName("detalle_pedido_id_pk"); // Primary Key
+
+            entity.HasOne(d => d.Producto)
+                  .WithMany(p => p.DetallePedidos)
+                  .HasForeignKey(d => d.IdProducto)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("producto_detalle_pedido_fk"); // Foreign Key to Producto
+
+            entity.HasOne(d => d.Pedido)
+                  .WithMany(p => p.Detalles)
+                  .HasForeignKey(d => d.IdPedido)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("pedido_detalle_pedido_fk"); // Foreign Key to Pedido
+        });
+        modelBuilder.Entity<Pedido>(entity =>
+        {
+            entity.HasKey(e => e.IdPedido).HasName("pedido_id_pk"); // Primary Key
+
+            entity.HasOne(d => d.Mesa)
+                  .WithMany(p => p.Pedidos)
+                  .HasForeignKey(d => d.IdMesa)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("mesa_pedido_fk"); // Foreign Key to Mesa
+
+            entity.HasMany(d => d.Detalles)
+                  .WithOne(p => p.Pedido)
+                  .HasForeignKey(d => d.IdPedido)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("pedido_detalle_pedido_fk"); // Foreign Key to DetallePedido
+        });
+
         modelBuilder.Entity<Persona>(entity =>
         {
             entity.ToTable("personas", "Usuarios"); // Tabla y esquema
@@ -648,12 +683,11 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("unidad_medida_id_fk");
 
             entity.HasMany(d => d.DetalleVenta)
-                .WithOne(p => p.IdProductoSucursalNavigation)
+                .WithOne(p => p.ProductoSucursal)
                 .HasForeignKey(d => d.IdProductoSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("producto_sucursal_id_fk");
         });
-
 
         modelBuilder.Entity<Proveedor>(entity =>
         {
@@ -796,55 +830,75 @@ public partial class DBSenorialContext : DbContext
 
         modelBuilder.Entity<Venta>(entity =>
         {
-            entity.HasKey(e => e.IdVenta).HasName("venta_id_pk");
-
-            entity.Property(e => e.FechaVenta).HasDefaultValueSql("(getdate())");
-
+            entity.HasKey(e => e.IdVenta).HasName("venta_id_pk"); // Definir Primary Key
             entity.HasOne(d => d.IdAperturaNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdApertura)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("apertura_caja_id_fk");
+                  .HasForeignKey(d => d.IdApertura)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("apertura_caja_id_fk"); // Relación con AperturaCaja
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdCliente)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("cliente_id_fk");
+                  .HasForeignKey(d => d.IdCliente)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("cliente_id_fk"); // Relación con Cliente
 
             entity.HasOne(d => d.IdComprobanteNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdComprobante)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("comprobante_id_fk");
+                  .HasForeignKey(d => d.IdComprobante)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("comprobante_id_fk"); // Relación con TipoComprobante
 
             entity.HasOne(d => d.IdEmpleadoNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdEmpleado)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("empleado_id_fk");
+                  .HasForeignKey(d => d.IdEmpleado)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("empleado_id_fk"); // Relación con Empleado
 
             entity.HasOne(d => d.IdMetodoNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdMetodo)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("metodo_id_fk");
+                  .HasForeignKey(d => d.IdMetodo)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("metodo_id_fk"); // Relación con MetodoPago
 
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("sucursales_ventas_id_fk");
+                  .HasForeignKey(d => d.IdSucursal)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("sucursales_ventas_id_fk"); // Relación con Sucursal
 
             entity.HasOne(d => d.IdTipoPedidoNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdTipoPedido)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("tipo_pedido_id_fk");
+                  .HasForeignKey(d => d.IdTipoPedido)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("tipo_pedido_id_fk"); // Relación con TipoPedido
 
             entity.HasOne(d => d.IdVoucherNavigation).WithMany(p => p.Venta)
-                .HasForeignKey(d => d.IdVoucher)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("voucher_id_fk");
+                  .HasForeignKey(d => d.IdVoucher)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("voucher_id_fk"); // Relación con Voucher
 
             entity.HasMany(e => e.DetalleVenta)
-                  .WithOne(e => e.IdVentaNavigation)
+                  .WithOne(e => e.Venta)
                   .HasForeignKey(e => e.IdVenta)
                   .OnDelete(DeleteBehavior.ClientSetNull)
-                  .HasConstraintName("venta_detalle_venta_fk");
+                  .HasConstraintName("venta_detalle_venta_fk"); // Relación con DetalleVenta
+        });
+
+        modelBuilder.Entity<DetalleVenta>(entity =>
+        {
+            entity.HasKey(e => e.IdDetalleVenta).HasName("detalle_venta_id_pk"); // Primary Key
+
+            entity.HasOne(d => d.Producto)
+                .WithMany(p => p.DetalleVentas)
+                .HasForeignKey(d => d.IdProducto)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("producto_detalle_venta_fk"); // Foreign Key to Producto
+
+            entity.HasOne(d => d.Venta)
+                .WithMany(p => p.DetalleVenta)
+                .HasForeignKey(d => d.IdVenta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("venta_detalle_venta_fk"); // Foreign Key to Venta
+
+            entity.HasOne(d => d.ProductoSucursal)
+                .WithMany(p => p.DetalleVenta)
+                .HasForeignKey(d => d.IdProductoSucursal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("producto_sucursal_detalle_venta_fk"); // Foreign Key to ProductoSucursal
         });
 
         modelBuilder.Entity<Voucher>(entity =>
