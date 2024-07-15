@@ -11,5 +11,6 @@ namespace RequestResponseModels.Response.Schema_Ventas.Mesas
     {
         public int IdMesa { get; set; }
         public string? Nombre { get; set; }
+        public string Estado { get; set;}
     }
 }

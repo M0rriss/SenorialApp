@@ -57,6 +57,8 @@ using RequestResponseModels.Response.Schema_Ventas.Pedidos;
 using RequestResponseModels.Request.Schema_Ventas.DetalleVentas;
 using RequestResponseModels.Request.Schema_Ventas.Ventas;
 using RequestResponseModels.Response.Schema_Ventas.Ventas;
+using RequestResponseModels.Request.Schema_Ventas.Mesas;
+using RequestResponseModels.Response.Schema_Ventas.Mesas;
 
 namespace UtilityAutoMapper
 {
@@ -82,9 +84,13 @@ namespace UtilityAutoMapper
             CreateMap<Categoria, CategoriaRequest>().ReverseMap();
             CreateMap<Categoria,CategoriaResponse>().ReverseMap();
             CreateMap<CategoriaRequest,CategoriaResponse>().ReverseMap();
-            CreateMap<Categoria, CategoriaUiRequest>().ReverseMap();
             CreateMap<Categoria, CategoriaUiResponse>().ReverseMap();
             CreateMap<Categoria, CategoriaUpdateUiRequest>().ReverseMap();
+            CreateMap<CategoriaUiRequest, Categoria>().ReverseMap();
+            CreateMap<CategoriaUiRequest, CategoriaResponse>().ReverseMap();
+            CreateMap<CategoriaUpdateUiRequest, CategoriaResponse>().ReverseMap();
+            CreateMap<CategoriaUiRequest, Categoria>().ReverseMap();
+            CreateMap<Categoria, CategoriaUiRequest>().ReverseMap();
             #endregion
             #region Insumo
             CreateMap<Insumo, InsumoRequest>().ReverseMap();
@@ -283,12 +289,21 @@ namespace UtilityAutoMapper
             CreateMap<DetallePedido, DetallePedidoResponse>().ReverseMap();
 
             #endregion
-
+            
             #region Venta
             CreateMap<Venta, VentasRequest>().ReverseMap();
             CreateMap<Venta, VentasResponse>().ReverseMap();
             CreateMap<DetalleVenta, DetalleVentaRequest>().ReverseMap();
             CreateMap<DetalleVenta, DetalleVentaResponse>().ReverseMap();
+            #endregion
+            #region Mesas
+            CreateMap<Mesa, MesaRequest>().ReverseMap();
+            CreateMap<Mesa, MesaResponse>().ReverseMap();
+            CreateMap<MesaRequest, Mesa>().ReverseMap();
+            CreateMap<MesaResponse, Mesa>().ReverseMap();
+            CreateMap<MesaRequest, MesaResponse>().ReverseMap();
+            CreateMap<MesaResponse, MesaRequest>().ReverseMap();
+
             #endregion
 
             #endregion

@@ -13,7 +13,7 @@ namespace IBusiness.Schema_Almacen.Categorias
 {
     public interface ICategoriaBusiness : ICrudBusiness<CategoriaRequest, CategoriaResponse>
     {
-        Task<List<CategoriaUiResponse>> UiGetCategoria();
+        Task<List<CategoriaUiRequest>> UiGetCategoria();
         Task<CategoriaUiResponse> InsertUiCategoria(CategoriaUiRequest request);
         Task<CategoriaUiResponse> UpdateUiCategoria(CategoriaUpdateUiRequest request);
         Task<bool> DeleteUiCategoria(int id);

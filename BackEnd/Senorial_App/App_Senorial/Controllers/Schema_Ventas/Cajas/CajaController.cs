@@ -11,11 +11,13 @@ using IBusiness.Schema_Ventas.Cliente;
 using IBusiness.Schema_Ventas.Cajas;
 using IBusiness.Schema_Ventas.AperturaCajas;
 using RequestResponseModels.Request.Schema_Ventas.Cajas;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App_Senorial.Controllers.Schema_Ventas.Cajas
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CajaController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

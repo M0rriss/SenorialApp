@@ -28,7 +28,6 @@ namespace Repository.Schema_Almacen.Insumos
                     u => u.IdUnidad,
                     (i, u) => new InsumoUiRequest
                     {
-                        IdInsumo = i.IdInsumo,
                         InsumoNombre = i.Nombre,
                         UnidadMedida = u.Abreviacion
                     }).ToListAsync();

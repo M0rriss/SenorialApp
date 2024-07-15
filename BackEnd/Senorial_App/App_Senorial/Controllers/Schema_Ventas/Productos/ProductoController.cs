@@ -3,6 +3,7 @@ using Business.Schema_Almacen.Categorias;
 using Business.Schema_Ventas.Productos;
 using IBusiness.Schema_Almacen.Categorias;
 using IBusiness.Schema_Ventas.Productos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
@@ -17,6 +18,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

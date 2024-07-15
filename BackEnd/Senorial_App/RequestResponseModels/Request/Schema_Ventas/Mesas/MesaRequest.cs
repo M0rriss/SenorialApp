@@ -10,8 +10,16 @@ namespace RequestResponseModels.Request.Schema_Ventas.Mesas
 {
     public class MesaRequest
     {
+        //public int IdMesa { get; set; }
+        [StringLength(100)]
+        public string? Nombre { get; set; }
+        public string Estado { get; set; }
+    }
+    public class MesaUpdateRequest
+    {
         public int IdMesa { get; set; }
         [StringLength(100)]
         public string? Nombre { get; set; }
+        public string Estado { get; set; }
     }
 }

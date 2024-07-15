@@ -11,5 +11,6 @@ namespace IBusiness.Schema_Ventas.Mesas
 {
     public interface IMesaBusiness : ICrudBusiness<MesaRequest, MesaResponse>
     {
+        Task<MesaResponse> UpdateMesa(MesaUpdateRequest request);
     }
 }

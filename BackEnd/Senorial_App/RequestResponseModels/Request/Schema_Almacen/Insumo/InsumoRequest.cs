@@ -18,7 +18,7 @@ namespace RequestResponseModels.Request.Schema_Almacen.Insumo
     }
     public class InsumoUiRequest
     {
-        public int IdInsumo { get; set; }
+       // public int IdInsumo { get; set; }
         public string InsumoNombre { get; set; }
         public string UnidadMedida { get; set; }
     }

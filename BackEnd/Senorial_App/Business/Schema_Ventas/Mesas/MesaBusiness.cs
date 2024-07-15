@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using DBSenorialModels.Senorial;
 using IBusiness.Schema_Ventas.Mesas;
 using IRepository.Schema_Ventas.Mesas;
@@ -29,10 +30,11 @@ namespace Business.Schema_Ventas.Mesas
         #region CRUD
         public async Task<List<MesaResponse>> GetAll()
         {
-            List<Mesa> mesa = await _mesaRepository.GetAll();
-            var response = _mapper.Map<List<MesaResponse>>(mesa);
+            List<Mesa> mesas = await _mesaRepository.GetAll();
+            var response = _mapper.Map<List<MesaResponse>>(mesas);
             return response;
         }
+
         public async Task<MesaResponse> GetById(int id)
         {
             Mesa mesa = await _mesaRepository.GetById(id);
@@ -40,37 +42,92 @@ namespace Business.Schema_Ventas.Mesas
             return response;
         }
 
-        public async Task<MesaResponse> Create(MesaRequest entity)
+        public async Task<MesaResponse> Create(MesaRequest request)
         {
-            Mesa mesa = _mapper.Map<Mesa>(entity);
+            var estado = ConvertToBoolean(request.Estado);
+
+            var mesa = new Mesa
+            {
+                Nombre = request.Nombre,
+                Estado = estado
+            };
+
             mesa = await _mesaRepository.Create(mesa);
-            var response = _mapper.Map<MesaResponse>(mesa);
+            var response = new MesaResponse
+            {
+                IdMesa = mesa.IdMesa,
+                Nombre = mesa.Nombre,
+                Estado = estado ? "Activo" : "Inactivo"
+            };
+
             return response;
         }
 
         public async Task<List<MesaResponse>> CreateMultiple(List<MesaRequest> list)
         {
-            var mesa = _mapper.Map<List<Mesa>>(list);
-            mesa = await _mesaRepository.CreateMultiple(mesa);
-            var response = _mapper.Map<List<MesaResponse>>(mesa);
+            var mesas = new List<Mesa>();
+            foreach (var request in list)
+            {
+                var estado = ConvertToBoolean(request.Estado);
+
+                var mesa = new Mesa
+                {
+                    Nombre = request.Nombre,
+                    Estado = estado
+                };
+                mesas.Add(mesa);
+            }
+
+            var createdMesas = await _mesaRepository.CreateMultiple(mesas);
+            var response = _mapper.Map<List<MesaResponse>>(createdMesas);
             return response;
         }
-
-        public async Task<MesaResponse> Update(MesaRequest entity)
+        public async Task<MesaResponse> UpdateMesa(MesaUpdateRequest request)
         {
-            var mesa = _mapper.Map<Mesa>(entity);
+            var estado = ConvertToBoolean(request.Estado);
+
+            var mesa = await _mesaRepository.GetById(request.IdMesa);
+            if (mesa == null)
+            {
+                throw new ArgumentException("Mesa no encontrada.");
+            }
+
+            mesa.Nombre = request.Nombre;
+            mesa.Estado = estado;
+
             mesa = await _mesaRepository.Update(mesa);
             var response = _mapper.Map<MesaResponse>(mesa);
-            return response; ;
+            return response;
+        }
+        public async Task<MesaResponse> Update(MesaRequest request)
+        {
+            var estado = ConvertToBoolean(request.Estado);
+
+            var mesa = _mapper.Map<Mesa>(request);
+            mesa.Estado = estado;
+
+            mesa = await _mesaRepository.Update(mesa);
+            var response = _mapper.Map<MesaResponse>(mesa);
+            return response;
         }
 
         public async Task<List<MesaResponse>> UpdateMultiple(List<MesaRequest> list)
         {
-            var mesa = _mapper.Map<List<Mesa>>(list);
-            mesa = await _mesaRepository.UpdateMultiple(mesa);
-            var response = _mapper.Map<List<MesaResponse>>(mesa);
+            var mesas = new List<Mesa>();
+            foreach (var request in list)
+            {
+                var estado = ConvertToBoolean(request.Estado);
+
+                var mesa = _mapper.Map<Mesa>(request);
+                mesa.Estado = estado;
+                mesas.Add(mesa);
+            }
+
+            var updatedMesas = await _mesaRepository.UpdateMultiple(mesas);
+            var response = _mapper.Map<List<MesaResponse>>(updatedMesas);
             return response;
         }
+
         public async Task<int> Delete(int id)
         {
             int result = await _mesaRepository.Delete(id);
@@ -79,10 +136,9 @@ namespace Business.Schema_Ventas.Mesas
 
         public async Task<List<MesaRequest>> DeleteMultiple(List<MesaRequest> list)
         {
-            var mesa = _mapper.Map<List<Mesa>>(list);
-            var deletedCount = await _mesaRepository.DeleteMultiple(mesa);
+            var mesas = _mapper.Map<List<Mesa>>(list);
+            var deletedCount = await _mesaRepository.DeleteMultiple(mesas);
             return list;
-
         }
 
         public async Task<GenericFilterResponse<MesaResponse>> GetByFilterAsync(GenericFilterRequest request)
@@ -96,8 +152,18 @@ namespace Business.Schema_Ventas.Mesas
         {
             _mesaRepository.Dispose();
         }
-
         #endregion
 
+        private bool ConvertToBoolean(string estado)
+        {
+            if (string.IsNullOrEmpty(estado))
+                throw new ArgumentException("Estado no puede ser nulo o vacío.");
+            if (estado.Equals("Activo", StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            throw new ArgumentException("Estado no válido. Debe ser 'Activo' o 'Inactivo'.");
+        }
     }
 }

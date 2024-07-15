@@ -17,7 +17,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Authorize]
     public class CategoriaController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

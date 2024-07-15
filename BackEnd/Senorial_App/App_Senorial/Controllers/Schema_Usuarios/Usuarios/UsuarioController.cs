@@ -14,6 +14,7 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsuarioController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

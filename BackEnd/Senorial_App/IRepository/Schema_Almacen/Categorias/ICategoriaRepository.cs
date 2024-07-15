@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Generico.CRUD;
+using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace IRepository.Schema_Almacen.Categorias
 {
     public interface ICategoriaRepository : ICrudRepository<Categoria>
     {
-        Task<List<CategoriaUiResponse>> UiCategoria();
+        Task<List<CategoriaUiRequest>> UiCategoria();
         Task<Categoria> BuscarPorNombre(string nombre);
     }
 }

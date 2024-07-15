@@ -17,5 +17,6 @@ namespace Repository.Schema_Ventas.Mesas
         {
             throw new NotImplementedException();
         }
+
     }
 }

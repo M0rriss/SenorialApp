@@ -4,16 +4,19 @@ using DBSenorialModels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DBSenorialModels.Data.Migraciones
+namespace DBSenorialModels.Data.migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    partial class DBSenorialContextModelSnapshot : ModelSnapshot
+    [Migration("20240715041346_rmMenuDash")]
+    partial class rmMenuDash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,6 +324,28 @@ namespace DBSenorialModels.Data.Migraciones
                     b.ToTable("conteo_dinero", "Ventas");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleDashMenu", b =>
+                {
+                    b.Property<int>("IdMenu")
+                        .HasColumnType("int")
+                        .HasColumnName("id_menu");
+
+                    b.Property<int>("IdRol")
+                        .HasColumnType("int")
+                        .HasColumnName("id_rol");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("descripcion");
+
+                    b.HasKey("IdMenu", "IdRol");
+
+                    b.HasIndex("IdRol");
+
+                    b.ToTable("detalle_dash_menu", "Usuarios");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
                     b.Property<int>("IdDetInventario")
@@ -470,11 +495,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("id_empleado");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmpleado"));
-
-                    b.Property<bool?>("Estado")
-                        .HasMaxLength(100)
-                        .HasColumnType("bit")
-                        .HasColumnName("estado");
 
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
@@ -1064,6 +1084,48 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdSucursal");
 
                     b.ToTable("inventario", "Almacen");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.MenuDash", b =>
+                {
+                    b.Property<int>("IdMenu")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_menu");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMenu"));
+
+                    b.Property<string>("DataTarget")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("data_target");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("descripcion");
+
+                    b.Property<string>("Icono")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("icono");
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("nombre");
+
+                    b.Property<int?>("Parent")
+                        .HasColumnType("int")
+                        .HasColumnName("parent");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("url");
+
+                    b.HasKey("IdMenu");
+
+                    b.ToTable("menu_dash", "Usuarios");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Mesa", b =>
@@ -2541,7 +2603,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 7, 15, 17, 39, 28, 988, DateTimeKind.Local).AddTicks(5026),
+                            CreatedAt = new DateTime(2024, 7, 14, 23, 13, 44, 86, DateTimeKind.Local).AddTicks(4968),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -2764,6 +2826,25 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasConstraintName("conteo_dinero_apertura_fk");
 
                     b.Navigation("AperturaCaja");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleDashMenu", b =>
+                {
+                    b.HasOne("DBSenorialModels.Senorial.MenuDash", "IdMenuNavigation")
+                        .WithMany("DetalleDashMenus")
+                        .HasForeignKey("IdMenu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DBSenorialModels.Senorial.Role", "IdRolNavigation")
+                        .WithMany("DetalleDashMenus")
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdMenuNavigation");
+
+                    b.Navigation("IdRolNavigation");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
@@ -3218,6 +3299,11 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Salidas");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.MenuDash", b =>
+                {
+                    b.Navigation("DetalleDashMenus");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.Mesa", b =>
                 {
                     b.Navigation("Ambientes");
@@ -3262,6 +3348,8 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Role", b =>
                 {
+                    b.Navigation("DetalleDashMenus");
+
                     b.Navigation("Empleados");
 
                     b.Navigation("Usuarios");

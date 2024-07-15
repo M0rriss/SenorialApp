@@ -4,16 +4,19 @@ using DBSenorialModels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DBSenorialModels.Data.Migraciones
+namespace DBSenorialModels.Data.migraciones
 {
     [DbContext(typeof(DBSenorialContext))]
-    partial class DBSenorialContextModelSnapshot : ModelSnapshot
+    [Migration("20240715041910_rmMenuDashB")]
+    partial class rmMenuDashB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -470,11 +473,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("id_empleado");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmpleado"));
-
-                    b.Property<bool?>("Estado")
-                        .HasMaxLength(100)
-                        .HasColumnType("bit")
-                        .HasColumnName("estado");
 
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
@@ -2541,7 +2539,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 7, 15, 17, 39, 28, 988, DateTimeKind.Local).AddTicks(5026),
+                            CreatedAt = new DateTime(2024, 7, 14, 23, 19, 8, 555, DateTimeKind.Local).AddTicks(1662),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,

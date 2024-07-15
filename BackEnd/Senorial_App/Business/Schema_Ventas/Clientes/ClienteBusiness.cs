@@ -1,26 +1,19 @@
 ﻿using AutoMapper;
-using Azure;
-using Azure.Core;
 using DBSenorialModels.Senorial;
-using DocumentFormat.OpenXml.Office2016.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using IBusiness.Schema_Ventas.Cliente;
 using IRepository.Schema_Usuarios.Personas;
 using IRepository.Schema_Usuarios.Roles;
+using IRepository.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Ventas.Clientes;
 using Repository.Schema_Usuarios.Personas;
 using Repository.Schema_Usuarios.Roles;
+using Repository.Schema_Usuarios.Usuarios;
 using Repository.Schema_Ventas.Clientes;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Ventas.Cliente;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Ventas.Cliente;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Schema_Ventas.Clientes
 {
@@ -30,6 +23,7 @@ namespace Business.Schema_Ventas.Clientes
         private readonly IClienteRepository _clienteRepository;
         private readonly IPersonaRepository _personaRepository;
         private readonly IRolesRepository _rolesRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
         public ClienteBusiness(IMapper mapper)
         {
@@ -37,6 +31,7 @@ namespace Business.Schema_Ventas.Clientes
             _clienteRepository = new ClienteRepository();
             _personaRepository = new PersonaRepository();
             _rolesRepository = new RolesRepository();
+            _usuarioRepository = new UsuarioRepository();
         }
         #endregion
         #region CRUD
@@ -132,13 +127,19 @@ namespace Business.Schema_Ventas.Clientes
             }
 
             // Crear una nueva persona
+            string[] nombresSeparados = request.Nombres.Split(' ');
+            string primerNombre = nombresSeparados[0];
+            string apellidoPaterno = nombresSeparados.Length > 1 ? nombresSeparados[1] : string.Empty;
+
             var persona = new Persona
             {
-                PrimerNombre = request.Nombres.Split(' ')[0], // Primer nombre
-                ApellidoPaterno = request.Nombres.Split(' ')[1], // Apellido paterno
-                Email = request.Correo.ToLower(),
+                PrimerNombre = primerNombre,
+                ApellidoPaterno = apellidoPaterno,
+                Email = request.Correo,
                 Telefono = request.Telefono,
-                // Completar otros campos de Persona según sea necesario
+                IdTipoDocumento = 1, // Este valor es arbitrario, ajústalo según sea necesario
+                Genero = "",
+                TipoPersona = "Natural",
             };
 
             // Guardar la persona en el repositorio
@@ -192,10 +193,13 @@ namespace Business.Schema_Ventas.Clientes
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
-
+            // Dividir los nombres de manera segura
+            string[] nombresSeparados = request.Nombres.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string primerNombre = nombresSeparados.Length > 0 ? nombresSeparados[0] : string.Empty;
+            string apellidoPaterno = nombresSeparados.Length > 1 ? nombresSeparados[1] : string.Empty;
             // Actualizar detalles de la persona
-            existingPersona.PrimerNombre = request.Nombres.Split(' ')[0];
-            existingPersona.ApellidoPaterno = request.Nombres.Split(' ')[1];
+            existingPersona.PrimerNombre = primerNombre;
+            existingPersona.ApellidoPaterno = apellidoPaterno;
             existingPersona.Email = request.Correo.ToLower();
             existingPersona.Telefono = request.Telefono;
             // Actualizar otros campos de persona según sea necesario
@@ -212,19 +216,31 @@ namespace Business.Schema_Ventas.Clientes
 
         public async Task<bool> DeleteUiCliente(int idCliente)
         {
-            // Buscar la persona asociada al cliente
-            var cliente = await _personaRepository.GetById(idCliente);
+            // Buscar el cliente por IdCliente
+            var cliente = await _clienteRepository.GetById(idCliente);
             if (cliente == null)
             {
-                throw new ArgumentNullException(nameof(cliente), "Persona not found");
+                throw new ArgumentNullException(nameof(cliente), "Cliente not found");
             }
+
+            // Buscar la persona asociada al cliente
             var persona = await _personaRepository.GetById(cliente.IdPersona);
             if (persona == null)
             {
                 throw new ArgumentException("La persona asociada no existe.");
             }
-            // Eliminar la persona y sus referencias
+
+            // Eliminar los usuarios asociados a la persona
+            var usuariosAsociados = await _usuarioRepository.ObtenerPorPersonaId(cliente.IdPersona);
+            foreach (var usuario in usuariosAsociados)
+            {
+                await _usuarioRepository.Delete(usuario.IdUsuario);
+            }
+
+            // Eliminar el cliente
             await _clienteRepository.Delete(idCliente);
+
+            // Eliminar la persona
             await _personaRepository.DeletePersona(cliente.IdPersona);
 
             // Eliminar cualquier otra referencia o entidad relacionada si es necesario

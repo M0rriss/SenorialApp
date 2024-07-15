@@ -114,24 +114,26 @@ namespace Business.Schema_Ventas.Empleados
         #region CRUD PERSONALIZADO
         public async Task<List<EmpleadosUiRequest>> UiGetEmpleado()
         {
-            return await _empleadoRepository.UiEmpleado();
+            var empleados = await _empleadoRepository.UiEmpleado();
+            return empleados; 
         }
 
         public async Task<EmpleadosUiResponse> InsertUiEmpleado(EmpleadosUiRequest request)
         {
             // Check if the email is already in use
-            var existingPersonaByEmail =  _personaRepository.BuscarCorreo(request.Correo);
+            var existingPersonaByEmail = _personaRepository.BuscarCorreo(request.Correo);
             if (existingPersonaByEmail != null)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
             // Check if the phone number is already in use
-            var existingPersonaByPhone =  _personaRepository.BuscarTelefono(request.Telefono);
+            var existingPersonaByPhone = _personaRepository.BuscarTelefono(request.Telefono);
             if (existingPersonaByPhone != null)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
+
             // Split names and last names
             var nombres = request.Nombres.Split(' ', 2);
             var apellidos = request.Apellidos.Split(' ', 2);
@@ -147,27 +149,40 @@ namespace Business.Schema_Ventas.Empleados
                 NroDocumento = request.Identificacion,
                 Genero = "",
                 IdTipoDocumento = 1
-                
             };
+
             await _personaRepository.Create(persona);
+
             var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
             if (sucursal == null)
             {
                 throw new ArgumentException("La sucursal especificada no existe.");
             }
 
+            var rol = await _rolesRepository.GetByRol(request.Rol);
+            if (rol == null)
+            {
+                throw new ArgumentException("El rol especificado no existe.");
+            }
+
+            var estado = request.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase) ? true : request.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase) ? false : (bool?)null;
+
             var empleado = new Empleado
             {
                 IdPersona = persona.IdPersona,
+                IdRol = rol.IdRol,
+                IdSucursal = sucursal.IdSucursal,
+                Estado = estado
             };
 
-            var rol = await _rolesRepository.GetByRol(request.Rol);
             // Insert the new Empleado
             await _empleadoRepository.Create(empleado);
+
             // Map the inserted entity back to the response model
             var response = _mapper.Map<EmpleadosUiResponse>(empleado);
             response.Persona = _mapper.Map<PersonaResponse>(persona);
             response.Sucursal = sucursal.Nombre;
+
             return response;
         }
 
@@ -244,20 +259,22 @@ namespace Business.Schema_Ventas.Empleados
 
         public async Task<bool> DeleteUiEmpleado(int idEmpleado)
         {
-            var empleado = await _personaRepository.GetById(idEmpleado);
+            var empleado = await _empleadoRepository.GetById(idEmpleado);
             if (empleado == null)
             {
                 throw new ArgumentException(nameof(idEmpleado), "Empleado no encontrado");
             }
-            var persona = await _personaRepository.GetById(empleado.IdPersona);
+
+            var persona = await _personaRepository.BuscarporId(empleado.IdPersona);
             if (persona == null)
             {
                 throw new ArgumentException("La persona asociada no existe.");
             }
-            // Eliminar la persona asociada al proveedor
+
+            // Eliminar la persona asociada al empleado
             await _empleadoRepository.Delete(idEmpleado);
 
-            // Eliminar el proveedor
+            // Eliminar la persona
             await _personaRepository.DeletePersona(persona.IdPersona);
 
             return true;

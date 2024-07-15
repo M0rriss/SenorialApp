@@ -303,6 +303,10 @@ namespace Business.Schema_Usuarios.Usuarios
                 PrimerNombre = nombre.Split(' ')[0],
                 ApellidoPaterno = nombre.Split(' ').Length > 1 ? nombre.Split(' ')[1] : "",
                 Email = email,
+                Direccion = "",
+                TipoPersona = "Natural",
+                IdTipoDocumento = 1,
+                Telefono = "",
                 // Otros campos necesarios
             });
 
@@ -351,6 +355,11 @@ namespace Business.Schema_Usuarios.Usuarios
                 PrimerNombre = nombre.Split(' ')[0],
                 ApellidoPaterno = nombre.Split(' ').Length > 1 ? nombre.Split(' ')[1] : "",
                 Email = email,
+                NroDocumento = "",
+                Telefono = "",
+                IdTipoDocumento = 1, // Este valor es arbitrario, ajústalo según sea necesario
+                Genero = "",
+                TipoPersona = "Natural",
                 // Otros campos necesarios
             });
 

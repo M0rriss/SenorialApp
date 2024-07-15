@@ -42,7 +42,7 @@ namespace Repository.Schema_Ventas.Empleados
                 Telefono = epr.Persona.Telefono,
                 Identificacion = epr.Persona.NroDocumento,
                 Rol = epr.Rol.Nombre,
-                Estado = epr.Rol.Estado, // Si `Estado` es una propiedad de `Rol`
+                Estado = epr.Empleado.Estado.HasValue && epr.Empleado.Estado.Value ? "Activo" : "Inactivo", // Manejo explícito de nullables
                 Sucursal = s.Nombre
             })
         .ToListAsync();

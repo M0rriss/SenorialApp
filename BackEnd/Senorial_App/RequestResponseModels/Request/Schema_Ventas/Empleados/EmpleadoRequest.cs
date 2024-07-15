@@ -20,8 +20,11 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
     {
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+        [EmailAddress]
         public string Correo { get; set; }
+        [Phone]
         public string Telefono { get; set; }
+        [DocumentType]
         public string Identificacion { get; set; }
         public string Rol { get; set; }
         public string Estado { get; set; }

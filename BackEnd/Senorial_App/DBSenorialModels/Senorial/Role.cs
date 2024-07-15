@@ -25,9 +25,6 @@ public partial class Role
     public string Estado { get; set; }
 
     [InverseProperty("IdRolNavigation")]
-    public virtual ICollection<DetalleDashMenu> DetalleDashMenus { get; set; } = new List<DetalleDashMenu>();
-
-    [InverseProperty("IdRolNavigation")]
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
 
     [InverseProperty("IdRolNavigation")]

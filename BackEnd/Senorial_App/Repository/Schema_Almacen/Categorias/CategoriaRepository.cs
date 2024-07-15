@@ -2,6 +2,7 @@
 using IRepository.Schema_Almacen.Categorias;
 using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
+using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
@@ -19,18 +20,18 @@ namespace Repository.Schema_Almacen.Categorias
         {
             throw new NotImplementedException();
         }
-        public async Task<List<CategoriaUiResponse>> UiCategoria()
+        public async Task<List<CategoriaUiRequest>> UiCategoria()
         {
             var result = await (from c1 in dbset
                                 join c2 in dbset on c1.IdCategoria equals c2.IdCategoriaPadre into subcategories
                                 from sub in subcategories.DefaultIfEmpty()
                                 where c1.IdCategoriaPadre == null && c1.Estado
                                 group sub by new { c1.Nombre, c1.Estado } into grouped
-                                select new CategoriaUiResponse
+                                select new CategoriaUiRequest
                                 {
                                     Categoria = grouped.Key.Nombre,
                                     Subcategorias = string.Join(", ", grouped.Where(s => s != null && s.Estado).Select(s => s.Nombre)),
-                                    Estado = grouped.Key.Estado ? "Activo" : "Inactivo"
+                                    Estado = grouped.Key.Estado ? "Activo" : "Inactivo",
                                 })
                          .ToListAsync();
 
@@ -39,9 +40,9 @@ namespace Repository.Schema_Almacen.Categorias
 
         public async Task<Categoria> BuscarPorNombre(string nombre)
         {
-            return await db.Categorias
-                .Where(c => c.Nombre.ToLower() == nombre.ToLower())
-                .FirstOrDefaultAsync();
+            var categoria = await dbset.ToListAsync();
+            var categorias = categoria.FirstOrDefault(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+            return categorias;
         }
        
     }

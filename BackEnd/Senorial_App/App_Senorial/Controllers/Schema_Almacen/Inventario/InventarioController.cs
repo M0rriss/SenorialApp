@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Inventarios;
 using IBusiness.Schema_Almacen.Inventarios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Request.Schema_Almacen.Entradas;
@@ -17,6 +18,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Inventario
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class InventarioController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

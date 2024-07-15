@@ -3,6 +3,7 @@ using Business.Schema_Almacen.Categorias;
 using Business.Schema_Ventas.Clientes;
 using IBusiness.Schema_Almacen.Categorias;
 using IBusiness.Schema_Ventas.Cliente;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Ventas.Cliente;
@@ -15,6 +16,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Clientes
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClienteController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

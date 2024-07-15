@@ -33,8 +33,6 @@ public partial class DBSenorialContext : DbContext
 
     //public virtual DbSet<DetalleCompra> DetalleCompras { get; set; }
 
-    public virtual DbSet<DetalleDashMenu> DetalleDashMenus { get; set; }
-
     public virtual DbSet<DetalleInventario> DetalleInventarios { get; set; }
 
     //public virtual DbSet<DetalleProduccion> DetalleProduccions { get; set; }
@@ -48,25 +46,18 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Entrada> Entradas { get; set; }
 
-    //public virtual DbSet<Estado> Estados { get; set; }
-
     public virtual DbSet<Imagene> Imagenes { get; set; }
 
     public virtual DbSet<Insumo> Insumos { get; set; }
 
     public virtual DbSet<Inventario> Inventarios { get; set; }
 
-    public virtual DbSet<MenuDash> MenuDashes { get; set; }
 
     public virtual DbSet<Mesa> Mesas { get; set; }
 
     public virtual DbSet<MetodoPago> MetodoPagos { get; set; }
 
     public virtual DbSet<Persona> Personas { get; set; }
-
-    //public virtual DbSet<PersonaJuridica> PersonaJuridicas { get; set; }
-
-    //public virtual DbSet<PersonaNatural> PersonaNaturals { get; set; }
 
     //public virtual DbSet<Produccion> Produccions { get; set; }
 
@@ -229,23 +220,7 @@ public partial class DBSenorialContext : DbContext
         //    entity.HasOne(d => d.IdInsumoNavigation).WithMany(p => p.DetalleCompras)
         //        .OnDelete(DeleteBehavior.ClientSetNull)
         //        .HasConstraintName("insumo_id_fk");
-            
 
-            
-        //});
-
-        modelBuilder.Entity<DetalleDashMenu>(entity =>
-        {
-            entity.HasKey(e => new { e.IdMenu, e.IdRol }).HasName("detalle_dash_menu_id_pk");
-
-            entity.HasOne(d => d.IdMenuNavigation).WithMany(p => p.DetalleDashMenus)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("menu_id_fk");
-
-            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.DetalleDashMenus)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("rol_id_fk");
-        });
 
         modelBuilder.Entity<DetalleInventario>(entity =>
         {
@@ -434,10 +409,6 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("sucursal_id_fk");
         });
 
-        modelBuilder.Entity<MenuDash>(entity =>
-        {
-            entity.HasKey(e => e.IdMenu).HasName("dashboard_id_pk");
-        });
 
         modelBuilder.Entity<Mesa>(entity =>
         {

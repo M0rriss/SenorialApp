@@ -100,36 +100,97 @@ namespace Business.Schema_Almacen.Categorias
 
         #endregion
         #region UI CRUD
-        public async Task<List<CategoriaUiResponse>> UiGetCategoria()
+        public async Task<List<CategoriaUiRequest>> UiGetCategoria()
         {
             return await _categoriaRepository.UiCategoria();
         }
 
         public async Task<CategoriaUiResponse> InsertUiCategoria(CategoriaUiRequest request)
         {
+            // Buscar categoría existente por nombre
             var existingCategoria = await _categoriaRepository.BuscarPorNombre(request.Categoria);
             if (existingCategoria != null)
             {
                 throw new ArgumentException("La categoría ya está registrada.");
             }
 
-            var categoria = _mapper.Map<Categoria>(request);
+            // Buscar subcategoría existente por nombre si se proporciona
+            Categoria subcategoria = null;
+            if (!string.IsNullOrEmpty(request.Subcategorias))
+            {
+                subcategoria = await _categoriaRepository.BuscarPorNombre(request.Subcategorias);
+                if (subcategoria == null)
+                {
+                    throw new ArgumentException("La subcategoría especificada no existe.");
+                }
+            }
+
+            // Realiza la conversión manual de Estado y asigna la subcategoría si existe
+            var categoria = new Categoria
+            {
+                Nombre = request.Categoria,
+                Estado = ConvertToBoolean(request.Estado),
+                CategoriaPadre = subcategoria
+            };
+
             var categoriaCreada = await _categoriaRepository.Create(categoria);
-            var response = _mapper.Map<CategoriaUiResponse>(categoriaCreada);
+
+            // Mapear la respuesta
+            var response = new CategoriaUiResponse
+            {
+                Categoria = categoriaCreada.Nombre,
+                Estado = categoriaCreada.Estado ? "Activo" : "Inactivo",
+                Subcategorias = categoriaCreada.CategoriaPadre?.Nombre
+            };
             return response;
         }
 
         public async Task<CategoriaUiResponse> UpdateUiCategoria(CategoriaUpdateUiRequest request)
         {
+            //var existingCategoria = await _categoriaRepository.GetById(request.IdCategoria);
+            //if (existingCategoria == null)
+            //{
+            //    throw new ArgumentException("La categoría especificada no existe.");
+            //}
+
+            //_mapper.Map(request, existingCategoria);
+            //await _categoriaRepository.Update(existingCategoria);
+            //var response = _mapper.Map<CategoriaUiResponse>(existingCategoria);
+            //return response;
+            // Buscar la categoría existente por Id
             var existingCategoria = await _categoriaRepository.GetById(request.IdCategoria);
             if (existingCategoria == null)
             {
                 throw new ArgumentException("La categoría especificada no existe.");
             }
 
-            _mapper.Map(request, existingCategoria);
+            // Buscar la categoría padre por nombre si se proporciona
+            Categoria categoriaPadre = null;
+            if (request.IdCategoriaPadre.HasValue)
+            {
+                categoriaPadre = await _categoriaRepository.GetById(request.IdCategoriaPadre.Value);
+                if (categoriaPadre == null)
+                {
+                    throw new ArgumentException("La categoría padre especificada no existe.");
+                }
+            }
+
+            // Actualizar los datos de la categoría existente
+            existingCategoria.Nombre = request.Nombre;
+            existingCategoria.Estado = request.Estado;
+            existingCategoria.CategoriaPadre = categoriaPadre;
+
+            // Guardar los cambios en la base de datos
             await _categoriaRepository.Update(existingCategoria);
-            var response = _mapper.Map<CategoriaUiResponse>(existingCategoria);
+
+            // Mapear la respuesta
+            var response = new CategoriaUiResponse
+            {
+                Categoria = existingCategoria.Nombre,
+                Estado = existingCategoria.Estado ? "Activo" : "Inactivo",
+                Subcategorias = existingCategoria.CategoriaPadre?.Nombre
+            };
+
             return response;
         }
 
@@ -143,6 +204,10 @@ namespace Business.Schema_Almacen.Categorias
 
             await _categoriaRepository.Delete(id);
             return true;
+        }
+        private bool ConvertToBoolean(string estado)
+        {
+            return !string.IsNullOrEmpty(estado) && estado.Equals("Activo", StringComparison.OrdinalIgnoreCase);
         }
         #endregion
     }

@@ -17,7 +17,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
     
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class InsumoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

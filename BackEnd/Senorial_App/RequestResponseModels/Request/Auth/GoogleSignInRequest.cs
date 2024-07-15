@@ -9,6 +9,7 @@ namespace RequestResponseModels.Request.Auth
     public class GoogleSignInRequest
     {
         public string TokenId { get; set; }
+        //public bool EsCliente { get; set; }
     }
 
 }
