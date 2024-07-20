@@ -1,0 +1,93 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$background-color : #F5F5F5;
+$white-color      : #ffffff;
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$shadow-color     : rgba(0, 0, 0, 0.1);
+$neutral-color    : #181c2e;
+$reply-bg         : #fff;
+$reply-text-user  : #000;
+$font-family      : 'Poppins', sans-serif;
+
+section {
+  width            : 100vw;
+  transform        : scale(0.75);
+}
+
+.menu-categories {
+  box-shadow       : 0 8px 16px rgba(0, 0, 0, 0.25);
+  background-color : var(--reply-bg, $reply-bg);
+  display          : flex;
+  flex-direction   : column;
+  font-size        : 22px;
+  color            : var(--reply-text-user, $reply-text-user);
+  font-weight      : 600;
+  text-align       : center;
+  line-height      : 160%;
+  height           : 114px;
+  overflow         : hidden;
+  padding          : 0 24px;
+
+}
+
+.category-list {
+  display          : flex;
+  justify-content  : center;
+  align-items      : center;
+  gap              : 16px;
+  padding          : 22px 24px;
+  overflow-x       : auto;
+  height           : 100%;
+}
+
+.category-container {
+  flex-grow        : 1;
+  display          : flex;
+  justify-content  : center;
+  align-items      : center;
+  width            : 150px;
+}
+
+.category-item {
+  justify-content  : center;
+  border-radius    : 10px;
+  display          : flex;
+  gap              : 8px;
+  color            : var(--color-neutral-800, $neutral-color);
+  font-weight      : 700;
+  white-space      : nowrap;
+  padding          : 8px;
+  transition       : background-color 0.3s, color 0.3s;
+  text-decoration  : none;
+  height           : 100%;
+  align-items      : center;
+}
+
+.category-item:hover {
+  background-color : var(--color-secondary, $secondary-color);
+  color            : var(--color-white, $white-color);
+}
+
+.category-icon {
+  aspect-ratio     : 1;
+  object-fit       : contain;
+  width            : 40px;
+}
+
+.category-name {
+  font-feature-settings: "clig" off, "liga" off;
+  font-family      : $font-family;
+  margin           : auto 0;
+}
+
+@media (max-width: 991px) {
+  .category-list {
+    flex-wrap      : wrap;
+    padding        : 0 20px;
+  }
+
+  .category-item {
+    white-space    : initial;
+  }
+}

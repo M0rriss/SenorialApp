@@ -1,0 +1,181 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$poppins-font     : 'Poppins', sans-serif;
+
+
+section{
+  width           : 100vw;
+  transform       : scale(0.8);
+}
+
+.meal-deal {
+  border-radius    : 12px;
+  box-shadow       : 4px 4px 28px rgba(0, 0, 0, 0.25);
+  border           : 1px solid rgba(0, 0, 0, 0.1);
+  background-color : $white-color;
+  width            : 390px;
+  height           : 210;
+  padding          : 27px;
+  transition       : transform 0.3s;
+}
+
+.meal-deal:hover {
+  transform        : scale(0.85);
+}
+
+@media (max-width: 640px) {
+  .meal-deal {
+    display: none;
+  }
+}
+
+.meal-deal-content {
+  display          : flex;
+  gap              : 20px;
+  align-items      : center;
+  justify-content  : center;
+}
+
+@media (max-width: 991px) {
+  .meal-deal-content {
+    flex-direction  : column;
+    align-items     : stretch;
+    gap             : 0;
+  }
+}
+
+.meal-info {
+  display          : flex;
+  flex-direction   : column;
+  width            : 50%;
+}
+
+@media (max-width: 991px) {
+  .meal-info {
+    width           : 100%;
+  }
+}
+
+.meal-details {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+  color            : $primary-color;
+  margin           : auto 0;
+  padding          : 14px 0;
+}
+
+@media (max-width: 640px) {
+  .meal-details {
+    display         : none;
+  }
+}
+
+.meal-title {
+  font             : 600 20px $poppins-font, sans-serif;
+}
+
+.meal-description {
+  margin-top       : 7px;
+  font             : 400 12px/21px $poppins-font, sans-serif;
+}
+
+.meal-price {
+  color            : $primary-color;
+  margin-top       : 6px;
+  font             : 700 16px $poppins-font, sans-serif;
+}
+
+.meal-image {
+  display          : flex;
+  flex-direction   : column;
+  margin-left      : 20px;
+  position         : relative;
+}
+
+@media (max-width: 991px) {
+  .meal-image {
+    width           : 100%;
+  }
+}
+
+.image-container {
+  display          : flex;
+  justify-content  : center;
+  align-items      : center;
+  flex-grow        : 1;
+  position         : relative;
+}
+
+@media (max-width: 640px) {
+  .image-container {
+    display         : none;
+  }
+}
+
+.image-wrapper {
+  display          : flex;
+  flex-direction   : column;
+  overflow         : hidden;
+  position         : relative;
+  width            : 160px;
+  height           : 160px;
+  align-items      : flex-end;
+  padding          : 0;
+  border-radius    : 12px;
+}
+
+.background-image {
+  position         : absolute;
+  inset            : 0;
+  height           : 100%;
+  width            : 100%;
+  object-fit       : cover;
+  object-position  : center;
+  border-radius    : 12px;
+}
+
+.foreground-image {
+  position         : absolute;
+  bottom           : 0;
+  right            : 0;
+  aspect-ratio     : 1.09;
+  object-fit       : auto;
+  object-position  : center;
+  width            : 100%;
+  border-radius    : 12px;
+  margin-top       : 19px;
+}
+
+.visually-hidden {
+  position         : absolute;
+  width            : 1px;
+  height           : 1px;
+  padding          : 0;
+  margin           : -1px;
+  overflow         : hidden;
+  clip             : rect(0, 0, 0, 0);
+  white-space      : nowrap;
+  border           : 0;
+}
+
+.rounded-container {
+  border-radius    : 38px 0 11px 0;
+  background-color : $white-color;
+  height           : 60px;
+  width            : 67px;
+  position         : absolute; /* Posición absoluta */
+  bottom           : 0; /* Posición en el borde inferior */
+  right            : 0; /* Posición en el borde derecho */
+  display          : flex; /* Centrar el icono */
+  justify-content  : center; /* Centrar el icono */
+  align-items      : center; /* Centrar el icono */
+}
+
+.plus-icon {
+  color            : $primary-color; /* Color del icono */
+  font-size        : 28px; /* Tamaño del icono */
+}

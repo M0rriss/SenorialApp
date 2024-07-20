@@ -22,7 +22,34 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],"baseUrl": "./",
+    "paths": {
+      "@app/*"         : ["src/app/*"],
+      "@ecommerce/*"   : ["src/app/ecommerce/*"],
+      "@dashboard/*"   : ["src/app/dashboard/*"],
+      "@modules/*"     : ["src/app/modules/*"],
+      "@modules-ecommerce/*" : ["src/app/ecommerce/modules/*"],
+      "@modules-dashboard/*" : ["src/app/dashboard/modules/*"],
+      "@routing/*"     : ["src/app/routing/*"],
+      "@routing-ecommerce/*" : ["src/app/ecommerce/routing/*"],
+      "@routing-dashboard/*" : ["src/app/dashboard/routing/*"],
+      "@pages/*"       : ["src/app/pages/*"],
+      "@pages-ecommerce/*" : ["src/app/ecommerce/pages/*"],
+      "@pages-dashboard/*" : ["src/app/dashboard/pages/*"],
+      "@shared/*"      : ["src/app/shared/*"],
+      "@shared-ecommerce/*" : ["src/app/ecommerce/shared/*"],
+      "@shared-dashboard/*" : ["src/app/dashboard/shared/*"],
+      "@components/*"  : ["src/app/components/*"],
+      "@components-ecommerce/*"  : ["src/app/ecommerce/components/*"],
+      "@components-dashboard/*"  : ["src/app/dashboard/components/*"],
+      "@services/*"    : ["src/app/services/*"],
+      "@services-ecommerce/*"  : ["src/app/ecommerce/services/*"],
+      "@services-dashboard/*"  : ["src/app/dashboard/services/*"],
+      "@assets/*"      : ["src/assets/*"],
+      "@environments/*": ["src/environments/*"],
+      "@interfaces/*"  : ["src/app/interfaces/*"],
+      "@fortawesome/*" : ["node_modules/font-awesome/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
