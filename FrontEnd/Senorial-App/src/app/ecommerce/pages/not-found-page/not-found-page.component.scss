@@ -1,0 +1,76 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color   : #181C2E;
+$secondary-color : #FF910F;
+$white-color     : #ffffff;
+$gray-color      : #79797c;
+$font-family     : 'Poppins', sans-serif;
+
+.error-container {
+    background-color: $white-color;
+    display         : flex;
+    flex-direction  : column;
+    align-items     : center;
+    font-weight     : 700;
+    text-align      : center;
+    padding         : 80px 0 80px 80px;
+
+    .error-image-container {
+        display         : flex;
+        justify-content : center;
+        align-items     : center;
+        margin-top      : 123px;
+        width           : 100%;
+        max-width       : 1311px;
+
+        img {
+            width       : 33.33%;
+            height      : auto;
+        }
+    }
+
+    .error-title {
+        color           : $primary-color;
+        font            : bold 32px/130% 'Playfair Display', $font-family;
+        letter-spacing  : 0.65px;
+        margin-top      : 31px;
+    }
+
+    .error-description {
+        color           : $gray-color;
+        font            : 19px/24px 'Playfair Display', $font-family;
+        letter-spacing  : 0.37px;
+        margin-top      : 19px;
+        width           : 737px;
+    }
+
+    .home-button {
+        background-color: $secondary-color;
+        border-radius   : 107.543px;
+        color           : $white-color;
+        font            : 400 23px/41px $font-family;
+        letter-spacing  : 0.47px;
+        margin-top      : 37px;
+        padding         : 12px 35px;
+        text-decoration : none;
+        display         : inline-block;
+    }
+
+    @media (max-width   : 991px) {
+        padding-left    : 20px;
+
+        .error-image-container {
+            max-width   : 100%;
+            margin-top  : 40px;
+        }
+
+        .error-title,
+        .error-description {
+            max-width   : 100%;
+        }
+
+        .home-button {
+            padding     : 0 20px;
+        }
+    }
+}
