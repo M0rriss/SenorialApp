@@ -1,0 +1,39 @@
+<section class="delivery-section">
+    <div class="back-button">
+      <div class="back-icon">
+        <i class="fa-solid fa-angle-left"></i>
+      </div>
+      <span class="back-text">Volver</span>
+    </div>
+    <div class="breadcrumb">
+      <span class="active-label">Despacho</span>
+      <span class="inactive-label">> Pago</span>
+    </div>
+    <div class="step-indicators">
+      <div class="step-indicator active-step">1</div>
+      <div class="step-line"></div>
+      <div class="step-indicator inactive-step">2</div>
+    </div>
+    <div class="step-labels">
+      <div class="active-label">Despacho</div>
+      <div class="inactive-label">Pago</div>
+    </div>
+    <div class="pickup-option">
+      <i class="fa-solid fa-shop"></i>
+      <div>Recoger en Tienda</div>
+    </div>
+    <div *ngFor="let store of stores" (click)="selectStore(store)" class="store-option" [ngClass]="{'active-store': store.isSelected}">
+      <div class="store-checkbox" [ngClass]="{'checked': store.isSelected}">
+        <i *ngIf="store.isSelected" class="fa-solid fa-circle"></i>
+        <i *ngIf="!store.isSelected" class="fa-regular fa-circle"></i>
+      </div>
+      <div class="store-info">
+        <div class="store-name">{{store.name}}</div>
+        <div class="store-address">{{store.address}}</div>
+      </div>
+    </div>
+    <div class="save-button-container">
+      <button class="payment-button">Ir a Pagar</button>
+    </div>
+  </section>
+  

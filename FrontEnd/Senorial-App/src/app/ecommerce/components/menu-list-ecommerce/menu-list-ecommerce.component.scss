@@ -1,0 +1,65 @@
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+
+body {
+  font-family      : 'Roboto', sans-serif;
+}
+
+.personal-info-card {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+  max-width        : 352px;
+  padding          : 48px 19px;
+  border-radius    : 0 0 23.851px 23.851px;
+  box-shadow       : 0 9.54px 19.081px rgba(0, 0, 0, 0.25);
+  background-color : $white-color;
+  font-size        : 26px;
+  color            : $primary-color;
+  font-weight      : 600;
+  text-align       : center;
+  line-height      : 160%;
+}
+
+.location-badge,
+.contact-info,
+.personal-label {
+  display          : flex;
+  justify-content  : center;
+  gap              : 10px;
+  padding          : 10px 80px; /* Added padding for all */
+  border-radius    : 8px;
+  color            : $primary-color;
+  white-space      : nowrap;
+  cursor           : pointer;
+
+  &:hover {
+    background-color : $secondary-color;
+    color            : $white-color;
+  }
+}
+
+.location-icon,
+.phone-icon {
+  aspect-ratio     : 0.95;
+  object-fit       : auto;
+  object-position  : center;
+  width            : 22px;
+  margin           : auto 0;
+}
+
+.location-text,
+.phone-number,
+.personal-label {
+  font-feature-settings : "clig" off, "liga" off;
+  font-family           : 'Roboto', sans-serif;
+}
+
+.divider {
+  border-bottom    : 1px solid $gray-color;
+  width            : 80%;
+  margin           : 10px auto;
+}

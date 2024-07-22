@@ -1,0 +1,54 @@
+<section class="account-section">
+  <div class="account-container">
+    <aside class="sidebar">
+      <nav class="sidebar-content">
+        <h2 class="sidebar-title">Datos Personales</h2>
+        <hr class="sidebar-divider" />
+        <!-- <a href="#" class="sidebar-link">Mis Pedidos</a> -->
+        <button class="logout-button">Cerrar Sesión</button>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="account-details">
+        <h1 class="account-title">Mi Cuenta</h1>
+        <label for="name" class="form-label">Datos Personales</label>
+        <form class="form-container">
+          <div class="form-row">
+            <div class="form-column">
+              <div class="form-group">
+                <input type="text" id="name" class="form-input" placeholder="Nombre*" />
+                <input type="email" id="email" class="form-input" placeholder="Email*" />
+                <div class="form-input-with-icon">
+                  <select class="form-select">
+                    <option value="dni">DNI</option>
+                    <option value="ruc">RUC</option>
+                  </select>
+                  <i class="fa-solid fa-caret-down icon"></i>
+                </div>
+                <div class="change-password">
+                  <input type="radio" id="change-password-checkbox" class="change-password-checkbox" (click)="togglePasswordFields()" />
+                  <label for="change-password-checkbox">Cambiar Contraseña</label>
+                </div>
+                <ng-template [ngIf]="showPasswordFields">
+                  <input type="password" id="current-password" class="form-input" placeholder="Contraseña actual*" />
+                  <input type="password" id="new-password" class="form-input" placeholder="Nueva contraseña*" />
+                  <input type="password" id="repeat-new-password" class="form-input" placeholder="Repetir nueva contraseña*" />
+                </ng-template>
+              </div>
+            </div>
+            <div class="form-column">
+              <div class="form-group">
+                <input type="text" id="lastname" class="form-input" placeholder="Apellido*" />
+                <input type="tel" id="phone" class="form-input" placeholder="Celular*" />
+                <input type="text" id="document-number" class="form-input" placeholder="Numero de Documento*" />
+              </div>
+            </div>
+          </div>
+          <div class="save-button-container">
+            <button type="submit" class="save-button">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</section>
