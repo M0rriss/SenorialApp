@@ -19,6 +19,8 @@ import { StaffPersonalComponent }       from '@components-ecommerce/staff-person
 import { MenuListEcommerceComponent } from './components/menu-list-ecommerce/menu-list-ecommerce.component';
 import { UserAccountComponent } from './pages/user-account/user-account.component';
 import { StorePickUpComponent } from './pages/store-pick-up/store-pick-up.component';
+import { AddItemToCheckoutComponent } from './pages/add-item-to-checkout/add-item-to-checkout.component';
+import { CheckOutComponent } from './pages/check-out/check-out.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { StorePickUpComponent } from './pages/store-pick-up/store-pick-up.compon
     MenuListEcommerceComponent,
     UserAccountComponent,
     StorePickUpComponent,
+    AddItemToCheckoutComponent,
+    CheckOutComponent,
   ],
   imports: [
     CommonModule,
