@@ -8,9 +8,13 @@ const routes: Routes = [
     component : HomePageComponent
   },
   {
-    path      :'**',
-    redirectTo:'home'
-  }
+    path      :'dashboard',
+    component : HomePageComponent
+  },
+  // {
+  //   path      :'**',
+  //   redirectTo:'home'
+  // }
 ];
 
 @NgModule({

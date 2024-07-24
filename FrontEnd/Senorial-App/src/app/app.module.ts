@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { AppRoutingModule } from '@app/app-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { EcommerceModule } from '@ecommerce/ecommerce.module';
-import { RouterModule } from '@angular/router';
-import { SharedModule } from '@shared/shared.module';
+import { BrowserModule }    from '@angular/platform-browser';
+import { EcommerceModule }  from '@ecommerce/ecommerce.module';
+import { NgModule }         from '@angular/core';
+import { RouterModule }     from '@angular/router';
+import { SharedModule }     from '@shared/shared.module';
 
 
 import { AppComponent } from '@app/app.component';
