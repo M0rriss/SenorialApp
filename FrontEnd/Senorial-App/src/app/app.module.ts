@@ -8,6 +8,7 @@ import { SharedModule }     from '@shared/shared.module';
 
 
 import { AppComponent } from '@app/app.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AppComponent } from '@app/app.component';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    DashboardModule,
     EcommerceModule,
     FormsModule,
     RouterModule,

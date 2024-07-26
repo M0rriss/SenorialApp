@@ -1,0 +1,110 @@
+$primary-color      : #181C2E;
+$secondary-color    : #FF910F;
+$white-color        : #ffffff;
+$lato-font          : 'Lato', sans-serif;
+$inter-font         : 'Inter', sans-serif;
+$background-color   : #2b2b2f;
+$header-bg-color    : #2b2b2f;
+$divider-color      : #3a3a3f;
+$text-color         : #fff;
+$muted-text-color   : rgba(255, 255, 255, 0.5);
+$status-logout      : #FA7575;
+
+.profile-card {
+    display          : flex;
+    justify-content  : space-between;
+    align-items      : center;
+    width            : 272px;
+    height           : 100px;
+    padding          : 24px 16px;
+    border-radius    : 8px;
+    background-color : #333;
+
+    .user-info {
+        display         : flex;
+        align-items     : center;
+        gap             : 16px;
+
+        .avatar-wrapper {
+            position       : relative;
+            width          : 45px;
+            aspect-ratio   : 1;
+            margin         : auto 0;
+            border-radius  : 999px;
+            overflow       : hidden;
+
+            .avatar {
+                position       : absolute;
+                inset          : 0;
+                width          : 100%;
+                height         : 100%;
+                object-fit     : cover;
+                object-position: center;
+            }
+
+            .status-indicator {
+                position        : absolute;
+                bottom          : 0;
+                left            : 0;
+                width           : 10px;
+                height          : 10px;
+                border-radius   : 50%;
+                background-color: $status-logout;
+            }
+        }
+
+        .user-details {
+            display         : flex;
+            flex-direction  : column;
+            justify-content : center;
+            color           : $text-color;
+            font-weight     : 600;
+
+            .user-name {
+                font    : 500 16px $inter-font, sans-serif;
+                margin  : 0;
+                padding : 0;
+            }
+
+            .user-role {
+                font    : 300 14px $inter-font, sans-serif;
+                color   : $text-color;
+                margin  : 4px 0 0 0;
+                padding : 0;
+            }
+
+            .user-email {
+                color   : $muted-text-color;
+                font    : 12px $inter-font, sans-serif;
+                margin  : 4px 0 0 0;
+                padding : 0;
+            }
+        }
+    }
+
+    .logout-button {
+        background : none;
+        border     : none;
+        cursor     : pointer;
+        padding    : 0;
+        margin     : auto 0;
+
+        .logout-icon {
+            width  : 24px;
+            height : 24px;
+            fill   : $status-logout;
+        }
+
+        .visually-hidden {
+            position      : absolute;
+            width         : 1px;
+            height        : 1px;
+            padding       : 0;
+            margin        : -1px;
+            overflow      : hidden;
+            clip          : rect(0, 0, 0, 0);
+            white-space   : nowrap;
+            border        : 0;
+        }
+    }
+}

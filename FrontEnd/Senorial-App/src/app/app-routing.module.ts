@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from '@pages-ecommerce/home-page/home-page.component';
+import { LocalComponent } from './dashboard/pages/local/local.component';
+import { MesaDetailComponent } from './dashboard/pages/mesa-detail/mesa-detail.component';
 
 const routes: Routes = [
   {
@@ -9,7 +11,11 @@ const routes: Routes = [
   },
   {
     path      :'dashboard',
-    component : HomePageComponent
+    component : LocalComponent
+  },
+  {
+    path      :'mesadetail',
+    component : MesaDetailComponent
   },
   // {
   //   path      :'**',
