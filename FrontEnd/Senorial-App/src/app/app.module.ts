@@ -5,10 +5,12 @@ import { FormsModule }      from '@angular/forms';
 import { NgModule }         from '@angular/core';
 import { RouterModule }     from '@angular/router';
 import { SharedModule }     from '@shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from '@app/app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,9 @@ import { DashboardModule } from './dashboard/dashboard.module';
     FormsModule,
     RouterModule,
     SharedModule,
+    BrowserAnimationsModule,
+    HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { NgModule }     from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EcommerceRoutingModule } from '@ecommerce/ecommerce-routing.module';
 
@@ -23,6 +23,7 @@ import { ShoppingCartComponent }        from '@components-ecommerce/shopping-car
 import { StaffPersonalComponent }       from '@components-ecommerce/staff-personal/staff-personal.component';
 import { StorePickUpComponent }         from '@pages-ecommerce/store-pick-up/store-pick-up.component';
 import { UserAccountComponent }         from '@pages-ecommerce/user-account/user-account.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 @NgModule({
@@ -51,7 +52,9 @@ import { UserAccountComponent }         from '@pages-ecommerce/user-account/user
   imports: [
     CommonModule,
     EcommerceRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
     NavBarComponent,

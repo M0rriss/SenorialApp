@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from '@pages-ecommerce/home-page/home-page.component';
 import { LocalComponent } from './dashboard/pages/local/local.component';
 import { MesaDetailComponent } from './dashboard/pages/mesa-detail/mesa-detail.component';
+import { InvoiceTypeComponent } from './dashboard/pages/invoice-type/invoice-type.component';
+import { OrdersComponent } from './dashboard/pages/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -16,6 +18,14 @@ const routes: Routes = [
   {
     path      :'mesadetail',
     component : MesaDetailComponent
+  },
+  {
+    path      :'invoice',
+    component : InvoiceTypeComponent
+  },
+  {
+    path      :'pedidos',
+    component : OrdersComponent
   },
   // {
   //   path      :'**',

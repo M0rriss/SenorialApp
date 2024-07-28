@@ -211,6 +211,51 @@ body {
   text-align        : center;
 }
 
+@media (max-width: 1366px) and (max-height: 1080px) {
+  .content {
+    padding: 20px;
+  }
+
+  .order-summary {
+    padding: 40px 30px;
+  }
+
+  .order-content {
+    width: 500px;
+  }
+
+  .table-info {
+    padding: 15px 20px;
+    width: 350px;
+  }
+
+  .order-item {
+    padding: 20px 15px;
+    width: 350px;
+  }
+
+  .order-separator {
+    width: 350px;
+  }
+
+  .total-amount {
+    font-size: 35px;
+  }
+
+  .attendant-info {
+    font-size: 18px;
+  }
+
+  .receipt-options {
+    font-size: 15px;
+  }
+
+  .receipt-option,
+  .receipt-option-active {
+    width: 120px;
+  }
+}
+
 @media (max-width: 1366px) and (max-height: 768px) {
   .content {
     padding: 20px;
@@ -256,3 +301,51 @@ body {
   }
 }
 
+@media (max-width: 991px) {
+  .order-summary {
+    padding: 0 20px;
+  }
+
+  .order-content {
+    margin-right : 10px;
+    flex-wrap    : wrap;
+  }
+
+  .order-details {
+    max-width: 100%;
+  }
+
+  .order-items {
+    max-width: 100%;
+  }
+
+  .table-info,
+  .order-item {
+    max-width       : 100%;
+    flex-wrap       : wrap;
+    padding         : 0 20px;
+  }
+
+  .order-separator {
+    max-width: 100%;
+  }
+
+  .order-summary-footer {
+    max-width       : 100%;
+    padding         : 0 20px;
+  }
+
+  .total-amount {
+    max-width: 100%;
+  }
+
+  .receipt-options {
+    padding-left : 20px;
+    white-space  : initial;
+  }
+
+  .receipt-option-active {
+    white-space  : initial;
+    padding      : 0 20px;
+  }
+}

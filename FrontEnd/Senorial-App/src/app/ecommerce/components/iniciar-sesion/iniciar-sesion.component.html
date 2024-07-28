@@ -10,26 +10,27 @@
           <p class="login-description">
             Accede a los beneficios que tenemos para ti ingresando con tu cuenta
           </p>
-          <form>
+          <form [formGroup]="loginForm" (submit)="logIn()">
             <label for="login-email" class="visually-hidden">Email del cliente</label>
-            <input type="email" id="login-email" class="email-input" placeholder="Email del cliente" />
+            <input formControlName="email" type="email" id="login-email" class="email-input" placeholder="Email del cliente" />
             <div class="password-container">
               <label for="login-password" class="visually-hidden">Password</label>
-              <input type="password" id="login-password" class="password-input" placeholder="Password" />
+              <input formControlName="password" type="password" id="login-password" class="password-input" placeholder="Password" />
               <i class="fa-solid fa-eye password-icon" id="toggle-login-password"></i>
             </div>
+            <div *ngIf="loginError" class="error-text">Lo sentimos ingrese bien la credenciales</div>
             <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
             <div class="social-login">
               <span class="social-login-text">Inicia sesión con:</span>
               <img src="./googleIconWeb.svg" alt="Google Icon" class="google-icon">
             </div>
-            <button type="submit" class="submit-btn">Ingresar</button>
+            <button type="submit" class="submit-btn"[disabled]="loginForm.status== 'VALID'">Ingresar</button>
           </form>
         </div>
       </div>
     </section>
   </ng-template>
-  
+
   <ng-template [ngIf]="!isLogin">
     <!-- Signup Form -->
     <section class="registration-container">

@@ -90,9 +90,11 @@ $status-logout      : #FA7575;
         margin     : auto 0;
 
         .logout-icon {
-            width  : 24px;
-            height : 24px;
-            fill   : $status-logout;
+            display        : flex;
+            align-items    : center;
+            justify-content: center;
+            color          : $status-logout;
+            font-size      : 22px;
         }
 
         .visually-hidden {

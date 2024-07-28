@@ -3,3 +3,10 @@ main{
     transform: scale(0.75);
     padding: 0 24px;
 }
+.floating-right{
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+}

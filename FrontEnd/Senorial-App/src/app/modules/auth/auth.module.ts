@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogModule } from 'primeng/dialog';
+
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    DialogModule
-  ],
-  exports:[
-    DialogModule
+    AuthRoutingModule
   ]
 })
-export class SharedModule { }
+export class AuthModule { }
