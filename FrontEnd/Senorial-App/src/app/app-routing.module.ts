@@ -5,6 +5,7 @@ import { LocalComponent } from './dashboard/pages/local/local.component';
 import { MesaDetailComponent } from './dashboard/pages/mesa-detail/mesa-detail.component';
 import { InvoiceTypeComponent } from './dashboard/pages/invoice-type/invoice-type.component';
 import { OrdersComponent } from './dashboard/pages/orders/orders.component';
+import { CashRegisterComponent } from './dashboard/pages/cash-register/cash-register.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path      :'pedidos',
     component : OrdersComponent
+  },
+  {
+    path      :'caja',
+    component : CashRegisterComponent
   },
   // {
   //   path      :'**',

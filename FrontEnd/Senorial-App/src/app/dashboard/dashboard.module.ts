@@ -8,6 +8,7 @@ import { MesaDetailComponent } from './pages/mesa-detail/mesa-detail.component';
 import { InvoiceTypeComponent } from './pages/invoice-type/invoice-type.component';
 import { FormsModule } from '@angular/forms';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { CashRegisterComponent } from './pages/cash-register/cash-register.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { OrdersComponent } from './pages/orders/orders.component';
        LogOutComponent,
        MesaDetailComponent,
        InvoiceTypeComponent,
-       OrdersComponent
+       OrdersComponent,
+       CashRegisterComponent,
   ],
   imports: [
     CommonModule,
