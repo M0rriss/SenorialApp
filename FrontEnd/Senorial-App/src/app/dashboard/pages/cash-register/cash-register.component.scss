@@ -43,6 +43,7 @@ $orange-color                   : #fa6400;
     color: $text-color;
     white-space: nowrap;
     padding: 8px;
+    margin: 0;
     font: 50px Poppins, sans-serif;
     text-align: center;
     width: 100%;
@@ -828,9 +829,9 @@ input[type="number"]:focus {
   width: 270px;
   height: 60px;
   padding: 0 0 0 10px;
-  border-radius: 36px;
   margin-top: 5px;
   align-content: center;
+  background-color: #F2F2F2;
 }
 
 .dialog-actions {

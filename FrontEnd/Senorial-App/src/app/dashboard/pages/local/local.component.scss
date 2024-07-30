@@ -28,7 +28,6 @@ body {
 
 .content {
   flex-grow      : 1;
-  padding        : 40px;
   box-sizing     : border-box;
   display        : flex;
   flex-direction : column;
@@ -40,7 +39,6 @@ body {
   background-color: $table-bg-color;
   display        : flex;
   flex-direction : column;
-  padding        : 20px 0 24px 80px;
   width          : 100%;
 }
 
