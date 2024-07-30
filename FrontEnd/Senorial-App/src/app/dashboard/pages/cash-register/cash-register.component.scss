@@ -23,7 +23,7 @@ $orange-color                   : #fa6400;
 
 .content {
     flex-grow: 1;
-    padding: 20px;
+    padding: 0 20px;
     width: calc(100% - #{$sidebar-width});
 }
 
@@ -53,7 +53,7 @@ $orange-color                   : #fa6400;
     border-radius: 12px 12px 0 0;
     background-color: #eaeaea;
     display: flex;
-    margin-top: 28px;
+    margin-top: 16px;
     padding-left: 0;
     font-size: 22px;
     color: #222;
@@ -476,7 +476,7 @@ td {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 10px 0 0 0 ;
     width: 100%;
 }
 
@@ -524,7 +524,7 @@ td {
     flex-direction: column;
     width: 100%;
     max-width: 250px; /* Asegurar que las tarjetas tengan el mismo tamaño */
-    padding: 12px 20px;
+    padding: 12px 18px;
     height: 140px;
     justify-content: space-between;
 }
@@ -567,14 +567,14 @@ td {
     display: flex;
     justify-content: space-between;
     align-content: center;
-    margin-top: 4px;
 }
 
 .summary-label {
     font-family: Poppins, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     color: #000;
     font-weight: 600;
+    margin: 26px 0;
 }
 
 .summary-value {
@@ -585,7 +585,6 @@ td {
     white-space: nowrap;
     text-align: right;
     border-style: none;
-    margin-top: 4px;
 }
 
 .value-wrapper {
