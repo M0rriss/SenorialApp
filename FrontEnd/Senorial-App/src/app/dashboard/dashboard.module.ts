@@ -9,6 +9,7 @@ import { InvoiceTypeComponent } from './pages/invoice-type/invoice-type.componen
 import { FormsModule } from '@angular/forms';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { CashRegisterComponent } from './pages/cash-register/cash-register.component';
+import { InventoryComponent } from './pages/inventory/inventory.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { CashRegisterComponent } from './pages/cash-register/cash-register.compo
        InvoiceTypeComponent,
        OrdersComponent,
        CashRegisterComponent,
+       InventoryComponent,
   ],
   imports: [
     CommonModule,

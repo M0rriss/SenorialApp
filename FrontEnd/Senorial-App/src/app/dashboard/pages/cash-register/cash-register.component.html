@@ -179,74 +179,63 @@
     </div>
   </div>
 </div>
- <!-- DIALOG CONTEO DETALLADO -->
- <div class="dialog-overlay" *ngIf="isDetailCountOpen" (click)="closeDetailCount()">
+<!-- DIALOG CONTEO DETALLADO -->
+<div class="dialog-overlay" *ngIf="isDetailCountOpen" (click)="closeDetailCount()">
   <div class="dialog" (click)="$event.stopPropagation()">
     <div class="dialog-content">
       <h2 class="dialog-title">Conteo Detallado</h2>
       <h3 class="dialog-subtitle">Monedas</h3>
       <div class="coin-grid">
-        <div class="coin">0.10</div>
-        <div class="coin">0.20</div>
-        <div class="coin">0.50</div>
-        <div class="coin">1.00</div>
-        <div class="coin">2.00</div>
-        <div class="coin">5.00</div>
+        <div class="coin" (click)="increaseQty('coin', 0.10)">0.10</div>
+        <div class="coin" (click)="increaseQty('coin', 0.20)">0.20</div>
+        <div class="coin" (click)="increaseQty('coin', 0.50)">0.50</div>
+        <div class="coin" (click)="increaseQty('coin', 1.00)">1.00</div>
+        <div class="coin" (click)="increaseQty('coin', 2.00)">2.00</div>
+        <div class="coin" (click)="increaseQty('coin', 5.00)">5.00</div>
       </div>
       <div class="quantity-grid">
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="coinQuantities[0.10]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="coinQuantities[0.20]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="coinQuantities[0.50]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="coinQuantities[1.00]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="coinQuantities[2.00]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="coinQuantities[5.00]" class="quantity-value" />
         </div>
       </div>
       <h3 class="dialog-subtitle">Billetes</h3>
       <div class="bill-grid">
-        <div class="bill">10.00</div>
-        <div class="bill">20.00</div>
-        <div class="bill">50.00</div>
-        <div class="bill">100.00</div>
-        <div class="bill">200.00</div>
+        <div class="bill" (click)="increaseQty('bill', 10.00)">10.00</div>
+        <div class="bill" (click)="increaseQty('bill', 20.00)">20.00</div>
+        <div class="bill" (click)="increaseQty('bill', 50.00)">50.00</div>
+        <div class="bill" (click)="increaseQty('bill', 100.00)">100.00</div>
+        <div class="bill" (click)="increaseQty('bill', 200.00)">200.00</div>
       </div>
       <div class="quantity-grid">
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="billQuantities[10.00]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="billQuantities[20.00]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="billQuantities[50.00]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="billQuantities[100.00]" class="quantity-value" />
         </div>
         <div class="quantity-input">
-          <div class="quantity-label">qty</div>
-          <div class="quantity-value">1</div>
+          <input type="number" [(ngModel)]="billQuantities[200.00]" class="quantity-value" />
         </div>
       </div>
       <p class="dialog-text">Se creará un conteo detallado con los siguientes datos</p>
@@ -254,7 +243,7 @@
         <div class="total-label">Monto Total</div>
         <div class="total-value">
           <span class="currency">S/.</span>
-          <span class="amount">0.00</span>
+          <span class="amount">{{ totalAmount.toFixed(2) }}</span>
         </div>
       </div>
       <div class="dialog-actions">

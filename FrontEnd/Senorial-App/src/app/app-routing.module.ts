@@ -6,6 +6,7 @@ import { MesaDetailComponent } from './dashboard/pages/mesa-detail/mesa-detail.c
 import { InvoiceTypeComponent } from './dashboard/pages/invoice-type/invoice-type.component';
 import { OrdersComponent } from './dashboard/pages/orders/orders.component';
 import { CashRegisterComponent } from './dashboard/pages/cash-register/cash-register.component';
+import { InventoryComponent } from './dashboard/pages/inventory/inventory.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
     path      :'caja',
     component : CashRegisterComponent
   },
+  {
+    path      :'inventario',
+    component : InventoryComponent
+  },
+
   // {
   //   path      :'**',
   //   redirectTo:'home'
