@@ -198,7 +198,6 @@ $sidebar-width: 300px;
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
-  margin-left:  math.div($sidebar-width, 2);;
 
   &.show {
     display: block; // Mostrar el modal cuando isModalOpen es true
