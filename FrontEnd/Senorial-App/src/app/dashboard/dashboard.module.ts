@@ -10,6 +10,10 @@ import { FormsModule } from '@angular/forms';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { CashRegisterComponent } from './pages/cash-register/cash-register.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
+import { ClientTableComponent } from './pages/client-table/client-table.component';
+import { EmployeeTableComponent } from './pages/employee-table/employee-table.component';
+import { SupplierTableComponent } from './pages/supplier-table/supplier-table.component';
+import { UserMaintenanceComponent } from './pages/mantenimiento/user-maintenance/user-maintenance.component';
 
 
 @NgModule({
@@ -23,6 +27,10 @@ import { InventoryComponent } from './pages/inventory/inventory.component';
        OrdersComponent,
        CashRegisterComponent,
        InventoryComponent,
+       ClientTableComponent,
+       EmployeeTableComponent,
+       SupplierTableComponent,
+       UserMaintenanceComponent,
   ],
   imports: [
     CommonModule,

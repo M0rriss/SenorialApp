@@ -1,0 +1,120 @@
+// Definiendo variables
+$primary-color: #181C2E;
+$secondary-color: #FF910F;
+$white-color: #ffffff;
+$background-color: #fcfbfb;
+$text-color: #1a1a1a;
+$input-bg-color: #fff;
+$button-bg-color: #141318;
+$button-text-color: #fff;
+$table-header-bg-color: #141318;
+$table-header-text-color: #fff;
+$table-row-bg-color: #fff;
+$table-row-bg-color-alt: #f9f9f9;
+
+.clients-section {
+  display: flex;
+  background-color: $background-color;
+}
+
+.side-bar {
+  width: 300px; // Ajustar el ancho según tu diseño
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.section-title {
+  color: $text-color;
+  text-align: center;
+  font: 500 50px Poppins, sans-serif;
+  margin-top: 20px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.search-wrapper {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: rgba(22, 26, 35, 0.5);
+  font-weight: 400;
+
+
+}
+
+.search-input {
+  align-items: center;
+  border-radius: 8px;
+  background-color: $input-bg-color;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  width: 320px;
+}
+
+.search-icon {
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-field {
+  font-family: Inter, sans-serif;
+  border: none;
+  outline: none;
+  width: 270px; // Ajustar el ancho según tu diseño
+}
+
+.reset-button {
+  border-radius: 8px;
+  background-color: $button-bg-color;
+  color: $button-text-color;
+  white-space: nowrap;
+  padding: 10px 20px;
+  font: 700 13px Montserrat, sans-serif;
+  border: none;
+  cursor: pointer;
+}
+
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.clients-table th,
+.clients-table td {
+  padding: 16px;
+  text-align: left;
+}
+
+.clients-table thead {
+  background-color: $table-header-bg-color;
+  color: $table-header-text-color;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: Montserrat, sans-serif;
+}
+
+.clients-table tbody tr {
+  background-color: $table-row-bg-color;
+  font-size: 14px;
+  color: $text-color;
+  font-weight: 500;
+  font-family: Montserrat, sans-serif;
+}
+
+.clients-table tbody tr:nth-child(even) {
+  background-color: $table-row-bg-color-alt;
+}

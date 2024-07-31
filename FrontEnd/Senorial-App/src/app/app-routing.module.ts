@@ -7,6 +7,10 @@ import { InvoiceTypeComponent } from './dashboard/pages/invoice-type/invoice-typ
 import { OrdersComponent } from './dashboard/pages/orders/orders.component';
 import { CashRegisterComponent } from './dashboard/pages/cash-register/cash-register.component';
 import { InventoryComponent } from './dashboard/pages/inventory/inventory.component';
+import { ClientTableComponent } from './dashboard/pages/client-table/client-table.component';
+import { EmployeeTableComponent } from './dashboard/pages/employee-table/employee-table.component';
+import { SupplierTableComponent } from './dashboard/pages/supplier-table/supplier-table.component';
+import { UserMaintenanceComponent } from './dashboard/pages/mantenimiento/user-maintenance/user-maintenance.component';
 
 const routes: Routes = [
   {
@@ -36,6 +40,34 @@ const routes: Routes = [
   {
     path      :'inventario',
     component : InventoryComponent
+  },
+  {
+    path      :'cliente',
+    component : ClientTableComponent
+  },
+  {
+    path      :'proveedor',
+    component : SupplierTableComponent
+  },
+  {
+    path      :'empleado',
+    component : EmployeeTableComponent
+  },
+  {
+    path      :'mantenimiento-usuario',
+    component : UserMaintenanceComponent
+  },
+  {
+    path      :'empleado',
+    component : EmployeeTableComponent
+  },
+  {
+    path      :'empleado',
+    component : EmployeeTableComponent
+  },
+  {
+    path      :'empleado',
+    component : EmployeeTableComponent
   },
 
   // {
