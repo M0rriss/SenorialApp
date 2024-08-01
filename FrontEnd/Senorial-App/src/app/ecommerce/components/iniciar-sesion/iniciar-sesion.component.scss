@@ -189,7 +189,9 @@ form {
   width            : 24px;
   margin-left      : auto;
 }
-
+.password-icon:hover {
+  color: #666;
+}
 .input-field-select select {
   border           : none;
   flex             : 1;

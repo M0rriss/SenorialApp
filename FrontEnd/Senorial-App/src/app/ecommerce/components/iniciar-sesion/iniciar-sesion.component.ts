@@ -36,4 +36,18 @@ export class IniciarSesionComponent {
   setActiveForm(value: string):void {
     this.isLogin = !this.isLogin;
   }
+  togglePasswordVisibility(inputId: string, iconId: string): void {
+    const passwordInput = document.getElementById(inputId) as HTMLInputElement;
+    const icon = document.getElementById(iconId) as HTMLElement;
+
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
 }

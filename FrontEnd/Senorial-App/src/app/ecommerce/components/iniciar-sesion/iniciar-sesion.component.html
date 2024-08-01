@@ -15,8 +15,8 @@
             <input formControlName="email" type="email" id="login-email" class="email-input" placeholder="Email del cliente" />
             <div class="password-container">
               <label for="login-password" class="visually-hidden">Password</label>
-              <input formControlName="password" type="password" id="login-password" class="password-input" placeholder="Password" />
-              <i class="fa-solid fa-eye password-icon" id="toggle-login-password"></i>
+  <input formControlName="password" type="password" id="login-password" class="password-input" placeholder="Password" />
+  <i class="fa-solid fa-eye password-icon" id="toggle-login-password" (click)="togglePasswordVisibility('login-password', 'toggle-login-password')"></i>
             </div>
             <div *ngIf="loginError" class="error-text">Lo sentimos ingrese bien la credenciales</div>
             <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
@@ -64,9 +64,9 @@
             <label for="email" class="visually-hidden">Correo Electronico</label>
             <input type="email" id="email" class="input-field" placeholder="Correo Electronico" />
             <div class="password-container">
-              <label for="register-password" class="visually-hidden">Password</label>
-              <input type="password" id="register-password" class="password-input" placeholder="Password" />
-              <i class="fa-solid fa-eye password-icon" id="toggle-register-password"></i>
+              <label for="login-password" class="visually-hidden">Password</label>
+  <input formControlName="password" type="password" id="login-password" class="password-input" placeholder="Password" />
+  <i class="fa-solid fa-eye password-icon" id="toggle-login-password" (click)="togglePasswordVisibility('login-password', 'toggle-login-password')"></i>
             </div>
             <div class="social-login">
               <span class="social-login-text">Regístrate con:</span>

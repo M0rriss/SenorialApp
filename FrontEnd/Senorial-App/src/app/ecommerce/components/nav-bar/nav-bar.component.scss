@@ -145,3 +145,33 @@ header {
     }
   }
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+.overlay.hidden {
+  opacity: 0;
+  z-index: -1;  /* Opcional: para asegurarse de que no interfiera con otros elementos */
+}
+.shopping-cart-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: $white-color;
+  z-index: 1000;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+
+  &.open {
+    transform: translateX(0);
+  }
+}

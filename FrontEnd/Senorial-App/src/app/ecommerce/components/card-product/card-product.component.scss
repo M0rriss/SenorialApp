@@ -20,6 +20,7 @@ section{
   height           : 210;
   padding          : 27px;
   transition       : transform 0.3s;
+  margin: 20px;
 }
 
 .meal-deal:hover {
@@ -173,6 +174,7 @@ section{
   display          : flex; /* Centrar el icono */
   justify-content  : center; /* Centrar el icono */
   align-items      : center; /* Centrar el icono */
+  cursor: pointer;
 }
 
 .plus-icon {

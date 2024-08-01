@@ -1,10 +1,10 @@
 <!-- Estado de carrito vacío -->
 <ng-container *ngIf="cartItems.length === 0; else cartWithItems">
-  <section class="cart-container empty">
+  <section class="shopping-cart-container cart-container empty">
     <header class="cart-header">
       <h2 class="cart-title">Tu Carrito</h2>
       <div class="cart-icon-wrapper">
-        <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="toggleShop()"></i>
+        <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="closeShop()"></i>
       </div>
     </header>
     <div class="cart-divider" role="separator"></div>
@@ -17,11 +17,11 @@
 
 <!-- Estado de carrito con items -->
 <ng-template #cartWithItems>
-  <section class="cart-container items">
+  <section class="shopping-cart-container cart-container items">
     <header class="cart-header">
       <h2 class="cart-title">Tu Carrito</h2>
       <div class="cart-icon-wrapper">
-        <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="toggleShop()"></i>
+        <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="closeShop()"></i>
       </div>
     </header>
     <div class="cart-divider" role="separator"></div>
@@ -63,7 +63,7 @@
         <span class="button-text">Ir a pagar</span>
         <span class="button-price">S/. {{ total }}</span>
       </button>
-      <button class="continue-shopping" (click)="toggleShop()">
+      <button class="continue-shopping" (click)="closeShop()">
         Seguir Comprando
       </button>
     </div>

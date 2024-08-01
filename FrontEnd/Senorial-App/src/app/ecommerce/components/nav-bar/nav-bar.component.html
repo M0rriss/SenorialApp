@@ -18,10 +18,7 @@
         <img src="./user-icon.svg" alt="user" class="user-icon">
         Ingresar
       </button>
-      <button type="button"
-              (click)="toggleActive('shopping-cart')"
-              class="btn btn-shopping-cart"
-              [ngClass]="{'active': isShoppingCartActive}">
+      <button type="button" (click)="toggleShop()" class="btn btn-shopping-cart" [ngClass]="{'active': isShopOpen}">
         <img src="./shopping-cart.svg" alt="cart" class="shopping-cart-icon">
       </button>
     </div>
@@ -42,7 +39,6 @@
 <div *ngIf="isShopOpen" class="overlay" (click)="toggleShop()"></div>
 
 <!-- Carrito de Compras -->
-<div *ngIf="isShoppingCartOpen" [ngClass]="{'hidden': !isShopOpen}">
-    <!-- Tu contenido del carrito aquí -->
-    <shopping-cart></shopping-cart>
+<div *ngIf="isShopOpen" class="shopping-cart-container open closed">
+  <shopping-cart ></shopping-cart>
 </div>

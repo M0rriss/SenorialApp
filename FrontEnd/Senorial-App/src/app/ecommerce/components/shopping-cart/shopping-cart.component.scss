@@ -5,143 +5,153 @@ $secondary-color  : #FF910F;
 $white-color      : #ffffff;
 $gray-color       : #79797c;
 $font-family      : 'Poppins', sans-serif;
-
+$overlay-color    : rgba(0, 0, 0, 0.7);
+.shopping-cart-container,
 .cart-container {
-  display            : flex;
-  flex-direction     : column;
-  justify-content    : space-between;
-  box-shadow         : 0 8px 6px rgba(0, 0, 0, 0.1);
-  background-color   : $white-color;
-  width              : 400px;
-  height             : 100vh;
-  padding            : 24px 32px;
-  border-radius      : 16px 0 0 16px;
-  position           : fixed;
-  top                : 0;
-  right              : 27.5%;
-  z-index            : 1000;
-  transform          : translateX(100%);
-  transition         : transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 6px rgba(0, 0, 0, 0.1);
+  background-color: $white-color;
+  width: 400px;
+  height: 100vh;
+  padding: 24px 32px;
+  border-radius: 16px 0 0 16px;
+  position: fixed;
+  top: 0;
+  left: 50%; /* Posiciona el contenedor en el 50% del ancho del viewport */
+  transform: translateX(-50%);
+  //z-index: 1000;
+  transition: transform 0.3s ease-in-out;
 
   &.open {
-    transform        : translateX(0);
+    transform: translateX(0);
   }
 
+
   .cart-header {
-    display          : flex;
-    justify-content  : space-between;
-    align-items      : center;
-    width            : 100%;
-    padding-bottom   : 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 16px;
 
     .cart-title {
-      color          : $primary-color;
-      font           : 700 24px $font-family, sans-serif;
+      color: $primary-color;
+      font: 700 20px $font-family, sans-serif;
     }
 
     .cart-icon-wrapper {
-      cursor         : pointer;
+      cursor: pointer;
 
       .cart-close-icon {
-        color        : $primary-color;
-        font-size    : 24px;
-        transition   : color 0.3s;
+        color: $primary-color;
+        font-size: 24px;
+        transition: color 0.3s;
 
         &:hover {
-          color      : #FF0000;
+          color: #FF0000;
         }
       }
     }
   }
 
   .cart-divider {
-    border-bottom    : 1px solid $gray-color;
-    margin           : 20px 0;
+    border-bottom: 1px solid $gray-color;
+    margin: 10px 0;
   }
 
-  &.empty {
-    .cart-empty-message {
-      color          : $primary-color;
-      text-align     : center;
-      font           : 700 20px $font-family, sans-serif;
-      margin-top     : 100px;
+  &.empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+  }
+   .cart-empty-message {
+    color: $primary-color;
+    text-align: center;
+    font: 700 20px $font-family, sans-serif;
+    margin: 90% 0;
+    gap: 40px;
 
-      .cart-empty-icon {
-        color        : $primary-color;
-        font-size    : 32px;
-        display      : block;
-        margin-top   : 10px;
-      }
+    .cart-empty-icon {
+      color: $primary-color;
+      font-size: 32px;
+      display: block;
+      margin-top: 40px;
     }
   }
 
   &.items {
-    overflow-y       : auto;
+    overflow-y: auto;
 
     .cart-item {
-      display        : flex;
-      gap            : 15px;
-      margin-bottom  : 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
 
       .item-image {
-        width        : 80px;
-        height       : 80px;
-        object-fit   : cover;
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
         border-radius: 12px;
       }
 
       .item-details {
-        flex-grow    : 1;
-        display      : flex;
+        display: flex;
         flex-direction: column;
         justify-content: space-between;
-        color        : $primary-color;
+        flex-grow: 1;
+        color: $primary-color;
 
         .item-header {
-          display    : flex;
+          display: flex;
           justify-content: space-between;
           align-items: center;
-          font       : 700 18px $font-family, sans-serif;
+          font: 700 18px $font-family, sans-serif;
 
           h3 {
-            margin   : 0;
+            font-size: 18px; // Ajusta el tamaño de la fuente para el nombre del producto
+            font-weight: 700;
           }
 
           .remove-icon {
-            color    : $primary-color;
+            color: $primary-color;
             font-size: 16px;
-            cursor   : pointer;
+            cursor: pointer;
             transition: color 0.3s;
 
             &:hover {
-              color  : #FF0000;
+              color: #FF0000;
             }
           }
         }
 
         .item-footer {
-          display    : flex;
+          display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: start;
 
           .item-price {
-            font     : 700 16px $font-family, sans-serif;
-            color    : $primary-color;
+            font: 700 18px $font-family, sans-serif;
+            color: $primary-color;
           }
 
           .add-more {
-            display  : flex;
+            display: flex;
             align-items: center;
+            flex-direction: column;
 
             .add-more-icons {
-              display  : flex;
+              display: flex;
               align-items: center;
-              gap      : 5px;
+              gap: 10px;
 
               .add-more-icon {
-                color  : $primary-color;
-                font-size: 20px;
-                cursor : pointer;
+                color: $primary-color;
+                font-size: 24px;
+                cursor: pointer;
                 transition: color 0.3s;
 
                 &:hover {
@@ -150,10 +160,16 @@ $font-family      : 'Poppins', sans-serif;
               }
 
               span {
-                font-size  : 16px;
+                margin:  15px 0;
+                font-size: 16px;
                 font-weight: 700;
-                color      : $primary-color;
+                color: $primary-color;
               }
+            }
+            p {
+              font-size: 14px;
+              color: $primary-color;
+              margin: 0;
             }
           }
         }
@@ -163,49 +179,51 @@ $font-family      : 'Poppins', sans-serif;
 
   .subtotal,
   .total {
-    display          : flex;
-    justify-content  : space-between;
-    align-items      : center;
-    font             : 700 18px $font-family, sans-serif;
-    color            : $primary-color;
-    margin-bottom    : 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 700 18px $font-family, sans-serif;
+    color: $primary-color;
+    margin-bottom: 10px;
   }
 
   .checkout-buttons {
-    display          : flex;
-    flex-direction   : column;
-    gap              : 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     .checkout-button,
     .continue-shopping {
-      padding        : 12px;
-      border-radius  : 8px;
-      font           : 700 18px $font-family, sans-serif;
-      cursor         : pointer;
-      text-align     : center;
-      width          : 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font: 700 18px $font-family, sans-serif;
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
     }
 
     .checkout-button {
       background-color: $secondary-color;
-      color           : $white-color;
-      border          : none;
+      color: $white-color;
+      border: none;
     }
 
     .continue-shopping {
       background-color: transparent;
-      color           : $primary-color;
-      border          : 2px solid $primary-color;
+      color: $primary-color;
+      border: 2px solid $primary-color;
     }
   }
 }
 
 .overlay {
-  position           : fixed;
-  top                : 0;
-  left               : 0;
-  width              : 100%;
-  height             : 100%;
-  background-color   : rgba(0, 0, 0, 0.5);
-  z-index            : 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
 }
+

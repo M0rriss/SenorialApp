@@ -8,15 +8,20 @@ import { Component } from '@angular/core';
 export class ShoppingCartComponent {
   isShopOpen = false;
 
+  closeShop() {
+    this.isShopOpen = false;
+    const cartElement = document.querySelector('.shopping-cart-container') as HTMLElement;
+      cartElement.style.display = 'none';
+      const overlay = document.querySelector('.overlay') as HTMLElement;
+  if (overlay) {
+    overlay.style.display = 'none';  // O usa overlay.classList.add('hidden') si usas clases
+  }
+  }
+
   toggleShop() {
     this.isShopOpen = !this.isShopOpen;
-    const cartElement = document.querySelector('.shopping-cart-container') as HTMLElement;
-    if (this.isShopOpen) {
-      cartElement.classList.add('open');
-    } else {
-      cartElement.classList.remove('open');
-    }
   }
+
   cartItems = [
     {
       name: 'Hamburguesa',
@@ -34,11 +39,11 @@ export class ShoppingCartComponent {
     return this.subtotal;
   }
 
-  incrementQuantity(item:any) {
+  incrementQuantity(item: any) {
     item.quantity++;
   }
 
-  decrementQuantity(item:any) {
+  decrementQuantity(item: any) {
     if (item.quantity > 0) {
       item.quantity--;
     }
