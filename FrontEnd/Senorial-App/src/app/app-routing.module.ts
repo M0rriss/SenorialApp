@@ -59,27 +59,27 @@ const routes: Routes = [
     component : EmployeeTableComponent
   },
   {
-    path      :'manteniminento-usuario',
+    path      :'mantenimiento-usuario',
     component : UserMaintenanceComponent
   },
   {
-    path      :'manteniminento-producto',
+    path      :'mantenimiento-producto',
     component : ProductMaintenanceComponent
   },
   {
-    path      :'manteniminento-insumo',
+    path      :'mantenimiento-insumo',
     component : SuppliesMaintenanceComponent
   },
   {
-    path      :'manteniminento-metodo-pago',
+    path      :'mantenimiento-metodo-pago',
     component : PaymentMethodMaintenanceComponent
   },
   {
-    path      :'manteniminento-categoria',
+    path      :'mantenimiento-categoria',
     component : CategoryMaintenanceComponent
   },
   {
-    path      :'manteniminento-mesa',
+    path      :'mantenimiento-mesa',
     component : TableMaintenanceComponent
   },
 

@@ -3,10 +3,19 @@ main{
     transform: scale(0.75);
     padding: 0 24px;
 }
-.floating-right{
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100vh;
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
 }
+
+
+
+
+// .floating-right{
+//   display: none;
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   height: 100vh;
+// }

@@ -6,24 +6,24 @@ import { Component } from '@angular/core';
   styleUrl: './shopping-cart.component.scss'
 })
 export class ShoppingCartComponent {
+  isShopOpen = false;
+
+  toggleShop() {
+    this.isShopOpen = !this.isShopOpen;
+    const cartElement = document.querySelector('.shopping-cart-container') as HTMLElement;
+    if (this.isShopOpen) {
+      cartElement.classList.add('open');
+    } else {
+      cartElement.classList.remove('open');
+    }
+  }
   cartItems = [
-    // Ejemplo de items, puedes reemplazar con los items reales de tu aplicación
     {
       name: 'Hamburguesa',
-      quantity: 100,
+      quantity: 1,
       price: 10.85,
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZpQ9NUgTcIJNgpVlQzZCUraE15UGGKrargA&s'
-    },
-    // {
-    //   name: 'Hamburguesa',
-    //   quantity: 100,
-    //   price: 10.85,
-    //   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZpQ9NUgTcIJNgpVlQzZCUraE15UGGKrargA&s'
-    // },
-   
-    
-    
-   
+    }
   ];
 
   get subtotal() {
@@ -31,13 +31,24 @@ export class ShoppingCartComponent {
   }
 
   get total() {
-    // Asume que no hay impuestos ni descuentos por ahora
     return this.subtotal;
   }
-  incrementQuantity(item?: number){
-    
+
+  incrementQuantity(item:any) {
+    item.quantity++;
   }
-  decrementQuantity(item?: number){
-    
+
+  decrementQuantity(item:any) {
+    if (item.quantity > 0) {
+      item.quantity--;
+    }
   }
+
+  removeItem(item: any) {
+    const index = this.cartItems.indexOf(item);
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+    }
+  }
+
 }
