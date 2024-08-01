@@ -44,14 +44,14 @@
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
     <form>
-      <div class="image-upload-container">
+      <div class="image-upload-container" (click)="triggerFileInput()">
         <div class="upload-image-preview">
           <i class="fa-regular fa-user"></i>
         </div>
         <div class="upload-instructions">
           <p class="drag-instruction">Drag image here or</p>
           <span class="browse-link" (click)="triggerFileInput()">Browse image</span>
-          <input type="file" id="file-input" style="display: none;" (change)="handleFileInput($event)">
+          <input type="file" id="fileInput" class="hidden-file-input" (change)="handleFileInput($event)">
         </div>
       </div>
       <div class="form-row">

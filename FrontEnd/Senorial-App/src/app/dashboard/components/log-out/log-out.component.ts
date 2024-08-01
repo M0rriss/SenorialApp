@@ -8,4 +8,20 @@ import { Component } from '@angular/core';
 export class LogOutComponent {
 
   email:string = 'admin@admin.com'
+  isConfirmDialogOpen: boolean = false;
+  closeConfirmDialog(): void {
+    this.isConfirmDialogOpen = false;
+  }
+  deleteProduct(): void {
+    // Lógica para eliminar producto
+    this.isConfirmDialogOpen = false;
+  }
+  confirmDelete(): void {
+    // Lógica para confirmar eliminación de producto
+    this.deleteProduct();
+  }
+
+  openConfirmDialog(): void {
+    this.isConfirmDialogOpen = true;
+  }
 }

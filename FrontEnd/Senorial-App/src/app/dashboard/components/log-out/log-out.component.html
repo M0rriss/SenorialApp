@@ -11,7 +11,18 @@
     </div>
   </div>
   <button class="logout-button" aria-label="Logout">
-    <i class="fa-solid fa-arrow-right-from-bracket logout-icon"></i>
+    <i class="fa-solid fa-arrow-right-from-bracket logout-icon"(click)="openConfirmDialog()"></i>
     <span class="visually-hidden">Logout</span>
   </button>
 </article>
+<!-- Confirm Dialog -->
+<div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
+  <div class="confirm-dialog">
+    <h2 id="confirm-dialog-title" class="confirm-dialog-title">Log Out</h2>
+    <p class="confirm-dialog-description">¿Estás seguro que quieres salir?</p>
+    <div class="confirm-dialog-button-container">
+      <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Log Out</button>
+      <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">Cancelar</button>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,11 @@ import { ClientTableComponent } from './dashboard/pages/client-table/client-tabl
 import { EmployeeTableComponent } from './dashboard/pages/employee-table/employee-table.component';
 import { SupplierTableComponent } from './dashboard/pages/supplier-table/supplier-table.component';
 import { UserMaintenanceComponent } from './dashboard/pages/mantenimiento/user-maintenance/user-maintenance.component';
+import { ProductMaintenanceComponent } from './dashboard/pages/mantenimiento/product-maintenance/product-maintenance.component';
+import { SuppliesMaintenanceComponent } from './dashboard/pages/mantenimiento/supplies-maintenance/supplies-maintenance.component';
+import { PaymentMethodMaintenanceComponent } from './dashboard/pages/mantenimiento/payment-method-maintenance/payment-method-maintenance.component';
+import { CategoryMaintenanceComponent } from './dashboard/pages/mantenimiento/category-maintenance/category-maintenance.component';
+import { TableMaintenanceComponent } from './dashboard/pages/mantenimiento/table-maintenance/table-maintenance.component';
 
 const routes: Routes = [
   {
@@ -54,20 +59,28 @@ const routes: Routes = [
     component : EmployeeTableComponent
   },
   {
-    path      :'mantenimiento-usuario',
+    path      :'manteniminento-usuario',
     component : UserMaintenanceComponent
   },
   {
-    path      :'empleado',
-    component : EmployeeTableComponent
+    path      :'manteniminento-producto',
+    component : ProductMaintenanceComponent
   },
   {
-    path      :'empleado',
-    component : EmployeeTableComponent
+    path      :'manteniminento-insumo',
+    component : SuppliesMaintenanceComponent
   },
   {
-    path      :'empleado',
-    component : EmployeeTableComponent
+    path      :'manteniminento-metodo-pago',
+    component : PaymentMethodMaintenanceComponent
+  },
+  {
+    path      :'manteniminento-categoria',
+    component : CategoryMaintenanceComponent
+  },
+  {
+    path      :'manteniminento-mesa',
+    component : TableMaintenanceComponent
   },
 
   // {

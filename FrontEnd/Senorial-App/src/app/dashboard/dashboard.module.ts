@@ -14,6 +14,11 @@ import { ClientTableComponent } from './pages/client-table/client-table.componen
 import { EmployeeTableComponent } from './pages/employee-table/employee-table.component';
 import { SupplierTableComponent } from './pages/supplier-table/supplier-table.component';
 import { UserMaintenanceComponent } from './pages/mantenimiento/user-maintenance/user-maintenance.component';
+import { ProductMaintenanceComponent } from './pages/mantenimiento/product-maintenance/product-maintenance.component';
+import { SuppliesMaintenanceComponent } from './pages/mantenimiento/supplies-maintenance/supplies-maintenance.component';
+import { PaymentMethodMaintenanceComponent } from './pages/mantenimiento/payment-method-maintenance/payment-method-maintenance.component';
+import { CategoryMaintenanceComponent } from './pages/mantenimiento/category-maintenance/category-maintenance.component';
+import { TableMaintenanceComponent } from './pages/mantenimiento/table-maintenance/table-maintenance.component';
 
 
 @NgModule({
@@ -31,6 +36,11 @@ import { UserMaintenanceComponent } from './pages/mantenimiento/user-maintenance
        EmployeeTableComponent,
        SupplierTableComponent,
        UserMaintenanceComponent,
+       ProductMaintenanceComponent,
+       SuppliesMaintenanceComponent,
+       PaymentMethodMaintenanceComponent,
+       CategoryMaintenanceComponent,
+       TableMaintenanceComponent,
   ],
   imports: [
     CommonModule,

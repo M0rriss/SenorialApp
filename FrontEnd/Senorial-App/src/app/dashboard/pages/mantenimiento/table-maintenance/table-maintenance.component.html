@@ -1,0 +1,64 @@
+<section class="mesas-section">
+  <side-bar></side-bar>
+  <div class="content">
+    <h1 class="section-title">Mesas</h1>
+
+    <div class="mesas-container">
+      <div class="mesas-wrapper">
+        <header class="mesa-header">
+          <h2 class="mesa-header-title">Mesas</h2>
+          <button class="mesa-button" (click)="openAddDialog()">
+            <i class="fa-solid fa-circle-plus mesa-icon"></i>
+            <span>Categoria</span>
+          </button>
+        </header>
+
+        <div class="mesas-list">
+          <div class="mesa-item" *ngFor="let mesa of mesas">
+            <h3 class="mesa-name">{{ mesa.name }}</h3>
+            <div class="mesa-actions">
+              <label class="switch">
+                <input type="checkbox" [checked]="mesa.active">
+                <span class="slider round"></span>
+              </label>
+              <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(mesa)"></i>
+              <i class="delete-icon fa-solid fa-ellipsis-vertical kebab-menu" (click)="openConfirmDialog(mesa)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Mesa Dialog -->
+    <div class="dialog-overlay" [ngClass]="{'show': isAddEditDialogOpen}">
+      <div class="add-mesa-dialog">
+        <span class="close-button" (click)="closeAddEditDialog()">&times;</span>
+        <h2 class="dialog-title">{{ dialogTitle }}</h2>
+        <div class="form-row">
+          <label class="form-label">Mesa</label>
+          <input class="form-input" [(ngModel)]="mesaName" placeholder="Mesa Name" />
+        </div>
+        <div class="form-row">
+          <label class="form-label">Estado</label>
+          <input class="form-input" [(ngModel)]="mesaStatus" placeholder="Enter a state" />
+        </div>
+        <div class="action-buttons">
+          <button class="button discard-button" (click)="closeAddEditDialog()">Cancelar</button>
+          <button class="button add-mesa-button" (click)="saveMesa()">{{ dialogActionButton }}</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
+      <div class="confirm-dialog">
+        <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar la mesa?</h2>
+        <p class="confirm-dialog-description">¿Estás seguro que quieres eliminarla?</p>
+        <div class="confirm-dialog-button-container">
+          <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button>
+          <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
