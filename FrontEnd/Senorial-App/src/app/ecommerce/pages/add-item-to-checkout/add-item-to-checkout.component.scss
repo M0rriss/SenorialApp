@@ -5,22 +5,30 @@ $secondary-color  : #FF910F;
 $white-color      : #ffffff;
 $gray-color       : #79797c;
 $font-family      : 'Poppins', sans-serif;
-
+main{
+  padding: 0;
+  margin: 0;
+}
+.container{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
 .hamburger-section {
-  background-color : #f2f2f2;
   display          : flex;
   flex-direction   : column;
   justify-content  : center;
-  padding          : 80px 80px;
+  padding          : 0 80px;
 }
 
 .hamburger-container {
-  margin-top       : 411px;
+  margin-top:120px;
+  transform: scale(0.75);
 }
 
 .hamburger-content {
   display          : flex;
   justify-content  : space-around;
+  align-items: center;
 }
 
 .hamburger-image-column {
@@ -95,7 +103,10 @@ $font-family      : 'Poppins', sans-serif;
   display          : flex;
   margin-top       : 17px;
   flex-direction   : column;
-  padding          : 0 44px;
+  padding          : 16px 44px;
+  border            : solid rgba(0, 0, 0, 0.1) .5px; // Un borde muy sutil para delinear la caja
+  box-shadow        : 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 32px;
 }
 
 .hamburger-title {

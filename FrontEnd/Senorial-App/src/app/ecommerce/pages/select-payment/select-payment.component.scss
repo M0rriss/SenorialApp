@@ -4,11 +4,17 @@ $white-color      : #ffffff;
 $gray-color       : #79797c;
 $font-family      : 'Poppins', sans-serif;
 
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+}
 .payment-section {
-  background-color : #f2f2f2;
   display          : flex;
   flex-direction   : column;
-  padding          : 80px 80px 80px 26px;
+  transform: scale(0.85);
+  margin-top:  -50px;
 }
 
 .payment-title {

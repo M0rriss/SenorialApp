@@ -3,10 +3,21 @@ $secondary-color    : #FF910F;
 $white-color        : #ffffff;
 $gray-color         : #79797c;
 $font-family        : 'Poppins', sans-serif;
-
+main{
+  display: flex;
+  flex-direction: row;
+    transform: scale(0.75);
+    padding: 0 24px;
+    margin: 20px;
+    justify-content: center;
+}
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
 .delivery-section {
   align-items      : center;
-  background-color : #f2f2f2;
   display          : flex;
   flex-direction   : column;
   font             : 400 20px/36px $font-family, sans-serif;
@@ -155,7 +166,7 @@ $font-family        : 'Poppins', sans-serif;
       .store-name,
       .store-address {
         color        : $primary-color;
-        
+
       }
     }
 
@@ -196,7 +207,7 @@ $font-family        : 'Poppins', sans-serif;
         border-radius: 50%;
         transform    : translate(-50%, -50%);
     }
-    
+
     &.checked::after {
         background   : $secondary-color;
     }

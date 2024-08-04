@@ -1,105 +1,115 @@
-<section class="checkout-container">
-  <div class="checkout-content">
-    <div class="checkout-layout">
-      <main class="checkout-main">
-        <div class="checkout-form">
-          <a href="#" class="back-button">
-            <div class ="back-container">
-              <i class="fa-solid fa-angle-left"></i>
-            </div>
-            <span class="back-text">Volver</span>
-          </a>
-          <div class="checkout-box">
-            <h1 class="checkout-title">Check Out</h1>
-            <p class="delivery-method">Forma de entrega: <span style="color: #ff910f;">Recojo</span></p>
-            <form class="form-container">
-              <div class="form-row">
-                <div class="form-column">
-                  <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Nombre*" aria-label="Nombre" required />
-                    <input type="email" class="form-input" placeholder="Email*" aria-label="Email" required />
-                    <div class="document-input">
-                      <select class="document-select" aria-label="Tipo de documento">
-                        <option value="dni">DNI</option>
-                        <option value="passport">Pasaporte</option>
-                        <option value="driver_license">Licencia de Conducir</option>
-                      </select>
-                      <i class="fa-solid fa-sort-down"></i>
+<div class="container">
+  <ecommerce-nav-bar></ecommerce-nav-bar>
+  <main>
+    <section class="checkout-container">
+      <div class="checkout-content">
+        <div class="checkout-layout">
+          <main class="checkout-main">
+            <div class="checkout-form">
+              <a href="#" class="back-button">
+                <div class ="back-container">
+                  <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <span class="back-text">Volver</span>
+              </a>
+              <div class="checkout-box">
+                <h1 class="checkout-title">Check Out</h1>
+                <p class="delivery-method">Forma de entrega: <span style="color: #ff910f;">Recojo</span></p>
+                <form class="form-container">
+                  <div class="form-row">
+                    <div class="form-column">
+                      <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Nombre*" aria-label="Nombre" required />
+                        <input type="email" class="form-input" placeholder="Email*" aria-label="Email" required />
+                        <div class="document-input">
+                          <select class="document-select" aria-label="Tipo de documento">
+                            <option value="dni">DNI</option>
+                            <option value="passport">Pasaporte</option>
+                            <option value="driver_license">Licencia de Conducir</option>
+                          </select>
+                          <i class="fa-solid fa-sort-down"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-column">
+                      <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Apellido*" aria-label="Apellido" required />
+                        <input type="tel" class="form-input" placeholder="Celular*" aria-label="Celular" required />
+                        <input type="text" class="form-input" placeholder="Numero de Documento*" aria-label="Numero de Documento" required />
+                      </div>
                     </div>
                   </div>
+                </form>
+                <h2 class="payment-method">Método de Pago</h2>
+                <div class="payment-selection">
+                  <div class="payment-type-wrapper">
+                    <span class="payment-type">Tarjeta de Crédito / Débito</span>
+                    <button class="change-payment">Cambiar</button>
+                  </div>
+                  <div class="payment-options">
+                    <select class="payment-select" aria-label="Método de Pago">
+                      <option value="tarjeta">Tarjeta de Crédito / Débito</option>
+                      <option value="yape">Yape</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="form-column">
-                  <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Apellido*" aria-label="Apellido" required />
-                    <input type="tel" class="form-input" placeholder="Celular*" aria-label="Celular" required />
-                    <input type="text" class="form-input" placeholder="Numero de Documento*" aria-label="Numero de Documento" required />
+                <h2 class="invoice-type">Tipo de comprobante</h2>
+                <div class="invoice-options">
+                  <div class="invoice-option">
+                    <label class="radio-button">
+                      <input type="radio" name="invoice" value="boleta" checked />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="invoice-label">Boleta Simple</span>
+                  </div>
+                  <div class="invoice-option">
+                    <label class="radio-button">
+                      <input type="radio" name="invoice" value="factura" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="invoice-label">Factura</span>
                   </div>
                 </div>
               </div>
-            </form>
-            <h2 class="payment-method">Método de Pago</h2>
-            <div class="payment-selection">
-              <div class="payment-type-wrapper">
-                <span class="payment-type">Tarjeta de Crédito / Débito</span>
-                <button class="change-payment">Cambiar</button>
+              <button type="submit"routerLink="/select-payment" class="add-to-cart">Ir a Pagar</button>
+            </div>
+          </main>
+          <aside class="order-summary">
+            <div class="summary-box">
+              <header class="summary-header">
+                <h2 class="summary-title">Items</h2>
+                <p class="item-name">Hamburguesa de Queso</p>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/46f7400c3f5686c0cb166f9f2801759a1cbb09b0f7758f28bd1fb6a71d38d4d6?apiKey=2c15b75b40d1420c9ac43e72a5fc3a97&" alt="Hamburguesa de Queso" class="item-image" />
+              </header>
+              <div class="quantity-container">
+                <span class="quantity-label">Cantidad</span>
+                <div class="quantity-control">
+                  <button aria-label="Decrease quantity" class="decrease-button">
+                    <i class="fa-solid fa-sort-up"></i>
+                  </button>
+                  <span class="quantity-value">1</span>
+                  <button aria-label="Increase quantity" class="increase-button">
+                    <i class="fa-solid fa-sort-down"></i>
+                  </button>
+                </div>
               </div>
-              <div class="payment-options">
-                <select class="payment-select" aria-label="Método de Pago">
-                  <option value="tarjeta">Tarjeta de Crédito / Débito</option>
-                  <option value="yape">Yape</option>
-                </select>
+              <div class="subtotal">
+                <span>SubTotal:</span>
+                <span>S/. 10.90</span>
+              </div>
+              <div class="total">
+                <span class="total-label">Total a Pagar:</span>
+                <span class="total-amount">S/. 10.90</span>
               </div>
             </div>
-            <h2 class="invoice-type">Tipo de comprobante</h2>
-            <div class="invoice-options">
-              <div class="invoice-option">
-                <label class="radio-button">
-                  <input type="radio" name="invoice" value="boleta" checked />
-                  <span class="checkmark"></span>
-                </label>
-                <span class="invoice-label">Boleta Simple</span>
-              </div>
-              <div class="invoice-option">
-                <label class="radio-button">
-                  <input type="radio" name="invoice" value="factura" />
-                  <span class="checkmark"></span>
-                </label>
-                <span class="invoice-label">Factura</span>
-              </div>
-            </div>
-          </div>
-          <button class="add-to-cart">Agregar al carrito</button>
+          </aside>
         </div>
-      </main>
-      <aside class="order-summary">
-        <div class="summary-box">
-          <header class="summary-header">
-            <h2 class="summary-title">Items</h2>
-            <p class="item-name">Hamburguesa de Queso</p>
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/46f7400c3f5686c0cb166f9f2801759a1cbb09b0f7758f28bd1fb6a71d38d4d6?apiKey=2c15b75b40d1420c9ac43e72a5fc3a97&" alt="Hamburguesa de Queso" class="item-image" />
-          </header>
-          <div class="quantity-container">
-            <span class="quantity-label">Cantidad</span>
-            <div class="quantity-control">
-              <button aria-label="Decrease quantity" class="decrease-button">
-                <i class="fa-solid fa-sort-up"></i>
-              </button>
-              <span class="quantity-value">1</span>
-              <button aria-label="Increase quantity" class="increase-button">
-                <i class="fa-solid fa-sort-down"></i>
-              </button>
-            </div>
-          </div>
-          <div class="subtotal">
-            <span>SubTotal:</span>
-            <span>S/. 10.90</span>
-          </div>
-          <div class="total">
-            <span class="total-label">Total a Pagar:</span>
-            <span class="total-amount">S/. 10.90</span>
-          </div>
-        </div>
-      </aside>
-    </div>
+      </div>
+    </section>
+
+  </main>
+  <footer-ecommerce></footer-ecommerce>
   </div>
-</section>
+
+
+

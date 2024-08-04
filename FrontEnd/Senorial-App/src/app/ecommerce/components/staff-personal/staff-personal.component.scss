@@ -6,6 +6,19 @@ $white-color       : #ffffff;
 $gray-color        : #79797c;
 $font-family       : 'Poppins', sans-serif;
 
+main{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+    transform: scale(0.95);
+    margin: 20px;
+    justify-content: center;
+}
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
 body {
   margin           : 0;
   padding          : 0;
@@ -13,7 +26,6 @@ body {
 }
 
 .login-container {
-  background-color : #f2f2f2;
   display          : flex;
   align-items      : center;
   justify-content  : center;
@@ -43,9 +55,6 @@ body {
   flex-direction   : column;
   align-items      : center;
 
-  @media (max-width: 991px) {
-    align-items    : stretch;
-  }
 }
 
 .back-button-container {
@@ -62,10 +71,6 @@ body {
   color            : $secondary-color;
   text-decoration  : none; /* Quitar subrayado */
 
-  @media (max-width: 991px) {
-    margin-top     : 40px;
-    white-space    : initial;
-  }
 }
 
 .back-icon {
@@ -100,9 +105,6 @@ body {
   height           : auto;
   margin-top       : 40px;
 
-  @media (max-width: 991px) {
-    margin-top     : 60px;
-  }
 }
 
 .login-form-container {
@@ -114,21 +116,14 @@ body {
   align-items      : center;
   font             : 400 19px/150% Roboto, sans-serif;
 
-  @media (max-width: 991px) {
-    margin-top     : 40px;
-  }
 }
 
 .login-title {
   color            : $primary-color;
   text-align       : center;
   font             : 30px Poppins, sans-serif;
-  margin           : 0;
-  padding          : 10px 0;
+  margin           : 10px;
 
-  @media (max-width: 991px) {
-    max-width      : 100%;
-  }
 }
 
 form {
@@ -151,7 +146,7 @@ form {
   color            : #a5a2a2;
   letter-spacing   : 0.96px;
   padding          : 23px;
-  margin-top       : 20px;
+  margin           : 20px;
   display          : flex;
   align-items      : center;
   justify-content  : space-between;
@@ -195,7 +190,11 @@ form {
 .social-login-text {
   margin           : auto 0;
 }
-
+.btn-google{
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
+}
 .social-icon {
   aspect-ratio     : 1;
   object-fit       : auto;
@@ -216,6 +215,7 @@ form {
   padding          : 8px;
   font             : 700 18px/36px Roboto, sans-serif;
   border           : none;
+  cursor: pointer;
 
   @media (max-width: 991px) {
     margin-top     : 40px;

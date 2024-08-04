@@ -4,6 +4,21 @@ $white-color      : #ffffff;
 $gray-color       : #79797c;
 $font-family      : 'Poppins', sans-serif;
 
+main{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+    transform: scale(0.9);
+    padding: 0 24px;
+    margin: 20px;
+    justify-content: center;
+}
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
+
 .account-section {
   margin-top       : 128px;
 }
@@ -114,7 +129,7 @@ $font-family      : 'Poppins', sans-serif;
   font-family      : 'Roboto', sans-serif;
   align-self       : flex-start;
   margin-left      : 10px;
-  font             : 600 24px $font-family, sans-serif; 
+  font             : 600 24px $font-family, sans-serif;
 }
 
 .form-input,

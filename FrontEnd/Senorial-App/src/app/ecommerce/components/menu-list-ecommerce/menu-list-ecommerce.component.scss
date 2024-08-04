@@ -41,6 +41,7 @@ body {
   color            : $primary-color;
   white-space      : nowrap;
   cursor           : pointer;
+  text-decoration  : none ;
 
   &:hover {
     background-color : $secondary-color;
@@ -62,8 +63,14 @@ body {
 .personal-label {
   font-feature-settings : "clig" off, "liga" off;
   font-family           : 'Roboto', sans-serif;
-}
+  text-decoration       : none ;
+  color                 : $primary-color;
 
+ &:hover {
+  background-color : $secondary-color;
+  color            : $white-color;
+}
+}
 .divider {
   border-bottom    : 1px solid $gray-color;
   width            : 80%;

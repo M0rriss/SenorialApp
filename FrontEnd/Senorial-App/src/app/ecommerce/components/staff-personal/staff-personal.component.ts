@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrl: './staff-personal.component.scss'
 })
 export class StaffPersonalComponent {
+  public showPassword: boolean = false;
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 }

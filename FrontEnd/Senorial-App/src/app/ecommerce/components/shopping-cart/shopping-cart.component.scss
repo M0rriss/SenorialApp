@@ -192,7 +192,19 @@ $overlay-color    : rgba(0, 0, 0, 0.7);
     flex-direction: column;
     gap: 10px;
 
-    .checkout-button,
+
+    .checkout-button{
+      display: flex;
+
+      padding: 12px;
+      border-radius: 8px;
+      font: 700 18px $font-family, sans-serif;
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+      justify-content  : space-between;
+    }
+
     .continue-shopping {
       padding: 12px;
       border-radius: 8px;
