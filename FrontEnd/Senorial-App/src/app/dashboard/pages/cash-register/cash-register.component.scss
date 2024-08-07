@@ -183,7 +183,6 @@ $orange-color                   : #fa6400;
     font: 400 14px/1.5 'DM Sans', sans-serif;
     padding: 40px;
     border: 1px solid $modal-border-color;
-    margin-left: calc((100% - 554px - #{$sidebar-width}) / 2); /* Centrando teniendo en cuenta el sidebar */
     box-sizing: border-box;
 }
 
@@ -627,7 +626,6 @@ td {
   padding: 24px 32px;
   max-width: 785px;
   width: 100%;
-  margin-left: calc((100% - 785px - #{$sidebar-width}) / 2); /* Centrando teniendo en cuenta el sidebar */
 }
 
 .dialog-content {

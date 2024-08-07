@@ -96,7 +96,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<CategoriaUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<IActionResult> UiGetCategoria()
+        public async Task<ActionResult> UiGetCategoria()
         {
             var response = await _categoriaBusiness.UiGetCategoria();
             return Ok(response);

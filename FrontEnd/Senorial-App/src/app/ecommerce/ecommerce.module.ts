@@ -24,6 +24,9 @@ import { StaffPersonalComponent }       from '@components-ecommerce/staff-person
 import { StorePickUpComponent }         from '@pages-ecommerce/store-pick-up/store-pick-up.component';
 import { UserAccountComponent }         from '@pages-ecommerce/user-account/user-account.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { PrimeNGConfig } from 'primeng/api';
+import { StepsModule } from 'primeng/steps';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -54,7 +57,9 @@ import { SharedModule } from '@app/shared/shared.module';
     EcommerceRoutingModule,
     FormsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StepsModule,
+    ButtonModule,
   ],
   exports: [
     NavBarComponent,

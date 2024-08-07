@@ -11,6 +11,13 @@ main{
     margin: 20px;
     justify-content: center;
 }
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  width: 450px;
+}
 .container{
   min-height: 100vh;
   display: grid;
@@ -234,44 +241,5 @@ main{
     border          : none;
   }
 
-  @media (max-width: 991px) {
-    padding        : 0 20px;
+ }
 
-    .back-button {
-      margin-top    : 40px;
-      white-space   : initial;
-    }
-
-    .step-indicators {
-      margin-top    : 40px;
-      white-space   : initial;
-    }
-
-    .pickup-option {
-      margin-top    : 40px;
-      padding       : 10px 20px;
-      justify-content: center;
-    }
-
-    .store-option,
-    .alternate-store {
-      flex-wrap     : wrap;
-      padding       : 0 20px;
-    }
-
-    .payment-button {
-      margin-top    : 40px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .delivery-section {
-      display       : none;
-    }
-
-    .back-icon,
-    .step-labels {
-      display       : none;
-    }
-  }
-}

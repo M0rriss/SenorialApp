@@ -8,7 +8,15 @@
         </div>
         <span class="back-text">Volver</span>
       </div>
-      <div class="breadcrumb">
+      <div class="card" style="width: 450px; ">
+        <p-steps  [model]="items" [readonly]="true" class="custom-steps" >
+          <ng-template let-item pTemplate="item">
+            <div #stepOne *ngIf="item.label === 'Despacho'" class="p-steps-number">{{item.label}}</div>
+            <div #stepTwo *ngIf="item.label === 'Pago'" class="p-steps-number">{{item.label}}</div>
+          </ng-template>
+        </p-steps>
+      </div>
+      <!-- <div class="breadcrumb">
         <span class="active-label">Despacho</span>
         <span class="inactive-label">> Pago</span>
       </div>
@@ -20,7 +28,7 @@
       <div class="step-labels">
         <div class="active-label">Despacho</div>
         <div class="inactive-label">Pago</div>
-      </div>
+      </div> -->
       <div class="pickup-option">
         <i class="fa-solid fa-shop"></i>
         <div>Recoger en Tienda</div>

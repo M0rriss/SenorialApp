@@ -66,7 +66,7 @@ namespace App_Senorial.Controllers.Authentication
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(LoginDashboardResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> LoginDashboard([FromBody] LoginUserRequest request)
+        public async Task<ActionResult<GenericResponse>> LoginDashboard([FromBody] LoginUserRequest request)
         {
             var loginResponse = await _authBusiness.LoginDashboard(request);
             

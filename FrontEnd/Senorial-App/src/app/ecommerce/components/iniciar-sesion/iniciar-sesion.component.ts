@@ -22,7 +22,6 @@ export class IniciarSesionComponent {
 
   }
   logIn(){
-    console.log(this.loginForm)
     const data:LoginRequest = {...this.loginForm.value} as LoginRequest;
     this.auth.login(data).subscribe({
       next: (res) =>{

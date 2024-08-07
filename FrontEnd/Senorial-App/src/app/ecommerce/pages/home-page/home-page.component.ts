@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'ecommerce-home-page',
