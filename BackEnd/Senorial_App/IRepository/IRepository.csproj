@@ -15,4 +15,8 @@
 	 <ProjectReference Include="..\RequestResponseModels\RequestResponseModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cloudinary_Interface\" />
+  </ItemGroup>
+
 </Project>

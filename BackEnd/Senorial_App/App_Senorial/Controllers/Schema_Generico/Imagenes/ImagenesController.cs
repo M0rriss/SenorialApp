@@ -3,7 +3,9 @@ using Business.Schema_Generico.Imagenes;
 using IBusiness.Schema_Generico.Imagenes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RequestResponseModels.Request.CloudinaryReq;
 using RequestResponseModels.Request.Schema_Generico.Imagenes;
+using RequestResponseModels.Response.CloudinaryRes;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using RequestResponseModels.Response.Schema_Generico.Imagenes;
 using System.Net;
@@ -28,11 +30,53 @@ namespace App_Senorial.Controllers.Schema_Generico.Imagenes
         }
         #endregion DECLARACION DE VARIABLE Y CONSTRUCTOR
         #region CRUD METHODS
-        /// <summary>
-        /// RETORNA TODOS LOS REGISTROS DE LA TABLA Imagenes
-        /// </summary>
-        /// <returns>List-ImagenesResponse</returns>
-        [HttpGet]
+        [HttpPost("upload")]
+        public async Task<ActionResult<UploadImageResponse>> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No se proporcionó ninguna imagen.");
+            }
+
+            // Generar un nuevo nombre único para la imagen
+            string newFileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+
+            // Leer la imagen como un array de bytes
+            byte[] imageBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                imageBytes = memoryStream.ToArray();
+            }
+
+            // Convertir la imagen a base64
+            string base64Image = Convert.ToBase64String(imageBytes);
+
+            // Crear el request para la lógica de negocio
+            var uploadRequest = new UploadImageRequest
+            {
+                ImageBase64 = base64Image,
+                FileName = newFileName
+            };
+
+            // Llamar a la lógica de negocio para subir la imagen
+            var response = await _imagenesBusiness.UploadImageAsync(uploadRequest);
+
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(response);
+            }
+        }
+
+            /// <summary>
+            /// RETORNA TODOS LOS REGISTROS DE LA TABLA Imagenes
+            /// </summary>
+            /// <returns>List-ImagenesResponse</returns>
+            [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<ImagenesResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]

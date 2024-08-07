@@ -35,4 +35,8 @@
     <ProjectReference Include="..\UtilConstants\UtilityConstants.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cloudinary_Class\" />
+  </ItemGroup>
+
 </Project>

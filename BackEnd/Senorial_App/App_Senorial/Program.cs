@@ -2,17 +2,20 @@ using App_Senorial.Middleware;
 using Business.Auth;
 using DBSenorialModels.Data;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using IServices.Cloud;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Services.cloudinary;
 using Services.Gmail;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using UtilityAutoMapper;
+using UtilitySecurity.CloudinarySetting;
 using UtilitySecurity.OneTimePassword;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,7 +77,9 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
     options.CallbackPath = builder.Configuration["Authentication:Google:MobileCallbackPath"];
 });
-
+//CLOUDINARY SERVICE
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<CloudinaryService>();
 //SMTP CONFIG
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));

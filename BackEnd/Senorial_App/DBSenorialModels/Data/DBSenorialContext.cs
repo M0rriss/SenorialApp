@@ -309,7 +309,7 @@ public partial class DBSenorialContext : DbContext
 
         modelBuilder.Entity<Imagene>(entity =>
         {
-            entity.HasKey(e => e.IdImg).HasName("imagenes_id_pk");
+            entity.HasKey(e => e.Id).HasName("imagenes_id_pk");
         });
 
         modelBuilder.Entity<Insumo>(entity =>
