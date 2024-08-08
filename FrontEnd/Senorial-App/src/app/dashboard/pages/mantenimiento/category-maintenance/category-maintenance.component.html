@@ -1,0 +1,109 @@
+<section class="categories-section">
+  <side-bar></side-bar>
+  <div class="content">
+    <h1 class="section-title">Categorias</h1>
+    <div class="view-toggle">
+      <button *ngIf="!isTableView" class="view-toggle-button" (click)="switchToTableView()">Ir a Tabla</button>
+      <button *ngIf="isTableView" class="view-toggle-button" (click)="switchToVisualView()">Ir a Cuadro</button>
+    </div>
+
+    <!-- Vista de Tabla -->
+    <div *ngIf="isTableView">
+      <table class="categories-table">
+        <thead>
+          <tr class="table-header">
+            <th>Categoria</th>
+            <th>SubCategoria</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-row" *ngFor="let category of categorias">
+            <td>{{category.categoria}}</td>
+            <td>{{category.subcategorias}}</td>
+            <td class="status-container">
+              <label class="switch">
+                <input type="checkbox" [checked]="category.estado">
+                <span class="slider round"></span>
+              </label>
+              <span class="status-label">{{category.estado ? 'Activo' : 'Inactivo'}}</span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(category)"></i>
+                <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog(category)"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Vista de Cuadro -->
+    <div *ngIf="!isTableView" class="categories-container">
+      <div class="categories-wrapper">
+        <header class="category-header">
+          <h2 class="category-header-title">Categorias</h2>
+          <button class="category-button" (click)="openAddDialog()">
+            <i class="fa-solid fa-circle-plus category-icon"></i>
+            <span>Categoria</span>
+          </button>
+        </header>
+
+        <div class="categories-list">
+          <div class="category-item" *ngFor="let category of allCategorias">
+            <h3 class="category-name">{{ category.nombre }}</h3>
+            <div class="category-actions">
+              <label class="switch">
+                <input type="checkbox" [checked]="category.estado">
+                <span class="slider round"></span>
+              </label>
+              <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(category)"></i>
+              <i class="delete-icon fa-solid fa-ellipsis-vertical kebab-menu" (click)="openConfirmDialog(category)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Category Dialog -->
+    <div class="dialog-overlay" [ngClass]="{'show': isAddEditDialogOpen}">
+      <div class="add-category-dialog">
+        <span class="close-button" (click)="closeAddEditDialog()">&times;</span>
+        <h2 class="dialog-title">{{ dialogTitle }}</h2>
+        <div class="form-row">
+          <label class="form-label">Nombre</label>
+          <input class="form-input" [(ngModel)]="categoryName" placeholder="Nombre de la categoría" />
+        </div>
+        <div class="form-row">
+          <label class="form-label">Subcategoría</label>
+          <input class="form-input" [(ngModel)]="subCategoryName" placeholder="Nombre de la subcategoría" />
+        </div>
+        <div class="form-row">
+          <label class="form-label">Estado</label>
+          <select class="form-input" [(ngModel)]="categoryStatus">
+            <option [value]="true">Activo</option>
+            <option [value]="false">Inactivo</option>
+          </select>
+        </div>
+        <div class="action-buttons">
+          <button class="button discard-button" (click)="closeAddEditDialog()">Cancelar</button>
+          <button class="button add-category-button" (click)="saveCategory()">{{ dialogActionButton }}</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
+      <div class="confirm-dialog">
+        <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar la categoría?</h2>
+        <p class="confirm-dialog-description">¿Estás seguro que quieres eliminarla?</p>
+        <div class="confirm-dialog-button-container">
+          <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button>
+          <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

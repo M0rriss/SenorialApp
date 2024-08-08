@@ -98,5 +98,52 @@ namespace Business.Schema_Ventas.Productos
         }
 
         #endregion
+        #region UI CRUD
+        public async Task<List<ProductoUiResponse>> UiGetProducto()
+        {
+            return await _productoRepository.UiProducto();
+        }
+
+        public async Task<ProductoUiResponse> InsertUiProducto(ProductoUiRequest request)
+        {
+            var existingProducto = await _productoRepository.BuscarPorNombre(request.Nombre);
+            if (existingProducto != null)
+            {
+                throw new ArgumentException("El producto ya está registrado.");
+            }
+
+            var producto = _mapper.Map<Producto>(request);
+            var productoCreado = await _productoRepository.Create(producto);
+            var response = _mapper.Map<ProductoUiResponse>(productoCreado);
+            return response;
+        }
+
+        public async Task<ProductoUiResponse> UpdateUiProducto(ProductoUpdateUiRequest request)
+        {
+            var existingProducto = await _productoRepository.BuscarPorNombre(request.Nombre);
+            if (existingProducto == null)
+            {
+                throw new ArgumentException("El producto especificado no existe.");
+            }
+
+            _mapper.Map(request, existingProducto);
+            await _productoRepository.Update(existingProducto);
+            var response = _mapper.Map<ProductoUiResponse>(existingProducto);
+            return response;
+        }
+
+        public async Task<bool> DeleteUiProducto(int id)
+        {
+            var producto = await _productoRepository.GetById(id);
+            if (producto == null)
+            {
+                throw new ArgumentException("El producto especificado no existe.");
+            }
+
+            await _productoRepository.Delete(id);
+            return true;
+        }
+        #endregion
+
     }
 }

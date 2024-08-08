@@ -10,5 +10,8 @@ namespace IRepository.Schema_Generico.Imagenes
 {
     public interface IImagenesRepository : ICrudRepository<Imagene>
     {
+        Task<int> SaveTemporaryImageAsync(Imagene imageEntity);
+        Task<Imagene> GetImageByIdAsync(int id);
+        Task DeleteImageAsync(int id);
     }
 }

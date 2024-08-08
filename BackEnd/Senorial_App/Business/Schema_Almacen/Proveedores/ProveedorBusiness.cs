@@ -112,91 +112,137 @@ namespace Business.Schema_Almacen.Proveedores
 
         public async Task<ProveedorUiResponse> InsertUiProveedor(ProveedorUiRequest request)
         {
+            // Validar si el correo ya está registrado
             var existingEmail = _personaRepository.BuscarCorreo(request.Correo);
             if (existingEmail != null)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
+
+            // Validar si el teléfono ya está registrado
             var existingPhone = _personaRepository.BuscarTelefono(request.Telefono);
             if (existingPhone != null)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
+
+            // Verificar y separar nombres y apellidos
             var nombreCompleto = request.ProveedorNombre.Split(' ');
+            if (nombreCompleto.Length < 2)
+            {
+                throw new ArgumentException("Debe proporcionar al menos un nombre y un apellido.");
+            }
             var primerNombre = nombreCompleto[0];
             var apellidoPaterno = nombreCompleto.Length > 1 ? nombreCompleto[1] : "";
+
             var persona = new Persona
             {
-                PrimerNombre = request.ProveedorNombre.Split(' ')[0], // Primer nombre
-                ApellidoPaterno = request.ProveedorNombre.Split(' ')[1], // Apellido paterno
+                PrimerNombre = primerNombre,
+                ApellidoPaterno = apellidoPaterno,
                 Email = request.Correo.ToLower(),
                 Telefono = request.Telefono,
                 NroDocumento = request.Dni,
                 Genero = "",
                 IdTipoDocumento = 1
             };
+
             var personaCreada = await _personaRepository.Create(persona);
+
             var nuevoProveedor = new Proveedor
             {
                 IdPersona = personaCreada.IdPersona,
-                Vende = request.Distribuye  
+                Vende = request.Distribuye
             };
+
             var proveedorCreado = await _proveedorRepository.Create(nuevoProveedor);
+
             var response = _mapper.Map<ProveedorUiResponse>(proveedorCreado);
             response.Persona = _mapper.Map<PersonaResponse>(persona);
+
             return response;
         }
 
         public async Task<ProveedorUiResponse> UpdateUiProveedor(ProveedorUpdateUiRequest request)
         {
+            // Buscar el proveedor existente
             var existingProveedor = _proveedorRepository.BuscarporId(request.IdProveedor);
-            if(existingProveedor == null)
+            if (existingProveedor == null)
             {
-                throw new ArgumentException(nameof(existingProveedor), "Proveedor not found");
+                throw new ArgumentException("Proveedor no encontrado", nameof(existingProveedor));
             }
+
+            // Buscar la persona asociada al proveedor
             var existingPersona = await _personaRepository.BuscarporId(existingProveedor.IdPersona);
-            if(existingPersona == null)
+            if (existingPersona == null)
             {
-                throw new ArgumentException(nameof(existingProveedor), "Persona not found");
+                throw new ArgumentException("Persona no encontrada", nameof(existingPersona));
             }
+
+            // Validar si el nuevo correo está en uso por otra persona
             var proveedorEmail = _personaRepository.BuscarCorreo(request.Correo);
-            if(proveedorEmail != null && proveedorEmail.IdPersona != existingProveedor.IdPersona)
+            if (proveedorEmail != null && proveedorEmail.IdPersona != existingProveedor.IdPersona)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
+
+            // Validar si el nuevo teléfono está en uso por otra persona
             var userWithPhone = _personaRepository.BuscarTelefono(request.Telefono);
             if (userWithPhone != null && userWithPhone.IdPersona != existingProveedor.IdPersona)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
-            existingPersona.PrimerNombre = request.ProveedorNombre.Split(' ')[0];
-            existingPersona.ApellidoPaterno = request.ProveedorNombre.Split(' ')[1];
+
+            // Separar nombres y apellidos
+            var nombres = request.ProveedorNombre.Split(' ');
+            if (nombres.Length < 2)
+            {
+                throw new ArgumentException("Debe proporcionar al menos un nombre y un apellido.");
+            }
+            var primerNombre = nombres[0];
+            var apellidoPaterno = nombres.Length > 1 ? nombres[1] : "";
+
+            // Actualizar detalles de la persona
+            existingPersona.PrimerNombre = primerNombre;
+            existingPersona.ApellidoPaterno = apellidoPaterno;
             existingPersona.Email = request.Correo.ToLower();
             existingPersona.Telefono = request.Telefono;
             existingPersona.NroDocumento = request.Dni;
-            var response = _mapper.Map<ProveedorUiResponse>(existingPersona);
-            response.Distribuye = existingProveedor.Vende;
+
+            // Guardar la actualización de la persona
+            await _personaRepository.Update(existingPersona);
+
+            // Actualizar el proveedor
+            existingProveedor.Vende = request.Distribuye;
+            await _proveedorRepository.Update(existingProveedor);
+
+            // Mapear la respuesta
+            var response = _mapper.Map<ProveedorUiResponse>(existingProveedor);
             response.Persona = _mapper.Map<PersonaResponse>(existingPersona);
+
             return response;
 
         }
 
         public async Task<bool> DeleteUiProveedor(int idProveedor)
         {
-            var proveedor = await _personaRepository.GetById(idProveedor);
+            // Buscar el proveedor por su Id
+            var proveedor = await _proveedorRepository.GetById(idProveedor);
             if (proveedor == null)
             {
-                throw new ArgumentNullException(nameof(proveedor), "Proveedor not found");
+                throw new ArgumentNullException(nameof(proveedor), "Proveedor no encontrado");
             }
-            var persona = await _personaRepository.GetById(proveedor.IdPersona);
+
+            // Buscar la persona asociada al proveedor
+            var persona = await _personaRepository.BuscarporId(proveedor.IdPersona);
             if (persona == null)
             {
                 throw new ArgumentException("La persona asociada no existe.");
             }
-            // Eliminar la persona asociada al proveedor
-            await _proveedorRepository.Delete(idProveedor);
 
             // Eliminar el proveedor
+            await _proveedorRepository.Delete(idProveedor);
+
+            // Eliminar la persona asociada al proveedor
             await _personaRepository.DeletePersona(persona.IdPersona);
 
             return true;

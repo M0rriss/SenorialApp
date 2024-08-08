@@ -145,5 +145,9 @@ namespace Repository.Schema_Usuarios.Usuarios
             await db.SaveChangesAsync();
             return true;
         }
+        public async Task<List<Usuario>> ObtenerPorPersonaId(int personaId)
+        {
+            return await db.Set<Usuario>().Where(u => u.IdPersona == personaId).ToListAsync();
+        }
     }
 }

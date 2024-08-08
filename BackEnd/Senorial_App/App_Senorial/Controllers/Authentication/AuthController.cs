@@ -66,7 +66,7 @@ namespace App_Senorial.Controllers.Authentication
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(LoginDashboardResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> LoginDashboard([FromBody] LoginUserRequest request)
+        public async Task<ActionResult<GenericResponse>> LoginDashboard([FromBody] LoginUserRequest request)
         {
             var loginResponse = await _authBusiness.LoginDashboard(request);
             
@@ -126,6 +126,19 @@ namespace App_Senorial.Controllers.Authentication
             var response = await _usuarioBusiness.UsuarioRegistroEcommerce(req);
 
             return Ok(response); 
+        }
+        [HttpPost("google-signin/ecommerce")]
+        public async Task<IActionResult> GoogleSignInEcommerce([FromBody] GoogleSignInRequest request)
+        {
+            var usuarioResponse = await _usuarioBusiness.AutenticarConGoogleEcommerce(request.TokenId);
+            return Ok(usuarioResponse);
+        }
+
+        [HttpPost("google-signin/mobile")]
+        public async Task<IActionResult> GoogleSignInMobile([FromBody] GoogleSignInRequest request)
+        {
+            var usuarioResponse = await _usuarioBusiness.AutenticarConGoogleMobile(request.TokenId);
+            return Ok(usuarioResponse);
         }
         /// <summary>
         /// Metodo para realizar el registro en el Mobile

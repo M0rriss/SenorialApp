@@ -38,13 +38,13 @@ public partial class Sucursal
     [InverseProperty("Sucursals")]
     public virtual Documento? IdDocumentoNavigation { get; set; } = null!;
 
-    [InverseProperty("IdSucursalNavigation")]
+    //[InverseProperty("IdSucursalNavigation")]
     public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
 
     [InverseProperty("IdSucursalNavigation")]
     public virtual ICollection<ProductoSucursal> ProductoSucursals { get; set; } = new List<ProductoSucursal>();
 
-    [InverseProperty("IdSucursalNavigation")]
+    //[InverseProperty("IdSucursalNavigation")]
     public virtual ICollection<Salida> Salida { get; set; } = new List<Salida>();
 
     [InverseProperty("IdSucursalNavigation")]

@@ -1,0 +1,126 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$lato-font        : 'Lato', sans-serif;
+$poppins-font     : 'Poppins', sans-serif;
+
+section {
+  width             : 100vw;
+  transform         : scale(0.75);
+  display           : flex;
+  justify-content   : center;
+}
+
+.contact-container {
+  display           : flex;
+  justify-content   : center;
+  background-color  : $primary-color;
+  height            : 72px;
+  align-items       : center;
+  width             : 100vw;
+  padding           : 0 24px;
+}
+
+.contact-content {
+  display           : flex;
+  align-items       : center;
+  width             : 100%;
+  max-width         : 1200px;
+  justify-content   : space-between;
+  gap               : 40px;
+  height            : 72px;
+}
+
+.contact-details, .contact-hours-container, .menu-content {
+  display           : flex;
+  align-items       : center;
+  gap               : 100px;
+}
+
+.contact-button {
+  border-radius     : 40px;
+  background-color  : $secondary-color;
+  padding           : 8px 16px;
+  font-size         : 24px;
+  font-weight       : 700;
+  border            : none;
+  color             : $white-color;
+  cursor            : pointer;
+}
+
+.contact-hours {
+  margin            : 0;
+  font-size         : 22px;
+  font-weight       : 500;
+  color             : $white-color;
+  font-family       : $poppins-font;
+}
+
+.divider {
+  color             : $white-color;
+  font-size         : 30px;
+}
+
+.phone-box {
+  display           : flex;
+  align-items       : center;
+  gap               : 10px;
+}
+
+.phone-icon {
+  font-size         : 32px;
+  color             : $white-color;
+}
+
+.phone-number {
+  font-size         : 22px;
+  color             : $white-color;
+  font-family       : $poppins-font;
+}
+
+.menu-content {
+  display           : flex;
+  gap               : 100px; /* Aumentar el espacio entre los elementos */
+}
+
+.menu-button {
+  border-radius     : 40px;
+  background-color  : $secondary-color;
+  padding           : 8px 16px;
+  font-size         : 24px;
+  font-weight       : 700;
+  border            : none;
+  color             : $white-color;
+  cursor            : pointer;
+}
+
+@media (max-width: 991px) {
+  .contact-container {
+    padding         : 20px;
+  }
+
+  .contact-content {
+    flex-direction  : column;
+    gap             : 20px;
+  }
+
+  .contact-details,
+  .menu-content {
+    justify-content : center;
+    flex-wrap       : wrap;
+  }
+
+  .contact-button,
+  .menu-button {
+    width           : 100%;
+    text-align      : center;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-container {
+    display         : none;
+  }
+}

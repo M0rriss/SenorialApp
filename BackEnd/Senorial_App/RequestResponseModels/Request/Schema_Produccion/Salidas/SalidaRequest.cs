@@ -10,9 +10,9 @@ namespace RequestResponseModels.Request.Schema_Produccion.Salidas
 {
     public class SalidaRequest
     {
-        public int IdDetInventario { get; set; }
-        public int IdProduccion { get; set; }
-        public int? Cantidad { get; set; }
-        public int IdSucursal { get; set; }
+        public int IdInventario { get; set; }
+        public DateTime FechaSalida { get; set; }
+        public int Cantidad { get; set; }
+        public string Motivo { get; set; }
     }
 }

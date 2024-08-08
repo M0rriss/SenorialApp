@@ -23,8 +23,11 @@ namespace IBusiness.Schema_Usuarios.Usuarios
         Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
         Task<UsuarioResponse> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);
         Task<UsuarioResponse> RestablecerContrasenaEcommerce(RestablecerPasswordEcommerceRequest request);
+        Task<UsuarioResponse> AutenticarConGoogleEcommerce(string tokenId);
+        Task<UsuarioResponse> AutenticarConGoogleMobile(string tokenId);
+
+
         Task<List<UsuarioUiRequest>> GetUiUsuarios();
-       
         Task<UsuarioUiResponse> InsertUiUsuarios(UsuarioUiRequest request);
         Task<UsuarioUiResponse> UpdateUiUsuarios(UsuarioUiUpdateRequest usuario);
         Task<bool> DeleteUiUser(int idUsuario);

@@ -11,5 +11,9 @@ namespace IBusiness.Schema_Ventas.Productos
 {
     public interface IProductoBusiness : ICrudBusiness<ProductoRequest, ProductoResponse>
     {
+        Task<List<ProductoUiResponse>> UiGetProducto();
+        Task<ProductoUiResponse> InsertUiProducto(ProductoUiRequest request);
+        Task<ProductoUiResponse> UpdateUiProducto(ProductoUpdateUiRequest request);
+        Task<bool> DeleteUiProducto(int id);
     }
 }

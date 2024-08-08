@@ -3,6 +3,7 @@ using Business.Schema_Ventas.Mesas;
 using Business.Schema_Ventas.Productos;
 using IBusiness.Schema_Ventas.Mesas;
 using IBusiness.Schema_Ventas.Productos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Ventas.Mesas;
@@ -15,6 +16,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Mesas
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MesaController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -81,9 +83,9 @@ namespace App_Senorial.Controllers.Schema_Ventas.Mesas
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(MesaResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Update([FromBody] MesaRequest request)
+        public async Task<ActionResult> Update([FromBody] MesaUpdateRequest request)
         {
-            var result = await _mesaBusiness.Update(request);
+            var result = await _mesaBusiness.UpdateMesa(request);
             return Ok(result);
         }
         /// <summary>

@@ -10,7 +10,7 @@ namespace RequestResponseModels.Request.Schema_Almacen.Inventario
 {
     public class InventarioRequest
     {
-        public int IdInventario { get; set; }
         public int IdSucursal { get; set; }
+        public DateTime FechaActualizacion { get; set; } = DateTime.Now;
     }
 }

@@ -24,33 +24,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06. Utilities", "06. Utilit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App_Senorial", "App_Senorial\App_Senorial.csproj", "{777655CB-325D-4206-BA6A-B9DA4AFA9BA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBusiness", "IBusiness\IBusiness.csproj", "{7BA73EBE-7E40-42E3-AB75-A5303D55E16D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBusiness", "IBusiness\IBusiness.csproj", "{7BA73EBE-7E40-42E3-AB75-A5303D55E16D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{78030FFE-BB37-4154-B1C1-7411518E15CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{78030FFE-BB37-4154-B1C1-7411518E15CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IServices", "IServices\IServices.csproj", "{A4A835E3-676F-4CAB-A694-202751A563ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IServices", "IServices\IServices.csproj", "{A4A835E3-676F-4CAB-A694-202751A563ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{0F1A2DD2-0612-4AEA-9D96-60CC5DB21253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{0F1A2DD2-0612-4AEA-9D96-60CC5DB21253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRepository", "IRepository\IRepository.csproj", "{618D4F8C-8B59-453E-A6CC-016D2D620B28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRepository", "IRepository\IRepository.csproj", "{618D4F8C-8B59-453E-A6CC-016D2D620B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{786EF868-8E24-4ED0-9492-DC2EBC357E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{786EF868-8E24-4ED0-9492-DC2EBC357E1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBSenorialModels", "DBSenorialModels\DBSenorialModels.csproj", "{065F6EFF-8D1F-4A2A-9B6F-C01F19CA3C71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBSenorialModels", "DBSenorialModels\DBSenorialModels.csproj", "{065F6EFF-8D1F-4A2A-9B6F-C01F19CA3C71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestResponseModels", "RequestResponseModels\RequestResponseModels.csproj", "{EF0E2690-8786-4735-8103-6F0245109CF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestResponseModels", "RequestResponseModels\RequestResponseModels.csproj", "{EF0E2690-8786-4735-8103-6F0245109CF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonModels", "CommonModels\CommonModels.csproj", "{3AFD6347-0303-4900-A7D8-F3936F59BAF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonModels", "CommonModels\CommonModels.csproj", "{3AFD6347-0303-4900-A7D8-F3936F59BAF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilitySecurity", "UtilSecurity\UtilitySecurity.csproj", "{E3C7945D-A637-4302-84E2-011133DE0E03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilitySecurity", "UtilSecurity\UtilitySecurity.csproj", "{E3C7945D-A637-4302-84E2-011133DE0E03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityConstants", "UtilConstants\UtilityConstants.csproj", "{66A90C19-F2F3-430C-B61E-46C0E6465F65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilityConstants", "UtilConstants\UtilityConstants.csproj", "{66A90C19-F2F3-430C-B61E-46C0E6465F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelGenerator", "ExcelGenerator\ExcelGenerator.csproj", "{37DC36FE-4A35-4732-A249-891382572F0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelGenerator", "ExcelGenerator\ExcelGenerator.csproj", "{37DC36FE-4A35-4732-A249-891382572F0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfGenerator", "PdfGenerator\PdfGenerator.csproj", "{3548C254-5FF3-4E3E-8B4A-9A3DBB3B764F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfGenerator", "PdfGenerator\PdfGenerator.csproj", "{3548C254-5FF3-4E3E-8B4A-9A3DBB3B764F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityAutoMapper", "UtilityAutoMapper\UtilityAutoMapper.csproj", "{340AD964-662C-44B3-908B-2D43B73521E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilityAutoMapper", "UtilityAutoMapper\UtilityAutoMapper.csproj", "{340AD964-662C-44B3-908B-2D43B73521E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

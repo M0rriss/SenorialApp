@@ -1,0 +1,125 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+
+
+section {
+  display           : flex;
+  justify-content   : center;
+  margin: 0;
+  padding: 0;
+  font-family       : 'Roboto', sans-serif;
+  transform         : scale(0.9);
+
+}
+
+.locales-section {
+  display           : flex;
+  justify-content   : center;
+  margin-top: -120px;
+  padding: 0;
+  transform         : scale(0.75);
+
+}
+
+.locales-container {
+  display           : flex;
+  flex-direction    : column;
+  align-items       : center;
+  max-width         : 774px;
+  width             : 100%;
+  transform         : scale(0.90);
+}
+
+.main-title {
+  color             : $primary-color;
+  font-size         : 45px;
+  font-weight       : 900;
+  text-align        : center;
+  margin-bottom     : 76px;
+}
+
+.subtitle {
+  font-size         : 30px;
+  line-height       : 1.17;
+  text-align        : center;
+  margin-bottom     : 120px;
+}
+
+.local-card {
+  width             : 100%;
+  max-width         : 529px;
+  margin-bottom     : 67px;
+}
+
+.local-title {
+  background-color  : $primary-color;
+  color             : $white-color;
+  font-size         : 45px;
+  font-weight       : 900;
+  text-align        : center;
+  padding           : 24px;
+  border-radius     : 17px 17px 0 0;
+  margin            : 0;
+}
+
+.local-info {
+  background-color  : $white-color;
+  border-radius     : 0 0 17px 17px;
+  padding           : 64px 60px;
+  border            : solid rgba(0, 0, 0, 0.1) .5px;
+  box-shadow        : 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size         : 30px;
+  font-weight       : 500;
+  line-height       : 1.17;
+  color: $gray-color;
+}
+
+.address,
+.phone {
+  margin            : 0 0 20px 0;
+}
+
+.pickup-info {
+  display           : flex;
+  align-items       : center;
+  gap               : 12px;
+}
+
+.pickup-icon {
+  width             : 35px;
+  height            : 35px;
+}
+
+@media (max-width: 991px) {
+  .locales-section {
+    padding         : 40px 20px;
+  }
+
+  .main-title,
+  .local-title {
+    font-size       : 40px;
+  }
+
+  .subtitle {
+    margin-bottom   : 40px;
+  }
+
+  .local-card {
+    margin-bottom   : 40px;
+  }
+
+  .local-info {
+    padding         : 40px 20px;
+  }
+}

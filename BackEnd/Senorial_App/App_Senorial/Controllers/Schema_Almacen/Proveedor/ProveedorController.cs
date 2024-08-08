@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Proveedores;
 using IBusiness.Schema_Almacen.Proveedores;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Proveedor;
@@ -12,6 +13,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Proveedor
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProveedorController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

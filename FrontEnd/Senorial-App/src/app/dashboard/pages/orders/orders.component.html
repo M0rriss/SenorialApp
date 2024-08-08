@@ -1,0 +1,89 @@
+<div class="main-container">
+  <side-bar></side-bar>
+  <div class="order-info-container">
+    <div class="order-info-wrapper">
+      <h2 class="order-info-title">Información del Pedido</h2>
+      <div class="order-status-tabs">
+        <div class="status-tab" *ngFor="let status of statusTabs" (click)="selectStatus(status)">
+          <div class="status-tab-content">
+            <div class="status-icon" [ngStyle]="{'background-color': status.color}"></div>
+            <span class="status-text">{{ status.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="order-cards-container">
+      <div class="order-cards-wrapper">
+        <article class="order-card" *ngFor="let order of orders" [ngClass]="getOrderClass(order.status)" (click)="openOrderSummary(order)">
+          <div class="order-status">
+            <span class="status-badge" [ngClass]="getBadgeClass(order.status)">{{ order.status }}</span>
+            <span class="table-number">Mesa-{{ order.table }}</span>
+          </div>
+          <div class="order-details">
+            <div class="customer-info">
+              <div class="customer-name-wrapper">
+                <div class="customer-icon">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <span class="customer-name">{{ order.customerName }}</span>
+              </div>
+              <div class="order-items">
+                <span>{{ order.items.length }}</span>
+                <span> Items</span>
+              </div>
+            </div>
+            <div class="order-type">
+              <i class="fa-solid fa-location-dot order-type-icon"></i>
+              <span>{{ order.orderType }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order Summary Modal -->
+<div class="modal-background" *ngIf="selectedOrder" (click)="closeOrderModal()">
+  <section class="order-summary" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="summary-title">Resumen del Pedido</h2>
+      <button class="close-button" (click)="closeOrderModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="summary-content">
+      <div class="summary-header">
+        <div class="table-number-summary">Mesa {{ selectedOrder.table }}</div>
+        <div class="action-buttons">
+          <button class="ready-button" (click)="markAsReady()">Listo</button>
+          <button class="cancel-button" (click)="openCancelModal()">Cancelar Orden</button>
+        </div>
+      </div>
+      <div class="order-items-container">
+        <article class="order-item-summary" *ngFor="let item of selectedOrder.items">
+          <button class="delete-item-button" (click)="deleteItem(item)">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="item-details-summary">
+            <h3 class="item-title-summary">{{ item.title }}</h3>
+            <p class="item-description-summary">{{ item.description }}</p>
+            <p class="item-price-summary">{{ item.price }}</p>
+          </div>
+          <img loading="lazy" [src]="item.image" class="item-image-summary" alt="{{ item.title }}" />
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Cancel Order Modal -->
+<div class="modal-background" *ngIf="isCancelModalOpen" (click)="closeCancelModal()">
+  <section class="cancel-modal" (click)="$event.stopPropagation()">
+    <h2 class="modal-title">Cancelar Pedido</h2>
+    <p class="modal-message">Estas seguro que quieres cancelarlo?</p>
+    <div class="button-group">
+      <button class="btn btn-confirm" (click)="confirmCancelOrder()">Si</button>
+      <button class="btn btn-cancel" (click)="closeCancelModal()">No</button>
+    </div>
+  </section>
+</div>

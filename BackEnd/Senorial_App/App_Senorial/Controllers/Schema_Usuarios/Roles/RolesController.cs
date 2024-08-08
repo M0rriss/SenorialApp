@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Schema_Usuarios.Roles;
 using IBusiness.Schema_Usuarios.Roles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Usuarios.Roles;
@@ -12,6 +13,7 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Roles
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

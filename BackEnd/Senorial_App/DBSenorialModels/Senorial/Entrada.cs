@@ -6,29 +6,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DBSenorialModels.Senorial;
 
-[PrimaryKey("IdInventario", "IdCompra")]
-[Table("entradas", Schema = "Almacen")]
-public partial class Entrada
+//[PrimaryKey("IdInventario", "IdCompra")]
+[Table("Entrada", Schema = "Almacen")]
+public class Entrada
 {
     [Key]
+    [Column("id_entrada")]
+    public int IdEntrada { get; set; }
+
     [Column("id_inventario")]
     public int IdInventario { get; set; }
 
-    [Key]
-    [Column("id_compra")]
-    public int IdCompra { get; set; }
-
-    [Column("fecha_Ingreso", TypeName = "datetime")]
-    public DateTime? FechaIngreso { get; set; }
+    [Column("fecha_ingreso", TypeName = "datetime")]
+    public DateTime FechaIngreso { get; set; }
 
     [Column("cantidad")]
-    public int? Cantidad { get; set; }
+    public int Cantidad { get; set; }
 
-    [ForeignKey("IdCompra")]
-    [InverseProperty("Entrada")]
-    public virtual Compra IdCompraNavigation { get; set; } = null!;
+    [Column("motivo")]
+    [StringLength(250)]
+    public string Motivo { get; set; }
 
     [ForeignKey("IdInventario")]
-    [InverseProperty("Entrada")]
-    public virtual Inventario IdInventarioNavigation { get; set; } = null!;
+    public virtual Inventario Inventario { get; set; }
 }

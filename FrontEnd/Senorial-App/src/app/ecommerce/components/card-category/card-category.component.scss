@@ -1,0 +1,91 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+
+.food-card {
+  border-radius    : 24px;
+  box-shadow       : 0 8px 6px rgba(0, 0, 0, 0.25);
+  background-color : var(--reply-bg, $white-color);
+  display          : flex;
+  width            : 401px;
+  flex-direction   : column;
+  padding          : 32px;
+}
+
+.image-container {
+  display          : flex;
+  justify-content  : center;
+  padding          : 0 18px;
+}
+
+.food-image {
+  aspect-ratio     : 1.06;
+  object-fit       : auto;
+  object-position  : center;
+  width            : 100%;
+}
+
+.content-wrapper {
+  display          : flex;
+  flex-direction   : column;
+}
+
+.food-title {
+  color            : var(--color-neutral-800, $primary-color);
+  text-align       : center;
+  letter-spacing   : 0.3px;
+  padding          : 3px;
+  font             : 600 30px $font-family, sans-serif;
+}
+
+.description-wrapper {
+  display          : flex;
+  margin-top       : 8px;
+  flex-direction   : column;
+}
+
+.food-description {
+  color            : $gray-color;
+  letter-spacing   : 0.28px;
+  font             : 300 22px $font-family, sans-serif;
+}
+
+.price-order-wrapper {
+  display          : flex;
+  justify-content  : space-between;
+  gap              : 20px;
+  text-align       : center;
+  line-height      : 130%;
+  padding-top      : 20px;
+}
+
+.food-price {
+  color            : var(--color-neutral-800, $primary-color);
+  letter-spacing   : 0.44px;
+  padding          : 8px;
+  font             : 700 26px $font-family, sans-serif;
+}
+
+.order-button {
+  border-radius    : 8px;
+  background-color : var(--color-neutral-800, $primary-color);
+  color            : var(--reply-bg, $white-color);
+  letter-spacing   : -0.28px;
+  margin-left      : 16px;
+  padding          : 8px 32px;
+  font             : 500 18px $font-family, sans-serif;
+  cursor           : pointer;
+  border           : none;
+  text-align       : center;
+}
+
+@media (max-width: 640px) {
+  .food-card,
+  .food-image {
+    display        : none;
+  }
+}

@@ -1,5 +1,7 @@
 ﻿using IBusiness.Schema_Generico.CRUD;
+using RequestResponseModels.Request.CloudinaryReq;
 using RequestResponseModels.Request.Schema_Generico.Imagenes;
+using RequestResponseModels.Response.CloudinaryRes;
 using RequestResponseModels.Response.Schema_Generico.Imagenes;
 using System;
 using System.Collections.Generic;
@@ -11,5 +13,6 @@ namespace IBusiness.Schema_Generico.Imagenes
 {
     public interface IImagenesBusiness : ICrudBusiness<ImagenesRequest, ImagenesResponse>
     {
+        Task<UploadImageResponse> UploadImageAsync(UploadImageRequest request);
     }
 }

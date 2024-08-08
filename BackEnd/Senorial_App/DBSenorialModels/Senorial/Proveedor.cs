@@ -20,8 +20,8 @@ public partial class Proveedor
     [StringLength(50)]
     public string? Vende { get; set; }
 
-    [InverseProperty("IdProveedorNavigation")]
-    public virtual ICollection<Compra> Compras { get; set; } = new List<Compra>();
+    //[InverseProperty("IdProveedorNavigation")]
+    //public virtual ICollection<Compra> Compras { get; set; } = new List<Compra>();
 
     [ForeignKey("IdPersona")]
     [InverseProperty("Proveedors")]

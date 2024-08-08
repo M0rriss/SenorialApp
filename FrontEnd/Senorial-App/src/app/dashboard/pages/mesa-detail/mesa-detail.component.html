@@ -1,0 +1,88 @@
+<div class="main-container">
+  <side-bar></side-bar>
+  <main class="content">
+    <section class="order-summary">
+      <div class="order-content-wrapper">
+        <div class="order-content">
+          <div class="order-details">
+            <div class="order-items">
+              <div class="table-info">
+                <div class="table-number">Mesa 1</div>
+                <div class="table-total">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-item">
+                <div class="item-name">1x Combo</div>
+                <div class="item-price">S/.68.00</div>
+              </div>
+              <div class="order-separator"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="order-summary-footer">
+          <div class="total-amount">Monto Total: S/.68.00</div>
+          <div class="attendant-info">Atendido Por : Victor</div>
+          <div class="receipt-options">
+            <div
+              class="receipt-option"
+              [class.receipt-option-active]="selectedReceiptOption === 'Factura'"
+              (click)="selectOption('Factura')"
+            >
+              Factura
+            </div>
+            <div
+              class="receipt-option"
+              [class.receipt-option-active]="selectedReceiptOption === 'Boleta'"
+              (click)="selectOption('Boleta')"
+            >
+              Boleta
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+</div>

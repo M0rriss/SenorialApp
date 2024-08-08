@@ -1,0 +1,80 @@
+<ng-template [ngIf]="isLogin">
+    <!-- Login Form -->
+    <section class="login-container">
+      <div class="login-content">
+        <div class="auth-options">
+          <div class="btn login-btn active" (click)="setActiveForm('login')">Iniciar Sesión</div>
+          <div class="btn register-btn" (click)="setActiveForm('register')">Registrarse</div>
+        </div>
+        <div class="form-body">
+          <p class="login-description">
+            Accede a los beneficios que tenemos para ti ingresando con tu cuenta
+          </p>
+          <form [formGroup]="loginForm" (submit)="logIn()">
+            <label for="login-email" class="visually-hidden">Email del cliente</label>
+            <input formControlName="email" type="email" id="login-email" class="email-input" placeholder="Email del cliente" />
+            <div class="password-container">
+              <label for="login-password" class="visually-hidden">Password</label>
+  <input formControlName="password" type="password" id="login-password" class="password-input" placeholder="Password" />
+  <i class="fa-solid fa-eye password-icon" id="toggle-login-password" (click)="togglePasswordVisibility('login-password', 'toggle-login-password')"></i>
+            </div>
+            <div *ngIf="loginError" class="error-text">Lo sentimos ingrese bien la credenciales</div>
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <div class="social-login">
+              <span class="social-login-text">Inicia sesión con:</span>
+              <img src="./googleIconWeb.svg" alt="Google Icon" class="google-icon">
+            </div>
+            <button type="submit" class="submit-btn"[disabled]="loginForm.status== 'VALID'">Ingresar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+
+  <ng-template [ngIf]="!isLogin">
+    <!-- Signup Form -->
+    <section class="registration-container">
+      <div class="registration-content">
+        <div class="tab-container">
+          <div class="btn tab-login" (click)="setActiveForm('login')">Iniciar Sesión</div>
+          <div class="btn tab-register active" (click)="setActiveForm('register')">Registrarse</div>
+        </div>
+        <div class="form-body">
+          <p class="registration-description">
+            Accede a los beneficios que tenemos para ti ingresando con tu cuenta
+          </p>
+          <form>
+            <label for="name" class="visually-hidden">Nombre</label>
+            <input type="text" id="name" class="input-field" placeholder="Nombre" />
+            <label for="surname" class="visually-hidden">Apellidos</label>
+            <input type="text" id="surname" class="input-field" placeholder="Apellidos" />
+            <div class="input-field-select select-wrapper">
+              <label for="document-type" class="visually-hidden">Tipo de Documento</label>
+              <select id="document-type">
+                <option>Tipo de Documento</option>
+                <option>DNI</option>
+                <option>Pasaporte</option>
+              </select>
+              <i class="fa-solid fa-sort-down select-icon"></i>
+            </div>
+            <label for="document-number" class="visually-hidden">Numero de documento</label>
+            <input type="text" id="document-number" class="input-field" placeholder="Numero de documento" />
+            <label for="phone" class="visually-hidden">Celular</label>
+            <input type="tel" id="phone" class="input-field" placeholder="Celular" />
+            <label for="email" class="visually-hidden">Correo Electronico</label>
+            <input type="email" id="email" class="input-field" placeholder="Correo Electronico" />
+            <div class="password-container">
+              <label for="login-password" class="visually-hidden">Password</label>
+  <input formControlName="password" type="password" id="login-password" class="password-input" placeholder="Password" />
+  <i class="fa-solid fa-eye password-icon" id="toggle-login-password" (click)="togglePasswordVisibility('login-password', 'toggle-login-password')"></i>
+            </div>
+            <div class="social-login">
+              <span class="social-login-text">Regístrate con:</span>
+              <img src="./googleIconWeb.svg" alt="Google Icon" class="google-icon">
+            </div>
+            <button type="submit" class="register-button">Registrarse</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </ng-template>

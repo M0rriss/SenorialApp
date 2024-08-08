@@ -1,0 +1,94 @@
+<section class="users-section">
+  <side-bar></side-bar>
+  <div class="content">
+    <h1 class="section-title">Usuarios</h1>
+    <table class="users-table">
+      <thead>
+        <tr class="table-header">
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Telefono</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="user-row">
+          <td>Felix Lujan</td>
+          <td>Desarrollador</td>
+          <td>930418642</td>
+          <td class="status-container">
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider round"></span>
+            </label>
+            <span class="status-label">Activo</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <i class="add-icon fa-solid fa-circle-plus" (click)="addUser()"></i>
+              <i class="edit-icon fa-regular fa-pen-to-square" (click)="editUser()"></i>
+              <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
+            </div>
+          </td>
+        </tr>
+        <!-- Más filas según sea necesario -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Modal para agregar/editar usuario -->
+<div class="dialog-overlay" [ngClass]="{'show': isModalOpen}">
+  <div class="add-user-dialog">
+    <span class="close-button" (click)="closeDialog()">&times;</span>
+    <h2 class="dialog-title">{{modalTitle}}</h2>
+    <form>
+      <div class="image-upload-container" (click)="triggerFileInput()">
+        <div class="upload-image-preview">
+          <i class="fa-regular fa-user"></i>
+        </div>
+        <div class="upload-instructions">
+          <p class="drag-instruction">Drag image here or</p>
+          <span class="browse-link" (click)="triggerFileInput()">Browse image</span>
+          <input type="file" id="fileInput" class="hidden-file-input" (change)="handleFileInput($event)">
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+      </div>
+      <div class="form-row">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+      </div>
+      <div class="form-row">
+        <label for="role" class="form-label">Role</label>
+        <input type="text" id="role" class="form-input" placeholder="Enter your role" required>
+      </div>
+      <div class="form-row">
+        <label for="contact" class="form-label">Contact Number</label>
+        <input type="tel" id="contact" class="form-input" placeholder="Enter your contact number" required>
+      </div>
+      <div class="form-row">
+        <label for="state" class="form-label">State</label>
+        <input type="text" id="state" class="form-input" value="Activo" required>
+      </div>
+      <div class="action-buttons">
+        <button type="button" class="button discard-button" (click)="closeDialog()">Descartar</button>
+        <button type="submit" class="button add-user-button">{{modalButtonText}}</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Confirm Dialog -->
+<div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
+  <div class="confirm-dialog">
+    <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar el usuario?</h2>
+    <p class="confirm-dialog-description">¿Estás seguro que quieres eliminarlo?</p>
+    <div class="confirm-dialog-button-container">
+      <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button>
+      <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">No</button>
+    </div>
+  </div>
+</div>

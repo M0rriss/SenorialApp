@@ -16,7 +16,19 @@ public partial class MetodoPago
     [Column("descripcion")]
     [StringLength(100)]
     public string? Descripcion { get; set; }
+    [Column("estado")]
+    [StringLength(100)]
+    public bool Estado{ get; set; }
 
     [InverseProperty("IdMetodoNavigation")]
     public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
+    [NotMapped]
+    // Propiedad calculada para obtener el estado como cadena
+    public string EstadoDescripcion
+    {
+        get
+        {
+            return Estado ? "Activo" : "Inactivo";
+        }
+    }
 }

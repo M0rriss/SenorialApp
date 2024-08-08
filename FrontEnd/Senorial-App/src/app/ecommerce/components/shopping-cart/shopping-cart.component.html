@@ -1,0 +1,71 @@
+<!-- Estado de carrito vacío -->
+<ng-container *ngIf="cartItems.length === 0; else cartWithItems">
+  <section class="shopping-cart-container cart-container empty">
+    <header class="cart-header">
+      <h2 class="cart-title">Tu Carrito</h2>
+      <div class="cart-icon-wrapper">
+        <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="closeShop()"></i>
+      </div>
+    </header>
+    <div class="cart-divider" role="separator"></div>
+    <p class="cart-empty-message">
+      Tu canasta está vacía
+      <i class="fa-solid fa-trash cart-empty-icon"></i>
+    </p>
+  </section>
+</ng-container>
+
+<!-- Estado de carrito con items -->
+<ng-template #cartWithItems>
+  <section class="shopping-cart-container cart-container items">
+    <header class="cart-header">
+      <h2 class="cart-title">Tu Carrito</h2>
+      <div class="cart-icon-wrapper">
+        <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="closeShop()"></i>
+      </div>
+    </header>
+    <div class="cart-divider" role="separator"></div>
+
+    <article *ngFor="let item of cartItems" class="cart-item">
+      <img [src]="item.image" alt="Item Image" class="item-image" />
+      <div class="item-details">
+        <div class="item-header">
+          <h3>{{ item.quantity }} x {{ item.name }}</h3>
+          <i class="fa-solid fa-trash remove-icon" (click)="removeItem(item)"></i>
+        </div>
+        <div class="item-footer">
+          <p class="item-price">S/. {{ item.price }}</p>
+          <div class="add-more">
+            <div class="add-more-icons">
+              <i class="fa-solid fa-circle-minus add-more-icon" (click)="decrementQuantity(item)"></i>
+              <span>{{ item.quantity }}</span>
+              <i class="fa-solid fa-circle-plus add-more-icon" (click)="incrementQuantity(item)"></i>
+            </div>
+            <p>Agregar una Unidad más</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="cart-divider" role="separator"></div>
+
+    <div class="subtotal">
+      <span>Subtotal</span>
+      <span>S/. {{ subtotal }}</span>
+    </div>
+    <div class="cart-divider" role="separator"></div>
+    <div class="total">
+      <span>Total a pagar</span>
+      <span>S/. {{ total }}</span>
+    </div>
+    <div class="checkout-buttons">
+      <button routerLink="/store-pickup" class="checkout-button">
+        <span class="button-text">Ir a pagar</span>
+        <span class="button-price">S/. {{ total }}</span>
+      </button>
+      <button class="continue-shopping" (click)="closeShop()">
+        Seguir Comprando
+      </button>
+    </div>
+  </section>
+</ng-template>

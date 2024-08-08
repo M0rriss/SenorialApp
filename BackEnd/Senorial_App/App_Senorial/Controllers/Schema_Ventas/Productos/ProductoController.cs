@@ -3,6 +3,7 @@ using Business.Schema_Almacen.Categorias;
 using Business.Schema_Ventas.Productos;
 using IBusiness.Schema_Almacen.Categorias;
 using IBusiness.Schema_Ventas.Productos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
@@ -10,12 +11,14 @@ using RequestResponseModels.Request.Schema_Ventas.Productos;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using RequestResponseModels.Response.Schema_Ventas.Mesas;
+using RequestResponseModels.Response.Schema_Ventas.Productos;
 using System.Net;
 
 namespace App_Senorial.Controllers.Schema_Ventas.Productos
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -87,24 +90,47 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
             var result = await _productoBusiness.Update(request);
             return Ok(result);
         }
-        /// <summary>
-        /// ELIMINA EL REGISTRO DE LA TABLA FILTRADO POR EL PRIMARY KEY
-        /// </summary>
-        /// <param name="id">PRIMARY KEY</param>
-        /// <returns>cantidad de registros eliminados</returns>
-        [HttpDelete("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoRequest))]
+        #endregion CRUD METHODS
+        #region UI CRUD
+        [HttpGet, Route("Listado")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<ProductoUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> UiGetProducto()
         {
-            var result = await _productoBusiness.Delete(id);
+            var response = await _productoBusiness.UiGetProducto();
+            return Ok(response);
+        }
+        [HttpPost, Route("Crear/Producto")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> CreateUi([FromBody] ProductoUiRequest request)
+        {
+            var result = await _productoBusiness.InsertUiProducto(request);
             return Ok(result);
         }
-        #endregion CRUD METHODS
 
+        [HttpPut, Route("Actualizar/Producto")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> UpdateUi([FromBody] ProductoUpdateUiRequest request)
+        {
+            var result = await _productoBusiness.UpdateUiProducto(request);
+            return Ok(result);
+        }
 
-
+        [HttpDelete("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
+        public async Task<ActionResult> DeleteUi(int id)
+        {
+            var result = await _productoBusiness.DeleteUiProducto(id);
+            return Ok(result);
+        }
+        #endregion UI CRUD
 
 
     }

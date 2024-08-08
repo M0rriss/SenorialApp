@@ -42,6 +42,7 @@ namespace Services.Gmail
             using (var mail = new MailMessage())
             using (var smtpClient = new SmtpClient(SmtpServer, SmtpPort))
             {
+
                 mail.From = new MailAddress(SenderEmail, SenderName);
                 mail.To.Add(destino);
                 mail.Subject = "Restaurar Contraseña";
@@ -53,46 +54,46 @@ namespace Services.Gmail
                         <title>Recuperación de Contraseña - Señorial</title>
                     </head>
                     <body style=""font-family: Arial, sans-serif; background-color: #f0f0f0; padding: 20px;"">
-                        <div style=""max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);"">
-                            <img src=""https://logo.png"" alt=""Señorial Logo"" style=""max-width: 100%; height: auto; margin-bottom: 20px;"">
-                            <h2 style=""color: #FF910F;"">Recuperación de Contraseña</h2>
+                        <div style=""max-width: 500px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);"">
+                            <div style=""text-align: center;"">
+                                <img src=""https://res.cloudinary.com/dilxrtdwx/image/upload/fl_preserve_transparency/v1723063595/senorial_folder_img/senorial_folder_img/2d207588-83b8-4f94-98f7-644f2490f765_SenorialLogoBW.svg.jpg?_s=public-apps"" alt=""Señorial Logo"" style=""max-width: 100px; height: auto; margin-bottom: 10px;"">
+                            </div>
+                            <h2 style=""color: #FF910F; text-align: center; margin-top: 5px;"">Recuperación de Contraseña</h2>
                             <p>Correo {destino},</p>
                             <p>Has solicitado recuperar tu contraseña de Señorial. Utiliza el siguiente código de verificación para continuar:</p>
                             <p style=""text-align: center; font-size: 2em; margin-top: 20px; font-weight: bold; color: #333333;"">
                                 <span style=""border: 1px solid #ccc; padding: 10px 20px; border-radius: 5px;"">{codigoOtp}</span>
                             </p>
-                            <p>Si no solicitaste este cambio, por favor ignora este correo.</p>
-                            <p>¡Gracias por utilizar Señorial!</p>
-                            <p style=""font-size: 0.8em; color: #999999;"">Este es un correo generado automáticamente, por favor no respondas a este mensaje.</p>
+                            <p style=""text-align: center;"">Si no solicitaste este cambio, por favor ignora este correo.</p>
+                            <p style=""text-align: center;"">¡Gracias por utilizar Señorial!</p>
+                            <p style=""font-size: 0.8em; color: #999999; text-align: center;"">Este es un correo generado automáticamente, por favor no respondas a este mensaje.</p>
                         </div>
                     </body>
                     </html>";
                 mail.IsBodyHtml = true;
 
-                // Configurar las credenciales y SSL para el cliente SMTP
                 smtpClient.UseDefaultCredentials = false;
                 smtpClient.Credentials = new NetworkCredential(SmtpUsername, SmtpPassword);
                 smtpClient.EnableSsl = EnableSsl;
 
-                // Enviar el correo electrónico
                 await smtpClient.SendMailAsync(mail);
             }
-        }
 
-        // Método para validar el código OTP recibido
-        //public bool ValidateOtp(string destino, string codigoOtp)
-        //{
-        //    if (_otpStorage.TryGetValue(destino, out var otpData))
-        //    {
-        //        // Verificar si el código OTP coincide y no ha expirado
-        //        if (otpData.Otp == codigoOtp && otpData.ExpirationTime > DateTime.UtcNow)
-        //        {
-        //            // Limpiar el código OTP después de usarlo
-        //            _otpStorage.Remove(destino);
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //} Analizar mas adelante
+            // Método para validar el código OTP recibido
+            //public bool ValidateOtp(string destino, string codigoOtp)
+            //{
+            //    if (_otpStorage.TryGetValue(destino, out var otpData))
+            //    {
+            //        // Verificar si el código OTP coincide y no ha expirado
+            //        if (otpData.Otp == codigoOtp && otpData.ExpirationTime > DateTime.UtcNow)
+            //        {
+            //            // Limpiar el código OTP después de usarlo
+            //            _otpStorage.Remove(destino);
+            //            return true;
+            //        }
+            //    }
+            //    return false;
+            //} Analizar mas adelante
+        }
     }
 }

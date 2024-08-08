@@ -1,0 +1,96 @@
+<div class="container">
+  <ecommerce-nav-bar></ecommerce-nav-bar>
+  <main>
+    <section class="payment-section">
+      <h2 class="payment-title">Forma de Pago</h2>
+      <div class="payment-container">
+        <div class="payment-content">
+          <div class="payment-options">
+            <div class="payment-card">
+              <h3 class="payment-heading">Elige un medio de pago</h3>
+              <div class="payment-methods">
+                <div class="payment-method-list">
+                  <div class="credit-card-option">
+                    <div class="credit-card-header">
+                      <label class="radio-button">
+                        <input type="radio" id="creditCard" name="paymentMethod" [(ngModel)]="selectedPaymentMethod" value="creditCard">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label for="creditCard" class="custom-radio-label">Tarjeta de crédito o débito</label>
+                    </div>
+                    <div class="credit-card-logos">
+                      <img src="./visa.svg" alt="Credit card logo 1" class="credit-card-logo">
+                      <img src="./mastercard.svg" alt="Credit card logo 2" class="credit-card-logo">
+                    </div>
+                  </div>
+                  <div class="yape-option">
+                    <div class="yape-content">
+                      <div class="yape-header">
+                        <label class="radio-button">
+                          <input type="radio" id="yape" name="paymentMethod" [(ngModel)]="selectedPaymentMethod" value="yape">
+                          <span class="checkmark"></span>
+                        </label>
+                        <label for="yape" class="custom-radio-label">Pago con Yape</label>
+                      </div>
+                      <img src="./yape.svg" alt="Yape logo" class="yape-logo">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="continue-button" (click)="showForm = true" [disabled]="!selectedPaymentMethod">Continuar</button>
+            </div>
+          </div>
+          <ng-container *ngIf="showForm">
+            <div class="payment-form" *ngIf="selectedPaymentMethod === 'creditCard'">
+              <div class="payment-form-card">
+                <div class="payment-reminder">
+                  <img src="./SenorialLogoBW.svg" alt="Payment reminder icon" class="reminder-icon">
+                  <p class="reminder-text">Recuerda activar las compras por internet con tu banco</p>
+                </div>
+                <form>
+                  <input type="text" id="cardNumber" class="form-input" placeholder="Número De Tarjeta">
+                  <div class="input-group">
+                    <input type="text" id="expiryDate" class="form-input" placeholder="MM/AA">
+                    <input type="text" id="cvv" class="form-input" placeholder="CVV">
+                  </div>
+                  <div class="input-group">
+                    <input type="text" id="firstName" class="form-input" placeholder="Nombres">
+                    <input type="text" id="lastName" class="form-input" placeholder="Apellidos">
+                  </div>
+                  <input type="email" id="email" class="form-input" placeholder="Correo">
+                  <button type="submit" class="pay-button">Pagar</button>
+                </form>
+                <div class="card-logos">
+                  <img src="./visa.svg" alt="Credit card logo 1" class="credit-card-logo">
+                  <img src="./mastercard.svg" alt="Credit card logo 2" class="credit-card-logo">
+                </div>
+              </div>
+            </div>
+            <div class="payment-form" *ngIf="selectedPaymentMethod === 'yape'">
+              <div class="payment-form-card">
+                <div class="payment-reminder">
+                  <img src="./SenorialLogoBW.svg" alt="Payment reminder icon" class="reminder-icon">
+                </div>
+                <form>
+                  <input type="text" id="yapeNumber" class="form-input" placeholder="Ingresa tu celular Yape">
+                  <div class="input-group">
+                    <input type="text" id="yapeCode" class="form-input" placeholder="Código de aprobación">
+                  </div>
+                  <p class="form-text">Encuéntralo en el menú de Yape</p>
+                  <button type="submit" class="yape-button">Yapear</button>
+                </form>
+                <img src="./yape.svg" alt="Yape logo" class="yape-logo-bottom">
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer-ecommerce></footer-ecommerce>
+  </div>
+
+
+
+

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Insumos;
+using Business.Schema_Generico.UnidadMediciones;
 using IBusiness.Schema_Almacen.Insumos;
+using IBusiness.Schema_Generico.UnidadMediciones;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +22,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
         private readonly IInsumoBusiness _insumoBusiness;
+        private readonly IUnidadMedicionBusiness _unidadMedicionBusiness;
         private readonly IMapper _mapper;
         /// <summary>
         /// CONSTRUCTOR
@@ -29,30 +32,22 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
         {
             _mapper = mapper;
             _insumoBusiness = new InsumoBusiness(mapper);
+            _unidadMedicionBusiness = new UnidadMedicionBusiness(mapper);
         }
         #endregion DECLARACION DE VARIABLE Y CONSTRUCTOR
         #region CRUD METHODS
-        /// <summary>
-        /// RETORNA TODOS LOS REGISTROS DE LA TABLA Insumo
-        /// </summary>
-        /// <returns>List-InsumoResponse</returns>
-        
-        [HttpGet,Route("Listado")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<InsumoResponse>))]
+        [HttpGet, Route("Listado")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<InsumoUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> UiGetInsumo()
         {
-            var result = await _insumoBusiness.GetAll();
-            return Ok(result);
+            var response = await _insumoBusiness.UiGetInsumo();
+            return Ok(response);
         }
-        /// <summary>
-        /// RETORNA EL REGISTRO DE LA TABLA FILTRADO POR EL PRIMARY KEY
-        /// </summary>
-        /// <param name="id">PRIMARY KEY</param>
-        /// <returns>InsumoResponse</returns>
+
         [HttpGet("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoResponse))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoUiResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Get(int id)
@@ -60,46 +55,34 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
             var result = await _insumoBusiness.GetById(id);
             return Ok(result);
         }
-        /// <summary>
-        /// INSERTA UN REGISTRO EN LA TABLA Insumo
-        /// </summary>
-        /// <param name="request">InsumoRequest</param>
-        /// <returns>InsumoResponse</returns>
-        [HttpPost,Route("Crear/Insumo")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoResponse))]
+
+        [HttpPost, Route("Crear/Insumo")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoUiResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Create([FromBody] InsumoRequest request)
+        public async Task<ActionResult> Create([FromBody] InsumoUiRequest request)
         {
-            var result = await _insumoBusiness.Create(request);
+            var result = await _insumoBusiness.InsertUiInsumo(request);
             return Ok(result);
         }
-        /// <summary>
-        /// ACTUALIZA UN REGISTRO EN LA TABLA Insumo
-        /// </summary>
-        /// <param name="request">InsumoRequest</param>
-        /// <returns>InsumoResponse</returns>
+
         [HttpPut, Route("Actualizar/Insumo")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoResponse))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoUiResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Update([FromBody] InsumoRequest request)
+        public async Task<ActionResult> Update([FromBody] InsumoUpdateUiRequest request)
         {
-            var result = await _insumoBusiness.Update(request);
+            var result = await _insumoBusiness.UpdateUiInsumo(request);
             return Ok(result);
         }
-        /// <summary>
-        /// ELIMINA EL REGISTRO DE LA TABLA FILTRADO POR EL PRIMARY KEY
-        /// </summary>
-        /// <param name="id">PRIMARY KEY</param>
-        /// <returns>cantidad de registros eliminados</returns>
+
         [HttpDelete("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(InsumoResponse))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(bool))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Delete(int id)
         {
-            var result = await _insumoBusiness.Delete(id);
+            var result = await _insumoBusiness.DeleteUiInsumo(id);
             return Ok(result);
         }
         #endregion CRUD METHODS

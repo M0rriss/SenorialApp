@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Business.Schema_Ventas.Empleados;
 using DBSenorialModels.Senorial;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using IBusiness.Schema_Ventas.Empleados;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Ventas.Empleados;
@@ -13,6 +15,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmpleadoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -34,13 +37,13 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// </summary>
         /// <returns>List-CategoriaResponse</returns>
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<EmpleadoResponse>))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<EmpleadosUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Get()
         {
-            var result = _empleadoBusiness.UiGetEmpleado();
-            return Ok(result);
+            var empleados = await _empleadoBusiness.UiGetEmpleado();
+            return Ok(empleados);
         }
         /// <summary>
         /// Inserta un nuevo empleado.
@@ -61,7 +64,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// </summary>
         /// <param name="request">Datos actualizados del empleado.</param>
         /// <returns>EmpleadoUiResponse actualizado.</returns>
-        [HttpPut("{idEmpleado}")]
+        [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(EmpleadosUiResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
@@ -81,8 +84,8 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Delete(int idEmpleado)
         {
-            await _empleadoBusiness.DeleteUiEmpleado(idEmpleado);
-            return Ok("Empleado eliminado correctamente.");
+            var result = await _empleadoBusiness.DeleteUiEmpleado(idEmpleado);
+            return Ok(result);
         }
     }
 }

@@ -1,0 +1,329 @@
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+
+main{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+    transform: scale(0.9);
+    padding: 0 24px;
+    margin: 20px;
+    justify-content: center;
+}
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
+
+.account-section {
+  margin-top       : 128px;
+}
+
+.account-container {
+  display          : flex;
+  gap              : 20px;
+}
+
+.sidebar {
+  display          : flex;
+  flex-direction   : column;
+  width            : 26%;
+}
+
+.sidebar-content {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+  border-radius    : 38px;
+  border           : 1px solid rgba(0, 0, 0, 0.5);
+  background-color : $white-color;
+  font-size        : 24px;
+  color            : $primary-color;
+  padding          : 29px 22px;
+}
+
+.sidebar-title {
+  font-family      : $font-family;
+  font-weight      : 800;
+}
+
+.sidebar-divider {
+  border           : 2px solid $gray-color;
+  background-color : $gray-color;
+  align-self       : center;
+  margin-top       : 6px;
+  width            : 209px;
+  height           : 2px;
+}
+
+.logout-button {
+  font-family      : 'Roboto', sans-serif;
+  justify-content  : center;
+  border-radius    : 10.18px;
+  background-color : $secondary-color;
+  margin-top       : 50px;
+  color            : $white-color;
+  font-weight      : 700;
+  line-height      : 119%;
+  padding          : 16px 2px;
+  border           : none;
+  font-size        : 24px;
+}
+
+.main-content {
+  display          : flex;
+  flex-direction   : column;
+  width            : 74%;
+}
+
+.account-details {
+  display          : flex;
+  flex-grow        : 1;
+  flex-direction   : column;
+  justify-content  : center;
+  border-radius    : 36px;
+  border           : 1px solid #afafaf;
+  background-color : $white-color;
+  padding          : 36px;
+}
+
+.account-title {
+  color            : $primary-color;
+  align-self       : flex-start;
+  margin-left      : 10px;
+  font             : 800 30px $font-family, sans-serif;
+}
+
+.form-container {
+  margin-top       : 35px;
+}
+
+.form-row {
+  display          : flex;
+  gap              : 20px;
+}
+
+.form-column {
+  display          : flex;
+  flex-direction   : column;
+  width            : 50%;
+}
+
+.form-group {
+  display          : flex;
+  flex-grow        : 1;
+  flex-direction   : column;
+  font-size        : 19px;
+  color            : #989191;
+  font-weight      : 400;
+  letter-spacing   : 0.96px;
+  line-height      : 150%;
+}
+
+.form-label {
+  color            : $primary-color;
+  font-family      : 'Roboto', sans-serif;
+  align-self       : flex-start;
+  margin-left      : 10px;
+  font             : 600 24px $font-family, sans-serif;
+}
+
+.form-input,
+input[type="password"] {
+  font-family      : 'Roboto', sans-serif;
+  border-radius    : 20px;
+  border           : 2px solid $gray-color;
+  margin-top       : 12px;
+  padding          : 10px 24px;
+  font-size        : 0.9em;
+
+  &::placeholder {
+    font-size      : 0.9em; // Ajuste de tamaño del placeholder
+    color          : $gray-color;
+  }
+}
+
+.form-input-with-icon {
+  position         : relative;
+  display          : flex;
+  align-items      : center;
+  font-family      : 'Roboto', sans-serif;
+  border-radius    : 20px;
+  border           : 2px solid $gray-color;
+  margin-top       : 12px;
+  padding          : 10px 24px;
+  font-size        : 0.9em;
+
+  .form-select {
+    width          : 100%;
+    border         : none;
+    outline        : none;
+    font-size      : inherit;
+    font-family    : inherit;
+    color          : $primary-color;
+    background     : transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance     : none;
+    padding-right  : 30px; // Espacio para el icono
+  }
+
+  .icon {
+    position       : absolute;
+    right          : 16px;
+    pointer-events : none;
+    color          : $secondary-color;
+  }
+}
+
+.change-password {
+  display          : flex;
+  align-items      : center;
+  margin-top       : 12px;
+  gap              : 20px;
+  color            : $primary-color;
+  padding          : 10px 17px;
+
+  img {
+    width          : 28px;
+  }
+
+  input[type="radio"] {
+    appearance     : none;
+    border         : 1px solid $gray-color;
+    border-radius  : 50%;
+    width          : 24px;
+    height         : 24px;
+    margin-right   : 8px;
+    cursor         : pointer;
+    position       : relative;
+
+    &:checked::after {
+      content      : '';
+      position     : absolute;
+      top          : 4px;
+      left         : 4px;
+      width        : 14px;
+      height       : 14px;
+      background-color : $secondary-color;
+      border-radius : 50%;
+    }
+  }
+}
+
+.icon {
+  width            : 28px;
+  align-self       : flex-start;
+}
+
+.save-button-container {
+  text-align: center;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.save-button {
+  font-family      : 'Roboto', sans-serif;
+  justify-content  : center;
+  border-radius    : 10.18px;
+  background-color : $secondary-color;
+  color            : $white-color;
+  padding          : 10px 43px;
+  font-weight      : 700;
+  font-size        : 25px;
+  line-height      : 143%;
+  border-style     : none;
+}
+
+@media (max-width: 991px) {
+  .account-section {
+    max-width      : 100%;
+    margin-top     : 40px;
+  }
+
+  .account-container {
+    flex-direction : column;
+    align-items    : stretch;
+    gap            : 0;
+  }
+
+  .sidebar,
+  .main-content {
+    width          : 100%;
+  }
+
+  .sidebar-content {
+    margin-top     : 40px;
+    padding        : 0 20px;
+  }
+
+  .sidebar-link,
+  .logout-button {
+    margin-top     : 40px;
+  }
+
+  .account-details {
+    max-width      : 100%;
+    margin-top     : 10px;
+    padding        : 0 20px;
+  }
+
+  .form-container {
+    max-width      : 100%;
+    padding-right  : 20px;
+  }
+
+  .form-row {
+    flex-direction : column;
+    align-items    : stretch;
+    gap            : 0;
+  }
+
+  .form-column {
+    width          : 100%;
+  }
+
+  .form-group {
+    max-width      : 100%;
+    margin-top     : 40px;
+  }
+
+  .form-input,
+  .form-input-with-icon {
+    max-width      : 100%;
+    white-space    : normal;
+    padding        : 10px 20px;
+  }
+
+  .change-password {
+    flex-wrap      : wrap;
+  }
+
+  .save-button {
+    white-space    : normal;
+    padding        : 10px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar-content,
+  .account-details {
+    display        : none;
+  }
+}
+
+.visually-hidden {
+  position         : absolute;
+  width            : 1px;
+  height           : 1px;
+  padding          : 0;
+  margin           : -1px;
+  overflow         : hidden;
+  clip             : rect(0, 0, 0, 0);
+  white-space      : nowrap;
+  border           : 0;
+}

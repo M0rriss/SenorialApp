@@ -2,7 +2,9 @@
 using DBSenorialModels.Senorial;
 using IBusiness.Schema_Almacen.Insumos;
 using IRepository.Schema_Almacen.Insumos;
+using IRepository.Schema_Generico.UnidadMediciones;
 using Repository.Schema_Almacen.Insumos;
+using Repository.Schema_Generico.UnidadMediciones;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.Insumo;
@@ -19,11 +21,13 @@ namespace Business.Schema_Almacen.Insumos
     {
         #region Dependency Injecction
         private readonly IInsumoRepository _insumoRepository;
+        private readonly IUnidadMedicionRepository _unidadMedicionRepository;
         private readonly IMapper _mapper;
         public InsumoBusiness(IMapper mapper)
         {
             _mapper = mapper;
             _insumoRepository = new InsumoRepository();
+            _unidadMedicionRepository = new UnidadMedicionRepository();
         }
         #endregion
         #region CRUD
@@ -97,6 +101,80 @@ namespace Business.Schema_Almacen.Insumos
             _insumoRepository.Dispose();
         }
 
+        #endregion
+        #region UI CRUD
+        public async Task<List<InsumoUiRequest>> UiGetInsumo()
+        {
+            return await _insumoRepository.UiInsumo();
+        }
+
+        public async Task<InsumoUiResponse> InsertUiInsumo(InsumoUiRequest request)
+        {
+            var existingNombre = await _insumoRepository.BuscarNombre(request.InsumoNombre);
+            if (existingNombre != null)
+            {
+                throw new ArgumentException("El nombre del insumo ya está registrado.");
+            }
+
+            var unidadMedida = await _unidadMedicionRepository.ObtenerUnidadMedidaPorNombre(request.UnidadMedida);
+            if (unidadMedida == null)
+            {
+                throw new ArgumentException("La unidad de medida especificada no existe.");
+            }
+
+            var insumo = new Insumo
+            {
+                Nombre = request.InsumoNombre,
+                IdUnidad = unidadMedida.IdUnidad
+            };
+
+            var insumoCreado = await _insumoRepository.Create(insumo);
+            var response = _mapper.Map<InsumoUiResponse>(insumoCreado);
+            response.UnidadMedida = unidadMedida.Abreviacion;
+            return response;
+        }
+
+        public async Task<InsumoUiResponse> UpdateUiInsumo(InsumoUpdateUiRequest request)
+        {
+            var existingInsumo = await _insumoRepository.BuscarporId(request.IdInsumo);
+            if (existingInsumo == null)
+            {
+                throw new ArgumentException(nameof(existingInsumo), "Insumo no encontrado");
+            }
+
+            var existingNombre = await _insumoRepository.BuscarNombre(request.InsumoNombre);
+            if (existingNombre != null && existingNombre.IdInsumo != existingInsumo.IdInsumo)
+            {
+                throw new ArgumentException("El nombre del insumo ya está registrado.");
+            }
+
+            var unidadMedida = await _unidadMedicionRepository.ObtenerUnidadMedidaPorNombre(request.UnidadMedida);
+            if (unidadMedida == null)
+            {
+                throw new ArgumentException("La unidad de medida especificada no existe.");
+            }
+
+            existingInsumo.Nombre = request.InsumoNombre;
+            existingInsumo.IdUnidad = unidadMedida.IdUnidad;
+
+            var insumoActualizado = await _insumoRepository.Update(existingInsumo);
+            var response = _mapper.Map<InsumoUiResponse>(insumoActualizado);
+            response.UnidadMedida = unidadMedida.Abreviacion;
+
+            return response;
+        }
+
+        public async Task<bool> DeleteUiInsumo(int idInsumo)
+        {
+            var insumo = await _insumoRepository.GetById(idInsumo);
+            if (insumo == null)
+            {
+                throw new ArgumentNullException(nameof(insumo), "Insumo no encontrado");
+            }
+
+            await _insumoRepository.Delete(idInsumo);
+            return true;
+        }
         #endregion
     }
 }

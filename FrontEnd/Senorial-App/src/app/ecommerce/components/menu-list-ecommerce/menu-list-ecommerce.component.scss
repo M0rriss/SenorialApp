@@ -1,0 +1,78 @@
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+
+body {
+  font-family      : 'Roboto', sans-serif;
+}
+
+
+.personal-info-card {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+  max-width        : 250px;
+  padding          : 10px 20px;
+  border-radius    : 0 0 24px 24px;
+  box-shadow       : 0 1px 1px rgba(0, 0, 0, 0.25);
+  background-color : $white-color;
+  font-size        : 22px;
+  color            : $primary-color;
+  font-weight      : 600;
+  text-align       : center;
+  line-height      : 120%;
+  position: absolute;
+  top: 100px; /* Ajusta la posición para que quede debajo del header */
+  left:18%; /* Para centrar horizontalmente */
+  transform: translateX(-50%); /* Ajuste fino para centrar */
+  z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+.location-badge,
+.contact-info,
+.personal-label {
+  display          : flex;
+  justify-content  : center;
+  gap              : 10px;
+  padding          : 10px 80px; /* Added padding for all */
+  border-radius    : 8px;
+  color            : $primary-color;
+  white-space      : nowrap;
+  cursor           : pointer;
+  text-decoration  : none ;
+
+  &:hover {
+    background-color : $secondary-color;
+    color            : $white-color;
+  }
+}
+
+.location-icon,
+.phone-icon {
+  aspect-ratio     : 0.95;
+  object-fit       : auto;
+  object-position  : center;
+  width            : 22px;
+  margin           : auto 0;
+}
+
+.location-text,
+.phone-number,
+.personal-label {
+  font-feature-settings : "clig" off, "liga" off;
+  font-family           : 'Roboto', sans-serif;
+  text-decoration       : none ;
+  color                 : $primary-color;
+
+ &:hover {
+  background-color : $secondary-color;
+  color            : $white-color;
+}
+}
+.divider {
+  border-bottom    : 1px solid $gray-color;
+  width            : 80%;
+  margin           : 10px auto;
+}

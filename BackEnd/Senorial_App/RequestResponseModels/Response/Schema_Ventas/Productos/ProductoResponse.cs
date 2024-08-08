@@ -15,4 +15,12 @@ namespace RequestResponseModels.Response.Schema_Ventas.Productos
         public string Derivar { get; set; }
         public int IdImg { get; set; }
     }
+    public class ProductoUiResponse
+    {
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Derivar { get; set; }
+        public decimal Precio { get; set; }
+        public string Categoria { get; set; }
+    }
 }

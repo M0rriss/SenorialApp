@@ -1,0 +1,97 @@
+<section class="employees-section">
+  <side-bar></side-bar> <!-- Componente de sidebar -->
+  <div class="content">
+    <h1 class="section-title">Empleados</h1>
+    <div class="action-bar">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, telefono o correo" />
+      </div>
+      <div class="buttons">
+        <button class="action-button" (click)="openDialog('add')">Agregar</button>
+        <button class="action-button" (click)="openDialog('edit')">Editar</button>
+      </div>
+    </div>
+    <table class="employees-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Correo</th>
+          <th>Telefono</th>
+          <th>Identificación</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Sucursal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#20462</td>
+          <td>Felix</td>
+          <td>Apellido</td>
+          <td>fifisor-gloglo.com</td>
+          <td>75372286</td>
+          <td>DNI12345678</td>
+          <td>Mozo</td>
+          <td>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider round"></span>
+            </label>
+            <span class="status-label">Activo</span>
+          </td>
+          <td>Pio Pata</td>
+        </tr>
+        <!-- Más filas según sea necesario -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal para agregar/editar empleado -->
+  <div id="employee-modal" class="modal" [ngClass]="{'show': isModalOpen}">
+    <div class="modal-content">
+      <span class="close-button" (click)="closeDialog()">&times;</span>
+      <h2 id="modal-title" class="dialog-title">{{modalTitle}}</h2>
+      <form>
+        <div class="form-row">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" id="name" class="form-input" placeholder="Enter your name" required>
+        </div>
+        <div class="form-row">
+          <label for="lastname" class="form-label">Apellidos</label>
+          <input type="text" id="lastname" class="form-input" placeholder="Enter your last name" required>
+        </div>
+        <div class="form-row">
+          <label for="email" class="form-label">Correo</label>
+          <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+        </div>
+        <div class="form-row">
+          <label for="phone" class="form-label">Telefono</label>
+          <input type="tel" id="phone" class="form-input" placeholder="Enter your phone" required>
+        </div>
+        <div class="form-row">
+          <label for="identification" class="form-label">Identificación</label>
+          <input type="text" id="identification" class="form-input" placeholder="Enter your identify" required>
+        </div>
+        <div class="form-row">
+          <label for="role" class="form-label">Rol</label>
+          <input type="text" id="role" class="form-input" placeholder="Enter your role" required>
+        </div>
+        <div class="form-row">
+          <label for="status" class="form-label">Estado</label>
+          <input type="text" id="status" class="form-input" placeholder="Enter your status" required>
+        </div>
+        <div class="form-row">
+          <label for="branch" class="form-label">Sucursal</label>
+          <input type="text" id="branch" class="form-input" placeholder="Enter your location" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-discard" (click)="closeDialog()">Cancelar</button>
+          <button type="submit" class="btn btn-submit">{{modalButtonText}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

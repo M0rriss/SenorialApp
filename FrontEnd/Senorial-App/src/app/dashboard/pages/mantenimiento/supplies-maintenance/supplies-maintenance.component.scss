@@ -1,0 +1,286 @@
+@use "sass:math";
+
+// Variables para colores y estilos
+$primary-color: #181C2E;
+$secondary-color: #FF910F;
+$white-color: #ffffff;
+$background-color: #fcfbfb;
+$text-color: #1a1a1a;
+$input-bg-color: #fff;
+$button-bg-color: #141318;
+$button-text-color: #fff;
+$table-header-bg-color: #141318;
+$table-header-text-color: #fff;
+$table-row-bg-color: #fff;
+$table-row-bg-color-alt: #f9f9f9;
+$sidebar-width: 300px;
+
+.insumos-section {
+  display: flex;
+  width: 100%;
+
+  side-bar {
+    width: $sidebar-width;
+    flex-shrink: 0;
+  }
+
+  .content {
+    flex-grow: 1;
+    padding: 29px 30px 80px 30px;
+    background-color: $background-color;
+    border-radius: 13px 0 0 13px;
+  }
+
+  .section-title {
+    color: $text-color;
+    font: 500 40px Poppins, sans-serif;
+    text-align: center;
+  }
+
+  .insumos-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 20px;
+
+    thead {
+      background-color: $table-header-bg-color;
+      color: $table-header-text-color;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 16px;
+      font-family: Montserrat, sans-serif;
+      font-size: 14px;
+
+      &:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+
+      &:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+    }
+
+    tbody tr {
+      background-color: $table-row-bg-color;
+
+      &:nth-child(even) {
+        background-color: $table-row-bg-color-alt;
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    .add-icon {
+      color: $secondary-color;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .edit-icon {
+      color: #6c63ff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .delete-icon {
+      color: #e74c3c;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  }
+}
+
+// Estilos para el modal de agregar/editar insumo
+.dialog-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.add-insumo-dialog {
+  background-color: $white-color;
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 470px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  .close-button {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .dialog-title {
+    color: #383e49;
+    font: 500 24px/1.2 Inter, sans-serif;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .form-label {
+      color: #48505e;
+      font: 500 14px/1.4 Inter, sans-serif;
+      width: 30%;
+      text-align: left;
+      padding-right: 10px;
+    }
+
+    .form-input {
+      width: 70%;
+      padding: 10px 14px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      font: 400 16px/1.5 Inter, sans-serif;
+      color: #383e49;
+
+      &::placeholder {
+        color: #858d9d;
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+
+    .button {
+      padding: 10px 16px;
+      border-radius: 4px;
+      font: 500 14px/1.4 Inter, sans-serif;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .discard-button {
+      color: #858d9d;
+      background-color: transparent;
+      border: 1px solid #141318;
+
+      &:hover {
+        background-color: #f3f4f6;
+      }
+    }
+
+    .add-insumo-button {
+      color: #fff;
+      background-color: #141318;
+      border: none;
+
+      &:hover {
+        background-color: #2c2c2c;
+      }
+    }
+  }
+}
+
+// Estilos para el confirm dialog
+.confirm-dialog-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.confirm-dialog {
+  background-color: $white-color;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 554px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .confirm-dialog-title {
+    color: #141318;
+    font: 600 32px 'Assistant', sans-serif;
+    margin: 0 0 17px;
+  }
+
+  .confirm-dialog-description {
+    color: #222;
+    font: 400 14px 'DM Sans', sans-serif;
+    margin: 0 0 17px;
+  }
+
+  .confirm-dialog-button-container {
+    display: flex;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    justify-content: center;
+
+    .button {
+      font-family: 'DM Sans', sans-serif;
+      border-radius: 8px;
+      padding: 8px 24px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .confirm-dialog-confirm-button {
+      background-color: #fae4e0;
+      color: #e68685;
+      width: 220px;
+
+      &:hover {
+        background-color: #f8d6d0;
+      }
+    }
+
+    .confirm-dialog-cancel-button {
+      background-color: #f2f2f2;
+      color: #222;
+      width: 220px;
+
+      &:hover {
+        background-color: #e5e5e5;
+      }
+    }
+  }
+}

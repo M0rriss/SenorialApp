@@ -1,0 +1,125 @@
+<nav class="sidebar">
+  <div class="logo-container">
+    <div class="logo-wrapper">
+      <img src="./SenorialLogo.svg" alt="Company Logo" class="logo" />
+    </div>
+  </div>
+  <ul class="nav-menu">
+    <span class="nav-title">Dashboard</span>
+    <div class="divider"></div>
+    <li routerLink="/dashboard" class="nav-item" [ngClass]="{'active': activeMenu === 'local'}" (click)="setActiveMenu('local')">
+      <img src="./house-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Local</span>
+    </li>
+    <li routerLink="/pedidos" class="nav-item" [ngClass]="{'active': activeMenu === 'pedidos'}" (click)="setActiveMenu('pedidos')">
+      <img src="./cube-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Pedidos</span>
+    </li>
+    <li routerLink="/caja" class="nav-item" [ngClass]="{'active': activeMenu === 'caja'}" (click)="toggleDropdown('caja')">
+      <img src="./wallet-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Caja</span>
+      <!-- <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['caja']}"></i> -->
+    </li>
+    <!-- <ul *ngIf="dropdowns['caja']" class="submenu">
+      <li routerLink="" class="submenu-item">
+        <span class="status-indicator status-red" aria-hidden="true"></span>
+        <span>Abrir Caja</span>
+      </li>
+      <li routerLink="" class="submenu-item">
+        <span class="status-indicator status-orange" aria-hidden="true"></span>
+        <span>Historial de Caja</span>
+      </li>
+      <li routerLink="" class="submenu-item">
+        <span class="status-indicator status-purple" aria-hidden="true"></span>
+        <span>Cerrar Caja</span>
+      </li>
+    </ul> -->
+    <li class="nav-item" [ngClass]="{'active': activeMenu === 'clientes'}" (click)="toggleDropdown('clientes')">
+      <img src="./profile-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Clientes</span>
+      <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['clientes']}"></i>
+    </li>
+    <ul *ngIf="dropdowns['clientes']" class="submenu">
+      <li routerLink="/cliente" class="submenu-item">
+        <span class="status-indicator status-orange" aria-hidden="true"></span>
+        <span>Clientes</span>
+      </li>
+      <li routerLink="/empleado" class="submenu-item">
+        <span class="status-indicator status-blue" aria-hidden="true"></span>
+        <span>Empleados</span>
+      </li>
+      <li routerLink="/proveedor" class="submenu-item">
+        <span class="status-indicator status-white" aria-hidden="true"></span>
+        <span>Proveedores</span>
+      </li>
+    </ul>
+    <li class="nav-item" [ngClass]="{'active': activeMenu === 'almacen'}" (click)="toggleDropdown('almacen')">
+      <img src="./almacen-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Almacen</span>
+      <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['almacen']}"></i>
+    </li>
+    <ul *ngIf="dropdowns['almacen']" class="submenu">
+      <li routerLink="/inventario" class="submenu-item">
+        <span class="status-indicator status-red" aria-hidden="true"></span>
+        <span>Inventario</span>
+      </li>
+      <li routerLink="/" class="submenu-item">
+        <span class="status-indicator status-purple" aria-hidden="true"></span>
+        <span>Detalle del Stock</span>
+      </li>
+      <!-- <li routerLink="/" class="submenu-item">
+        <span class="status-indicator status-blue" aria-hidden="true"></span>
+        <span>Insumos</span>
+      </li> -->
+    </ul>
+    <li  class="nav-item" [ngClass]="{'active': activeMenu === 'reportes'}" (click)="toggleDropdown('reportes')">
+      <img src="./report-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Reportes</span>
+      <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['reportes']}"></i>
+    </li>
+    <ul *ngIf="dropdowns['reportes']" class="submenu">
+      <li class="submenu-item">
+        <span class="status-indicator status-red" aria-hidden="true"></span>
+        <span>Reportes</span>
+      </li>
+      <li  class="submenu-item">
+        <span class="status-indicator status-blue" aria-hidden="true"></span>
+        <span>Documentos</span>
+      </li>
+    </ul>
+    <div class="divider"></div>
+    <li class="nav-item" [ngClass]="{'active': activeMenu === 'mantenimiento'}" (click)="toggleDropdown('mantenimiento')">
+      <img src="./settings-icon.svg" alt="" class="nav-icon" />
+      <span class="nav-text">Mantenimiento</span>
+      <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['mantenimiento']}"></i>
+    </li>
+    <ul *ngIf="dropdowns['mantenimiento']" class="submenu">
+      <li routerLink="/mantenimiento-usuario" class="submenu-item">
+        <span class="status-indicator status-red" aria-hidden="true"></span>
+        <span>Usuarios</span>
+      </li>
+      <li routerLink="/mantenimiento-producto" class="submenu-item">
+        <span class="status-indicator status-purple" aria-hidden="true"></span>
+        <span>Productos</span>
+      </li>
+      <li routerLink="/mantenimiento-categoria" class="submenu-item">
+        <span class="status-indicator status-blue" aria-hidden="true"></span>
+        <span>Categorías</span>
+      </li>
+      <li routerLink="/mantenimiento-metodo-pago" class="submenu-item">
+        <span class="status-indicator status-green" aria-hidden="true"></span>
+        <span>Método de Pago</span>
+      </li>
+      <li routerLink="/mantenimiento-insumo" class="submenu-item">
+        <span class="status-indicator status-orange" aria-hidden="true"></span>
+        <span>Insumos</span>
+      </li>
+      <li routerLink="/mantenimiento-mesa" class="submenu-item">
+        <span class="status-indicator status-white" aria-hidden="true"></span>
+        <span>Mesas</span>
+      </li>
+    </ul>
+    <div class="divider"></div>
+  </ul>
+  <log-out></log-out>
+</nav>

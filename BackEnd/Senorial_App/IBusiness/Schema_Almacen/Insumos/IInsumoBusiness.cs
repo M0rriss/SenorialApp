@@ -11,5 +11,9 @@ namespace IBusiness.Schema_Almacen.Insumos
 {
     public interface IInsumoBusiness : ICrudBusiness<InsumoRequest, InsumoResponse>
     {
+        Task<List<InsumoUiRequest>> UiGetInsumo(); // Añadimos esta línea
+        Task<InsumoUiResponse> InsertUiInsumo(InsumoUiRequest request);
+        Task<InsumoUiResponse> UpdateUiInsumo(InsumoUpdateUiRequest request);
+        Task<bool> DeleteUiInsumo(int idInsumo);
     }
 }

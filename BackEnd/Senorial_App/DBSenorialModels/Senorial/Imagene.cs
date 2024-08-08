@@ -11,14 +11,14 @@ public partial class Imagene
 {
     [Key]
     [Column("id_img")]
-    public int IdImg { get; set; }
+    public int Id { get; set; }
 
     [Column("url")]
-    public string? Url { get; set; }
+    public string? ImageData { get; set; }
 
     [Column("nombre")]
     [StringLength(100)]
-    public string? Nombre { get; set; }
+    public string? FileName { get; set; }
 
     [InverseProperty("IdImgNavigation")]
     public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();

@@ -1,7 +1,10 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Almacen.Insumos;
+using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
+using RequestResponseModels.Request.Schema_Almacen.Insumo;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
+using RequestResponseModels.Response.Schema_Almacen.Insumo;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
 using System.Collections.Generic;
@@ -17,5 +20,53 @@ namespace Repository.Schema_Almacen.Insumos
         {
             throw new NotImplementedException();
         }
+        public async Task<List<InsumoUiRequest>> UiInsumo()
+        {
+            return await db.Insumos.Join(
+                    db.UnidadMedicions,
+                    i => i.IdUnidad,
+                    u => u.IdUnidad,
+                    (i, u) => new InsumoUiRequest
+                    {
+                        InsumoNombre = i.Nombre,
+                        UnidadMedida = u.Abreviacion
+                    }).ToListAsync();
+        }
+
+        public async Task<Insumo> InsertUiInsumo(Insumo insumo)
+        {
+            await dbset.AddAsync(insumo);
+            await db.SaveChangesAsync();
+            return insumo;
+        }
+
+        public async Task<Insumo> UpdateUiInsumo(Insumo insumo)
+        {
+            dbset.Update(insumo);
+            await db.SaveChangesAsync();
+            return insumo;
+        }
+
+        public async Task<bool> DeleteUiInsumo(int idInsumo)
+        {
+            var insumo = await db.Insumos.FindAsync(idInsumo);
+            if (insumo == null)
+            {
+                throw new ArgumentNullException(nameof(insumo), "Insumo no encontrado");
+            }
+            db.Insumos.Remove(insumo);
+            await db.SaveChangesAsync();
+            return true;
+        }
+        public async Task<Insumo> BuscarporId(int id)
+        {
+            return await db.Insumos.FindAsync(id);
+        }
+
+        public async Task<Insumo> BuscarNombre(string nombre)
+        {
+            return await db.Insumos.FirstOrDefaultAsync(i => i.Nombre == nombre);
+        }
+
     }
 }

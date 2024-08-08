@@ -1,0 +1,608 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+main{
+    display: flex;
+    flex-direction: row;
+    transform: scale(0.85);
+    justify-content: center;
+}
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.back-button{
+  text-decoration  : none;
+}
+.back-container{
+  background-color : $secondary-color;
+  height           : 60px;
+  width            : 60px;
+  color            : $white-color;
+  display          : flex;
+  align-items      : center;
+  justify-content  : center;
+  border-radius    : 50%;
+}
+.checkout-container {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+
+}
+
+
+.checkout-layout {
+  gap              : 20px;
+  display          : flex;
+  top:150px;
+}
+
+.checkout-main {
+  display          : flex;
+  flex-direction   : column;
+  line-height      : normal;
+  margin-left      : 0;
+}
+
+.checkout-form {
+  display          : flex;
+  flex-grow        : 1;
+  flex-direction   : column;
+}
+
+.back-button {
+  align-self       : start;
+  display          : flex;
+  gap              : 17px;
+  font-size        : 22px;
+  color            : $secondary-color;
+  font-weight      : 400;
+  white-space      : nowrap;
+}
+
+.back-icon {
+  aspect-ratio     : 0.98;
+  object-fit       : auto;
+  object-position  : center;
+  width            : 56px;
+  background-color : $secondary-color;
+  border-radius    : 50%;
+  height           : 56px;
+}
+
+.back-text {
+  font-family      : $font-family;
+  margin           : auto 0;
+}
+
+.checkout-box {
+  align-items      : start;
+  border-radius    : 36px;
+  background-color : $white-color;
+  display          : flex;
+  margin-top       : 78px;
+  flex-direction   : column;
+  padding          : 36px;
+  width            : 1000px;
+  border            : solid rgba(0, 0, 0, 0.1) .5px; // Un borde muy sutil para delinear la caja
+  box-shadow        : 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-title {
+  color            : $primary-color;
+  align-self       : center;
+  font             : 800 32px $font-family;
+}
+
+.delivery-method {
+  color            : $primary-color;
+  letter-spacing   : 1.2px;
+  margin           : 109px 0 0 10px;
+  font             : 700 24px/23px 'Roboto', sans-serif;
+}
+
+.form-container {
+  align-self       : stretch;
+  margin-top       : 54px;
+  padding          : 6px 0;
+}
+
+.form-row {
+  gap              : 20px;
+  display          : flex;
+}
+
+.form-column {
+  display          : flex;
+  flex-direction   : column;
+  line-height      : normal;
+  width            : 50%;
+  margin-left      : 0;
+}
+
+.form-group {
+  display          : flex;
+  flex-grow        : 1;
+  flex-direction   : column;
+  font-size        : 18px;
+  color            : #989191;
+  font-weight      : 400;
+  white-space      : nowrap;
+  letter-spacing   : 0.88px;
+  line-height      : 150%;
+}
+
+.form-input {
+  font-family      : 'Roboto', sans-serif;
+  border-radius    : 18.373px;
+  padding          : 13px 26px;
+  border           : 2px solid #d9d9d9;
+  margin-top       : 11px;
+
+  &::placeholder {
+    font-size      : 20px;
+  }
+}
+
+.document-input {
+  display          : flex;
+  align-items      : center;
+  position         : relative;
+  margin-top       : 11px;
+}
+
+.document-select {
+  width            : 100%;
+  border-radius    : 18.373px;
+  padding          : 13px 26px;
+  border           : 2px solid #d9d9d9;
+  font-family      : 'Roboto', sans-serif;
+  appearance       : none;
+  background-size  : 16px 16px;
+  font-size        : 18px;
+  color            : #989191;
+
+  &::placeholder {
+    font-size      : 20px;
+  }
+}
+
+.document-input i {
+  position         : absolute;
+  right            : 16px;
+  top              : 50%;
+  transform        : translateY(-50%);
+  pointer-events   : none;
+  color            : $secondary-color;
+}
+
+.payment-selection {
+  display          : flex;
+  align-items      : center;
+  position         : relative;
+  margin-top       : 11px;
+  width            : 100%;
+}
+
+.payment-type-wrapper {
+  display          : flex;
+  flex-grow        : 1;
+  border-radius    : 18.373px;
+  padding          : 13px 26px;
+  border           : 2px solid #d9d9d9;
+  background-color : $white-color;
+  justify-content  : space-between;
+  align-items      : center;
+  margin           : 2rem 0 0 0;
+}
+
+.payment-type {
+  font-family      : 'Roboto', sans-serif;
+  font-size        : 20px;
+}
+
+.change-payment {
+  color            : $secondary-color;
+  text-decoration  : underline;
+  font             : 500 18px $font-family;
+  background       : none;
+  border           : none;
+  cursor           : pointer;
+  font-size        : 20px;
+}
+
+.payment-options {
+  display          : none;
+  width            : 100%;
+  border-radius    : 18.373px;
+  padding          : 13px 26px;
+  border           : 2px solid #d9d9d9;
+  font-family      : 'Roboto', sans-serif;
+  appearance       : none;
+  background-size  : 16px 16px;
+
+  &::placeholder {
+    font-size      : 20px;
+  }
+}
+
+.payment-selection.show-options .payment-type-wrapper {
+  display          : none;
+}
+
+.payment-selection.show-options .payment-options {
+  display          : block;
+}
+
+.payment-method {
+  color            : $primary-color;
+  letter-spacing   : 1.2px;
+  margin           : 54px 0 0 10px;
+  font             : 700 24px/96% 'Roboto', sans-serif;
+}
+
+.invoice-type {
+  color            : $primary-color;
+  letter-spacing   : 1.2px;
+  margin           : 54px 0 0 10px;
+  font             : 700 24px/96% 'Roboto', sans-serif;
+}
+
+.invoice-options {
+  justify-content  : space-between;
+  display          : flex;
+  margin-top       : 54px;
+  width            : 423px;
+  max-width        : 100%;
+  gap              : 20px;
+}
+
+.invoice-option {
+  display          : flex;
+  gap              : 3px;
+  justify-content  : space-between;
+  padding          : 10px 0;
+}
+
+.radio-button {
+  position         : relative;
+  display          : inline-block;
+  width            : 24px;
+  height           : 24px;
+  border-radius    : 50%;
+  background-color : $white-color;
+  border           : 2px solid $gray-color;
+  margin-right     : 10px;
+  cursor           : pointer;
+}
+
+.radio-button input {
+  opacity          : 0;
+  width            : 0;
+  height           : 0;
+}
+
+.checkmark {
+  position         : absolute;
+  top              : 50%;
+  left             : 50%;
+  width            : 14px;
+  height           : 14px;
+  background-color : $secondary-color;
+  border-radius    : 50%;
+  transform        : translate(-50%, -50%) scale(0);
+  transition       : transform 0.2s ease-in-out;
+}
+
+.radio-button input:checked ~ .checkmark {
+  transform        : translate(-50%, -50%) scale(1);
+}
+
+.invoice-label {
+  color            : #374957;
+  font-feature-settings : "clig" off, "liga" off;
+  font             : 700 14px/29px 'Roboto', sans-serif;
+  font-size        : 20px;
+}
+
+.add-to-cart {
+  border-radius    : 12px;
+  background-color : $primary-color;
+  align-self       : center;
+  margin-top       : 40px;
+  color            : $white-color;
+  text-align       : center;
+  padding          : 15px 30px;
+  font             : 600 26px $font-family;
+}
+
+.order-summary {
+  display          : flex;
+  flex-direction   : column;
+  line-height      : normal;
+  width            : 670px;
+  margin-left      : auto;
+  margin-right     : auto;
+  align-items      : center;
+}
+
+.summary-box {
+  border-radius    : 32px;
+  background-color : $white-color;
+  display          : flex;
+  flex-direction   : column;
+  align-self       : stretch;
+  margin           : auto;
+  padding          : 32px;
+  align-items      : center;
+  border            : solid rgba(0, 0, 0, 0.1) .5px; // Un borde muy sutil para delinear la caja
+  box-shadow        : 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.summary-header {
+  align-items      : center;
+  display          : flex;
+  flex-direction   : column;
+  color            : $primary-color;
+  padding          : 10px 48px;
+}
+
+.summary-title {
+  font             : 800 32px $font-family;
+}
+
+.item-name {
+  text-align       : center;
+  letter-spacing   : 1.2px;
+  align-self       : stretch;
+  margin-top       : 46px;
+  font             : 700 24px/23px $font-family;
+}
+
+.item-image {
+  aspect-ratio     : 1.39;
+  object-fit       : auto;
+  object-position  : center;
+  width            : 158px;
+  margin-top       : 46px;
+  max-width        : 100%;
+}
+
+.quantity-container {
+  align-self       : center;
+  display          : flex;
+  flex-direction   : column;
+  color            : $primary-color;
+  white-space      : nowrap;
+  padding          : 10px 11px 0;
+  font-weight      : 400;
+  align-items      : center;
+}
+
+.quantity-label {
+  font             : 600 24px $font-family;
+}
+
+.quantity-control {
+  justify-content  : center;
+  align-items      : center;
+  border-radius    : 50px;
+  border           : 3px solid $primary-color;
+  background-color : #fff;
+  display          : flex;
+  margin-top       : 10px;
+  width            : 50px;
+  flex-direction   : column;
+  font-size        : 14px;
+  padding          : 13px 19px;
+}
+
+.quantity-control button {
+  border           : none;
+  background       : none;
+  padding          : 0;
+  cursor           : pointer;
+}
+
+.quantity-icon {
+  object-position  : center;
+  width            : 100%;
+  fill             : $primary-color;
+  font-size        : 28px;
+}
+
+.quantity-value {
+  font-family      : 'Roboto', sans-serif;
+  align-self       : stretch;
+  align-items      : center;
+  justify-content  : center;
+  padding          : 15px 0;
+  font-size        : 24px;
+  display          : flex;
+}
+
+.decrease-button,
+.increase-button{
+  font-size        : 24px;
+}
+
+.subtotal {
+  display          : flex;
+  margin-top       : 4px;
+  gap              : 20px;
+  font-size        : 20px;
+  color            : $primary-color;
+  font-weight      : 700;
+  letter-spacing   : 1px;
+  line-height      : 116%;
+  justify-content  : space-between;
+  padding          : 10px 11px;
+  width            : 100%;
+  font-size        : 24px;
+}
+
+.total {
+  align-self       : center;
+  display          : flex;
+  margin-top       : 4px;
+  flex-direction   : column;
+  font-size        : 20px;
+  letter-spacing   : 1px;
+  line-height      : 116%;
+  padding          : 10px 11px 0;
+  width            : 100%;
+  text-align       : center;
+  font-size        : 24px;
+}
+
+.total-label {
+  color            : $primary-color;
+  font-family      : 'Roboto', sans-serif;
+  font-weight      : 700;
+}
+
+.total-amount {
+  font-family      : $font-family;
+  border-radius    : 18px;
+  background-color : $primary-color;
+  color            : $white-color;
+  font-weight      : 800;
+  padding          : 10px 24px;
+  width            : 100%;
+  text-align       : center;
+}
+
+@media (max-width: 991px) {
+  .checkout-container {
+    padding          : 0 20px;
+  }
+
+  .checkout-content {
+    max-width        : 100%;
+    margin-top       : 40px;
+  }
+
+  .checkout-layout {
+    flex-direction   : column;
+    align-items      : stretch;
+    gap              : 0;
+  }
+
+  .checkout-main {
+    width            : 100%;
+  }
+
+  .checkout-form {
+    max-width        : 100%;
+    margin-top       : 40px;
+  }
+
+  .back-button {
+    white-space      : initial;
+  }
+
+  .checkout-box {
+    max-width        : 100%;
+    margin-top       : 40px;
+    padding          : 0 20px;
+  }
+
+  .delivery-method {
+    margin-top       : 40px;
+  }
+
+  .form-container {
+    max-width        : 100%;
+    margin-top       : 40px;
+  }
+
+  .form-row {
+    flex-direction   : column;
+    align-items      : stretch;
+    gap              : 0;
+  }
+
+  .form-column {
+    width            : 100%;
+  }
+
+  .form-group {
+    margin-top       : 15px;
+    white-space      : initial;
+  }
+
+  .form-input,
+  .document-select,
+  .payment-select {
+    white-space      : initial;
+    padding          : 0 20px;
+    font-size        : 20px;
+  }
+
+  .document-input {
+    white-space      : initial;
+    padding          : 0 20px;
+  }
+
+  .payment-method {
+    margin-top       : 40px;
+  }
+
+  .payment-selection {
+    width            : 100vw;
+    flex-wrap        : wrap;
+    margin-top       : 60px;
+  }
+
+  .invoice-type {
+    margin-top       : 40px;
+  }
+
+  .invoice-options {
+    flex-wrap        : wrap;
+    margin-top       : 40px;
+  }
+
+  .add-to-cart {
+    padding          : 0 20px;
+  }
+
+  .order-summary {
+    width            : 100%;
+  }
+
+  .summary-box {
+    margin-top       : 40px;
+    padding          : 0 20px;
+  }
+
+  .summary-header {
+    padding          : 0 20px;
+  }
+
+  .item-name {
+    margin-top       : 40px;
+  }
+
+  .item-image {
+    margin-top       : 40px;
+  }
+
+  .quantity-container {
+    white-space      : initial;
+  }
+
+  .quantity-control {
+    white-space      : initial;
+  }
+
+  .total-amount {
+    padding          : 0 20px;
+  }
+}

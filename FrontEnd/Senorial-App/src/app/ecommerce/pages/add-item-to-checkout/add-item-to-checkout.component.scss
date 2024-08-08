@@ -1,0 +1,262 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+$primary-color    : #181C2E;
+$secondary-color  : #FF910F;
+$white-color      : #ffffff;
+$gray-color       : #79797c;
+$font-family      : 'Poppins', sans-serif;
+main{
+  padding: 0;
+  margin: 0;
+}
+.container{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.hamburger-section {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+  padding          : 0 80px;
+}
+
+.hamburger-container {
+  margin-top:120px;
+  transform: scale(0.75);
+}
+
+.hamburger-content {
+  display          : flex;
+  justify-content  : space-around;
+  align-items: center;
+}
+
+.hamburger-image-column {
+  display          : flex;
+  flex-direction   : column;
+  line-height      : normal;
+  width            : 35%;
+}
+
+.hamburger-image-wrapper {
+  justify-content  : flex-start;
+  align-items      : flex-start;
+  border-radius    : 36px;
+  background-color : $primary-color;
+  display          : flex;
+  padding          : 20px;
+  flex-direction   : column;
+  font-size        : 32px;
+  color            : $white-color;
+  width            : 500px;
+  height           : 500px;
+  position         : relative;
+}
+
+.hamburger-image {
+  position         : absolute;
+  width            : 400px;
+  height           : auto;
+  top              : -25%;
+  left             : 40%;
+}
+
+.hamburger-details {
+  display          : flex;
+  margin-top       : auto;
+  padding-left     : 32px;
+  flex-direction   : column;
+}
+
+.hamburger-name {
+  font-family      : $font-family;
+  font-weight      : 700;
+}
+
+.hamburger-price {
+  font-family      : $font-family;
+  font-weight      : 500;
+  margin-top       : 10px;
+}
+
+.hamburger-info-column {
+  display          : flex;
+  flex-direction   : column;
+  line-height      : normal;
+  width            : 59%;
+  margin-left      : 20px;
+}
+
+.hamburger-info-wrapper {
+  justify-content  : center;
+  border-radius    : 36px;
+  background-color : $white-color;
+  display          : flex;
+  flex-grow        : 1;
+  flex-direction   : column;
+  width            : 100%;
+  padding          : 40px;
+}
+
+.hamburger-info-content {
+  justify-content  : center;
+  display          : flex;
+  margin-top       : 17px;
+  flex-direction   : column;
+  padding          : 16px 44px;
+  border            : solid rgba(0, 0, 0, 0.1) .5px; // Un borde muy sutil para delinear la caja
+  box-shadow        : 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 32px;
+}
+
+.hamburger-title {
+  color            : $primary-color;
+  font             : 700 40px $font-family;
+}
+
+.hamburger-price-info {
+  display          : flex;
+  margin-top       : 37px;
+  gap              : 20px;
+  color            : $primary-color;
+  justify-content  : space-between;
+}
+
+.price-label {
+  margin           : auto 0;
+  font             : 500 30px $font-family;
+}
+
+.price-value {
+  font             : 600 40px $font-family;
+}
+
+.quantity-controls {
+  display          : flex;
+  margin-top       : 37px;
+  width            : 100%;
+  gap              : 20px;
+  justify-content  : space-between;
+}
+
+.quantity-selector {
+  justify-content  : center;
+  border-radius    : 84px;
+  background-color : $primary-color;
+  display          : flex;
+  gap              : 20px;
+  padding          : 7px;
+}
+
+.decrease-button,
+.increase-button {
+  background-color : $secondary-color;
+  border-radius    : 50%;
+  display          : flex;
+  align-items      : center;
+  justify-content  : center;
+  width            : 56px;
+  height           : 56px;
+  color            : $white-color;
+  font-size        : 24px;
+  border-style     : none;
+}
+
+.quantity-value {
+  color            : $white-color;
+  text-transform   : capitalize;
+  margin           : auto 0;
+  font             : 700 35px 'Sen', sans-serif;
+}
+
+.comment-button {
+  border-radius    : 52px;
+  box-shadow       : 2px 2px 8px 0px rgba(0, 0, 0, 0.16);
+  background-color : $white-color;
+  color            : $primary-color;
+  white-space      : nowrap;
+  padding          : 8px 24px;
+  font             : 500 30px $font-family;
+}
+
+.add-to-cart-button {
+  border-radius    : 52px;
+  background-color : $primary-color;
+  align-self       : center;
+  margin-top       : 37px;
+  color            : $white-color;
+  padding          : 12px 24px;
+  font             : 500 30px $font-family;
+}
+
+@media (max-width: 991px) {
+  .hamburger-section {
+    padding          : 0 20px;
+  }
+
+  .hamburger-container {
+    max-width        : 100%;
+    margin-top       : 40px;
+  }
+
+  .hamburger-content {
+    flex-direction   : column;
+    align-items      : stretch;
+    gap              : 0;
+  }
+
+  .hamburger-image-column,
+  .hamburger-info-column {
+    width            : 100%;
+    margin-left      : 0;
+  }
+
+  .hamburger-image-wrapper {
+    max-width        : 100%;
+    margin-top       : 40px;
+    font-size        : 40px;
+  }
+
+  .hamburger-details {
+    max-width        : 100%;
+    padding-left     : 20px;
+    margin-top       : 40px;
+    font-size        : 40px;
+  }
+
+  .hamburger-name,
+  .hamburger-price {
+    max-width        : 100%;
+    font-size        : 40px;
+  }
+
+  .hamburger-info-wrapper {
+    max-width        : 100%;
+    margin-top       : 40px;
+    padding          : 0 20px;
+  }
+
+  .hamburger-info-content {
+    max-width        : 100%;
+    padding          : 0 20px;
+  }
+
+  .hamburger-title {
+    max-width        : 100%;
+  }
+
+  .hamburger-price-info,
+  .quantity-controls {
+    max-width        : 100%;
+    flex-wrap        : wrap;
+  }
+
+  .comment-button {
+    white-space      : initial;
+    padding          : 0 20px;
+  }
+
+  .add-to-cart-button {
+    padding          : 0 30px;
+  }
+}

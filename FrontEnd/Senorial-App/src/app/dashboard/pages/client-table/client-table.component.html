@@ -1,0 +1,42 @@
+<section class="clients-section">
+  <side-bar></side-bar> <!-- Tu componente de sidebar -->
+  <div class="content">
+    <h2 class="section-title">Clientes</h2>
+    <div class="search-container">
+      <div class="search-wrapper">
+        <div class="search-input">
+          <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
+          <input type="text" placeholder="Buscar por nombre, DNI, telefono o correo" class="search-field" onkeypress="handleKeyPress(event)" />
+        </div>
+      </div>
+      <button class="reset-button" onclick="performSearch()">Reset</button>
+    </div>
+    <table class="clients-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Correo</th>
+          <th>Telefono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#20462</td>
+          <td>Felix Lujan</td>
+          <td>75372286</td>
+          <td>fifisor-gloglo.com</td>
+          <td>930418642</td>
+        </tr>
+        <tr>
+          <td>#20463</td>
+          <td>Edson Lujan</td>
+          <td>71457546</td>
+          <td>fifisor-gloglo.com</td>
+          <td>930418642</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

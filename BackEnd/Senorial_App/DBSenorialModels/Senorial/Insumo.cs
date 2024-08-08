@@ -23,13 +23,10 @@ public partial class Insumo
     [Column("id_unidad")]
     public int IdUnidad { get; set; }
 
-    [InverseProperty("IdInsumoNavigation")]
-    public virtual ICollection<DetalleCompra> DetalleCompras { get; set; } = new List<DetalleCompra>();
-
-    [InverseProperty("IdInsumoNavigation")]
-    public virtual ICollection<DetalleInventario> DetalleInventarios { get; set; } = new List<DetalleInventario>();
-
     [ForeignKey("IdUnidad")]
     [InverseProperty("Insumos")]
     public virtual UnidadMedicion IdUnidadNavigation { get; set; } = null!;
+
+    [InverseProperty("Insumo")]
+    public virtual ICollection<DetalleInventario> DetalleInventarios { get; set; } = new List<DetalleInventario>();
 }

@@ -1,0 +1,351 @@
+$primary-color            : #181C2E;
+$secondary-color          : #FF910F;
+$white-color              : #ffffff;
+$background-color         : #2b2b2f;
+$text-color               : #000;
+$muted-text-color         : #888;
+$table-bg-color           : #fcfbfb;
+$table-border-color       : #161616;
+$order-item-border-color  : #888;
+$receipt-option-bg        : #7a7c81;
+$receipt-option-active-bg : #161616;
+
+body {
+  margin      : 0;
+  font-family : 'Poppins', sans-serif;
+}
+
+.main-container {
+  display : flex;
+  height  : 99vh;
+}
+
+.content {
+  flex-grow       : 1;
+  padding         : 40px;
+  box-sizing      : border-box;
+  display         : flex;
+  flex-direction  : column;
+  align-items     : center;
+  overflow        : hidden;
+}
+
+.order-summary {
+  border-radius    : 13px 0 0 13px;
+  background-color : $table-bg-color;
+  display          : flex;
+  flex-direction   : column;
+  align-items      : center;
+  justify-content  : center;
+  overflow         : hidden;
+}
+
+.order-content-wrapper {
+  display          : flex;
+  flex-direction   : column;
+  align-items      : center;
+  width            : 100%;
+  height           : 100%;
+  overflow-anchor  : auto;
+}
+
+.order-content {
+  display          : flex;
+  flex-direction   : column;
+  margin-top       : 31px;
+  width            : 793px;
+  max-width        : 100%;
+  gap              : 20px;
+  justify-content  : flex-start;
+  align-items      : center;
+  overflow-y       : auto;
+  scrollbar-color  : $muted-text-color $primary-color;
+  scrollbar-width  : thin;
+}
+
+.order-details {
+  display         : flex;
+  flex-direction  : column;
+  font-weight     : 500;
+  width           : 100%;
+}
+
+.order-items {
+  display         : flex;
+  flex-direction  : column;
+  color           : $muted-text-color;
+  padding         : 8px 8px 0;
+  align-items     : center;
+}
+
+.table-info {
+  justify-content  : space-between;
+  border-radius    : 24px;
+  display          : flex;
+  gap              : 8px;
+  color            : $text-color;
+  padding          : 21px 25px;
+  border           : 5px solid $table-border-color;
+  width            : 500px;
+}
+
+.table-number {
+  font-size   : 35px;
+  font-weight : bold;
+}
+
+.table-total {
+  margin     : auto 0;
+  font-size  : 20px;
+}
+
+.order-item {
+  justify-content  : space-between;
+  border-radius    : 24px;
+  display          : flex;
+  margin-top       : 8px;
+  gap              : 8px;
+  font-size        : 20px;
+  padding          : 32px 25px;
+  border           : 2px solid $order-item-border-color;
+  width            : 500px;
+}
+
+.item-name,
+.item-price {
+  font-family: 'Poppins', sans-serif;
+}
+
+.order-separator {
+  position           : relative;
+  border-radius      : 24px;
+  margin-top         : 16px;
+  height             : 30px;
+  width              : 500px;
+  border-top         : 2px solid $order-item-border-color;
+  border-bottom      : none;
+  background-color   : $table-bg-color;
+  display            : flex;
+  justify-content    : center;
+
+  &::before,
+  &::after {
+    content           : '';
+    position          : absolute;
+    top               : 0;
+    height            : 100%;
+    width             : 25px;
+    background-color  : $table-bg-color;
+  }
+
+  &::before {
+    left                : 0;
+    border-top-left-radius : 24px;
+  }
+
+  &::after {
+    right                 : 0;
+    border-top-right-radius : 24px;
+  }
+}
+
+.order-summary-footer {
+  justify-content  : center;
+  align-items      : center;
+  border-top       : 3px solid $table-border-color;
+  display          : flex;
+  flex-direction   : column;
+  padding          : 8px;
+  width            : 100%;
+  position         : sticky;
+  bottom           : 0;
+  background       : $table-bg-color;
+}
+
+.total-amount {
+  color           : $table-border-color;
+  align-self      : stretch;
+  font-size       : 40px;
+  font-weight     : 600;
+  text-align      : center;
+  margin          : 20px 0;
+}
+
+.attendant-info {
+  color           : $muted-text-color;
+  margin-top      : 8px;
+  margin          : 20px 0;
+  font-size       : 20px;
+}
+
+.receipt-options {
+  border-radius    : 11px;
+  background-color : $receipt-option-bg;
+  display          : flex;
+  margin-top       : 8px;
+  gap              : 6px;
+  font-size        : 17px;
+  color            : $white-color;
+  white-space      : nowrap;
+  letter-spacing   : -0.34px;
+  line-height      : 133%;
+  justify-content  : center;
+  padding          : 6px;
+}
+
+.receipt-option {
+  font-family    : 'Inter', sans-serif;
+  margin         : auto 0;
+  width          : 138px;
+  text-align     : center;
+  cursor         : pointer;
+}
+
+.receipt-option-active {
+  font-family       : 'Inter', sans-serif;
+  border-radius     : 8px;
+  background-color  : $receipt-option-active-bg;
+  padding           : 11px 17px;
+  border            : 1px solid $white-color;
+  width             : 138px;
+  text-align        : center;
+}
+
+@media (max-width: 1366px) and (max-height: 1080px) {
+  .content {
+    padding: 20px;
+  }
+
+  .order-summary {
+    padding: 40px 30px;
+  }
+
+  .order-content {
+    width: 500px;
+  }
+
+  .table-info {
+    padding: 15px 20px;
+    width: 350px;
+  }
+
+  .order-item {
+    padding: 20px 15px;
+    width: 350px;
+  }
+
+  .order-separator {
+    width: 350px;
+  }
+
+  .total-amount {
+    font-size: 35px;
+  }
+
+  .attendant-info {
+    font-size: 18px;
+  }
+
+  .receipt-options {
+    font-size: 15px;
+  }
+
+  .receipt-option,
+  .receipt-option-active {
+    width: 120px;
+  }
+}
+
+@media (max-width: 1366px) and (max-height: 768px) {
+  .content {
+    padding: 20px;
+  }
+
+  .order-summary {
+    padding: 40px 30px;
+  }
+
+  .order-content {
+    width: 500px;
+  }
+
+  .table-info {
+    padding: 15px 20px;
+    width: 350px;
+  }
+
+  .order-item {
+    padding: 20px 15px;
+    width: 350px;
+  }
+
+  .order-separator {
+    width: 350px;
+  }
+
+  .total-amount {
+    font-size: 35px;
+  }
+
+  .attendant-info {
+    font-size: 18px;
+  }
+
+  .receipt-options {
+    font-size: 15px;
+  }
+
+  .receipt-option,
+  .receipt-option-active {
+    width: 120px;
+  }
+}
+
+@media (max-width: 991px) {
+  .order-summary {
+    padding: 0 20px;
+  }
+
+  .order-content {
+    margin-right : 10px;
+    flex-wrap    : wrap;
+  }
+
+  .order-details {
+    max-width: 100%;
+  }
+
+  .order-items {
+    max-width: 100%;
+  }
+
+  .table-info,
+  .order-item {
+    max-width       : 100%;
+    flex-wrap       : wrap;
+    padding         : 0 20px;
+  }
+
+  .order-separator {
+    max-width: 100%;
+  }
+
+  .order-summary-footer {
+    max-width       : 100%;
+    padding         : 0 20px;
+  }
+
+  .total-amount {
+    max-width: 100%;
+  }
+
+  .receipt-options {
+    padding-left : 20px;
+    white-space  : initial;
+  }
+
+  .receipt-option-active {
+    white-space  : initial;
+    padding      : 0 20px;
+  }
+}

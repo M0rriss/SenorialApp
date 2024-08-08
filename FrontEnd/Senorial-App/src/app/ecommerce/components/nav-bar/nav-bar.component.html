@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="nav-bar">
+    <div class="left-section">
+      <button class="menu-icon-container"
+              (click)="toggleMenu()"
+              [ngClass]="{'active': isMenuActive}">
+        <img  src="./menu-burger.svg" alt="menu" class="menu-icon">
+      </button>
+      <div class="logo">
+        <img routerLink="/" src="./SenorialLogoBW.svg" alt="Logo" class="svg-icon">
+      </div>
+    </div>
+    <div class="auth-buttons">
+      <button type="button"
+              (click)="toggleActive('login')"
+              class="btn btn-login"
+              [ngClass]="{'active': isLoginActive}">
+        <img src="./user-icon.svg" alt="user" class="user-icon">
+        Ingresar
+      </button>
+      <button type="button" (click)="toggleShop()" class="btn btn-shopping-cart" [ngClass]="{'active': isShopOpen}">
+        <img src="./shopping-cart.svg" alt="cart" class="shopping-cart-icon">
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Menú lateral -->
+<div *ngIf="isMenuOpen" class="personal-info-card">
+  <menu-list-ecommerce></menu-list-ecommerce>
+</div>
+
+<!-- Iniciar Sesión -->
+<div *ngIf="isLoginOpen" class="login-dialog">
+  <iniciar-sesion-ecommerce></iniciar-sesion-ecommerce>
+</div>
+
+<!-- Overlay -->
+<div *ngIf="isShopOpen" class="overlay" (click)="toggleShop()"></div>
+
+<!-- Carrito de Compras -->
+<div *ngIf="isShopOpen" class="shopping-cart-container open closed">
+  <shopping-cart ></shopping-cart>
+</div>

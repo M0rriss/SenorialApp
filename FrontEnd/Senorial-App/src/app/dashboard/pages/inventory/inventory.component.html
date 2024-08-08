@@ -1,0 +1,155 @@
+<div class="main-container">
+  <side-bar></side-bar>
+  <section *ngIf="!isStockDetailVisible" class="inventory-container">
+    <h1 class="inventory-title">Inventario</h1>
+    <div class="filter-buttons">
+      <button class="filter-button stock-detail-button" (click)="showStockDetail()">Stock Detail</button>
+      <button class="filter-button entries-button" (click)="openEntryDialog()">Entradas</button>
+      <button class="filter-button exits-button" (click)="openExitDialog()">Salidas</button>
+    </div>
+    <form class="search-bar">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" class="search-input" placeholder="Buscar" aria-label="Buscar">
+    </form>
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>Insumo</th>
+          <th>Unidad de Medida</th>
+          <th>Stock</th>
+          <th>Fecha</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Papa</td>
+          <td>KG</td>
+          <td>50</td>
+          <td>06-11-2024</td>
+          <td><span class="status-tag status-entry">Entradas</span></td>
+        </tr>
+        <tr>
+          <td>Pollo</td>
+          <td>KG</td>
+          <td>20</td>
+          <td>06-11-2024</td>
+          <td><span class="status-tag status-exit">Salidas</span></td>
+        </tr>
+        <tr>
+          <td>Tomate</td>
+          <td>KG</td>
+          <td>5</td>
+          <td>06-11-2024</td>
+          <td><span class="status-tag status-exit">Salidas</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Fondo de opacidad y diálogo de Registrar Entrada -->
+  <div class="overlay" [class.show]="isEntryDialogOpen || isExitDialogOpen"></div>
+
+  <!-- Dialogo de Registrar Entrada -->
+  <section class="register-entry" [class.show]="isEntryDialogOpen">
+    <header class="header">
+      <h1 class="title">Registrar Entrada</h1>
+      <button class="close-button" aria-label="Close" (click)="closeDialog()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </header>
+    <form class="search-navigation" role="search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <label for="search-input" class="visually-hidden">Buscar</label>
+      <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" />
+    </form>
+    <div class="stock-info">
+      <h2 class="stock-item">{{ selectedItem?.name || 'stock actual:' }}</h2>
+      <div class="stock-details" *ngIf="selectedItem">
+        <span class="stock-label">stock actual:</span>
+        <span class="stock-value">{{ selectedItem.stock }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="selectedItem">
+      <form>
+        <label for="quantity-input" class="visually-hidden">Cantidad</label>
+        <input type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
+        <label for="reason-input" class="visually-hidden">Motivo</label>
+        <input type="text" id="reason-input" class="input-field" placeholder="Motivo" />
+        <div class="action-buttons">
+          <button type="submit" class="register-button">Registrar</button>
+          <button type="button" class="cancel-button" (click)="closeDialog()">Cancelar</button>
+        </div>
+      </form>
+    </ng-container>
+  </section>
+
+  <!-- Dialogo de Registrar Salida -->
+  <section class="register-output" [class.show]="isExitDialogOpen">
+    <header class="header">
+      <h1 class="title">Registrar Salida</h1>
+      <button class="close-button" aria-label="Close" (click)="closeDialog()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </header>
+    <form class="search-navigation" role="search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <label for="search-input" class="visually-hidden">Buscar</label>
+      <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" />
+    </form>
+    <div class="stock-info stock-info-exit">
+      <h2 class="stock-item-out">{{ selectedItem?.name || 'stock actual:' }}</h2>
+      <div class="stock-details" *ngIf="selectedItem">
+        <span class="stock-label-out">stock actual:</span>
+        <span class="stock-value-out">{{ selectedItem.stock }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="selectedItem">
+      <form>
+        <label for="quantity-input" class="visually-hidden">Cantidad</label>
+        <input type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
+        <label for="reason-input" class="visually-hidden">Motivo</label>
+        <input type="text" id="reason-input" class="input-field" placeholder="Motivo" />
+        <div class="action-buttons">
+          <button type="submit" class="register-button">Registrar</button>
+          <button type="button" class="cancel-button" (click)="closeDialog()">Cancelar</button>
+        </div>
+      </form>
+    </ng-container>
+  </section>
+
+  <!-- Vista de Detalle de Stock -->
+  <section *ngIf="isStockDetailVisible" class="stock-detail">
+    <button class="back-button" (click)="hideStockDetail()">Volver</button>
+    <h1 class="stock-title">Detalle del Stock</h1>
+    <table class="stock-table">
+      <thead>
+        <tr>
+          <th>Descripcion</th>
+          <th>Stock</th>
+          <th>Disponibilidad</th>
+          <th>Precio de Compra</th>
+          <th>Precio de Venta</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of stocks">
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.stock }}</td>
+          <td><span class="status" [ngClass]="getStatusClass(item.stock)">{{ getDisponibilidad(item.stock) }}</span></td>
+          <td>{{ item.precioCompra }}</td>
+          <td>{{ item.precioVenta }}</td>
+          <td>
+            <button class="action-btn" aria-label="Edit">
+              <i class="fa-regular fa-pen-to-square" style="color:#624DE3"></i>
+            </button>
+            <button class="action-btn" aria-label="Delete">
+              <i class="fa-solid fa-trash" style="color:#F00006"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

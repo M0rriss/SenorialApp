@@ -22,7 +22,7 @@ namespace Repository.Schema_Ventas.Empleados
 
         public async Task<List<EmpleadosUiRequest>> UiEmpleado()
         {
-            return db.Empleados
+            return await db.Empleados
         .Join(db.Personas,
             e => e.IdPersona,
             p => p.IdPersona,
@@ -42,10 +42,10 @@ namespace Repository.Schema_Ventas.Empleados
                 Telefono = epr.Persona.Telefono,
                 Identificacion = epr.Persona.NroDocumento,
                 Rol = epr.Rol.Nombre,
-                Estado = epr.Rol.Estado, // Si `Estado` es una propiedad de `Rol`
+                Estado = epr.Empleado.Estado.HasValue && epr.Empleado.Estado.Value ? "Activo" : "Inactivo", // Manejo explícito de nullables
                 Sucursal = s.Nombre
             })
-        .ToList();
+        .ToListAsync();
         }
         public async Task<Empleado> InsertUiEmpleado(Empleado empleado)
         {
@@ -75,5 +75,6 @@ namespace Repository.Schema_Ventas.Empleados
             var empleado = dbset. Where(e => e.IdEmpleado == id).FirstOrDefault();
             return empleado;
         }
+       
     }
 }
