@@ -10,10 +10,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from '@app/app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { AuthInterceptor } from '@app/service/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,10 @@ import { MessageService } from 'primeng/api';
     ToastModule
 
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    provideHttpClient(withInterceptors([AuthInterceptor]))
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

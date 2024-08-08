@@ -23,6 +23,7 @@ $kebab-hover-color: #ff0000;
     position: relative;
     display: flex;
     flex-direction: column;
+    z-index: -1000;
   }
 
   .section-title {

@@ -100,6 +100,7 @@ body {
     justify-content: space-around;
     width        : 100%;
     max-width    : 1200px;
+    //z-index: -1000;
 }
 
 .order-card {
@@ -251,6 +252,7 @@ body {
     top          : 50%;
     left         : calc(50% + #{math.div($sidebar-width, 2)});
     transform    : translate(-50%, -50%);
+    
 }
 
 .modal-header {

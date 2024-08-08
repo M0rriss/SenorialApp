@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CategoriaService } from '../../../services/mantenimineto/categorias/categoria.service';
+import { CategoriaResponse, CategoriasResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-response';
 
 @Component({
   selector: 'category-maintenance',
   templateUrl: './category-maintenance.component.html',
   styleUrl: './category-maintenance.component.scss'
 })
-export class CategoryMaintenanceComponent {
+export class CategoryMaintenanceComponent implements OnInit{
   isTableView: boolean = true;
   isAddEditDialogOpen: boolean = false;
   isConfirmDialogOpen: boolean = false;
@@ -16,12 +18,21 @@ export class CategoryMaintenanceComponent {
   categoryStatus: boolean = true; // true = Activo, false = Inactivo
   selectedCategory: any = null;
 
+  //variables locales
+  categorias: CategoriaResponse[] = [];
+  allCategorias: CategoriasResponse[]=[];
+
   categories = [
     { name: 'Categoria 1', subCategory: 'SubCategoria 1', active: true },
     { name: 'Categoria 2', subCategory: 'SubCategoria 2', active: true },
     // Agrega más categorías según sea necesario
   ];
 
+  constructor(private categoriaService:CategoriaService){}
+  ngOnInit(): void {
+    this.listarCategorias();
+    this.listarAllCategorias();
+  }
   switchToTableView() {
     this.isTableView = true;
   }
@@ -52,6 +63,21 @@ export class CategoryMaintenanceComponent {
   closeAddEditDialog() {
     this.isAddEditDialogOpen = false;
   }
+  
+  listarCategorias(){
+    this.categoriaService.listarCategoria().subscribe({
+      next: (res: CategoriaResponse[]) =>{
+        this.categorias = res;
+      }
+    });
+  }
+  listarAllCategorias(){
+    this.categoriaService.listarTodasCategorias().subscribe({
+      next: (res: CategoriasResponse[]) =>{
+        this.allCategorias = res;
+      }
+    });
+  }
 
   saveCategory() {
     if (this.dialogActionButton === 'Agregar') {
@@ -81,4 +107,6 @@ export class CategoryMaintenanceComponent {
     this.categories = this.categories.filter(cat => cat !== this.selectedCategory);
     this.isConfirmDialogOpen = false;
   }
+
+  
 }

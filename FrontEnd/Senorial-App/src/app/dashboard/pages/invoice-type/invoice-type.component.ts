@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './invoice-type.component.scss'
 })
 export class InvoiceTypeComponent {
-  selectedOption: string = 'factura';
+  selectedOption: string = 'boleta';
   selectedPaymentOption: string = '';
   dniValue: string = ''; // Example DNI value
   rucValue: string = ''; // Example RUC value
