@@ -1,16 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductResponse } from '@app/core/models/dashboard/mantenimiento/product/product-response';
+import { ProductoService } from '@app/dashboard/services/mantenimineto/producto/producto.service';
 
 @Component({
   selector: 'product-maintenance',
   templateUrl: './product-maintenance.component.html',
   styleUrl: './product-maintenance.component.scss'
 })
-export class ProductMaintenanceComponent {
+export class ProductMaintenanceComponent implements OnInit {
   isModalOpen: boolean = false;
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Agregar Producto';
   modalButtonText: string = 'Agregar';
 
+  //Campos
+  product:ProductResponse[] = [];
+  constructor(private productService:ProductoService){
+
+  }
+  ngOnInit(): void {
+    this.listarProducto();
+  }
+
+  //FUNCIONALIDAD
+  listarProducto(){
+    this.productService.getAll().subscribe(
+      {
+        next: (res: ProductResponse[])=>
+          {
+            this.product = res;
+          }
+      }
+    );
+  }
+  //UI
   openDialog(action: string): void {
     this.isModalOpen = true;
     if (action === 'add') {

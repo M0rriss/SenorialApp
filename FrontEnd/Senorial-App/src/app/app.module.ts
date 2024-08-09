@@ -21,6 +21,7 @@ import { AuthInterceptor } from '@app/service/auth.interceptor';
     AppComponent
   ],
   imports: [
+
     AppRoutingModule,
     BrowserModule,
     DashboardModule,
@@ -32,6 +33,7 @@ import { AuthInterceptor } from '@app/service/auth.interceptor';
     HttpClientModule,
     MessagesModule,
     ToastModule
+    
 
   ],
   providers: [

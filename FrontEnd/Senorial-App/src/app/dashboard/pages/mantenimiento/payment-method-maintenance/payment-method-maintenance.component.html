@@ -11,23 +11,29 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="metodo-pago-row">
-          <td>Efectivo</td>
-          <td class="status-container">
-            <label class="switch">
-              <input type="checkbox" checked>
-              <span class="slider round"></span>
-            </label>
-            <span class="status-label">Activo</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <i class="add-icon fa-solid fa-circle-plus" (click)="addMetodoPago()"></i>
-              <i class="edit-icon fa-regular fa-pen-to-square" (click)="editMetodoPago()"></i>
-              <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
-            </div>
-          </td>
-        </tr>
+        @for (item of metodoPago; track $index){
+          <tr class="metodo-pago-row">
+            <td>{{item.descripcion}}</td>
+            <td class="status-container">
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"></span>
+              </label>
+              <span class="status-label">{{item.estadoDescripcion}}</span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <i class="add-icon fa-solid fa-circle-plus" (click)="addMetodoPago()"></i>
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editMetodoPago()"></i>
+                <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
+              </div>
+            </td>
+          </tr>
+        }
+        
+          
+        
+        
         <!-- Más filas según sea necesario -->
       </tbody>
     </table>
@@ -39,14 +45,14 @@
   <div class="add-metodo-pago-dialog">
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
-    <form>
+    <form [formGroup]="formMetodoPago" (submit)="crearMetodoPago()">
       <div class="form-row">
         <label for="metodo-pago" class="form-label">Método de Pago</label>
-        <input type="text" id="metodo-pago" class="form-input" placeholder="Ingrese el método de pago" required>
+        <input formControlName="descripcion" type="text" id="metodo-pago" class="form-input" placeholder="Ingrese el método de pago" required>
       </div>
       <div class="form-row">
         <label for="estado" class="form-label">Estado</label>
-        <input type="text" id="estado" class="form-input" placeholder="Ingrese el estado" required>
+        <input formControlName="estado" type="text" id="estado" class="form-input" placeholder="Ingrese el estado" required>
       </div>
 
       <div class="action-buttons">

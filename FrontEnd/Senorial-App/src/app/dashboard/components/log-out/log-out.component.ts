@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoginResponse } from '@app/core/models/login-request';
 
 @Component({
   selector: 'log-out',
   templateUrl: './log-out.component.html',
   styleUrl: './log-out.component.scss'
 })
-export class LogOutComponent {
+export class LogOutComponent implements OnInit {
+  //Var local
+  constructor(){}
+  ngOnInit(): void {
+    this.cargarInfoUser();
+  }
 
-  email:string = 'admin@admin.com'
+  email:string = ''
   isConfirmDialogOpen: boolean = false;
   closeConfirmDialog(): void {
     this.isConfirmDialogOpen = false;
@@ -23,5 +29,11 @@ export class LogOutComponent {
 
   openConfirmDialog(): void {
     this.isConfirmDialogOpen = true;
+  }
+
+  cargarInfoUser(): void{
+    var info:string = sessionStorage.getItem('user') || '';
+    let user = JSON.parse(info) as LoginResponse;
+    this.email = user.usuario.email;
   }
 }

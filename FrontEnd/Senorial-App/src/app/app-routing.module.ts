@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +9,7 @@ const routes: Routes = [
   },
   {
     path      :'dash',
-    loadChildren: () => import('@app/dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('@app/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
 
   {

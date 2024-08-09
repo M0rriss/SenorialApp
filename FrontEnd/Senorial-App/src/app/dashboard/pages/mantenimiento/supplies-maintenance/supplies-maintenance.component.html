@@ -12,18 +12,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="insumo-row">
-          <td>#12312</td>
-          <td>Papa</td>
-          <td>Kg</td>
-          <td>
-            <div class="action-buttons">
-              <i class="add-icon fa-solid fa-circle-plus" (click)="addInsumo()"></i>
-              <i class="edit-icon fa-regular fa-pen-to-square" (click)="editInsumo()"></i>
-              <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
-            </div>
-          </td>
-        </tr>
+        @for (item of suministro; track $index) {
+          <tr class="insumo-row">
+            <td>{{item.idInsumo}}</td>
+            <td>{{item.insumoNombre}}</td>
+            <td>{{item.unidadMedida}}</td>
+            <td>
+              <div class="action-buttons">
+                <i class="add-icon fa-solid fa-circle-plus" (click)="addInsumo()"></i>
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editInsumo()"></i>
+                <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
+              </div>
+            </td>
+          </tr>
+        }
+        
         <!-- Más filas según sea necesario -->
       </tbody>
     </table>
@@ -35,19 +38,19 @@
   <div class="add-insumo-dialog">
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
-    <form>
+    <form [formGroup]="formInsumo">
       <div class="form-row">
         <label for="insumo" class="form-label">Insumo</label>
-        <input type="text" id="insumo" class="form-input" placeholder="Ingrese el insumo" required>
+        <input formControlName="insumoNombre" type="text" id="insumo" class="form-input" placeholder="Ingrese el insumo" required>
       </div>
       <div class="form-row">
         <label for="unid-medida" class="form-label">Unid. Medida</label>
-        <input type="text" id="unid-medida" class="form-input" placeholder="Ingrese la unidad de medida" required>
+        <input formControlName="unidadMedida" type="text" id="unid-medida" class="form-input" placeholder="Ingrese la unidad de medida" required>
       </div>
 
       <div class="action-buttons">
         <button type="button" class="button discard-button" (click)="closeDialog()">Descartar</button>
-        <button type="submit" class="button add-insumo-button">{{modalButtonText}}</button>
+        <button type="submit" class="button add-insumo-button" (click)="agregarInsumo()">{{modalButtonText}}</button>
       </div>
     </form>
   </div>

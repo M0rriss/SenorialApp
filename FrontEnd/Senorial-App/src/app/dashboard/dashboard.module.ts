@@ -6,7 +6,7 @@ import { LocalComponent } from './pages/local/local.component';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { MesaDetailComponent } from './pages/mesa-detail/mesa-detail.component';
 import { InvoiceTypeComponent } from './pages/invoice-type/invoice-type.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { CashRegisterComponent } from './pages/cash-register/cash-register.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
@@ -46,6 +46,7 @@ import { TableMaintenanceComponent } from './pages/mantenimiento/table-maintenan
     CommonModule,
     DashboardRoutingModule,
     FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

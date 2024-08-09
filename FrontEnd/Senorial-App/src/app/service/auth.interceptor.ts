@@ -1,9 +1,15 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { LoginResponse } from '@app/core/models/login-request';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-  var token:string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTcyMzA4NTA4NSwianRpIjoiOC84LzIwMjQgMDI6NDQ6NDUiLCJuYmYiOjE3MjMwODUwODUsImV4cCI6MTcyMzA5MDQ4NX0.q6GElPv4AUVqEkmGfHedbAO-nHRn7AmprP14g6-quSI';
-
+  let json = sessionStorage.getItem('user') ?? '';
+  if(json == ''){
+    return next(req);
+  }
+  let user = JSON.parse(json) as LoginResponse;
+  const token = user.token;
   const modreq = req.clone({
+    
     setHeaders: {
       authorization: `Bearer ${token}`
     }
