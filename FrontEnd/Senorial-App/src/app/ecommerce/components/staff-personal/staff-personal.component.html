@@ -16,13 +16,14 @@
         </header>
         <main class="login-form-container">
           <h1 class="login-title">Solo el personal autorizado podra ingresar por aqui:</h1>
-          <form>
+          <form [formGroup]="formLoginDash" (submit)="loginDash()">
             <label for="email" class="visually-hidden">Email del persona</label>
-            <input type="email" id="email" class="input-field" placeholder="Email del personal" required />
+            <input formControlName="email" type="email" id="email" class="input-field" placeholder="Email del personal" required />
 
             <div class="password-field">
               <label for="password" class="visually-hidden">Password</label>
               <input
+                formControlName="password"
                 type="{{ showPassword ? 'text' : 'password' }}"
                 id="password"
                 class="password-text"

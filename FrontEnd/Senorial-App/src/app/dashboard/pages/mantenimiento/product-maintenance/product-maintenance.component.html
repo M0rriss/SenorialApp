@@ -14,20 +14,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="product-row">
-          <td>Hamburguesa</td>
-          <td>Hamburguesa de Pollo</td>
-          <td>S/. 10.00</td>
-          <td>Horno</td>
-          <td>Hamburguesas</td>
-          <td>
-            <div class="action-buttons">
-              <i class="add-icon fa-solid fa-circle-plus" (click)="addProduct()"></i>
-              <i class="edit-icon fa-regular fa-pen-to-square" (click)="editProduct()"></i>
-              <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
-            </div>
-          </td>
-        </tr>
+        @for (item of product; track $index) {
+          <tr class="product-row">
+            <td>{{item.idProducto}}</td>
+            <td>{{item.descripcion}}</td>
+            <td>{{1|currency:'S/'}}</td>
+            <td>{{item.derivar}}</td>
+            <td>Hamburguesa</td>
+            <td>
+              <div class="action-buttons">
+                <i class="add-icon fa-solid fa-circle-plus" (click)="addProduct()"></i>
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editProduct()"></i>
+                <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
+              </div>
+            </td>
+          </tr>
+        }
+        
         <!-- Más filas según sea necesario -->
       </tbody>
     </table>

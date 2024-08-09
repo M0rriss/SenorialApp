@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MesaResponse } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-response';
+import { MesaService } from '@app/dashboard/services/mantenimineto/mesa/mesa.service';
 
 @Component({
   selector: 'table-maintenance',
   templateUrl: './table-maintenance.component.html',
   styleUrl: './table-maintenance.component.scss'
 })
-export class TableMaintenanceComponent {
+export class TableMaintenanceComponent implements OnInit {
   mesas = [
     { name: 'Mesa 1', active: true },
     { name: 'Mesa 2', active: false },
@@ -21,6 +23,23 @@ export class TableMaintenanceComponent {
   mesaName = '';
   mesaStatus = '';
   selectedMesa: any = null;
+
+  //MESAS
+  mesasList:MesaResponse[] = [];
+  constructor(private mesaService:MesaService){}
+  ngOnInit(): void {
+    this.listarMesas();
+  }
+
+  //FUNCIONAMINETO
+  listarMesas(){
+    this.mesaService.getAll()
+      .subscribe({
+        next: (data: MesaResponse[])=>{
+          this.mesasList = data;
+        }
+      });
+  }
 
   // Abrir diálogo de agregar mesa
   openAddDialog() {

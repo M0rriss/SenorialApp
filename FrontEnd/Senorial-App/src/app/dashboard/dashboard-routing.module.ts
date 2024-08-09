@@ -16,10 +16,12 @@ import { UserMaintenanceComponent } from './pages/mantenimiento/user-maintenance
 import { MesaDetailComponent } from './pages/mesa-detail/mesa-detail.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { SupplierTableComponent } from './pages/supplier-table/supplier-table.component';
+import { authGuard } from '@app/guard/auth.guard';
 
 const routes: Routes = [
   {
     path      :'dashboard',
+    canActivate: [authGuard],
     component : LocalComponent
   },
   {

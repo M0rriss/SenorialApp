@@ -14,11 +14,11 @@
         </header>
 
         <div class="mesas-list">
-          <div class="mesa-item" *ngFor="let mesa of mesas">
-            <h3 class="mesa-name">{{ mesa.name }}</h3>
+          <div class="mesa-item" *ngFor="let mesa of mesasList">
+            <h3 class="mesa-name">{{ mesa.nombre }}</h3>
             <div class="mesa-actions">
               <label class="switch">
-                <input type="checkbox" [checked]="mesa.active">
+                <input type="checkbox" [checked]="mesa.estado">
                 <span class="slider round"></span>
               </label>
               <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(mesa)"></i>
