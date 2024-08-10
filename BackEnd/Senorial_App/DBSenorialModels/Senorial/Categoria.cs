@@ -17,9 +17,11 @@ public partial class Categoria
     [Column("nombre")]
     [StringLength(100)]
     public string Nombre { get; set; } = null!;
+
     [Column("estado")]
     [StringLength(100)]
     public bool Estado { get; set; }
+
     [Column("id_categoria_padre")]
     public int? IdCategoriaPadre { get; set; }
 

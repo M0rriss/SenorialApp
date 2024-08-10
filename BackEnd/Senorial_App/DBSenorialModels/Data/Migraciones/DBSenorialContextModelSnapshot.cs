@@ -537,26 +537,34 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
                 {
-                    b.Property<int>("IdImg")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_img");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdImg"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("FileName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("nombre");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("ImageData")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("url");
 
-                    b.HasKey("IdImg")
+                    b.HasKey("Id")
                         .HasName("imagenes_id_pk");
 
                     b.ToTable("imagenes", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FileName = "test",
+                            ImageData = "https://th.bing.com/th/id/OIP.TpPLUJnbBx_WleAW68PhvQHaFF?rs=1&pid=ImgDetMain"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
@@ -1349,6 +1357,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa clásica",
                             IdCategoria = 1,
+                            IdImg = 1,
                             Nombre = "Hamburguesa clásica",
                             PrecioVenta = 9.00m
                         },
@@ -1358,6 +1367,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa queso tocino",
                             IdCategoria = 1,
+                            IdImg = 1,
                             Nombre = "Hamburguesa queso tocino",
                             PrecioVenta = 12.00m
                         },
@@ -1367,6 +1377,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa señorial",
                             IdCategoria = 1,
+                            IdImg = 1,
                             Nombre = "Hamburguesa señorial",
                             PrecioVenta = 15.00m
                         },
@@ -1376,6 +1387,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo a la brasa",
                             IdCategoria = 6,
+                            IdImg = 1,
                             Nombre = "1/4 de pollo a la brasa",
                             PrecioVenta = 12.00m
                         },
@@ -1385,6 +1397,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo broaster",
                             IdCategoria = 6,
+                            IdImg = 1,
                             Nombre = "1/4 de pollo broaster",
                             PrecioVenta = 15.00m
                         },
@@ -1394,6 +1407,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla de pollo",
                             PrecioVenta = 15.00m
                         },
@@ -1403,6 +1417,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo al ajo",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla de pollo al ajo",
                             PrecioVenta = 16.00m
                         },
@@ -1412,6 +1427,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo dietética",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla de pollo dietética",
                             PrecioVenta = 16.00m
                         },
@@ -1421,6 +1437,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla mixta",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla mixta",
                             PrecioVenta = 20.00m
                         },
@@ -1430,6 +1447,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Brochetas de pollo",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Brochetas de pollo",
                             PrecioVenta = 15.00m
                         },
@@ -1439,6 +1457,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Pollo a la pizzarola",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Pollo a la pizzarola",
                             PrecioVenta = 20.00m
                         },
@@ -1448,6 +1467,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Bisteck a la parrilla",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Bisteck a la parrilla",
                             PrecioVenta = 18.00m
                         },
@@ -1457,6 +1477,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Chorizo a la parrilla",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Chorizo a la parrilla",
                             PrecioVenta = 11.00m
                         },
@@ -1466,6 +1487,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Chicharrón señorial",
                             IdCategoria = 3,
+                            IdImg = 1,
                             Nombre = "Chicharrón señorial",
                             PrecioVenta = 15.00m
                         },
@@ -1475,6 +1497,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Lonjitas",
                             IdCategoria = 3,
+                            IdImg = 1,
                             Nombre = "Lonjitas",
                             PrecioVenta = 6.00m
                         },
@@ -1484,6 +1507,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chaufa especial",
                             IdCategoria = 3,
+                            IdImg = 1,
                             Nombre = "Chaufa especial",
                             PrecioVenta = 10.00m
                         },
@@ -1493,6 +1517,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chaufa mixto",
                             IdCategoria = 3,
+                            IdImg = 1,
                             Nombre = "Chaufa mixto",
                             PrecioVenta = 12.00m
                         },
@@ -1502,6 +1527,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Spaguetti a lo alfredo",
                             IdCategoria = 3,
+                            IdImg = 1,
                             Nombre = "Spaguetti a lo alfredo",
                             PrecioVenta = 14.00m
                         },
@@ -1511,6 +1537,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Café pasado",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Café pasado",
                             PrecioVenta = 2.50m
                         },
@@ -1520,6 +1547,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chocolate con panetón",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Chocolate con panetón",
                             PrecioVenta = 5.00m
                         },
@@ -1529,6 +1557,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Leche fresca",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Leche fresca",
                             PrecioVenta = 3.00m
                         },
@@ -1538,6 +1567,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milo",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Milo",
                             PrecioVenta = 3.00m
                         },
@@ -1547,6 +1577,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Café con leche",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Café con leche",
                             PrecioVenta = 4.00m
                         },
@@ -1556,6 +1587,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mates",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Mates",
                             PrecioVenta = 2.00m
                         },
@@ -1565,6 +1597,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 3lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 3lts",
                             PrecioVenta = 14.00m
                         },
@@ -1574,6 +1607,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 2.25lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 2.25lts",
                             PrecioVenta = 11.00m
                         },
@@ -1583,6 +1617,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1.5lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 1.5lts",
                             PrecioVenta = 9.00m
                         },
@@ -1592,6 +1627,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 1lts",
                             PrecioVenta = 7.00m
                         },
@@ -1601,6 +1637,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1/2lt",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 1/2lt",
                             PrecioVenta = 4.00m
                         },
@@ -1610,6 +1647,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa personal",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa personal",
                             PrecioVenta = 2.50m
                         },
@@ -1619,6 +1657,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa pirañita",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa pirañita",
                             PrecioVenta = 1.50m
                         },
@@ -1628,6 +1667,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Refresco de maracuya (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Refresco de maracuya (Jarra)",
                             PrecioVenta = 8.00m
                         },
@@ -1637,6 +1677,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chicha morada (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Chicha morada (Jarra)",
                             PrecioVenta = 8.00m
                         },
@@ -1646,6 +1687,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Limonada Frozen (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Limonada Frozen (Jarra)",
                             PrecioVenta = 12.00m
                         },
@@ -1655,6 +1697,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Limonada Americana (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Limonada Americana (Jarra)",
                             PrecioVenta = 11.00m
                         },
@@ -1664,6 +1707,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de pisco",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de pisco",
                             PrecioVenta = 30.00m
                         },
@@ -1673,6 +1717,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de vino",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de vino",
                             PrecioVenta = 40.00m
                         },
@@ -1682,6 +1727,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de ron",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de ron",
                             PrecioVenta = 35.00m
                         },
@@ -1691,6 +1737,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de whisky",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de whisky",
                             PrecioVenta = 45.00m
                         },
@@ -1700,6 +1747,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Cerveza en lata",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Cerveza en lata",
                             PrecioVenta = 6.00m
                         },
@@ -1709,6 +1757,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Cerveza negra",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Cerveza negra",
                             PrecioVenta = 10.00m
                         },
@@ -1718,6 +1767,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Cerveza de trigo",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Cerveza de trigo",
                             PrecioVenta = 10.00m
                         },
@@ -1727,6 +1777,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Vino queirolo (Vaso)",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Vino queirolo (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -1736,6 +1787,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Whisky (Vaso)",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Whisky (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -1745,6 +1797,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Pisco Vargas (Vaso)",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Pisco Vargas (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -1754,6 +1807,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mojito",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Mojito",
                             PrecioVenta = 15.90m
                         },
@@ -1763,6 +1817,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Machu Picchu",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Machu Picchu",
                             PrecioVenta = 17.90m
                         },
@@ -1772,6 +1827,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Daikiri",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Daikiri",
                             PrecioVenta = 15.90m
                         },
@@ -1781,6 +1837,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Piña colada",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Piña colada",
                             PrecioVenta = 16.90m
                         },
@@ -1790,6 +1847,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Pisco sour",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Pisco sour",
                             PrecioVenta = 15.90m
                         },
@@ -1799,6 +1857,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Naranjita",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Naranjita",
                             PrecioVenta = 15.00m
                         },
@@ -1808,6 +1867,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Alitas en salsa BBQ",
                             IdCategoria = 14,
+                            IdImg = 1,
                             Nombre = "Alitas en salsa BBQ",
                             PrecioVenta = 35.00m
                         },
@@ -1817,6 +1877,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Alitas broaster",
                             IdCategoria = 14,
+                            IdImg = 1,
                             Nombre = "Alitas broaster",
                             PrecioVenta = 35.00m
                         },
@@ -1826,6 +1887,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Tequeños especiales",
                             IdCategoria = 14,
+                            IdImg = 1,
                             Nombre = "Tequeños especiales",
                             PrecioVenta = 20.00m
                         },
@@ -1835,6 +1897,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Durazno en almíbar",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Durazno en almíbar",
                             PrecioVenta = 5.00m
                         },
@@ -1844,6 +1907,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Helado 02 bolas",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Helado 02 bolas",
                             PrecioVenta = 4.00m
                         },
@@ -1853,6 +1917,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Helado 03 bolas",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Helado 03 bolas",
                             PrecioVenta = 6.00m
                         },
@@ -1862,6 +1927,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gelatina",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Gelatina",
                             PrecioVenta = 3.00m
                         },
@@ -1871,6 +1937,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Flan",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Flan",
                             PrecioVenta = 5.00m
                         },
@@ -1880,6 +1947,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo de papaya",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo de papaya",
                             PrecioVenta = 5.00m
                         },
@@ -1889,6 +1957,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo de fresa con leche",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo de fresa con leche",
                             PrecioVenta = 8.00m
                         },
@@ -1898,6 +1967,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo de plátano",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo de plátano",
                             PrecioVenta = 5.00m
                         },
@@ -1907,6 +1977,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo surtido",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo surtido",
                             PrecioVenta = 5.00m
                         },
@@ -1916,6 +1987,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Ensalada de frutas",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Ensalada de frutas",
                             PrecioVenta = 7.00m
                         },
@@ -1925,6 +1997,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de Oreo",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Milkshake de Oreo",
                             PrecioVenta = 11.90m
                         },
@@ -1934,6 +2007,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de durazno",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Milkshake de durazno",
                             PrecioVenta = 11.90m
                         },
@@ -1943,6 +2017,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de fresa",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Milkshake de fresa",
                             PrecioVenta = 11.90m
                         },
@@ -1952,6 +2027,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Salchipapa clásica",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Salchipapa clásica",
                             PrecioVenta = 7.00m
                         },
@@ -1961,6 +2037,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Salchipapa ayacuchana",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Salchipapa ayacuchana",
                             PrecioVenta = 9.00m
                         },
@@ -1970,6 +2047,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Salchipiernita",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Salchipiernita",
                             PrecioVenta = 11.00m
                         },
@@ -1979,6 +2057,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mounstruo",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Mounstruo",
                             PrecioVenta = 18.00m
                         },
@@ -1988,6 +2067,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mounstrito",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Mounstrito",
                             PrecioVenta = 10.00m
                         });
@@ -2541,7 +2621,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 7, 15, 17, 39, 28, 988, DateTimeKind.Local).AddTicks(5026),
+                            CreatedAt = new DateTime(2024, 8, 10, 0, 29, 58, 98, DateTimeKind.Local).AddTicks(1638),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,

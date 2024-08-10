@@ -310,6 +310,9 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<Imagene>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("imagenes_id_pk");
+            entity.HasData(
+                new Imagene {Id= 1, FileName="test", ImageData="https://th.bing.com/th/id/OIP.TpPLUJnbBx_WleAW68PhvQHaFF?rs=1&pid=ImgDetMain" }
+                );
         });
 
         modelBuilder.Entity<Insumo>(entity =>
@@ -529,98 +532,98 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("img_id_fk");
             entity.HasData(
     // Hamburguesas
-    new Producto { IdProducto =  1, Nombre = "Hamburguesa clásica",           Descripcion = "Hamburguesa clásica",           Derivar = "Horno",  IdCategoria = 1, PrecioVenta =  9.00M },
-    new Producto { IdProducto =  2, Nombre = "Hamburguesa queso tocino",      Descripcion = "Hamburguesa queso tocino",      Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 12.00M },
-    new Producto { IdProducto =  3, Nombre = "Hamburguesa señorial",          Descripcion = "Hamburguesa señorial",          Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 15.00M },
+    new Producto { IdProducto =  1, Nombre = "Hamburguesa clásica",           Descripcion = "Hamburguesa clásica",           Derivar = "Horno",  IdCategoria = 1, PrecioVenta =  9.00M, IdImg=1 },
+    new Producto { IdProducto =  2, Nombre = "Hamburguesa queso tocino",      Descripcion = "Hamburguesa queso tocino",      Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 12.00M, IdImg=1 },
+    new Producto { IdProducto =  3, Nombre = "Hamburguesa señorial",          Descripcion = "Hamburguesa señorial",          Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 15.00M, IdImg=1 },
 
     // Pollos y Parrillas
-    new Producto { IdProducto =  4, Nombre = "1/4 de pollo a la brasa",       Descripcion = "1/4 de pollo a la brasa",       Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 12.00M },
-    new Producto { IdProducto =  5, Nombre = "1/4 de pollo broaster",         Descripcion = "1/4 de pollo broaster",         Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 15.00M },
-    new Producto { IdProducto =  6, Nombre = "Parrilla de pollo",             Descripcion = "Parrilla de pollo",             Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 15.00M },
-    new Producto { IdProducto =  7, Nombre = "Parrilla de pollo al ajo",      Descripcion = "Parrilla de pollo al ajo",      Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 16.00M },
-    new Producto { IdProducto =  8, Nombre = "Parrilla de pollo dietética",   Descripcion = "Parrilla de pollo dietética",   Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 16.00M },
-    new Producto { IdProducto =  9, Nombre = "Parrilla mixta",                Descripcion = "Parrilla mixta",                Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 20.00M },
-    new Producto { IdProducto = 10, Nombre = "Brochetas de pollo",            Descripcion = "Brochetas de pollo",            Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 15.00M },
-    new Producto { IdProducto = 11, Nombre = "Pollo a la pizzarola",          Descripcion = "Pollo a la pizzarola",          Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 20.00M },
-    new Producto { IdProducto = 12, Nombre = "Bisteck a la parrilla",         Descripcion = "Bisteck a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 18.00M },
-    new Producto { IdProducto = 13, Nombre = "Chorizo a la parrilla",         Descripcion = "Chorizo a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 11.00M },
+    new Producto { IdProducto =  4, Nombre = "1/4 de pollo a la brasa",       Descripcion = "1/4 de pollo a la brasa",       Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 12.00M, IdImg=1 },
+    new Producto { IdProducto =  5, Nombre = "1/4 de pollo broaster",         Descripcion = "1/4 de pollo broaster",         Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 15.00M, IdImg=1 },
+    new Producto { IdProducto =  6, Nombre = "Parrilla de pollo",             Descripcion = "Parrilla de pollo",             Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 15.00M, IdImg=1 },
+    new Producto { IdProducto =  7, Nombre = "Parrilla de pollo al ajo",      Descripcion = "Parrilla de pollo al ajo",      Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 16.00M, IdImg=1 },
+    new Producto { IdProducto =  8, Nombre = "Parrilla de pollo dietética",   Descripcion = "Parrilla de pollo dietética",   Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 16.00M, IdImg=1 },
+    new Producto { IdProducto =  9, Nombre = "Parrilla mixta",                Descripcion = "Parrilla mixta",                Derivar = "Horno",  IdCategoria = 7, PrecioVenta = 20.00M, IdImg=1 },
+    new Producto { IdProducto = 10, Nombre = "Brochetas de pollo",            Descripcion = "Brochetas de pollo",            Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 15.00M, IdImg=1 },
+    new Producto { IdProducto = 11, Nombre = "Pollo a la pizzarola",          Descripcion = "Pollo a la pizzarola",          Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 20.00M, IdImg=1 },
+    new Producto { IdProducto = 12, Nombre = "Bisteck a la parrilla",         Descripcion = "Bisteck a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 18.00M, IdImg=1 },
+    new Producto { IdProducto = 13, Nombre = "Chorizo a la parrilla",         Descripcion = "Chorizo a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 11.00M, IdImg=1 },
 
     // Platos de Fondo
-    new Producto { IdProducto = 14, Nombre = "Chicharrón señorial",           Descripcion = "Chicharrón señorial",           Derivar = "Horno",  IdCategoria = 3, PrecioVenta = 15.00M },
-    new Producto { IdProducto = 15, Nombre = "Lonjitas",                      Descripcion = "Lonjitas",                      Derivar = "Horno",  IdCategoria = 3, PrecioVenta =  6.00M },
-    new Producto { IdProducto = 16, Nombre = "Chaufa especial",               Descripcion = "Chaufa especial",               Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 10.00M },
-    new Producto { IdProducto = 17, Nombre = "Chaufa mixto",                  Descripcion = "Chaufa mixto",                  Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 12.00M },
-    new Producto { IdProducto = 18, Nombre = "Spaguetti a lo alfredo",        Descripcion = "Spaguetti a lo alfredo",        Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 14.00M },
+    new Producto { IdProducto = 14, Nombre = "Chicharrón señorial",           Descripcion = "Chicharrón señorial",           Derivar = "Horno",  IdCategoria = 3, PrecioVenta = 15.00M, IdImg=1 },
+    new Producto { IdProducto = 15, Nombre = "Lonjitas",                      Descripcion = "Lonjitas",                      Derivar = "Horno",  IdCategoria = 3, PrecioVenta =  6.00M, IdImg=1 },
+    new Producto { IdProducto = 16, Nombre = "Chaufa especial",               Descripcion = "Chaufa especial",               Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 10.00M, IdImg=1 },
+    new Producto { IdProducto = 17, Nombre = "Chaufa mixto",                  Descripcion = "Chaufa mixto",                  Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 12.00M, IdImg=1 },
+    new Producto { IdProducto = 18, Nombre = "Spaguetti a lo alfredo",        Descripcion = "Spaguetti a lo alfredo",        Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 14.00M, IdImg=1 },
 
     // Bebidas Calientes
-    new Producto { IdProducto = 19, Nombre = "Café pasado",                   Descripcion = "Café pasado",                   Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.50M },
-    new Producto { IdProducto = 20, Nombre = "Chocolate con panetón",         Descripcion = "Chocolate con panetón",         Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  5.00M },
-    new Producto { IdProducto = 21, Nombre = "Leche fresca",                  Descripcion = "Leche fresca",                  Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  3.00M },
-    new Producto { IdProducto = 22, Nombre = "Milo",                          Descripcion = "Milo",                          Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  3.00M },
-    new Producto { IdProducto = 23, Nombre = "Café con leche",                Descripcion = "Café con leche",                Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  4.00M },
-    new Producto { IdProducto = 24, Nombre = "Mates",                         Descripcion = "Mates",                         Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.00M },
+    new Producto { IdProducto = 19, Nombre = "Café pasado",                   Descripcion = "Café pasado",                   Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.50M, IdImg=1 },
+    new Producto { IdProducto = 20, Nombre = "Chocolate con panetón",         Descripcion = "Chocolate con panetón",         Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  5.00M, IdImg=1 },
+    new Producto { IdProducto = 21, Nombre = "Leche fresca",                  Descripcion = "Leche fresca",                  Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  3.00M, IdImg=1 },
+    new Producto { IdProducto = 22, Nombre = "Milo",                          Descripcion = "Milo",                          Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  3.00M, IdImg=1 },
+    new Producto { IdProducto = 23, Nombre = "Café con leche",                Descripcion = "Café con leche",                Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  4.00M, IdImg=1 },
+    new Producto { IdProducto = 24, Nombre = "Mates",                         Descripcion = "Mates",                         Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.00M, IdImg=1 },
 
     // Bebidas Frías
-    new Producto { IdProducto = 25, Nombre = "Gaseosa de 3lts",               Descripcion = "Gaseosa de 3lts",               Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 14.00M },
-    new Producto { IdProducto = 26, Nombre = "Gaseosa de 2.25lts",            Descripcion = "Gaseosa de 2.25lts",            Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 11.00M },
-    new Producto { IdProducto = 27, Nombre = "Gaseosa de 1.5lts",             Descripcion = "Gaseosa de 1.5lts",             Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  9.00M },
-    new Producto { IdProducto = 28, Nombre = "Gaseosa de 1lts",               Descripcion = "Gaseosa de 1lts",               Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  7.00M },
-    new Producto { IdProducto = 29, Nombre = "Gaseosa de 1/2lt",              Descripcion = "Gaseosa de 1/2lt",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  4.00M },
-    new Producto { IdProducto = 30, Nombre = "Gaseosa personal",              Descripcion = "Gaseosa personal",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  2.50M },
-    new Producto { IdProducto = 31, Nombre = "Gaseosa pirañita",              Descripcion = "Gaseosa pirañita",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  1.50M },
-    new Producto { IdProducto = 32, Nombre = "Refresco de maracuya (Jarra)",  Descripcion = "Refresco de maracuya (Jarra)",  Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  8.00M },
-    new Producto { IdProducto = 33, Nombre = "Chicha morada (Jarra)",         Descripcion = "Chicha morada (Jarra)",         Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  8.00M },
-    new Producto { IdProducto = 34, Nombre = "Limonada Frozen (Jarra)",       Descripcion = "Limonada Frozen (Jarra)",       Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 12.00M },
-    new Producto { IdProducto = 35, Nombre = "Limonada Americana (Jarra)",    Descripcion = "Limonada Americana (Jarra)",    Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 11.00M },
+    new Producto { IdProducto = 25, Nombre = "Gaseosa de 3lts",               Descripcion = "Gaseosa de 3lts",               Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 14.00M, IdImg=1 },
+    new Producto { IdProducto = 26, Nombre = "Gaseosa de 2.25lts",            Descripcion = "Gaseosa de 2.25lts",            Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 11.00M, IdImg=1 },
+    new Producto { IdProducto = 27, Nombre = "Gaseosa de 1.5lts",             Descripcion = "Gaseosa de 1.5lts",             Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  9.00M, IdImg=1 },
+    new Producto { IdProducto = 28, Nombre = "Gaseosa de 1lts",               Descripcion = "Gaseosa de 1lts",               Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  7.00M, IdImg=1 },
+    new Producto { IdProducto = 29, Nombre = "Gaseosa de 1/2lt",              Descripcion = "Gaseosa de 1/2lt",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  4.00M, IdImg=1 },
+    new Producto { IdProducto = 30, Nombre = "Gaseosa personal",              Descripcion = "Gaseosa personal",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  2.50M, IdImg=1 },
+    new Producto { IdProducto = 31, Nombre = "Gaseosa pirañita",              Descripcion = "Gaseosa pirañita",              Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  1.50M, IdImg=1 },
+    new Producto { IdProducto = 32, Nombre = "Refresco de maracuya (Jarra)",  Descripcion = "Refresco de maracuya (Jarra)",  Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  8.00M, IdImg=1 },
+    new Producto { IdProducto = 33, Nombre = "Chicha morada (Jarra)",         Descripcion = "Chicha morada (Jarra)",         Derivar = "Cocina", IdCategoria = 11, PrecioVenta =  8.00M, IdImg=1 },
+    new Producto { IdProducto = 34, Nombre = "Limonada Frozen (Jarra)",       Descripcion = "Limonada Frozen (Jarra)",       Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 12.00M, IdImg=1 },
+    new Producto { IdProducto = 35, Nombre = "Limonada Americana (Jarra)",    Descripcion = "Limonada Americana (Jarra)",    Derivar = "Cocina", IdCategoria = 11, PrecioVenta = 11.00M, IdImg=1 },
 
     // Licores
-    new Producto { IdProducto = 36, Nombre = "Caliente de pisco",             Descripcion = "Caliente de pisco",             Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 30.00M },
-    new Producto { IdProducto = 37, Nombre = "Caliente de vino",              Descripcion = "Caliente de vino",              Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 40.00M },
-    new Producto { IdProducto = 38, Nombre = "Caliente de ron",               Descripcion = "Caliente de ron",               Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 35.00M },
-    new Producto { IdProducto = 39, Nombre = "Caliente de whisky",            Descripcion = "Caliente de whisky",            Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 45.00M },
-    new Producto { IdProducto = 40, Nombre = "Cerveza en lata",               Descripcion = "Cerveza en lata",               Derivar = "Cocina", IdCategoria = 12, PrecioVenta =  6.00M },
-    new Producto { IdProducto = 41, Nombre = "Cerveza negra",                 Descripcion = "Cerveza negra",                 Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
-    new Producto { IdProducto = 42, Nombre = "Cerveza de trigo",              Descripcion = "Cerveza de trigo",              Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
-    new Producto { IdProducto = 43, Nombre = "Vino queirolo (Vaso)",          Descripcion = "Vino queirolo (Vaso)",          Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
-    new Producto { IdProducto = 44, Nombre = "Whisky (Vaso)",                 Descripcion = "Whisky (Vaso)",                 Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
-    new Producto { IdProducto = 45, Nombre = "Pisco Vargas (Vaso)",           Descripcion = "Pisco Vargas (Vaso)",           Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M },
+    new Producto { IdProducto = 36, Nombre = "Caliente de pisco",             Descripcion = "Caliente de pisco",             Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 30.00M, IdImg=1 },
+    new Producto { IdProducto = 37, Nombre = "Caliente de vino",              Descripcion = "Caliente de vino",              Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 40.00M, IdImg=1 },
+    new Producto { IdProducto = 38, Nombre = "Caliente de ron",               Descripcion = "Caliente de ron",               Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 35.00M, IdImg=1 },
+    new Producto { IdProducto = 39, Nombre = "Caliente de whisky",            Descripcion = "Caliente de whisky",            Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 45.00M, IdImg=1 },
+    new Producto { IdProducto = 40, Nombre = "Cerveza en lata",               Descripcion = "Cerveza en lata",               Derivar = "Cocina", IdCategoria = 12, PrecioVenta =  6.00M, IdImg=1 },
+    new Producto { IdProducto = 41, Nombre = "Cerveza negra",                 Descripcion = "Cerveza negra",                 Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M, IdImg=1 },
+    new Producto { IdProducto = 42, Nombre = "Cerveza de trigo",              Descripcion = "Cerveza de trigo",              Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M, IdImg=1 },
+    new Producto { IdProducto = 43, Nombre = "Vino queirolo (Vaso)",          Descripcion = "Vino queirolo (Vaso)",          Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M, IdImg=1 },
+    new Producto { IdProducto = 44, Nombre = "Whisky (Vaso)",                 Descripcion = "Whisky (Vaso)",                 Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M, IdImg=1 },
+    new Producto { IdProducto = 45, Nombre = "Pisco Vargas (Vaso)",           Descripcion = "Pisco Vargas (Vaso)",           Derivar = "Cocina", IdCategoria = 12, PrecioVenta = 10.00M, IdImg=1 },
 
     // Cócteles
-    new Producto { IdProducto = 46, Nombre = "Mojito",                        Descripcion = "Mojito",                        Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M },
-    new Producto { IdProducto = 47, Nombre = "Machu Picchu",                  Descripcion = "Machu Picchu",                  Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 17.90M },
-    new Producto { IdProducto = 48, Nombre = "Daikiri",                       Descripcion = "Daikiri",                       Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M },
-    new Producto { IdProducto = 49, Nombre = "Piña colada",                   Descripcion = "Piña colada",                   Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 16.90M },
-    new Producto { IdProducto = 50, Nombre = "Pisco sour",                    Descripcion = "Pisco sour",                    Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M },
-    new Producto { IdProducto = 51, Nombre = "Naranjita",                     Descripcion = "Naranjita",                     Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.00M },
+    new Producto { IdProducto = 46, Nombre = "Mojito",                        Descripcion = "Mojito",                        Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M, IdImg=1 },
+    new Producto { IdProducto = 47, Nombre = "Machu Picchu",                  Descripcion = "Machu Picchu",                  Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 17.90M, IdImg=1 },
+    new Producto { IdProducto = 48, Nombre = "Daikiri",                       Descripcion = "Daikiri",                       Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M, IdImg=1 },
+    new Producto { IdProducto = 49, Nombre = "Piña colada",                   Descripcion = "Piña colada",                   Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 16.90M, IdImg=1 },
+    new Producto { IdProducto = 50, Nombre = "Pisco sour",                    Descripcion = "Pisco sour",                    Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.90M, IdImg=1 },
+    new Producto { IdProducto = 51, Nombre = "Naranjita",                     Descripcion = "Naranjita",                     Derivar = "Cocina", IdCategoria = 13, PrecioVenta = 15.00M, IdImg=1 },
 
     // Piqueos de la Casa
-    new Producto { IdProducto = 52, Nombre = "Alitas en salsa BBQ",           Descripcion = "Alitas en salsa BBQ",           Derivar = "Horno",  IdCategoria = 14, PrecioVenta = 35.00M },
-    new Producto { IdProducto = 53, Nombre = "Alitas broaster",               Descripcion = "Alitas broaster",               Derivar = "Horno",  IdCategoria = 14, PrecioVenta = 35.00M },
-    new Producto { IdProducto = 54, Nombre = "Tequeños especiales",           Descripcion = "Tequeños especiales",           Derivar = "Cocina", IdCategoria = 14, PrecioVenta = 20.00M },
+    new Producto { IdProducto = 52, Nombre = "Alitas en salsa BBQ",           Descripcion = "Alitas en salsa BBQ",           Derivar = "Horno",  IdCategoria = 14, PrecioVenta = 35.00M, IdImg=1 },
+    new Producto { IdProducto = 53, Nombre = "Alitas broaster",               Descripcion = "Alitas broaster",               Derivar = "Horno",  IdCategoria = 14, PrecioVenta = 35.00M, IdImg=1 },
+    new Producto { IdProducto = 54, Nombre = "Tequeños especiales",           Descripcion = "Tequeños especiales",           Derivar = "Cocina", IdCategoria = 14, PrecioVenta = 20.00M, IdImg=1 },
 
     // Postres
-    new Producto { IdProducto = 55, Nombre = "Durazno en almíbar",            Descripcion = "Durazno en almíbar",            Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  5.00M },
-    new Producto { IdProducto = 56, Nombre = "Helado 02 bolas",               Descripcion = "Helado 02 bolas",               Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  4.00M },
-    new Producto { IdProducto = 57, Nombre = "Helado 03 bolas",               Descripcion = "Helado 03 bolas",               Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  6.00M },
-    new Producto { IdProducto = 58, Nombre = "Gelatina",                      Descripcion = "Gelatina",                      Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  3.00M },
-    new Producto { IdProducto = 59, Nombre = "Flan",                          Descripcion = "Flan",                          Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  5.00M },
+    new Producto { IdProducto = 55, Nombre = "Durazno en almíbar",            Descripcion = "Durazno en almíbar",            Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  5.00M, IdImg=1 },
+    new Producto { IdProducto = 56, Nombre = "Helado 02 bolas",               Descripcion = "Helado 02 bolas",               Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  4.00M, IdImg=1 },
+    new Producto { IdProducto = 57, Nombre = "Helado 03 bolas",               Descripcion = "Helado 03 bolas",               Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  6.00M, IdImg=1 },
+    new Producto { IdProducto = 58, Nombre = "Gelatina",                      Descripcion = "Gelatina",                      Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  3.00M, IdImg=1 },
+    new Producto { IdProducto = 59, Nombre = "Flan",                          Descripcion = "Flan",                          Derivar = "Cocina", IdCategoria = 15, PrecioVenta =  5.00M, IdImg=1 },
 
     // Jugos y Milkshakes
-    new Producto { IdProducto = 60, Nombre = "Jugo de papaya",                Descripcion = "Jugo de papaya",                Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M },
-    new Producto { IdProducto = 61, Nombre = "Jugo de fresa con leche",       Descripcion = "Jugo de fresa con leche",       Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  8.00M },
-    new Producto { IdProducto = 62, Nombre = "Jugo de plátano",               Descripcion = "Jugo de plátano",               Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M },
-    new Producto { IdProducto = 63, Nombre = "Jugo surtido",                  Descripcion = "Jugo surtido",                  Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M },
-    new Producto { IdProducto = 64, Nombre = "Ensalada de frutas",            Descripcion = "Ensalada de frutas",            Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  7.00M },
-    new Producto { IdProducto = 65, Nombre = "Milkshake de Oreo",             Descripcion = "Milkshake de Oreo",             Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M },
-    new Producto { IdProducto = 66, Nombre = "Milkshake de durazno",          Descripcion = "Milkshake de durazno",          Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M },
-    new Producto { IdProducto = 67, Nombre = "Milkshake de fresa",            Descripcion = "Milkshake de fresa",            Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M },
+    new Producto { IdProducto = 60, Nombre = "Jugo de papaya",                Descripcion = "Jugo de papaya",                Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M, IdImg=1 },
+    new Producto { IdProducto = 61, Nombre = "Jugo de fresa con leche",       Descripcion = "Jugo de fresa con leche",       Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  8.00M, IdImg=1 },
+    new Producto { IdProducto = 62, Nombre = "Jugo de plátano",               Descripcion = "Jugo de plátano",               Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M, IdImg=1 },
+    new Producto { IdProducto = 63, Nombre = "Jugo surtido",                  Descripcion = "Jugo surtido",                  Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  5.00M, IdImg=1 },
+    new Producto { IdProducto = 64, Nombre = "Ensalada de frutas",            Descripcion = "Ensalada de frutas",            Derivar = "Cocina", IdCategoria = 16, PrecioVenta =  7.00M, IdImg=1 },
+    new Producto { IdProducto = 65, Nombre = "Milkshake de Oreo",             Descripcion = "Milkshake de Oreo",             Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M, IdImg=1 },
+    new Producto { IdProducto = 66, Nombre = "Milkshake de durazno",          Descripcion = "Milkshake de durazno",          Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M, IdImg=1 },
+    new Producto { IdProducto = 67, Nombre = "Milkshake de fresa",            Descripcion = "Milkshake de fresa",            Derivar = "Cocina", IdCategoria = 16, PrecioVenta = 11.90M, IdImg=1 },
 
     // Comida Rápida
-    new Producto { IdProducto = 68, Nombre = "Salchipapa clásica",            Descripcion = "Salchipapa clásica",            Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  7.00M },
-    new Producto { IdProducto = 69, Nombre = "Salchipapa ayacuchana",         Descripcion = "Salchipapa ayacuchana",         Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  9.00M },
-    new Producto { IdProducto = 70, Nombre = "Salchipiernita",                Descripcion = "Salchipiernita",                Derivar = "Horno",  IdCategoria = 9, PrecioVenta = 11.00M },
-    new Producto { IdProducto = 71, Nombre = "Mounstruo",                     Descripcion = "Mounstruo",                     Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 18.00M },
-    new Producto { IdProducto = 72, Nombre = "Mounstrito",                    Descripcion = "Mounstrito",                    Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 10.00M }
+    new Producto { IdProducto = 68, Nombre = "Salchipapa clásica",            Descripcion = "Salchipapa clásica",            Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  7.00M, IdImg=1 },
+    new Producto { IdProducto = 69, Nombre = "Salchipapa ayacuchana",         Descripcion = "Salchipapa ayacuchana",         Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  9.00M, IdImg=1 },
+    new Producto { IdProducto = 70, Nombre = "Salchipiernita",                Descripcion = "Salchipiernita",                Derivar = "Horno",  IdCategoria = 9, PrecioVenta = 11.00M, IdImg=1 },
+    new Producto { IdProducto = 71, Nombre = "Mounstruo",                     Descripcion = "Mounstruo",                     Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 18.00M, IdImg=1 },
+    new Producto { IdProducto = 72, Nombre = "Mounstrito",                    Descripcion = "Mounstrito",                    Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 10.00M, IdImg=1 }
 );
 
         });

@@ -30,11 +30,11 @@ public partial class DetalleInventario
 
     [ForeignKey("IdInsumo")]
     [InverseProperty("DetalleInventarios")]
-    public virtual Insumo Insumo { get; set; }
+    public virtual Insumo Insumo { get; set; } = null!;
 
     [ForeignKey("IdInventario")]
     //[InverseProperty("DetalleInventarios")]
-    public virtual Inventario Inventario { get; set; }
+    public virtual Inventario Inventario { get; set; } = null!;
 
     [InverseProperty("DetalleInventario")]
     public virtual ICollection<Salida> Salidas { get; set; } = new List<Salida>();

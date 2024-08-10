@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
+using DocumentFormat.OpenXml.Drawing;
 using IBusiness.Schema_Generico.Imagenes;
 using IRepository.Schema_Generico.Imagenes;
 using IServices.Cloud;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Repository.Schema_Generico.Imagenes;
@@ -47,16 +49,33 @@ namespace Business.Schema_Generico.Imagenes
         }
         public async Task<ImagenesResponse> GetById(int id)
         {
-            var imagen = await _imagenesRepository.GetById(id);
-            var response = _mapper.Map<ImagenesResponse>(imagen);
+            Imagene imagen = await _imagenesRepository.GetById(id);
+            ImagenesResponse response = new()
+            {
+                IdImg = imagen.Id,
+                Url = imagen.ImageData,
+                Nombre = imagen.FileName
+            };
             return response;
         }
 
         public async Task<ImagenesResponse> Create(ImagenesRequest entity)
         {
-            var imagen = _mapper.Map<Imagene>(entity);
+            Imagene imagen = new()
+            {
+                FileName = entity.Nombre,
+                ImageData = entity.Url,
+            };
+
             imagen = await _imagenesRepository.Create(imagen);
-            var response = _mapper.Map<ImagenesResponse>(imagen);
+            ImagenesResponse response = new(
+
+                )
+            {
+                IdImg = imagen.Id,
+                Nombre = imagen.FileName,
+                Url = imagen.ImageData,
+            };
             return response;
         }
 
@@ -131,6 +150,21 @@ namespace Business.Schema_Generico.Imagenes
             }
 
             return cloudinaryResponse;
+        }
+
+        public async Task<UploadImageResponse> SubirImagenAsync(IFormFile file)
+        {
+            string newFileName = $"{Guid.NewGuid()}_{System.IO.Path.GetFileName(file.FileName)}";
+            byte[] imageBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                imageBytes = memoryStream.ToArray();
+            }
+            string base64Image = Convert.ToBase64String(imageBytes);
+            UploadImageRequest image = new() { FileName = newFileName, ImageBase64 = base64Image };
+            UploadImageResponse res = await _cloudinaryService.UploadImageAsync(image);
+            return res;
         }
     }
 }

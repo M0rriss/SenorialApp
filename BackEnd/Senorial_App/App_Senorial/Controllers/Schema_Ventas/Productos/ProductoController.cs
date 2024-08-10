@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Categorias;
 using Business.Schema_Ventas.Productos;
+using CommonModels.Common;
 using IBusiness.Schema_Almacen.Categorias;
 using IBusiness.Schema_Ventas.Productos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Ventas.Productos;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using RequestResponseModels.Response.Schema_Ventas.Mesas;
 using RequestResponseModels.Response.Schema_Ventas.Productos;
@@ -18,10 +21,12 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
+
     public class ProductoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
+        
         private readonly IProductoBusiness _productoBusiness;
         private readonly IMapper _mapper;
         /// <summary>
@@ -92,6 +97,10 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
         }
         #endregion CRUD METHODS
         #region UI CRUD
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("Listado")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<ProductoUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
@@ -101,6 +110,11 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
             var response = await _productoBusiness.UiGetProducto();
             return Ok(response);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost, Route("Crear/Producto")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
@@ -110,7 +124,11 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
             var result = await _productoBusiness.InsertUiProducto(request);
             return Ok(result);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut, Route("Actualizar/Producto")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
@@ -120,7 +138,11 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
             var result = await _productoBusiness.UpdateUiProducto(request);
             return Ok(result);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
@@ -131,7 +153,51 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
             return Ok(result);
         }
         #endregion UI CRUD
+        #region Post
 
+        /// <summary>
+        /// Listado de Productos Ecommerce
+        /// </summary>
+        /// <param name="req">Fltros</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Filtro/Ecommerce")]
+        public async Task<ActionResult<GenericFilterResponse<ProductoEcommerceResponse>>> ListarProductosEcommerce(GenericFilterRequest req)
+        {
+            GenericFilterResponse<ProductoEcommerceResponse> res = await _productoBusiness.FiltrarProductoAsync(req);
+            return Ok(res);
+        }
+        /// <summary>
+        /// Listado productos para el mantenimiento
+        /// </summary>
+        /// <param name="req">Fltros</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Filtro/Dashboard")]
+        public async Task<ActionResult<GenericFilterResponse<ProductoEcommerceResponse>>> ListarProductosDashboard(GenericFilterRequest req)
+        {
+            GenericFilterResponse<ProductoDashboardResponse> res = await _productoBusiness.FiltrarProductoDashboardAsync(req);
+            return Ok(res);
+        }
+        [HttpPost]
+        [Route("Crear")]
+        public  async Task<ActionResult<CustomResponse>> CrearProducto([FromForm] ProductDashRequest file)
+        {
+            CustomResponse res = await _productoBusiness.CrearNuevoProductoAsync(file);
+            return StatusCode(201,res);
+        }
+        [HttpPut]
+        [Route("Actulizar")]
+        public async Task<ActionResult<CustomResponse>> ActulizarProducto([FromForm] ProductEditDashRequest file)
+        {
+            CustomResponse res = await _productoBusiness.EditarProductoAsync(file);
+            return StatusCode(201);
+        }
+
+
+        #endregion Post
 
     }
+
+    
 }

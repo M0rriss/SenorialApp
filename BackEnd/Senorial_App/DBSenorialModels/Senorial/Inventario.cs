@@ -21,7 +21,7 @@ public partial class Inventario
     public DateTime FechaActualizacion { get; set; } = DateTime.Now;
 
     [ForeignKey("IdSucursal")]
-    public virtual Sucursal Sucursal { get; set; }
+    public virtual Sucursal Sucursal { get; set; } = null!;
 
     [InverseProperty("Inventario")]
     public virtual ICollection<DetalleInventario> Detalles { get; set; } = new List<DetalleInventario>();
