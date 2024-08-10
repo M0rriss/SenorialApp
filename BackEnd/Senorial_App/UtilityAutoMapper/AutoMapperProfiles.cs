@@ -59,6 +59,8 @@ using RequestResponseModels.Request.Schema_Ventas.Ventas;
 using RequestResponseModels.Response.Schema_Ventas.Ventas;
 using RequestResponseModels.Request.Schema_Ventas.Mesas;
 using RequestResponseModels.Response.Schema_Ventas.Mesas;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
+using DBSenorialModels.View.Producto;
 
 namespace UtilityAutoMapper
 {
@@ -281,6 +283,9 @@ namespace UtilityAutoMapper
             CreateMap<Producto, ProductoUiRequest>().ReverseMap();
             CreateMap<Producto, ProductoUpdateUiRequest>().ReverseMap();
             CreateMap<Producto, ProductoUiResponse>().ReverseMap();
+
+            CreateMap<GenericFilterResponse<VwProductoEcommerce>, GenericFilterResponse<ProductoEcommerceResponse>>().ReverseMap();
+            CreateMap<GenericFilterResponse<VwProductoDashboard>, GenericFilterResponse<ProductoDashboardResponse>>().ReverseMap();
             #endregion
             #region Pedidos
             CreateMap<Pedido, PedidoRequest>().ReverseMap();

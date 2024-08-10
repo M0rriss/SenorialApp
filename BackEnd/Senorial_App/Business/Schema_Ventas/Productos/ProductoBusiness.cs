@@ -1,12 +1,23 @@
 ﻿using AutoMapper;
+using Business.Schema_Generico.Imagenes;
+using CloudinaryDotNet;
+using CommonModels.Common;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Producto;
+using IBusiness.Schema_Generico.Imagenes;
 using IBusiness.Schema_Ventas.Productos;
 using IRepository.Schema_Ventas.Productos;
+using IServices.Cloud;
 using Repository.Schema_Ventas.Productos;
+using RequestResponseModels.Request.CloudinaryReq;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
+using RequestResponseModels.Request.Schema_Generico.Imagenes;
 using RequestResponseModels.Request.Schema_Ventas.Productos;
+using RequestResponseModels.Response.CloudinaryRes;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
+using RequestResponseModels.Response.Schema_Generico.Imagenes;
 using RequestResponseModels.Response.Schema_Ventas.Productos;
+using Services.cloudinary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +30,15 @@ namespace Business.Schema_Ventas.Productos
     {
         #region Dependency Injecction
         private readonly IProductoRepository _productoRepository;
+        private readonly ICloudinaryService _cloudinary;
+        private readonly IImagenesBusiness _imagenesBusiness;
         private readonly IMapper _mapper;
         public ProductoBusiness(IMapper mapper)
         {
             _mapper = mapper;
             _productoRepository = new ProductoRepository();
+            _cloudinary = new CloudinaryService();
+            _imagenesBusiness = new ImagenesBusiness(mapper);
         }
         #endregion
         #region CRUD
@@ -143,7 +158,108 @@ namespace Business.Schema_Ventas.Productos
             await _productoRepository.Delete(id);
             return true;
         }
+
+        public async Task<GenericFilterResponse<ProductoEcommerceResponse>> FiltrarProductoAsync(GenericFilterRequest req) 
+        {
+            GenericFilterResponse<ProductoEcommerceResponse> res = new();
+
+            GenericFilterResponse<VwProductoEcommerce> list =
+                await _productoRepository
+                .GetByFilterViewProductEcommerceAsync(req);
+
+            foreach (var i in list.Lista)
+            {
+                ProductoEcommerceResponse tmp = new()
+                {
+                    IdProducto = i.IdProducto,
+                    DetalleProducto = i.DetalleProducto,
+                    NombreProducto = i.NombreProducto,
+                    PrecioVenta = i.PrecioVenta,
+                    RutaImagen = i.RutaImagen
+                };
+                res.Lista.Add(tmp);
+            }
+            res.TotalRegistros = list.TotalRegistros;
+
+            return res;
+        }
+        public async Task<GenericFilterResponse<ProductoDashboardResponse>> FiltrarProductoDashboardAsync(GenericFilterRequest req)
+        {
+            GenericFilterResponse<ProductoDashboardResponse> res = new();
+            GenericFilterResponse<VwProductoDashboard> list =
+                await _productoRepository
+                .GetByFilterViewProductDashboardAsync(req);
+
+            foreach(var i  in list.Lista)
+            {
+                ProductoDashboardResponse tmp = new()
+                {
+                    IdProducto = i.IdProducto,
+                    Categoria = i.Categoria,
+                    Derivar = i.Derivar,
+                    DetalleProducto = i.DetalleProducto,
+                    NombreProducto = i.NombreProducto,
+                    PrecioVenta = i.PrecioVenta,
+                    RutaImagen = i.RutaImagen
+                };
+                res.Lista.Add(tmp);
+            }
+            res.TotalRegistros = list.TotalRegistros;
+
+            return res;
+        }
         #endregion
+        #region NewProduct
+        public async Task<CustomResponse> CrearNuevoProductoAsync(ProductDashRequest req)
+        {
+            UploadImageResponse resImage = await _imagenesBusiness.SubirImagenAsync(req.File);
+            ImagenesRequest reqImgaen = new()
+            {
+                Nombre = resImage.PublicId,
+                Url = resImage.Url,
+            };
+            ImagenesResponse resdbImagen = await _imagenesBusiness.Create(reqImgaen);
+            Producto producto = new Producto()
+            {
+                IdCategoria = req.IdCategoria,
+                IdImg = resdbImagen.IdImg,
+                Descripcion = req.Description,
+                Derivar = req.Inprimir,
+                PrecioVenta = req.PricioCompra,
+                Nombre = req.Nombre,
+            };
+            await _productoRepository.Create(producto);
+            CustomResponse res = new() { Code = "201", Message = "Se registro Correctamente" };
+            return res;
+        }
+        public async Task<CustomResponse> EditarProductoAsync(ProductEditDashRequest req)
+        {
+            Producto resProduct = await _productoRepository.GetById(req.IdProducto);
+            ImagenesResponse Imgenes = await _imagenesBusiness.GetById(resProduct.IdImg ?? 0);
+            ImagenesRequest reqImgaen = new();
+            int idImagen = Imgenes.IdImg;
+            if (req.Nuevo)
+            {
+                UploadImageResponse resImage = await _imagenesBusiness.SubirImagenAsync(req.File);
+                reqImgaen.Nombre = resImage.PublicId;
+                reqImgaen.Url = resImage.Url;
+                ImagenesResponse imagenes = await _imagenesBusiness.Create(reqImgaen);
+                idImagen = imagenes.IdImg;
+            }
+
+
+            resProduct.IdCategoria = req.IdCategoria;
+            resProduct.IdImg = idImagen;
+            resProduct.Descripcion = req.Description;
+            resProduct.Derivar = req.Inprimir;
+            resProduct.PrecioVenta = req.PricioCompra;
+            resProduct.Nombre = req.Nombre;
+            
+            await _productoRepository.Update(resProduct);
+            CustomResponse res = new() { Code = "201", Message = "Se Actulizo Correctamente" };
+            return res;
+        }
+        #endregion NewProduct
 
     }
 }
