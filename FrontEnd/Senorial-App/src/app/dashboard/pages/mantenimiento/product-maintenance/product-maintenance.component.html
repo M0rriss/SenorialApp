@@ -14,17 +14,17 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of product; track $index) {
+        @for (item of product.lista; track $index) {
           <tr class="product-row">
-            <td>{{item.idProducto}}</td>
-            <td>{{item.descripcion}}</td>
-            <td>{{1|currency:'S/'}}</td>
+            <td>{{item.nombreProducto}}</td>
+            <td>{{item.detalleProducto}}</td>
+            <td>{{item.precioVenta|currency:'S/'}}</td>
             <td>{{item.derivar}}</td>
-            <td>Hamburguesa</td>
+            <td>{{item.categoria}}</td>
             <td>
               <div class="action-buttons">
                 <i class="add-icon fa-solid fa-circle-plus" (click)="addProduct()"></i>
-                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editProduct()"></i>
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editProduct(item)"></i>
                 <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
               </div>
             </td>
@@ -42,7 +42,7 @@
   <div class="add-product-dialog">
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
-    <form>
+    <form [formGroup]="formProduct" (submit)="productAcciones()"  >
       <div class="image-upload-container"  (click)="triggerFileInput()">
         <div class="upload-image-preview">
           <i class="fa-regular fa-image"></i>
@@ -50,32 +50,32 @@
         <div class="upload-instructions">
           <p class="drag-instruction">Drag image here or</p>
           <span class="browse-link" (click)="triggerFileInput()">Browse image</span>
-          <input type="file" id="fileInput" (change)="handleFileInput($event)" hidden />
+          <input  type="file" id="fileInput" (change)="handleFileInput($event)" hidden />
         </div>
       </div>
       <div class="form-row">
         <label for="productName" class="form-label">Product Name</label>
-        <input type="text" id="productName" class="form-input" placeholder="Enter product name" required>
+        <input formControlName="nombre" type="text" id="productName" class="form-input" placeholder="Enter product name" required>
       </div>
       <div class="form-row">
         <label for="description" class="form-label">Descripcion</label>
-        <input type="text" id="description" class="form-input" placeholder="Enter your description" required>
+        <input formControlName="descripcion" type="text" id="description" class="form-input" placeholder="Enter your description" required>
       </div>
       <div class="form-row">
         <label for="category" class="form-label">Categoria</label>
-        <input type="text" id="category" class="form-input" placeholder="Select product category" required>
+        <input formControlName="idCategoria" type="text" id="category" class="form-input" placeholder="Select product category" required>
       </div>
       <div class="form-row">
         <label for="printPlace" class="form-label">Imprimir En</label>
-        <input type="text" id="printPlace" class="form-input" placeholder="Select place of print" required>
+        <input formControlName="derivar" type="text" id="printPlace" class="form-input" placeholder="Select place of print" required>
       </div>
       <div class="form-row">
         <label for="purchasePrice" class="form-label">Precio Compra</label>
-        <input type="text" id="purchasePrice" class="form-input" placeholder="Enter buying price" required>
+        <input formControlName="precioVenta" type="text" id="purchasePrice" class="form-input" placeholder="Enter buying price" required>
       </div>
       <div class="action-buttons">
         <button type="button" class="button discard-button" (click)="closeDialog()">Cancelar</button>
-        <button type="submit" class="button add-product-button">{{modalButtonText}}</button>
+        <button  type="submit" class="button add-product-button">{{modalButtonText}}</button>
       </div>
     </form>
   </div>

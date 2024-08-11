@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProductDashResponse } from '@app/core/models/dashboard/mantenimiento/product/product-dash-response';
+import { ProductEditRequest } from '@app/core/models/dashboard/mantenimiento/product/product-edit-request';
 import { ProductResponse } from '@app/core/models/dashboard/mantenimiento/product/product-response';
+import { CustomResponse } from '@app/core/models/generic/custom-response';
+import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
+import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { ProductoService } from '@app/dashboard/services/mantenimineto/producto/producto.service';
 
 @Component({
@@ -12,26 +18,89 @@ export class ProductMaintenanceComponent implements OnInit {
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Agregar Producto';
   modalButtonText: string = 'Agregar';
+  idProducto:number = 0;
 
   //Campos
-  product:ProductResponse[] = [];
-  constructor(private productService:ProductoService){
+  product:GenericFilterResponse<ProductDashResponse> = {
+    totalRegistros:0,
+    lista:[],
+  };
+  formProduct:FormGroup;
+  file:any = [];
+  editar: boolean = false;
 
+  constructor(private productService:ProductoService,private fb:FormBuilder){
+    this.formProduct = this.fb.group({
+      nombre: [],
+      descripcion: [],
+      idCategoria: [],
+      derivar: [],
+      precioVenta:[],
+    })
   }
   ngOnInit(): void {
     this.listarProducto();
+    //this.editarProducto();
   }
 
   //FUNCIONALIDAD
   listarProducto(){
-    this.productService.getAll().subscribe(
+    let req:GenericFilterRequest = {
+      numeroPagina:8,
+      cantidad:10,
+      filtros: [],
+    }
+    this.productService.listarProductos(req).subscribe(
       {
-        next: (res: ProductResponse[])=>
+        next: (res: GenericFilterResponse<ProductDashResponse>)=>
           {
             this.product = res;
           }
       }
     );
+  }
+
+  crearProducto(){
+    let req = this.formProduct.value as ProductEditRequest;
+    const formData = new FormData();
+    formData.append("File",this.file);
+    formData.append("Nombre",req.nombre);
+    formData.append("Description",req.descripcion);
+    formData.append("IdCategoria",req.idCategoria.toString());
+    formData.append("Inprimir",req.derivar);
+    formData.append("PricioCompra",req.precioVenta.toString());
+    this.productService.crearProducto(formData).subscribe({
+      next: (res:CustomResponse)=>{
+        alert(res.message);
+      }
+    });
+  }
+  productAcciones(){
+    if(this.modalButtonText == "Agregar"){
+      this.crearProducto();
+    }
+    else{
+      this.editarProducto();
+    }
+  }
+  editarProducto(){
+    let req = this.formProduct.value as ProductEditRequest;
+    const formData = new FormData();
+    let archivo:File = this.file;
+    
+    formData.append("File",archivo);
+    formData.append("IdProducto",this.idProducto.toString());
+    formData.append("Nombre",req.nombre);
+    formData.append("Description",req.descripcion);
+    formData.append("IdCategoria",req.idCategoria.toString());
+    formData.append("Inprimir",req.derivar);
+    formData.append("PricioCompra",req.precioVenta.toString());
+    formData.append("Nuevo",`${this.editar}`);
+    this.productService.edidtarProducto(formData).subscribe({
+      next: (data:any)=>{
+        console.log(data);
+      }
+    });
   }
   //UI
   openDialog(action: string): void {
@@ -46,6 +115,7 @@ export class ProductMaintenanceComponent implements OnInit {
   }
 
   closeDialog(): void {
+    console.log("d");
     this.isModalOpen = false;
   }
 
@@ -53,7 +123,18 @@ export class ProductMaintenanceComponent implements OnInit {
     this.openDialog('add');
   }
 
-  editProduct(): void {
+  editProduct(req:ProductDashResponse): void {
+    this.formProduct.patchValue({
+      nombre: req.nombreProducto,
+      descripcion: req.detalleProducto,
+      idCategoria: req.categoria,
+      derivar: req.derivar,
+      precioVenta: req.precioVenta,
+    })
+    this.idProducto = req.idProducto;
+    const preview = document.querySelector('.upload-image-preview') as HTMLDivElement;
+    preview.style.backgroundImage = `url(${req.rutaImagen})`;
+    preview.innerHTML = '';
     this.openDialog('edit');
   }
 
@@ -67,12 +148,14 @@ export class ProductMaintenanceComponent implements OnInit {
   }
 
   closeConfirmDialog(): void {
+    this.formProduct.reset();
     this.isConfirmDialogOpen = false;
   }
 
   confirmDelete(): void {
     // Lógica para confirmar eliminación de producto
     this.deleteProduct();
+
   }
 
   triggerFileInput(): void {
@@ -91,5 +174,7 @@ export class ProductMaintenanceComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
+    //this.editar = true;
+    this.file = file;
   }
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CardProductResponse } from '@app/core/models/ecommerce/components/card-product/card-product-response';
 
 
 @Component({
@@ -14,6 +15,12 @@ export class NavBarComponent {
   isShoppingCartOpen = false;
   isShoppingCartActive = false;
   isShopOpen = false;
+
+  //
+
+  
+  constructor(){
+  }
 
   toggleShop() {
     this.isShopOpen = !this.isShopOpen;

@@ -8,12 +8,17 @@ import { AddItemToCheckoutComponent } from './pages/add-item-to-checkout/add-ite
 import { StorePickUpComponent } from './pages/store-pick-up/store-pick-up.component';
 import { CheckOutComponent } from './pages/check-out/check-out.component';
 import { SelectPaymentComponent } from './pages/select-payment/select-payment.component';
+import { NotFoundError } from 'rxjs';
 
 const routes: Routes = [
 
   {
     path      :'',
     component : HomePageComponent
+  },
+  {
+    path: 'notfund',
+    component: NotFoundError
   },
   {
     path      :'userAcount',
@@ -47,6 +52,11 @@ const routes: Routes = [
     path      :'e-commerce',
     loadChildren: () => import('@app/ecommerce/ecommerce.module').then(m => m.EcommerceModule)
   },
+  {
+    path      :'**',
+    pathMatch: 'full',
+    redirectTo:'notfund'
+  }
 ];
 
 @NgModule({

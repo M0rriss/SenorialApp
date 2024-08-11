@@ -26,26 +26,43 @@
     </header>
     <div class="cart-divider" role="separator"></div>
 
-    <article *ngFor="let item of cartItems" class="cart-item">
-      <img [src]="item.image" alt="Item Image" class="item-image" />
-      <div class="item-details">
-        <div class="item-header">
-          <h3>{{ item.quantity }} x {{ item.name }}</h3>
-          <i class="fa-solid fa-trash remove-icon" (click)="removeItem(item)"></i>
-        </div>
-        <div class="item-footer">
-          <p class="item-price">S/. {{ item.price }}</p>
-          <div class="add-more">
-            <div class="add-more-icons">
-              <i class="fa-solid fa-circle-minus add-more-icon" (click)="decrementQuantity(item)"></i>
-              <span>{{ item.quantity }}</span>
-              <i class="fa-solid fa-circle-plus add-more-icon" (click)="incrementQuantity(item)"></i>
+    @for (item of products; track $index) {
+      <article class="cart-item">
+        <img [src]="item.rutaImagen" alt="Item Image" class="item-image" />
+          <div class="item-details">
+            <div class="item-header">
+              <h3>{{ item.quantity }} x {{ item.nombreProducto }}</h3>
+              <i class="fa-solid fa-trash remove-icon" (click)="removeItem(item)"></i>
             </div>
-            <p>Agregar una Unidad más</p>
+            <div class="item-footer">
+              <p class="item-price">S/. {{ item.precioVenta * item.quantity}}</p>
+              <div class="add-more">
+                <div class="add-more-icons">
+                  <i class="fa-solid fa-circle-minus add-more-icon" (click)="decrementQuantity(item)"></i>
+                  <span>{{ item.quantity }}</span>
+                  <i class="fa-solid fa-circle-plus add-more-icon" (click)="incrementQuantity(item)"></i>
+                </div>
+                <p>Agregar una Unidad más</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </article>
+      </article>
+    }@empty {
+      <section class="shopping-cart-container cart-container empty">
+        <header class="cart-header">
+          <h2 class="cart-title">Tu Carrito</h2>
+          <div class="cart-icon-wrapper">
+            <i class="fa-solid fa-circle-xmark cart-close-icon" (click)="closeShop()"></i>
+          </div>
+        </header>
+        <div class="cart-divider" role="separator"></div>
+        <p class="cart-empty-message">
+          Tu canasta está vacía
+          <i class="fa-solid fa-trash cart-empty-icon"></i>
+        </p>
+      </section>
+    }
+    
 
     <div class="cart-divider" role="separator"></div>
 
