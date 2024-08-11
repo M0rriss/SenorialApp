@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CardProductComponent } from '../card-product/card-product.component';
+import { CardProductResponse } from '@app/core/models/ecommerce/components/card-product/card-product-response';
 
 @Component({
   selector: 'shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.scss'
 })
-export class ShoppingCartComponent {
+export class ShoppingCartComponent implements OnInit {
   isShopOpen = false;
+  //Campos
+
+  products: CardProductResponse[] = []
+  constructor(){
+  }
+  ngOnInit(): void {
+    this.mostarCompras();
+  }
 
   closeShop() {
     this.isShopOpen = false;
@@ -32,28 +42,76 @@ export class ShoppingCartComponent {
   ];
 
   get subtotal() {
-    return this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+    return this.products.reduce((acc, item) => acc + item.precioVenta * item.quantity, 0).toFixed(2);
   }
 
   get total() {
     return this.subtotal;
   }
 
-  incrementQuantity(item: any) {
-    item.quantity++;
+  incrementQuantity(item: CardProductResponse) {
+    // item.quantity++;
+    for(var i of this.products)
+    {
+      if(item.idProducto == i.idProducto){
+          i.quantity++;
+      }
+    }
+    var json =JSON.stringify(this.products);
+    localStorage.setItem("product",json);
   }
 
   decrementQuantity(item: any) {
-    if (item.quantity > 0) {
-      item.quantity--;
+    if (item.quantity > 1) {
+      for(var i of this.products)
+        {
+          if(item.idProducto == i.idProducto){
+              i.quantity--;
+          }
+        }
+        var json =JSON.stringify(this.products);
+        localStorage.setItem("product",json);
     }
   }
 
-  removeItem(item: any) {
-    const index = this.cartItems.indexOf(item);
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
+  removeItem(item: CardProductResponse) {
+
+    for(var i of this.products){
+      if(i.idProducto == item.idProducto){
+        let index = this.products.indexOf(item); 
+      
+        if(index == this.products.length - 1 ){
+          this.products = this.products.slice(0,index);
+        break;
+
+        }
+        if(index == 0){
+          this.products = this.products.slice(index+1,this.products.length);
+        break;
+
+        }
+        var ar1 = this.products.slice(index+1,this.products.length);
+        var ar2 = this.products.slice(0,index);
+        this.products = ar2.concat(ar1);
+        break;
+      }
     }
+    var json =JSON.stringify(this.products);
+    localStorage.setItem("product",json);
+    // const index = this.cartItems.indexOf(item);
+    // if (index > -1) {
+    //   this.cartItems.splice(index, 1);
+    // }
+  }
+
+  //FUNCIONALIDAD
+  mostarCompras(){
+    let json = localStorage.getItem('product') ?? '';
+    if(json == ''){
+      return;
+    }
+    let res = JSON.parse(json);
+    this.products = res as CardProductResponse[];
   }
 
 }

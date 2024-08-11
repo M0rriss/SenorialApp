@@ -37,6 +37,10 @@ export const urlMetodoPago = {
 }
 export const urlProducto = {
     generic: `${subRutas.producto}`,
+    ecommerce: `${subRutas.producto}/Filtro/Ecommerce`,
+    dashboard: `${subRutas.producto}/Filtro/Dashboard`,
+    create:`${subRutas.producto}/Crear`,
+    update: `${subRutas.producto}/Actulizar`,
 }
 //AUTH
 export const urlAuth = {
