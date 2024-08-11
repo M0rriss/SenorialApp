@@ -21,7 +21,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
 
     public class ProductoController : ControllerBase
     {
@@ -161,6 +161,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
         /// <param name="req">Fltros</param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         [Route("Filtro/Ecommerce")]
         public async Task<ActionResult<GenericFilterResponse<ProductoEcommerceResponse>>> ListarProductosEcommerce(GenericFilterRequest req)
         {
@@ -173,6 +174,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
         /// <param name="req">Fltros</param>
         /// <returns></returns>
         [HttpPost]
+        
         [Route("Filtro/Dashboard")]
         public async Task<ActionResult<GenericFilterResponse<ProductoEcommerceResponse>>> ListarProductosDashboard(GenericFilterRequest req)
         {

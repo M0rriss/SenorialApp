@@ -132,5 +132,32 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
             return Ok(response);
         }
         #endregion
+        #region Crud
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("listar")]
+        public async Task<ActionResult> ListarPadre()
+        {
+            List<CategoriaResponse> list = await _categoriaBusiness.ListarCategoriasPadresAsync();
+            return Ok(list);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("listar/Sub")]
+        public async Task<ActionResult> ListarSubCategorias([FromQuery] int idCategoria)
+        {
+            List<CategoriaResponse> list = await _categoriaBusiness.ListarSubCategoriaAsync(idCategoria);
+            return Ok(list);
+        }
+        #endregion Crud
     }
 }

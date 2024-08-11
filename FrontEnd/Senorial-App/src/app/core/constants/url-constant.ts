@@ -15,6 +15,8 @@ const subRutas = {
 export const urlCategoria = {
     listar:`${subRutas.categoria}/listado`,
     listv2:`${subRutas.categoria}`,
+    listEcommer:`${subRutas.categoria}/listar`,
+    filttraEcommer:`${subRutas.categoria}/listar/Sub`,
 }
 export const urlSuministro = {
     listar: `${subRutas.suministro}/Listado`,

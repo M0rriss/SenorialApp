@@ -1,7 +1,7 @@
 <div class="container">
 <ecommerce-nav-bar></ecommerce-nav-bar>
 <banner-ecommerce></banner-ecommerce>
-<ecommerce-categories-bar></ecommerce-categories-bar>
+<ecommerce-categories-bar (enviarFiltro)="optenerFiltro($event)" (enviarSub)="recibirSubCategoria($event)"></ecommerce-categories-bar>
 <main>
   @for (item of products.lista; track $index) {
   <card-product (produto)="verCarga($event)"  [Producto]="item"></card-product>

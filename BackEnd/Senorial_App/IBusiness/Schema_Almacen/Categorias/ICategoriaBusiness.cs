@@ -17,5 +17,7 @@ namespace IBusiness.Schema_Almacen.Categorias
         Task<CategoriaUiResponse> InsertUiCategoria(CategoriaUiRequest request);
         Task<CategoriaUiResponse> UpdateUiCategoria(CategoriaUpdateUiRequest request);
         Task<bool> DeleteUiCategoria(int id);
+        Task<List<CategoriaResponse>> ListarCategoriasPadresAsync();
+        Task<List<CategoriaResponse>> ListarSubCategoriaAsync(int idCategoria);
     }
 }

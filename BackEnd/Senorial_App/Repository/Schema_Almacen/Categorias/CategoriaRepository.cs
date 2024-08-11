@@ -44,6 +44,49 @@ namespace Repository.Schema_Almacen.Categorias
             var categorias = categoria.FirstOrDefault(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
             return categorias;
         }
-       
+
+       public async Task<List<Categoria>> ListarCategoriaPadreAsync()
+       {
+            List<Categoria> list = [];
+            var query = await (from categoria in dbset
+                        where categoria.CategoriaPadre == null
+                        select categoria).ToListAsync();
+
+            foreach (var c in query) 
+            {
+                Categoria tmp = new()
+                {
+                    IdCategoria = c.IdCategoria,
+                    Nombre = c.Nombre,
+                    Estado= c.Estado,
+                    IdCategoriaPadre = c.IdCategoriaPadre
+                };
+                list.Add(tmp);
+            }
+
+            return list;
+       }
+
+        public async Task<List<Categoria>> ListarSubCategoriaAsync(int idCategoria)
+        {
+            List<Categoria> list = [];
+            var query = await (from categoria in dbset
+                               where categoria.IdCategoriaPadre == idCategoria
+                               select categoria).ToListAsync();
+
+            foreach (var c in query)
+            {
+                Categoria tmp = new()
+                {
+                    IdCategoria = c.IdCategoria,
+                    Nombre = c.Nombre,
+                    Estado = c.Estado,
+                    IdCategoriaPadre = c.IdCategoriaPadre
+                };
+                list.Add(tmp);
+            }
+
+            return list;
+        }
     }
 }

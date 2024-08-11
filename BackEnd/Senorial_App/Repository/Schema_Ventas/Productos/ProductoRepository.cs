@@ -20,15 +20,20 @@ namespace Repository.Schema_Ventas.Productos
         {
             List<VwProductoEcommerce> list = [];
             var query = await (from product in dbset
-                        join categoria in db.Imagenes
-                            on product.IdImg equals categoria.Id
+                        join imagen in db.Imagenes
+                            on product.IdImg equals imagen.Id
+                        join categoria in db.Categorias
+                                    on product.IdCategoria equals categoria.IdCategoria
                         select new
                         {
                             product.IdProducto,
                             producto = product.Nombre,
                             product.Descripcion,
-                            categoria.ImageData,
-                            product.PrecioVenta
+                            imagen.ImageData,
+                            product.PrecioVenta,
+                            categoria.IdCategoria,
+                            categoria.IdCategoriaPadre,
+                            
                         }).ToListAsync();
             foreach (var item in query) 
             {
@@ -38,7 +43,9 @@ namespace Repository.Schema_Ventas.Productos
                     NombreProducto = item.producto,
                     DetalleProducto = item.Descripcion,
                     PrecioVenta = item.PrecioVenta,
-                    RutaImagen = item.ImageData
+                    RutaImagen = item.ImageData,
+                    CategoriaPadre = item.IdCategoriaPadre,
+                    IdCategoria = item.IdCategoria,
                 };
                 list.Add(tmp);
             }
@@ -113,8 +120,11 @@ namespace Repository.Schema_Ventas.Productos
                 {
                     switch (j.Name)
                     {
-                        case "id":
-                            query = query.Where(x => x.IdProducto == int.Parse(j.Value));
+                        case "Categoria":
+                            query = query.Where(x => x.CategoriaPadre == int.Parse(j.Value));
+                            break;
+                        case "SubCategoria":
+                            query = query.Where(x => x.IdCategoria == int.Parse(j.Value));
                             break;
                     }
                 }
