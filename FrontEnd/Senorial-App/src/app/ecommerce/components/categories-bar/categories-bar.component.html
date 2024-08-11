@@ -1,6 +1,15 @@
 <section class="menu-categories">
     <nav class="category-list">
-      <div class="category-container">
+      @for (item of categoria; track $index) {
+        <div class="category-container" (click)="enviarInfo(item.idCategoria)">
+          <a href="#hamburgers" class="category-item">
+            <img [src]="item.ruta" alt="Hamburger icon" class="category-icon" />
+            <span class="category-name">{{item.nombre}}</span>
+          </a>
+        </div>
+      }
+      
+      <!-- <div class="category-container">
         <a href="#hamburgers" class="category-item">
           <img src="./hamburguesa.svg" alt="Hamburger icon" class="category-icon" />
           <span class="category-name">Hamburguesas</span>
@@ -29,6 +38,14 @@
           <img src="./papasFritas.svg" alt="Side dish icon" class="category-icon" />
           <span class="category-name">Complementos</span>
         </a>
-      </div>
+      </div> -->
     </nav>
   </section>
+  @if (submentu) {
+    @for (item of subCategoria; track $index) {
+      <button (click)="enviarSubCategoria(item.idCategoria)" type="button" >{{item.nombre}}</button>
+    }
+  }
+  @else {
+
+  }

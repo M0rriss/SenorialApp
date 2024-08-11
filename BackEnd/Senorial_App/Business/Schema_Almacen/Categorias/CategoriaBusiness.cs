@@ -210,5 +210,20 @@ namespace Business.Schema_Almacen.Categorias
             return !string.IsNullOrEmpty(estado) && estado.Equals("Activo", StringComparison.OrdinalIgnoreCase);
         }
         #endregion
+
+        #region New
+        public async Task<List<CategoriaResponse>> ListarCategoriasPadresAsync()
+        {
+            List<Categoria> list = await _categoriaRepository.ListarCategoriaPadreAsync();
+            List<CategoriaResponse> res = _mapper.Map<List<CategoriaResponse>>(list);
+            return res;
+        }
+        public async Task<List<CategoriaResponse>> ListarSubCategoriaAsync(int idCategoria)
+        {
+            List<Categoria> list = await _categoriaRepository.ListarSubCategoriaAsync(idCategoria);
+            List<CategoriaResponse> res = _mapper.Map<List<CategoriaResponse>>(list);
+            return res;
+        }
+        #endregion New
     }
 }

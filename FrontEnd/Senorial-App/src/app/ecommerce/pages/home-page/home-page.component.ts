@@ -23,11 +23,27 @@ export class HomePageComponent implements OnInit{
     this.listarProductos();
   }
 
-  listarProductos():void{
+  optenerFiltro(data:number){
+    this.listarProductos(data.toString());
+  }
+  recibirSubCategoria(data:number){
+    this.listarProductos("",data.toString());
+  }
+
+  listarProductos(idCategoria:string = "",idSubCategoria:string=""):void{
     let req: GenericFilterRequest = {
       numeroPagina: 1,
       cantidad : 10,
-      filtros: [],
+      filtros: [
+        {
+          name:"Categoria",
+          value:idCategoria,
+        },
+        {
+          name: "SubCategoria",
+          value:idSubCategoria
+        }
+      ],
     }
     
     this.cardProductService.listarProductos(req).subscribe({

@@ -13,5 +13,7 @@ namespace DBSenorialModels.View.Producto
         public string DetalleProducto { get; set; } = string.Empty;
         public string RutaImagen { get; set; } = string.Empty;
         public decimal? PrecioVenta { get; set; }
+        public int IdCategoria { get; set; }
+        public int? CategoriaPadre { get; set; }
     }
 }
