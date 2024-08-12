@@ -19,6 +19,7 @@ import { SuppliesMaintenanceComponent } from './pages/mantenimiento/supplies-mai
 import { PaymentMethodMaintenanceComponent } from './pages/mantenimiento/payment-method-maintenance/payment-method-maintenance.component';
 import { CategoryMaintenanceComponent } from './pages/mantenimiento/category-maintenance/category-maintenance.component';
 import { TableMaintenanceComponent } from './pages/mantenimiento/table-maintenance/table-maintenance.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -41,12 +42,14 @@ import { TableMaintenanceComponent } from './pages/mantenimiento/table-maintenan
        PaymentMethodMaintenanceComponent,
        CategoryMaintenanceComponent,
        TableMaintenanceComponent,
+
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PaginatorModule,
   ]
 })
 export class DashboardModule { }

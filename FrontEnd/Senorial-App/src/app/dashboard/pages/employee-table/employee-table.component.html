@@ -47,6 +47,15 @@
         <!-- Más filas según sea necesario -->
       </tbody>
     </table>
+    <!-- Componente de Paginación -->
+ <div class="pagination-container">
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
   </div>
 
   <!-- Modal para agregar/editar empleado -->

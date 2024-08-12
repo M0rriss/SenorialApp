@@ -27,6 +27,10 @@ export class CategoryMaintenanceComponent implements OnInit{
     { name: 'Categoria 2', subCategory: 'SubCategoria 2', active: true },
     // Agrega más categorías según sea necesario
   ];
+ // Variables para la paginación
+ first: number = 0;
+ rows: number = 10;
+ totalRecords: number = 0;
 
   constructor(private categoriaService:CategoriaService){}
   ngOnInit(): void {
@@ -63,7 +67,7 @@ export class CategoryMaintenanceComponent implements OnInit{
   closeAddEditDialog() {
     this.isAddEditDialogOpen = false;
   }
-  
+
   listarCategorias(){
     this.categoriaService.listarCategoria().subscribe({
       next: (res: CategoriaResponse[]) =>{
@@ -107,6 +111,11 @@ export class CategoryMaintenanceComponent implements OnInit{
     this.categories = this.categories.filter(cat => cat !== this.selectedCategory);
     this.isConfirmDialogOpen = false;
   }
+// Método para manejar el cambio de página
+onPageChange(event: any) {
+  this.first = event.first;
+  this.rows = event.rows;
+  this.listarCategorias(); // Volver a cargar las categorías con la nueva página
+}
 
-  
 }

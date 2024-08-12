@@ -22,6 +22,14 @@
           <div class="table-cell">Sin datos</div>
           <div class="table-cell">0</div>
         </div>
+        <div class="pagination-container">
+          <p-paginator
+            [rows]="rows"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="[5, 10, 20]"
+            (onPageChange)="onPageChange($event)"
+          ></p-paginator>
+        </div>
       </ng-container>
 
       <!-- Historial de Caja -->
@@ -48,7 +56,17 @@
               <i class="fa-solid fa-magnifying-glass action-icon"></i>
             </div>
           </div>
+
+          <div class="pagination-container">
+           <p-paginator
+             [rows]="rows"
+             [totalRecords]="totalRecords"
+             [rowsPerPageOptions]="[5, 10, 20]"
+             (onPageChange)="onPageChange($event)"
+           ></p-paginator>
+         </div>
         </section>
+                <!-- Componente de Paginación -->
       </ng-container>
 
       <!-- Detalle de Caja -->
@@ -83,7 +101,17 @@
               <!-- Más filas aquí -->
             </tbody>
           </table>
+
         </div>
+        <!-- Componente de Paginación -->
+ <div class="pagination-container">
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
       </ng-container>
 
       <!-- Cerrar Caja -->

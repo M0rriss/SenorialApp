@@ -70,6 +70,7 @@
               class="receipt-option"
               [class.receipt-option-active]="selectedReceiptOption === 'Factura'"
               (click)="selectOption('Factura')"
+              routerLink="/invoice"
             >
               Factura
             </div>
@@ -77,6 +78,7 @@
               class="receipt-option"
               [class.receipt-option-active]="selectedReceiptOption === 'Boleta'"
               (click)="selectOption('Boleta')"
+              routerLink="/invoice"
             >
               Boleta
             </div>

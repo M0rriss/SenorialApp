@@ -37,7 +37,7 @@
     <section class="table-grid">
       <div class="table-row">
         <div class="table-column">
-          <div class="table-card">
+          <div class="table-card" routerLink="/mesadetail">
             <div class="table-header">
               <div class="table-status-dot status-occupied"></div>
               <span class="table-price">S/.35.00</span>
@@ -134,5 +134,14 @@
         </div>
       </div>
     </section>
+     <!-- Componente de Paginación -->
+ <div class="pagination-container">
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
   </main>
 </div>

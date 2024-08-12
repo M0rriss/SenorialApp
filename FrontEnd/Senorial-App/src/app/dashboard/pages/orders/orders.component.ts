@@ -6,6 +6,12 @@ import { Component } from '@angular/core';
   styleUrl: './orders.component.scss'
 })
 export class OrdersComponent {
+  // Variables para la paginación
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
+
+
   statusTabs = [
     { label: 'Todos', color: '#abaebc' },
     { label: 'Preparado', color: '#66ffa3' },
@@ -127,6 +133,10 @@ openOrderSummary(order: any) {
   this.selectedOrder = order;
 }
 
-
+onPageChange(event: any) {
+  this.first = event.first;
+  this.rows = event.rows;
+  //this.listarEmpleados();
+}
 
 }

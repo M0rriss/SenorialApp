@@ -27,6 +27,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { PrimeNGConfig } from 'primeng/api';
 import { StepsModule } from 'primeng/steps';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { ButtonModule } from 'primeng/button';
     ReactiveFormsModule,
     StepsModule,
     ButtonModule,
+    PaginatorModule
   ],
   exports: [
     NavBarComponent,
