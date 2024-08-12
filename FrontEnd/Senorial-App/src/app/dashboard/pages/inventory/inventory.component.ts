@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 interface InventoryItem {
   name: string;
@@ -12,8 +13,26 @@ interface InventoryItem {
 })
 
 export class InventoryComponent {
+// Variables para la paginación
+first: number = 0;
+rows: number = 10;
+totalRecords: number = 0;
+//modal
+isModalOpen: boolean = false;
+isConfirmDialogOpen: boolean = false;
+modalTitle: string = 'Editar el Detalle';
+modalButtonText: string = 'Editar';
+idProducto:number = 0;
+formDetalle:FormGroup;
 
-
+constructor(private fb:FormBuilder){
+this.formDetalle = this.fb.group({
+  descripcion:[],
+  stock:[],
+  precioCompra:[],
+  precioVenta:[],
+})
+}
  isEntryDialogOpen = false;
   isExitDialogOpen = false;
   isStockDetailVisible = false;
@@ -23,7 +42,13 @@ export class InventoryComponent {
     { name: 'Pollo', unit: 'KG', stock: 20 },
     { name: 'Tomate', unit: 'KG', stock: 5 }
   ];
+  detalleAcciones(){
 
+  }
+  triggerFileInput(): void {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
   openEntryDialog() {
     this.isEntryDialogOpen = true;
     this.isExitDialogOpen = false;
@@ -83,5 +108,22 @@ export class InventoryComponent {
     } else {
       return 'status-out-of-stock';
     }
+  }
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    //this.listarInventario();
+  }
+  deleteDetail(): void {
+    // Lógica para eliminar usuario
+    this.isConfirmDialogOpen = false;
+  }
+  closeConfirmDialog(): void {
+    this.isConfirmDialogOpen = false;
+  }
+
+  confirmDelete(): void {
+    // Lógica para confirmar eliminación de usuario
+    this.deleteDetail();
   }
 }

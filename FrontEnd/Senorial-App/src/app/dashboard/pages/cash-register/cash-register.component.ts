@@ -10,6 +10,10 @@ export class CashRegisterComponent {
   isModalOpen: boolean = false;
   showDetails: boolean = false;
   selectedCashRegister: any = null;
+  // Variables para la paginación
+first: number = 0;
+rows: number = 10;
+totalRecords: number = 0;
 
   isDetailCountOpen = false;
   coinQuantities: { [key: number]: number } = { 0.10: 0, 0.20: 0, 0.50: 0, 1.00: 0, 2.00: 0, 5.00: 0 };
@@ -65,5 +69,10 @@ export class CashRegisterComponent {
   closeDetailCount() {
     this.isDetailCountOpen = false;
     this.totalAmount = 0;
+  }
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    //this.listarEmpleados();
   }
 }

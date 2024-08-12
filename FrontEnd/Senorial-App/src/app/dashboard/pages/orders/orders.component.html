@@ -40,6 +40,15 @@
         </article>
       </div>
     </div>
+    <!-- Componente de Paginación -->
+  <div class="pagination-container">
+   <p-paginator
+     [rows]="rows"
+     [totalRecords]="totalRecords"
+     [rowsPerPageOptions]="[5, 10, 20]"
+     (onPageChange)="onPageChange($event)"
+   ></p-paginator>
+ </div>
   </div>
 </div>
 

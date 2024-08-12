@@ -10,7 +10,13 @@ export class UserMaintenanceComponent {
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Agregar Usuario';
   modalButtonText: string = 'Agregar';
+ // Variables para la paginación
+ first: number = 0;
+ rows: number = 10;
+ totalRecords: number = 0;
 
+ // status
+ stateStatus:boolean = true;
   openDialog(action: string): void {
     this.isModalOpen = true;
     if (action === 'add') {
@@ -68,5 +74,11 @@ export class UserMaintenanceComponent {
       };
       reader.readAsDataURL(file);
     }
+  }
+    // Método para manejar el cambio de página
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+
   }
 }

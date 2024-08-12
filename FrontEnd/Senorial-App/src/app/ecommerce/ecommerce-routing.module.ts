@@ -17,7 +17,7 @@ const routes: Routes = [
     component : HomePageComponent
   },
   {
-    path: 'notfund',
+    path: 'notfound',
     component: NotFoundError
   },
   {
@@ -55,7 +55,7 @@ const routes: Routes = [
   {
     path      :'**',
     pathMatch: 'full',
-    redirectTo:'notfund'
+    redirectTo:'notfound'
   }
 ];
 

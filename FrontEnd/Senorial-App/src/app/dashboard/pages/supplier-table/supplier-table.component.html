@@ -4,6 +4,7 @@
       <h1 class="section-title">Proveedores</h1>
       <div class="action-bar">
           <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
               <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, telefono o correo">
           </div>
           <div class="buttons">
@@ -18,7 +19,7 @@
                   <th>Proveedor Nombre <img src="sort_icon_url" alt="" class="sort-icon"></th>
                   <th>Correo <img src="sort_icon_url" alt="" class="sort-icon"></th>
                   <th>Telefono</th>
-                  <th>DNI <img src="sort_icon_url" alt="" class="sort-icon"></th>
+                  <th>Documento <img src="sort_icon_url" alt="" class="sort-icon"></th>
                   <th>Distribuye</th>
               </tr>
           </thead>
@@ -49,6 +50,15 @@
               </tr>
           </tbody>
       </table>
+<!-- Componente de Paginación -->
+<div class="pagination-container">
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
   </div>
 
   <!-- Modal para agregar/editar proveedor -->
@@ -70,8 +80,8 @@
                   <input type="tel" id="phone" class="form-input" placeholder="Enter provider phone" required>
               </div>
               <div class="form-row">
-                  <label for="dni" class="form-label">DNI</label>
-                  <input type="text" id="dni" class="form-input" placeholder="Enter provider DNI" required>
+                  <label for="dni" class="form-label">Documento</label>
+                  <input type="text" id="dni" class="form-input" placeholder="Enter provider Doc" required>
               </div>
               <div class="form-row">
                   <label for="role" class="form-label">Distribuye</label>

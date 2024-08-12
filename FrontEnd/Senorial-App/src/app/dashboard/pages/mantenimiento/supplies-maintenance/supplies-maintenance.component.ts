@@ -14,7 +14,10 @@ export class SuppliesMaintenanceComponent implements OnInit {
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Agregar Insumo';
   modalButtonText: string = 'Agregar';
-
+ // Variables para la paginación
+ first: number = 0;
+ rows: number = 10;
+ totalRecords: number = 0;
   //SUMINISTRO
   formInsumo:FormGroup;
   suministro: InsumoResponse[] = [];
@@ -98,5 +101,10 @@ export class SuppliesMaintenanceComponent implements OnInit {
   confirmDelete(): void {
     // Lógica para confirmar eliminación de insumo
     this.deleteInsumo();
+  }
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.listarSuministro();
   }
 }

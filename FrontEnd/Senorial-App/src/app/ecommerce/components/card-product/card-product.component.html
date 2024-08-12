@@ -13,10 +13,9 @@
             <img loading="lazy" [src]="data.rutaImagen" class="foreground-image" alt="Meal deal items: McChicken, Big Mac, and Royal Cheeseburger" />
           </div>
         </div>
-        <div class="rounded-container">
+        <div class="rounded-container" (click)="enviarProducto(data)">
           <i class="fa-solid fa-circle-plus plus-icon"></i>
         </div>
       </div>
     </div>
   </section>
-  

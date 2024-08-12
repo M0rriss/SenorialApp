@@ -9,6 +9,11 @@ export class SupplierTableComponent {
   isModalOpen = false;
   modalTitle = 'Agregar Proveedor';
   modalButtonText = 'Agregar Proveedor';
+// Variables para la paginación
+first: number = 0;
+rows: number = 10;
+totalRecords: number = 0;
+
 
   openDialog(action: string) {
     if (action === 'add') {
@@ -23,5 +28,10 @@ export class SupplierTableComponent {
 
   closeDialog() {
     this.isModalOpen = false;
+  }
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    //this.listarProveedores(); // Volver a cargar las categorías con la nueva página
   }
 }

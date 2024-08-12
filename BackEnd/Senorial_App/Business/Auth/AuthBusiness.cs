@@ -66,7 +66,7 @@ namespace Business.Auth
             var tokend = new SecurityTokenDescriptor
             {
                 Subject = claimsIdentity,
-                Expires = DateTime.UtcNow.AddMinutes(lifeTime),
+                Expires = DateTime.UtcNow.AddHours(lifeTime),
                 SigningCredentials = signIn
             };
             var tokenHandler = new JwtSecurityTokenHandler();

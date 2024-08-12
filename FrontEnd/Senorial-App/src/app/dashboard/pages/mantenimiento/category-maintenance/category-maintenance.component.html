@@ -2,11 +2,16 @@
   <side-bar></side-bar>
   <div class="content">
     <h1 class="section-title">Categorias</h1>
+    <div class="action-bar">
+    <div class="search-container">
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
+      <input type="text" class="search-input" placeholder="Buscar por Categoria o SubCategoria">
+    </div>
     <div class="view-toggle">
       <button *ngIf="!isTableView" class="view-toggle-button" (click)="switchToTableView()">Ir a Tabla</button>
       <button *ngIf="isTableView" class="view-toggle-button" (click)="switchToVisualView()">Ir a Cuadro</button>
     </div>
-
+    </div>
     <!-- Vista de Tabla -->
     <div *ngIf="isTableView">
       <table class="categories-table">
@@ -14,7 +19,7 @@
           <tr class="table-header">
             <th>Categoria</th>
             <th>SubCategoria</th>
-            <th>Estado</th>
+            <!-- <th>Estado</th> -->
             <th>Acciones</th>
           </tr>
         </thead>
@@ -22,13 +27,13 @@
           <tr class="category-row" *ngFor="let category of categorias">
             <td>{{category.categoria}}</td>
             <td>{{category.subcategorias}}</td>
-            <td class="status-container">
+            <!-- <td class="status-container">
               <label class="switch">
                 <input type="checkbox" [checked]="category.estado">
                 <span class="slider round"></span>
               </label>
               <span class="status-label">{{category.estado ? 'Activo' : 'Inactivo'}}</span>
-            </td>
+            </td> -->
             <td>
               <div class="action-buttons">
                 <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(category)"></i>
@@ -38,6 +43,16 @@
           </tr>
         </tbody>
       </table>
+      <!-- Componente de Paginación -->
+
+    </div>
+    <div class="pagination-container">
+      <p-paginator
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)"
+      ></p-paginator>
     </div>
 
     <!-- Vista de Cuadro -->

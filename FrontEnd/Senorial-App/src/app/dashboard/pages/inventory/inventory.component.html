@@ -2,15 +2,17 @@
   <side-bar></side-bar>
   <section *ngIf="!isStockDetailVisible" class="inventory-container">
     <h1 class="inventory-title">Inventario</h1>
+    <div class="action-bar">
     <div class="filter-buttons">
       <button class="filter-button stock-detail-button" (click)="showStockDetail()">Stock Detail</button>
       <button class="filter-button entries-button" (click)="openEntryDialog()">Entradas</button>
       <button class="filter-button exits-button" (click)="openExitDialog()">Salidas</button>
     </div>
-    <form class="search-bar">
+    <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="text" class="search-input" placeholder="Buscar" aria-label="Buscar">
-    </form>
+      <input type="text" class="search-input" placeholder="Buscar Insumo o por Fecha" aria-label="Buscar">
+    </div>
+    </div>
     <table class="inventory-table">
       <thead>
         <tr>
@@ -45,6 +47,15 @@
         </tr>
       </tbody>
     </table>
+     <!-- Componente de Paginación -->
+ <div class="pagination-container">
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
   </section>
 
   <!-- Fondo de opacidad y diálogo de Registrar Entrada -->
@@ -151,5 +162,56 @@
         </tr>
       </tbody>
     </table>
+     <!-- Componente de Paginación -->
+ <div class="pagination-container">
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
   </section>
 </div>
+<!-- Dialog ADD & EDIT -->
+<!-- <div class="dialog-overlay" [ngClass]="{'show': isModalOpen}">
+  <div class="add-product-dialog">
+    <span class="close-button" (click)="closeDialog()">&times;</span>
+    <h2 class="dialog-title">{{modalTitle}}</h2>
+      </div>
+      <div class="form-row">
+        <label for="productName" class="form-label">Descripcion</label>
+        <input formControlName="nombre" type="text" id="productName" class="form-input" placeholder="Enter product name" required>
+      </div>
+      <div class="form-row">
+        <label for="stock" class="form-label">Stock</label>
+        <input formControlName="stock" type="number" id="stock" class="form-input" placeholder="Enter stock quantity" required>
+      </div>
+      <div class="form-row">
+        <label for="purchasePrice" class="form-label">Precio Compra</label>
+        <input formControlName="precioCompra" type="text" id="purchasePrice" class="form-input" placeholder="Enter buying price" required>
+      </div>
+      <div class="form-row">
+        <label for="sellingPrice" class="form-label">Precio Venta</label>
+        <input formControlName="precioVenta" type="text" id="sellingPrice" class="form-input" placeholder="Enter selling price" required>
+      </div>
+
+      <div class="action-buttons">
+        <button type="button" class="button discard-button" (click)="closeDialog()">Cancelar</button>
+        <button type="submit" class="button add-product-button">{{modalButtonText}}</button>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<!-- Confirm Dialog -->
+<!-- <div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
+  <div class="confirm-dialog">
+    <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar el usuario?</h2>
+    <p class="confirm-dialog-description">¿Estás seguro que quieres eliminarlo?</p>
+    <div class="confirm-dialog-button-container">
+      <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button>
+      <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">No</button>
+    </div>
+  </div>
+</div> -->

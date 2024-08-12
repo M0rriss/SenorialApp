@@ -20,6 +20,7 @@ $kebab-hover-color: #ff0000;
   display: flex;
   width: 100%;
 
+
   .content {
     flex-grow: 1;
     padding: 20px;
@@ -28,6 +29,7 @@ $kebab-hover-color: #ff0000;
     position: relative;
     display: flex;
     flex-direction: column;
+
   }
 
   .section-title {
@@ -36,7 +38,33 @@ $kebab-hover-color: #ff0000;
     text-align: center;
     margin-bottom: 40px;
   }
+  .action-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+    width: 100%;
 
+    .search-container {
+      flex-grow: 1;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background-color: $input-bg-color;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      max-width: 320px;
+
+      .search-input {
+        font-family: Inter, sans-serif;
+        border: none;
+        outline: none;
+        width: 100%;
+      }
+    }
+  }
   .view-toggle {
     display: flex;
     justify-content: flex-end;
@@ -372,6 +400,7 @@ font-size: 24px;
         &::placeholder {
           color: #858d9d;
         }
+
       }
     }
 
@@ -486,4 +515,35 @@ font-size: 24px;
       }
     }
   }
+  /* PAGINACION */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: auto; /* Asegura que esté al final */
+    padding: 20px 0;
+  }
+
+  /* Estilo del componente de paginación */
+  .pagination-container ::ng-deep .ui-paginator {
+    background-color: #f5f5f5; /* Fondo gris claro */
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .pagination-container ::ng-deep .ui-paginator-page,
+  .pagination-container ::ng-deep .ui-paginator-first,
+  .pagination-container ::ng-deep .ui-paginator-last,
+  .pagination-container ::ng-deep .ui-paginator-next,
+  .pagination-container ::ng-deep .ui-paginator-prev {
+    color: #333; /* Color de texto gris oscuro */
+    background-color: #e0e0e0; /* Fondo gris medio */
+    border: none; /* Sin bordes */
+    margin: 0 5px;
+  }
+
+  .pagination-container ::ng-deep .ui-paginator-page.ui-state-active {
+    background-color: #b3b3b3; /* Fondo gris más oscuro para la página activa */
+    color: #fff; /* Texto blanco para la página activa */
+  }
 }
+

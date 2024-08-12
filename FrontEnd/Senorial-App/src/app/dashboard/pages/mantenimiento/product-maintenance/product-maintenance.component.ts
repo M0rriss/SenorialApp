@@ -7,6 +7,7 @@ import { CustomResponse } from '@app/core/models/generic/custom-response';
 import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { ProductoService } from '@app/dashboard/services/mantenimineto/producto/producto.service';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'product-maintenance',
@@ -19,7 +20,10 @@ export class ProductMaintenanceComponent implements OnInit {
   modalTitle: string = 'Agregar Producto';
   modalButtonText: string = 'Agregar';
   idProducto:number = 0;
-
+ // Variables para la paginación
+ first: number = 0;
+ rows: number = 10;
+ totalRecords: number = 0;
   //Campos
   product:GenericFilterResponse<ProductDashResponse> = {
     totalRegistros:0,
@@ -47,7 +51,7 @@ export class ProductMaintenanceComponent implements OnInit {
   listarProducto(){
     let req:GenericFilterRequest = {
       numeroPagina:8,
-      cantidad:10,
+      cantidad:this.rows,
       filtros: [],
     }
     this.productService.listarProductos(req).subscribe(
@@ -55,6 +59,7 @@ export class ProductMaintenanceComponent implements OnInit {
         next: (res: GenericFilterResponse<ProductDashResponse>)=>
           {
             this.product = res;
+            this.totalRecords = res.totalRegistros;
           }
       }
     );
@@ -87,7 +92,7 @@ export class ProductMaintenanceComponent implements OnInit {
     let req = this.formProduct.value as ProductEditRequest;
     const formData = new FormData();
     let archivo:File = this.file;
-    
+
     formData.append("File",archivo);
     formData.append("IdProducto",this.idProducto.toString());
     formData.append("Nombre",req.nombre);
@@ -176,5 +181,10 @@ export class ProductMaintenanceComponent implements OnInit {
     }
     //this.editar = true;
     this.file = file;
+  }
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.listarProducto();
   }
 }

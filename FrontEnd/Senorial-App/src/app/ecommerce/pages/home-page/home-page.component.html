@@ -7,6 +7,16 @@
   <card-product (produto)="verCarga($event)"  [Producto]="item"></card-product>
   }
 </main>
+<!-- Componente de Paginación -->
+<div class="pagination-container">
+ <p-paginator
+   [rows]="rows"
+   [totalRecords]="totalRecords"
+   [rowsPerPageOptions]="[5, 10, 20]"
+   (onPageChange)="onPageChange($event)"
+ ></p-paginator>
+</div>
+
 <footer-ecommerce></footer-ecommerce>
 </div>
 

@@ -15,6 +15,13 @@ export class PaymentMethodMaintenanceComponent implements OnInit {
   modalTitle: string = 'Agregar Método de Pago';
   modalButtonText: string = 'Agregar';
 
+//
+paymentStatus:boolean = true /* para los estados inactivo activo */
+
+ // Variables para la paginación
+ first: number = 0;
+ rows: number = 10;
+ totalRecords: number = 0;
   //
   formMetodoPago: FormGroup;
   metodoPago: MetodoPagoResponse[] = [];
@@ -91,4 +98,10 @@ export class PaymentMethodMaintenanceComponent implements OnInit {
     // Lógica para confirmar eliminación de método de pago
     this.deleteMetodoPago();
   }
+  // Método para manejar el cambio de página
+onPageChange(event: any) {
+  this.first = event.first;
+  this.rows = event.rows;
+  this.listarMetodosPago();
+}
 }

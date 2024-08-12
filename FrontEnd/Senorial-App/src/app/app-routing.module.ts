@@ -14,7 +14,7 @@ const routes: Routes = [
     loadChildren: () => import('@app/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {
-    path: 'notfund',
+    path: 'notfound',
     component: NotFoundPageComponent
   }
 ];

@@ -12,7 +12,13 @@ import { NotificationService } from '@app/shared/services/toast/notification.ser
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent implements OnInit{
-  //
+  // Variables para la paginación
+ first: number = 0;
+ rows: number = 10;
+ totalRecords: number = 0;
+
+
+
   products: GenericFilterResponse<CardProductResponse> = {
     lista: [],
     totalRegistros: 0,
@@ -45,7 +51,7 @@ export class HomePageComponent implements OnInit{
         }
       ],
     }
-    
+
     this.cardProductService.listarProductos(req).subscribe({
       next:(res: GenericFilterResponse<CardProductResponse>)=>{
         this.products = res;
@@ -73,8 +79,12 @@ export class HomePageComponent implements OnInit{
         let json = JSON.stringify(this.list);
         localStorage.setItem('product',json);
       }
-      
-    }
 
+    }
+    onPageChange(event: any) {
+      this.first = event.first;
+      this.rows = event.rows;
+      this.listarProductos();
+    }
 }
 

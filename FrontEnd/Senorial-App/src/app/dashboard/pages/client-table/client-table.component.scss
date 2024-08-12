@@ -22,8 +22,12 @@ $table-row-bg-color-alt: #f9f9f9;
 }
 
 .content {
-  flex-grow: 1;
-  padding: 20px;
+  display      : grid;
+  grid-template-rows: auto auto auto 1fr auto;
+    flex-grow: 1;
+    padding: 0 20px;
+    align-items: end;
+
 }
 
 .section-title {
@@ -117,4 +121,34 @@ $table-row-bg-color-alt: #f9f9f9;
 
 .clients-table tbody tr:nth-child(even) {
   background-color: $table-row-bg-color-alt;
+}
+/* PAGINACION */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: auto; /* Asegura que esté al final */
+  padding: 20px 0;
+}
+
+/* Estilo del componente de paginación */
+.pagination-container ::ng-deep .ui-paginator {
+  background-color: #f5f5f5; /* Fondo gris claro */
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.pagination-container ::ng-deep .ui-paginator-page,
+.pagination-container ::ng-deep .ui-paginator-first,
+.pagination-container ::ng-deep .ui-paginator-last,
+.pagination-container ::ng-deep .ui-paginator-next,
+.pagination-container ::ng-deep .ui-paginator-prev {
+  color: #333; /* Color de texto gris oscuro */
+  background-color: #e0e0e0; /* Fondo gris medio */
+  border: none; /* Sin bordes */
+  margin: 0 5px;
+}
+
+.pagination-container ::ng-deep .ui-paginator-page.ui-state-active {
+  background-color: #b3b3b3; /* Fondo gris más oscuro para la página activa */
+  color: #fff; /* Texto blanco para la página activa */
 }

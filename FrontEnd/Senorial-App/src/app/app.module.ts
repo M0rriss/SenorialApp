@@ -15,6 +15,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AuthInterceptor } from '@app/service/auth.interceptor';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,9 @@ import { AuthInterceptor } from '@app/service/auth.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     MessagesModule,
-    ToastModule
-    
+    ToastModule,
+    PaginatorModule
+
 
   ],
   providers: [

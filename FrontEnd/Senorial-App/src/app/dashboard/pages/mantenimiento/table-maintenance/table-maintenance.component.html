@@ -9,7 +9,7 @@
           <h2 class="mesa-header-title">Mesas</h2>
           <button class="mesa-button" (click)="openAddDialog()">
             <i class="fa-solid fa-circle-plus mesa-icon"></i>
-            <span>Categoria</span>
+            <span>Mesa</span>
           </button>
         </header>
 
@@ -40,8 +40,11 @@
         </div>
         <div class="form-row">
           <label class="form-label">Estado</label>
-          <input class="form-input" [(ngModel)]="mesaStatus" placeholder="Enter a state" />
-        </div>
+          <select class="form-input" [(ngModel)]="mesaStatus" placeholder="Enter a state">
+            <option [value]="true">Activo</option>
+            <option [value]="false">Inactivo</option>
+          </select>
+ </div>
         <div class="action-buttons">
           <button class="button discard-button" (click)="closeAddEditDialog()">Cancelar</button>
           <button class="button add-mesa-button" (click)="saveMesa()">{{ dialogActionButton }}</button>
