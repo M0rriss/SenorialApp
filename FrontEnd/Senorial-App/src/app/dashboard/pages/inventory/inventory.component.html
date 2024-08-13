@@ -133,6 +133,10 @@
   <section *ngIf="isStockDetailVisible" class="stock-detail">
     <button class="back-button" (click)="hideStockDetail()">Volver</button>
     <h1 class="stock-title">Detalle del Stock</h1>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" class="search-input" placeholder="Buscar Insumo " aria-label="Buscar">
+    </div>
     <table class="stock-table">
       <thead>
         <tr>
@@ -146,16 +150,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of stocks">
-          <td>{{ item.descripcion }}</td>
+          <td>{{ item.name }}</td>
           <td>{{ item.stock }}</td>
           <td><span class="status" [ngClass]="getStatusClass(item.stock)">{{ getDisponibilidad(item.stock) }}</span></td>
           <td>{{ item.precioCompra }}</td>
           <td>{{ item.precioVenta }}</td>
           <td>
-            <button class="action-btn" aria-label="Edit">
+            <button class="action-btn" aria-label="Edit" (click)="openEditDialog(item)">
               <i class="fa-regular fa-pen-to-square" style="color:#624DE3"></i>
             </button>
-            <button class="action-btn" aria-label="Delete">
+            <button class="action-btn" aria-label="Delete" (click)="openDeleteDialog(item)">
               <i class="fa-solid fa-trash" style="color:#F00006"></i>
             </button>
           </td>
@@ -173,27 +177,27 @@
 </div>
   </section>
 </div>
-<!-- Dialog ADD & EDIT -->
-<!-- <div class="dialog-overlay" [ngClass]="{'show': isModalOpen}">
+<!-- Diálogo ADD & EDIT -->
+<div class="dialog-overlay" [ngClass]="{'show': isModalOpen}">
   <div class="add-product-dialog">
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
-      </div>
+    <form [formGroup]="formDetalle" (ngSubmit)="detalleAcciones()">
       <div class="form-row">
-        <label for="productName" class="form-label">Descripcion</label>
-        <input formControlName="nombre" type="text" id="productName" class="form-input" placeholder="Enter product name" required>
+        <label for="productName" class="form-label">Descripción</label>
+        <input formControlName="descripcion" type="text" id="productName" class="form-input" placeholder="Ingrese el nombre del producto" required>
       </div>
       <div class="form-row">
         <label for="stock" class="form-label">Stock</label>
-        <input formControlName="stock" type="number" id="stock" class="form-input" placeholder="Enter stock quantity" required>
+        <input formControlName="stock" type="number" id="stock" class="form-input" placeholder="Ingrese la cantidad de stock" required>
       </div>
       <div class="form-row">
         <label for="purchasePrice" class="form-label">Precio Compra</label>
-        <input formControlName="precioCompra" type="text" id="purchasePrice" class="form-input" placeholder="Enter buying price" required>
+        <input formControlName="precioCompra" type="text" id="purchasePrice" class="form-input" placeholder="Ingrese el precio de compra" required>
       </div>
       <div class="form-row">
         <label for="sellingPrice" class="form-label">Precio Venta</label>
-        <input formControlName="precioVenta" type="text" id="sellingPrice" class="form-input" placeholder="Enter selling price" required>
+        <input formControlName="precioVenta" type="text" id="sellingPrice" class="form-input" placeholder="Ingrese el precio de venta" required>
       </div>
 
       <div class="action-buttons">
@@ -202,16 +206,16 @@
       </div>
     </form>
   </div>
-</div> -->
+</div>
 
-<!-- Confirm Dialog -->
-<!-- <div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
+<!-- Diálogo de Confirmación -->
+<div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
   <div class="confirm-dialog">
-    <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar el usuario?</h2>
+    <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar el Detalle?</h2>
     <p class="confirm-dialog-description">¿Estás seguro que quieres eliminarlo?</p>
     <div class="confirm-dialog-button-container">
       <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button>
       <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">No</button>
     </div>
   </div>
-</div> -->
+</div>

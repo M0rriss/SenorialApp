@@ -5,12 +5,13 @@
     "\\Senorial_App\\App_Senorial",
     "\\Senorial_App\\App_Senorial\\Controllers",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Almacen",
-    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Almacen\\Categorias",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Almacen\\Inventario",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\Pedidos",
+    "\\Senorial_App\\Business",
+    "\\Senorial_App\\Business\\Auth",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\App_Senorial\\Program.cs",
+  "SelectedNode": "\\Senorial_App\\Business\\Auth\\AuthBusiness.cs",
   "PreviewInSolutionExplorer": false
 }

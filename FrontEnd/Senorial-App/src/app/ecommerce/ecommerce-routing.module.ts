@@ -9,6 +9,7 @@ import { StorePickUpComponent } from './pages/store-pick-up/store-pick-up.compon
 import { CheckOutComponent } from './pages/check-out/check-out.component';
 import { SelectPaymentComponent } from './pages/select-payment/select-payment.component';
 import { NotFoundError } from 'rxjs';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 
 const routes: Routes = [
 
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path      :'select-payment',
     component : SelectPaymentComponent
+  },
+  {
+    path      :'forgot-password',
+    component : ForgetPasswordComponent
   },
   {
     path      :'e-commerce',

@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AuthInterceptor } from '@app/service/auth.interceptor';
 import { PaginatorModule } from 'primeng/paginator';
+import { PrimeIcons } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { PaginatorModule } from 'primeng/paginator';
     HttpClientModule,
     MessagesModule,
     ToastModule,
-    PaginatorModule
+    PaginatorModule,
 
 
   ],

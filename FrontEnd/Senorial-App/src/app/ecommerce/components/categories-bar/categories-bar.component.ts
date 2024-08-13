@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CategoriaEcommerceResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-ecommerce-response';
+import { CategoriaResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-response';
 import { CategoriaService } from '@app/dashboard/services/mantenimineto/categorias/categoria.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class CategoriesBarComponent implements OnInit{
 
   categoria: CategoriaEcommerceResponse[] = [];
   subCategoria: CategoriaEcommerceResponse[] = [];
-  submentu: boolean = false;
+  submenu: boolean = false;
+  nombreCategoriaSeleccionada: string = '';
   rutaImge: string[] = [
     "./hamburguesa.svg",
     "./pollo-frito-.svg",
@@ -49,12 +51,14 @@ export class CategoriesBarComponent implements OnInit{
       }
     });
   }
-  enviarInfo(idCategoria:number){
-    this.submentu = true;
+  enviarInfo(idCategoria:number, {nombre} : CategoriaEcommerceResponse){
+    this.submenu = true;
+    this.nombreCategoriaSeleccionada  = nombre;
     this.listarSubCategoria(idCategoria);
     this.enviarFiltro.emit(idCategoria);
   }
   enviarSubCategoria(idCategoria:number){
+
     this.enviarSub.emit(idCategoria);
   }
 
