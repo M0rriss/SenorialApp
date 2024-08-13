@@ -19,7 +19,7 @@
   <i class="fa-solid fa-eye password-icon" id="toggle-login-password" (click)="togglePasswordVisibility('login-password', 'toggle-login-password')"></i>
             </div>
             <div *ngIf="loginError" class="error-text">Lo sentimos ingrese bien la credenciales</div>
-            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <a routerLink="/forgot-password" class="forgot-password">¿Olvidaste tu contraseña?</a>
             <div class="social-login">
               <span class="social-login-text">Inicia sesión con:</span>
               <img src="./googleIconWeb.svg" alt="Google Icon" class="google-icon">

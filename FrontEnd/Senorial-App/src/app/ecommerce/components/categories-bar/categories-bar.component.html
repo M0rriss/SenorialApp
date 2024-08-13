@@ -1,51 +1,25 @@
 <section class="menu-categories">
-    <nav class="category-list">
-      @for (item of categoria; track $index) {
-        <div class="category-container" (click)="enviarInfo(item.idCategoria)">
-          <a href="#hamburgers" class="category-item">
-            <img [src]="item.ruta" alt="Hamburger icon" class="category-icon" />
-            <span class="category-name">{{item.nombre}}</span>
-          </a>
-        </div>
-      }
-      
-      <!-- <div class="category-container">
+  <nav class="category-list">
+    @for (item of categoria; track $index) {
+      <div class="category-container" (click)="enviarInfo(item.idCategoria,item)">
         <a href="#hamburgers" class="category-item">
-          <img src="./hamburguesa.svg" alt="Hamburger icon" class="category-icon" />
-          <span class="category-name">Hamburguesas</span>
+          <img [src]="item.ruta" alt="Hamburger icon" class="category-icon" />
+          <span class="category-name">{{item.nombre}}</span>
         </a>
       </div>
-      <div class="category-container">
-        <a href="#grills-and-chicken" class="category-item">
-          <img src="./pollo-frito-.svg" alt="Grill and chicken icon" class="category-icon" />
-          <span class="category-name">Parrillas y Pollos</span>
-        </a>
-      </div>
-      <div class="category-container">
-        <a href="#main-dishes" class="category-item">
-          <img src="./platosFondo.svg" alt="Main dish icon" class="category-icon" />
-          <span class="category-name">Platos de Fondo</span>
-        </a>
-      </div>
-      <div class="category-container">
-        <a href="#drinks" class="category-item">
-          <img src="./salud.svg" alt="Drink icon" class="category-icon" />
-          <span class="category-name">Bebidas</span>
-        </a>
-      </div>
-      <div class="category-container">
-        <a href="#sides" class="category-item">
-          <img src="./papasFritas.svg" alt="Side dish icon" class="category-icon" />
-          <span class="category-name">Complementos</span>
-        </a>
-      </div> -->
-    </nav>
-  </section>
-  @if (submentu) {
-    @for (item of subCategoria; track $index) {
-      <button (click)="enviarSubCategoria(item.idCategoria)" type="button" >{{item.nombre}}</button>
     }
-  }
-  @else {
+  </nav>
+</section>
 
+@if (submenu) {
+  <div class="subcategory-list">
+    @for (item of subCategoria; track $index) {
+      <button class="button-subcategorias" (click)="enviarSubCategoria(item.idCategoria)" type="button">{{item.nombre}}</button>
+    }
+  </div>
+}
+<div class="name-category">
+  @if (nombreCategoriaSeleccionada) {
+    <h2>{{nombreCategoriaSeleccionada}}</h2>
   }
+</div>
