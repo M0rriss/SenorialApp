@@ -29,4 +29,10 @@ public partial class Insumo
 
     [InverseProperty("Insumo")]
     public virtual ICollection<DetalleInventario> DetalleInventarios { get; set; } = new List<DetalleInventario>();
+
+    [InverseProperty("IdNavigationInsumo")]
+    public virtual ICollection<Entrada> Entrada { get; set; } = [];
+
+    [InverseProperty("IdNavigationInsumo")]
+    public virtual ICollection<Salida> Salida { get; set; } = [];
 }

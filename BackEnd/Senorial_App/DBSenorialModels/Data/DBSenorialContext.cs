@@ -237,6 +237,84 @@ public partial class DBSenorialContext : DbContext
                 .HasForeignKey(d => d.IdInventario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("inventario_id_fk");
+
+            entity.HasData(
+                new DetalleInventario() { IdDetInventario = 1,  IdInventario = 1,  IdInsumo = 1,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 2,  IdInventario = 1,  IdInsumo = 2,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 3,  IdInventario = 1,  IdInsumo = 3,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 4,  IdInventario = 1,  IdInsumo = 4,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 5,  IdInventario = 1,  IdInsumo = 5,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 6,  IdInventario = 1,  IdInsumo = 6,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 7,  IdInventario = 1,  IdInsumo = 7,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 8,  IdInventario = 1,  IdInsumo = 8,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 9,  IdInventario = 1,  IdInsumo = 9,   StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 10, IdInventario = 1,  IdInsumo = 10,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 11, IdInventario = 1,  IdInsumo = 11,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 12, IdInventario = 1,  IdInsumo = 12,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 13, IdInventario = 1,  IdInsumo = 13,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 14, IdInventario = 1,  IdInsumo = 14,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 15, IdInventario = 1,  IdInsumo = 15,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 16, IdInventario = 1,  IdInsumo = 16,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 17, IdInventario = 1,  IdInsumo = 17,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 18, IdInventario = 1,  IdInsumo = 18,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 19, IdInventario = 1,  IdInsumo = 19,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 20, IdInventario = 1,  IdInsumo = 20,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 21, IdInventario = 1,  IdInsumo = 21,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 22, IdInventario = 1,  IdInsumo = 22,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 23, IdInventario = 1,  IdInsumo = 23,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 24, IdInventario = 1,  IdInsumo = 24,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 25, IdInventario = 1,  IdInsumo = 25,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 26, IdInventario = 1,  IdInsumo = 26,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 27, IdInventario = 1,  IdInsumo = 27,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 28, IdInventario = 1,  IdInsumo = 28,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 29, IdInventario = 1,  IdInsumo = 29,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 30, IdInventario = 1,  IdInsumo = 30,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 31, IdInventario = 1,  IdInsumo = 31,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 32, IdInventario = 1,  IdInsumo = 32,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 33, IdInventario = 1,  IdInsumo = 33,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 34, IdInventario = 1,  IdInsumo = 34,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 35, IdInventario = 1,  IdInsumo = 35,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 36, IdInventario = 1,  IdInsumo = 36,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 37, IdInventario = 1,  IdInsumo = 37,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 38, IdInventario = 1,  IdInsumo = 38,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 39, IdInventario = 1,  IdInsumo = 39,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 40, IdInventario = 1,  IdInsumo = 40,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 41, IdInventario = 1,  IdInsumo = 41,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 42, IdInventario = 1,  IdInsumo = 42,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 43, IdInventario = 1,  IdInsumo = 43,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 44, IdInventario = 1,  IdInsumo = 44,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 45, IdInventario = 1,  IdInsumo = 45,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 46, IdInventario = 1,  IdInsumo = 46,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 47, IdInventario = 1,  IdInsumo = 47,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 48, IdInventario = 1,  IdInsumo = 48,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 49, IdInventario = 1,  IdInsumo = 49,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 50, IdInventario = 1,  IdInsumo = 50,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 51, IdInventario = 1,  IdInsumo = 51,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 52, IdInventario = 1,  IdInsumo = 52,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 53, IdInventario = 1,  IdInsumo = 53,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 54, IdInventario = 1,  IdInsumo = 54,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 55, IdInventario = 1,  IdInsumo = 55,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 56, IdInventario = 1,  IdInsumo = 56,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 57, IdInventario = 1,  IdInsumo = 57,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 58, IdInventario = 1,  IdInsumo = 58,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 59, IdInventario = 1,  IdInsumo = 59,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 60, IdInventario = 1,  IdInsumo = 60,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 61, IdInventario = 1,  IdInsumo = 61,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 62, IdInventario = 1,  IdInsumo = 62,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 63, IdInventario = 1,  IdInsumo = 63,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 64, IdInventario = 1,  IdInsumo = 64,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 65, IdInventario = 1,  IdInsumo = 65,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 66, IdInventario = 1,  IdInsumo = 66,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 67, IdInventario = 1,  IdInsumo = 67,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 68, IdInventario = 1,  IdInsumo = 68,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 69, IdInventario = 1,  IdInsumo = 69,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 70, IdInventario = 1,  IdInsumo = 70,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 71, IdInventario = 1,  IdInsumo = 71,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 72, IdInventario = 1,  IdInsumo = 72,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 73, IdInventario = 1,  IdInsumo = 73,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 74, IdInventario = 1,  IdInsumo = 74,  StockTotal = 12 },
+                new DetalleInventario() { IdDetInventario = 75, IdInventario = 1,  IdInsumo = 75,  StockTotal = 12 }
+                );
         });
 
         //modelBuilder.Entity<DetalleProduccion>(entity =>
@@ -304,6 +382,11 @@ public partial class DBSenorialContext : DbContext
                 .HasForeignKey(d => d.IdInventario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("inventario_id_entrada_fk");
+
+            entity.HasOne(e => e.IdNavigationInsumo)
+                .WithMany(e => e.Entrada)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("entrada_insumo_fk");
         });
 
 
@@ -410,6 +493,11 @@ public partial class DBSenorialContext : DbContext
                 .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sucursal_id_fk");
+
+            entity.HasData(
+                new Inventario() { IdInventario = 1, IdSucursal = 1, FechaActualizacion = DateTime.Now},
+                new Inventario() { IdInventario = 2, IdSucursal = 2, FechaActualizacion = DateTime.Now}
+                );
         });
 
 
@@ -695,11 +783,10 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("inventario_id_salida_fk");
 
-            entity.HasOne(d => d.DetalleInventario)
-                .WithMany(p => p.Salidas)
-                .HasForeignKey(d => d.IdDetInventario)
+           entity.HasOne(d => d.IdNavigationInsumo)
+                .WithMany(p => p.Salida)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detalle_inventario_id_fk");
+                .HasConstraintName("salida_insumo_fk");
         });
 
         modelBuilder.Entity<Sucursal>(entity =>

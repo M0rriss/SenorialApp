@@ -17,8 +17,8 @@ public class Salida
     [Column("id_inventario")]
     public int IdInventario { get; set; }
 
-    [Column("id_det_inventario")]
-    public int IdDetInventario { get; set; }
+    [Column("id_insumo")]
+    public int IdInsumo { get; set; }
 
     [Column("fecha_salida", TypeName = "datetime")]
     public DateTime FechaSalida { get; set; }
@@ -28,11 +28,12 @@ public class Salida
 
     [Column("motivo")]
     [StringLength(250)]
-    public string Motivo { get; set; }
+    public string Motivo { get; set; } = null!;
 
     [ForeignKey("IdInventario")]
-    public virtual Inventario Inventario { get; set; }
+    public virtual Inventario Inventario { get; set; } = null!;
 
-    [ForeignKey("IdDetInventario")]
-    public virtual DetalleInventario DetalleInventario { get; set; }
+    [ForeignKey("IdInventario")]
+    [InverseProperty("Salida")]
+    public virtual Insumo IdNavigationInsumo { get; set; } = null!;
 }

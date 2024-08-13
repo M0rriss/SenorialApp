@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Insumos;
 using Business.Schema_Generico.UnidadMediciones;
+using CommonModels.Common;
 using IBusiness.Schema_Almacen.Insumos;
 using IBusiness.Schema_Generico.UnidadMediciones;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,7 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.Insumo;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using System.Net;
 
@@ -17,7 +20,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
     
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class InsumoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -86,5 +89,38 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
             return Ok(result);
         }
         #endregion CRUD METHODS
+        #region POST
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Filtro")]
+        public async Task<ActionResult<GenericFilterResponse<InsumoUiRequest>>> FiltroProductos([FromBody] GenericFilterRequest req)
+        {
+            GenericFilterResponse< InsumoUiRequest > res = await _insumoBusiness.FiltroInsumoAsync(req);
+            return Ok(res);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Crear")]
+        public async Task<ActionResult<CustomResponse>> RegistarInsumo([FromBody] InsumoRequest req)
+        {
+            CustomResponse res = await _insumoBusiness.CrearInsumoAsync(req);
+            return StatusCode(201,res);
+        }
+        [HttpPut]
+        [Route("Actulizar")]
+        public async Task<ActionResult<CustomResponse>> ActulizarInsumo([FromBody] InsumoRequest req)
+        {
+            CustomResponse res = await _insumoBusiness.ActulizarInsumoAsync(req);
+            return StatusCode(200, res);
+        }
+        #endregion POST
     }
 }

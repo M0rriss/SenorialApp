@@ -22,12 +22,6 @@ public partial class DetalleInventario
     [Column("stock_total")]
     public int StockTotal { get; set; }
 
-    [Column("precio_compra", TypeName = "decimal(18, 2)")]
-    public decimal PrecioCompra { get; set; }
-
-    [Column("precio_venta", TypeName = "decimal(18, 2)")]
-    public decimal PrecioVenta { get; set; }
-
     [ForeignKey("IdInsumo")]
     [InverseProperty("DetalleInventarios")]
     public virtual Insumo Insumo { get; set; } = null!;
@@ -35,9 +29,6 @@ public partial class DetalleInventario
     [ForeignKey("IdInventario")]
     //[InverseProperty("DetalleInventarios")]
     public virtual Inventario Inventario { get; set; } = null!;
-
-    [InverseProperty("DetalleInventario")]
-    public virtual ICollection<Salida> Salidas { get; set; } = new List<Salida>();
 
     [NotMapped]
     public string EstadoStock => StockTotal > 16 ? "Suficiente" : StockTotal > 10 ? "En progreso" : "Agotándose";

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Business.Schema_Almacen.DetalleInventarios;
+using CommonModels.Common;
 using DBSenorialModels.Senorial;
+using IBusiness.Schema_Almacen.DetalleInventarios;
 using IBusiness.Schema_Almacen.Insumos;
 using IRepository.Schema_Almacen.Insumos;
 using IRepository.Schema_Generico.UnidadMediciones;
@@ -21,11 +24,13 @@ namespace Business.Schema_Almacen.Insumos
     {
         #region Dependency Injecction
         private readonly IInsumoRepository _insumoRepository;
+        private readonly IDetalleInventarioBusiness _detalleInventarioBusiness;
         private readonly IUnidadMedicionRepository _unidadMedicionRepository;
         private readonly IMapper _mapper;
         public InsumoBusiness(IMapper mapper)
         {
             _mapper = mapper;
+            _detalleInventarioBusiness = new DetalleInventarioBusiness();
             _insumoRepository = new InsumoRepository();
             _unidadMedicionRepository = new UnidadMedicionRepository();
         }
@@ -176,5 +181,40 @@ namespace Business.Schema_Almacen.Insumos
             return true;
         }
         #endregion
+
+        #region Personalizado
+        public async Task<GenericFilterResponse<InsumoUiRequest>> FiltroInsumoAsync(GenericFilterRequest req)
+        {
+            return await _insumoRepository.GetByFilterViewAsync(req);
+        }
+        public async Task<CustomResponse> CrearInsumoAsync(InsumoRequest req)
+        {
+            Insumo insumo = new()
+            {
+                Nombre = req.Nombre,
+                Url = req.Url,
+                IdUnidad = req.IdUnidad,
+            };
+            insumo = await _insumoRepository.Create(insumo);
+            CustomResponse response = new CustomResponse();
+            response.Message = "Registro Correctamente";
+            response.Code = "2000";
+            return response;
+        }
+        public async Task<CustomResponse> ActulizarInsumoAsync(InsumoRequest req)
+        {
+            Insumo insumo = new()
+            {
+                Nombre = req.Nombre,
+                Url = req.Url,
+                IdUnidad = req.IdUnidad,
+            };
+            insumo = await _insumoRepository.Update(insumo);
+            CustomResponse response = new CustomResponse();
+            response.Message = "Actulizar Correctamente";
+            response.Code = "2000";
+            return response;
+        }
+        #endregion Personalizado
     }
 }

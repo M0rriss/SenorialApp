@@ -224,5 +224,8 @@ namespace Business.Schema_Almacen.Inventarios
         }
         #endregion
 
+        #region Inventario
+
+        #endregion Inventario
     }
 }
