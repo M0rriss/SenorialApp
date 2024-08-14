@@ -18,7 +18,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Inventario
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class InventarioController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

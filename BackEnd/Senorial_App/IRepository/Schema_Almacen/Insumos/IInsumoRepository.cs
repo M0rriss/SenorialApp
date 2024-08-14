@@ -1,7 +1,9 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.Insumo;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +20,6 @@ namespace IRepository.Schema_Almacen.Insumos
         Task<bool> DeleteUiInsumo(int id);
         Task<Insumo> BuscarporId(int id);
         Task<Insumo> BuscarNombre(string nombre);
+        Task<GenericFilterResponse<InsumoUiRequest>> GetByFilterViewAsync(GenericFilterRequest request);
     }
 }

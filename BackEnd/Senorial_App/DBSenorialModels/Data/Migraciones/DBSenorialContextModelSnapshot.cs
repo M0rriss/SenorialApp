@@ -338,14 +338,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("int")
                         .HasColumnName("id_inventario");
 
-                    b.Property<decimal>("PrecioCompra")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("precio_compra");
-
-                    b.Property<decimal>("PrecioVenta")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("precio_venta");
-
                     b.Property<int>("StockTotal")
                         .HasColumnType("int")
                         .HasColumnName("stock_total");
@@ -358,6 +350,533 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdInventario");
 
                     b.ToTable("detalle_inventario", "Almacen");
+
+                    b.HasData(
+                        new
+                        {
+                            IdDetInventario = 1,
+                            IdInsumo = 1,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 2,
+                            IdInsumo = 2,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 3,
+                            IdInsumo = 3,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 4,
+                            IdInsumo = 4,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 5,
+                            IdInsumo = 5,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 6,
+                            IdInsumo = 6,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 7,
+                            IdInsumo = 7,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 8,
+                            IdInsumo = 8,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 9,
+                            IdInsumo = 9,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 10,
+                            IdInsumo = 10,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 11,
+                            IdInsumo = 11,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 12,
+                            IdInsumo = 12,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 13,
+                            IdInsumo = 13,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 14,
+                            IdInsumo = 14,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 15,
+                            IdInsumo = 15,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 16,
+                            IdInsumo = 16,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 17,
+                            IdInsumo = 17,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 18,
+                            IdInsumo = 18,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 19,
+                            IdInsumo = 19,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 20,
+                            IdInsumo = 20,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 21,
+                            IdInsumo = 21,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 22,
+                            IdInsumo = 22,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 23,
+                            IdInsumo = 23,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 24,
+                            IdInsumo = 24,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 25,
+                            IdInsumo = 25,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 26,
+                            IdInsumo = 26,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 27,
+                            IdInsumo = 27,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 28,
+                            IdInsumo = 28,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 29,
+                            IdInsumo = 29,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 30,
+                            IdInsumo = 30,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 31,
+                            IdInsumo = 31,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 32,
+                            IdInsumo = 32,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 33,
+                            IdInsumo = 33,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 34,
+                            IdInsumo = 34,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 35,
+                            IdInsumo = 35,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 36,
+                            IdInsumo = 36,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 37,
+                            IdInsumo = 37,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 38,
+                            IdInsumo = 38,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 39,
+                            IdInsumo = 39,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 40,
+                            IdInsumo = 40,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 41,
+                            IdInsumo = 41,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 42,
+                            IdInsumo = 42,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 43,
+                            IdInsumo = 43,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 44,
+                            IdInsumo = 44,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 45,
+                            IdInsumo = 45,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 46,
+                            IdInsumo = 46,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 47,
+                            IdInsumo = 47,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 48,
+                            IdInsumo = 48,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 49,
+                            IdInsumo = 49,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 50,
+                            IdInsumo = 50,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 51,
+                            IdInsumo = 51,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 52,
+                            IdInsumo = 52,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 53,
+                            IdInsumo = 53,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 54,
+                            IdInsumo = 54,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 55,
+                            IdInsumo = 55,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 56,
+                            IdInsumo = 56,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 57,
+                            IdInsumo = 57,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 58,
+                            IdInsumo = 58,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 59,
+                            IdInsumo = 59,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 60,
+                            IdInsumo = 60,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 61,
+                            IdInsumo = 61,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 62,
+                            IdInsumo = 62,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 63,
+                            IdInsumo = 63,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 64,
+                            IdInsumo = 64,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 65,
+                            IdInsumo = 65,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 66,
+                            IdInsumo = 66,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 67,
+                            IdInsumo = 67,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 68,
+                            IdInsumo = 68,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 69,
+                            IdInsumo = 69,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 70,
+                            IdInsumo = 70,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 71,
+                            IdInsumo = 71,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 72,
+                            IdInsumo = 72,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 73,
+                            IdInsumo = 73,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 74,
+                            IdInsumo = 74,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 75,
+                            IdInsumo = 75,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetallePedido", b =>
@@ -517,18 +1036,22 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("datetime")
                         .HasColumnName("fecha_ingreso");
 
+                    b.Property<int>("IdInsumo")
+                        .HasColumnType("int")
+                        .HasColumnName("id_Insumo");
+
                     b.Property<int>("IdInventario")
                         .HasColumnType("int")
                         .HasColumnName("id_inventario");
 
-                    b.Property<string>("Motivo")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("motivo");
+                    b.Property<decimal>("PrecioCompra")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("precio_compra");
 
                     b.HasKey("IdEntrada")
                         .HasName("entrada_id_pk");
+
+                    b.HasIndex("IdInsumo");
 
                     b.HasIndex("IdInventario");
 
@@ -1072,6 +1595,20 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdSucursal");
 
                     b.ToTable("inventario", "Almacen");
+
+                    b.HasData(
+                        new
+                        {
+                            IdInventario = 1,
+                            FechaActualizacion = new DateTime(2024, 8, 13, 16, 34, 27, 561, DateTimeKind.Local).AddTicks(9294),
+                            IdSucursal = 1
+                        },
+                        new
+                        {
+                            IdInventario = 2,
+                            FechaActualizacion = new DateTime(2024, 8, 13, 16, 34, 27, 561, DateTimeKind.Local).AddTicks(9296),
+                            IdSucursal = 2
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Mesa", b =>
@@ -2225,9 +2762,9 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("datetime")
                         .HasColumnName("fecha_salida");
 
-                    b.Property<int>("IdDetInventario")
+                    b.Property<int>("IdInsumo")
                         .HasColumnType("int")
-                        .HasColumnName("id_det_inventario");
+                        .HasColumnName("id_insumo");
 
                     b.Property<int>("IdInventario")
                         .HasColumnType("int")
@@ -2244,8 +2781,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdSalida")
                         .HasName("salida_id_pk");
-
-                    b.HasIndex("IdDetInventario");
 
                     b.HasIndex("IdInventario");
 
@@ -2621,7 +3156,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 10, 0, 29, 58, 98, DateTimeKind.Local).AddTicks(1638),
+                            CreatedAt = new DateTime(2024, 8, 13, 16, 34, 27, 565, DateTimeKind.Local).AddTicks(5051),
                             Email = "admin@admin.com",
                             IdPersona = 1,
                             IdRol = 1,
@@ -2951,11 +3486,19 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Entrada", b =>
                 {
+                    b.HasOne("DBSenorialModels.Senorial.Insumo", "IdNavigationInsumo")
+                        .WithMany("Entrada")
+                        .HasForeignKey("IdInsumo")
+                        .IsRequired()
+                        .HasConstraintName("entrada_insumo_fk");
+
                     b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
                         .WithMany("Entradas")
                         .HasForeignKey("IdInventario")
                         .IsRequired()
                         .HasConstraintName("inventario_id_entrada_fk");
+
+                    b.Navigation("IdNavigationInsumo");
 
                     b.Navigation("Inventario");
                 });
@@ -3070,11 +3613,11 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.DetalleInventario", "DetalleInventario")
-                        .WithMany("Salidas")
-                        .HasForeignKey("IdDetInventario")
+                    b.HasOne("DBSenorialModels.Senorial.Insumo", "IdNavigationInsumo")
+                        .WithMany("Salida")
+                        .HasForeignKey("IdInventario")
                         .IsRequired()
-                        .HasConstraintName("detalle_inventario_id_fk");
+                        .HasConstraintName("salida_insumo_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
                         .WithMany("Salidas")
@@ -3086,7 +3629,7 @@ namespace DBSenorialModels.Data.Migraciones
                         .WithMany("Salida")
                         .HasForeignKey("SucursalIdSucursal");
 
-                    b.Navigation("DetalleInventario");
+                    b.Navigation("IdNavigationInsumo");
 
                     b.Navigation("Inventario");
                 });
@@ -3262,11 +3805,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
-                {
-                    b.Navigation("Salidas");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Documento", b =>
                 {
                     b.Navigation("Sucursals");
@@ -3287,6 +3825,10 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
                 {
                     b.Navigation("DetalleInventarios");
+
+                    b.Navigation("Entrada");
+
+                    b.Navigation("Salida");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Inventario", b =>

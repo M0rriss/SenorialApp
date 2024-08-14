@@ -1,4 +1,5 @@
 ﻿using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Producto;
 using IRepository.Schema_Almacen.Insumos;
 using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
@@ -28,6 +29,7 @@ namespace Repository.Schema_Almacen.Insumos
                     u => u.IdUnidad,
                     (i, u) => new InsumoUiRequest
                     {
+                        IdInsumo = i.IdInsumo,
                         InsumoNombre = i.Nombre,
                         UnidadMedida = u.Abreviacion
                     }).ToListAsync();
@@ -67,6 +69,40 @@ namespace Repository.Schema_Almacen.Insumos
         {
             return await db.Insumos.FirstOrDefaultAsync(i => i.Nombre == nombre);
         }
+        public async Task<GenericFilterResponse<InsumoUiRequest>> GetByFilterViewAsync(GenericFilterRequest request)
+        {
+            List<InsumoUiRequest> list = await UiInsumo();
+            var query = list.Where(x => x.IdInsumo == x.IdInsumo);
+            request.Filtros.ForEach(j =>
+            {
+                if (!string.IsNullOrEmpty(j.Value))
+                {
+                    switch (j.Name)
+                    {
+                        case "Insumo":
+                            query = query.Where(x => x.IdInsumo == int.Parse(j.Value));
+                            break;
+                    }
+                }
+            });
 
+            GenericFilterResponse<InsumoUiRequest> res = new();
+
+            res.TotalRegistros = query.Count();
+            res.Lista = query
+                //.Include(x => x.Status)
+                .Skip((request.NumeroPagina - 1) * request.Cantidad)
+                .Take(request.Cantidad)
+                .OrderBy(x => x.IdInsumo)
+                .ToList();
+
+            return res;
+        }
+
+        public async Task BuscarInsumoNombre(string insumo)
+        {
+            
+
+        }
     }
 }
