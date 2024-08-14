@@ -3,7 +3,7 @@
   <div class="content">
     <h1 class="section-title">Categorias</h1>
     <div class="action-bar">
-    <div class="search-container">
+    <div class="search-container" *ngIf="isTableView">
       <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
       <input type="text" class="search-input" placeholder="Buscar por Categoria o SubCategoria">
     </div>
@@ -45,14 +45,14 @@
       </table>
       <!-- Componente de Paginación -->
 
-    </div>
-    <div class="pagination-container">
-      <p-paginator
-        [rows]="rows"
-        [totalRecords]="totalRecords"
-        [rowsPerPageOptions]="[5, 10, 20]"
-        (onPageChange)="onPageChange($event)"
-      ></p-paginator>
+      <div class="pagination-container">
+        <p-paginator
+          [rows]="rows"
+          [totalRecords]="totalRecords"
+          [rowsPerPageOptions]="[5, 10, 20]"
+          (onPageChange)="onPageChange($event)"
+        ></p-paginator>
+      </div>
     </div>
 
     <!-- Vista de Cuadro -->
