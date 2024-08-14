@@ -1,8 +1,12 @@
-﻿using IBusiness.Schema_Almacen.DetalleInventarios;
+﻿using DBSenorialModels.Senorial;
 using IBusiness.Schema_Almacen.DetalleInventarios;
+using IBusiness.Schema_Almacen.DetalleInventarios;
+using IRepository.Schema_Almacen.DetalleInventarios;
+using Repository.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Request.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.DetalleCompra;
+using RequestResponseModels.Response.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using System;
 using System.Collections.Generic;
@@ -14,13 +18,29 @@ namespace Business.Schema_Almacen.DetalleInventarios
 {
     public class DetalleInventarioBusiness : IDetalleInventarioBusiness
     {
-        
-        public Task<DetalleCompraResponse> Create(DetalleInventarioRequest entity)
+        private readonly IDetalleInventarioRepository _detalleInventarioRepository = new DetalleInventarioRepository();
+
+        public async Task<DetalleInventarioResponse> Create(DetalleInventarioRequest entity)
         {
-            throw new NotImplementedException();
+            DetalleInventario detalle = new()
+            {
+                IdInventario = entity.IdInventario,
+                IdInsumo = entity.IdInsumo,
+                StockTotal = entity.StockTotal,
+            };
+            detalle = await _detalleInventarioRepository.Create(detalle);
+            DetalleInventarioResponse res = new()
+            {
+                IdDetInventario = detalle.IdDetInventario,
+                IdInsumo = detalle.IdInsumo,
+                IdInventario = detalle.IdInventario,
+                StockTotal = detalle.StockTotal,
+            };
+
+            return res;
         }
 
-        public Task<List<DetalleCompraResponse>> CreateMultiple(List<DetalleInventarioRequest> list)
+        public Task<List<DetalleInventarioResponse>> CreateMultiple(List<DetalleInventarioRequest> list)
         {
             throw new NotImplementedException();
         }
@@ -40,27 +60,27 @@ namespace Business.Schema_Almacen.DetalleInventarios
             throw new NotImplementedException();
         }
 
-        public Task<List<DetalleCompraResponse>> GetAll()
+        public Task<List<DetalleInventarioResponse>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<GenericFilterResponse<DetalleCompraResponse>> GetByFilterAsync(GenericFilterRequest request)
+        public Task<GenericFilterResponse<DetalleInventarioResponse>> GetByFilterAsync(GenericFilterRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<DetalleCompraResponse> GetById(int id)
+        public Task<DetalleInventarioResponse> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<DetalleCompraResponse> Update(DetalleInventarioRequest entity)
+        public Task<DetalleInventarioResponse> Update(DetalleInventarioRequest entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<DetalleCompraResponse>> UpdateMultiple(List<DetalleInventarioRequest> list)
+        public Task<List<DetalleInventarioResponse>> UpdateMultiple(List<DetalleInventarioRequest> list)
         {
             throw new NotImplementedException();
         }
