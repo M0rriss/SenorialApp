@@ -8,6 +8,7 @@ using IRepository.Schema_Almacen.Insumos;
 using IRepository.Schema_Generico.UnidadMediciones;
 using Repository.Schema_Almacen.Insumos;
 using Repository.Schema_Generico.UnidadMediciones;
+using RequestResponseModels.Request.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Request.Schema_Almacen.Insumo;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Almacen.Insumo;
@@ -196,6 +197,13 @@ namespace Business.Schema_Almacen.Insumos
                 IdUnidad = req.IdUnidad,
             };
             insumo = await _insumoRepository.Create(insumo);
+            DetalleInventarioRequest detalle = new()
+            {
+                IdInsumo = insumo.IdInsumo,
+                IdInventario = 1,
+                StockTotal = 0,
+            };
+            await _detalleInventarioBusiness.Create(detalle);
             CustomResponse response = new CustomResponse();
             response.Message = "Registro Correctamente";
             response.Code = "2000";
@@ -205,6 +213,7 @@ namespace Business.Schema_Almacen.Insumos
         {
             Insumo insumo = new()
             {
+                IdInsumo = req.IdInsumo,
                 Nombre = req.Nombre,
                 Url = req.Url,
                 IdUnidad = req.IdUnidad,

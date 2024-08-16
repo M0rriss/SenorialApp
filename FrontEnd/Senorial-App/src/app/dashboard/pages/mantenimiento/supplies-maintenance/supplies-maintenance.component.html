@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of suministro; track $index) {
+        @for (item of suministro.lista; track $index) {
           <tr class="insumo-row">
             <td>{{item.idInsumo}}</td>
             <td>{{item.insumoNombre}}</td>
@@ -29,7 +29,7 @@
             <td>
               <div class="action-buttons">
                 <!-- <i class="add-icon fa-solid fa-circle-plus" (click)="addInsumo()"></i> -->
-                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editInsumo()"></i>
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editInsumo(item)"></i>
                 <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
               </div>
             </td>
@@ -42,8 +42,9 @@
     <!-- Componente de Paginación -->
   <div class="pagination-container">
     <p-paginator
-      [rows]="rows"
-      [totalRecords]="totalRecords"
+      [rows]="this.rows"
+      [first]="this.first"
+      [totalRecords]="this.suministro.totalRegistros"
       [rowsPerPageOptions]="[5, 10, 20]"
       (onPageChange)="onPageChange($event)"
     ></p-paginator>
@@ -59,12 +60,15 @@
     <form [formGroup]="formInsumo">
       <div class="form-row">
         <label for="insumo" class="form-label">Insumo</label>
-        <input formControlName="insumoNombre" type="text" id="insumo" class="form-input" placeholder="Ingrese el insumo" required>
+        <input formControlName="nombre" type="text" id="insumo" class="form-input" placeholder="Ingrese el insumo" required>
       </div>
       <!-- AQUI VA PARA EL LISTADO DE INSUMOS -->
       <div class="form-row">
         <label for="unid-medida" class="form-label">Unid. Medida</label>
-        <select formControlName="unidadMedida" type="text" id="unid-medida" class="form-input" placeholder="Ingrese la unidad de medida" required>
+        <select formControlName="idUnidad" type="text" id="unid-medida" class="form-input" placeholder="Ingrese la unidad de medida" required>
+          @for (item of this.unidad; track $index) {
+            <option [value]="item.idUnidad">{{item.descripcion}}</option>
+          }
         </select>
       </div>
 

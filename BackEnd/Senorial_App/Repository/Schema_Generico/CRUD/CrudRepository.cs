@@ -25,7 +25,7 @@ namespace Repository.Schema_Generico.CRUD
         #endregion
         #region CRUD
         public async Task<List<TEntity>> GetAll() => await dbset.ToListAsync();
-        public async Task<TEntity> GetById(int id) => await dbset.FindAsync(id);
+        public async Task<TEntity> GetById(object id) => await dbset.FindAsync(id);
         public async Task<TEntity> Create(TEntity entity)
         {
             await dbset.AddAsync(entity);

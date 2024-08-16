@@ -1,4 +1,6 @@
 export interface InsumoRequest{
-    insumoNombre: string;
-  unidadMedida: string;
+    idInsumo: number,
+  nombre: string,
+  url: string,
+  idUnidad: number
 }

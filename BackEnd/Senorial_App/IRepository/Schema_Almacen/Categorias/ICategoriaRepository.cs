@@ -16,5 +16,6 @@ namespace IRepository.Schema_Almacen.Categorias
         Task<Categoria> BuscarPorNombre(string nombre);
         Task<List<Categoria>> ListarCategoriaPadreAsync();
         Task<List<Categoria>> ListarSubCategoriaAsync(int idCategoria);
+        Task<List<Categoria>> ListarTodasSubCategoriasAsync();
     }
 }

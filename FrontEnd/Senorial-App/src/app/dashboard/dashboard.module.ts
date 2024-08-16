@@ -50,6 +50,7 @@ import { PaginatorModule } from 'primeng/paginator';
     FormsModule,
     ReactiveFormsModule,
     PaginatorModule,
+    
   ]
 })
 export class DashboardModule { }

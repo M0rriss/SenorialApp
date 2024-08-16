@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using Business.Schema_Usuarios.Usuarios;
+using CommonModels.Common;
+using DBSenorialModels.View.Usuario.User;
 using IBusiness.Schema_Usuarios.Usuarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System.Net;
@@ -82,6 +86,29 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         {
             await _usuarioBusiness.DeleteUiUser(id);
             return Ok( "User deleted successfully.");
+        }
+
+        [HttpPost]
+        [Route("Filtro")]
+        public async Task<ActionResult<GenericFilterResponse<VwUsuarios>>> FiltrarUsuarios([FromBody] GenericFilterRequest req)
+        {
+            GenericFilterResponse<VwUsuarios> res= await _usuarioBusiness.ListarUsuarioAsync(req);
+            return Ok( res );
+        }
+
+        [HttpPost]
+        [Route("Create")]
+        public async Task<ActionResult<CustomResponse>> CrearNuevoUsuario([FromForm] UsuarioAddRequest req)
+        {
+            CustomResponse res = await _usuarioBusiness.CrearNuevoUsuarioAsync(req);
+            return StatusCode(201, res );
+        }
+        [HttpPut]
+        [Route("Update")]
+        public async Task<ActionResult<CustomResponse>> ActulizarUsuario([FromForm] UsuarioUpdateRequest req)
+        {
+            CustomResponse res = await _usuarioBusiness.ActulizarUsuarioAsync(req);
+            return StatusCode(200, res);
         }
     }
 }

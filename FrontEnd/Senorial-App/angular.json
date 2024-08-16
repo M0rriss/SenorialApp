@@ -43,9 +43,14 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/@flaticon/flaticon-uicons/css/all/all.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
+<<<<<<< HEAD
+  "node_modules/primeng/resources/primeng.min.css",
+  "node_modules/primeicons/primeicons.css"
+=======
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
+>>>>>>> d864d7e9acffbf87da270a6975cf21242a7fb470
             ],
             "scripts": []
           },
@@ -115,8 +120,7 @@
               "node_modules/@flaticon/flaticon-uicons/css/all/all.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
   "node_modules/primeng/resources/primeng.min.css",
-  "node_modules/primeicons/primeicons.css",
-  "node_modules/primeflex/primeflex.css"
+  "node_modules/primeicons/primeicons.css"
             ],
             "scripts": []
           }

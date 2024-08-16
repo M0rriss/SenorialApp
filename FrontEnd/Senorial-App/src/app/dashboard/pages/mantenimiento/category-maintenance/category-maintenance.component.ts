@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from '../../../services/mantenimineto/categorias/categoria.service';
 import { CategoriaResponse, CategoriasResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-response';
+import { CustomResponse } from '@app/core/models/generic/custom-response';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CategoriaRequest } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-request';
 
 @Component({
   selector: 'category-maintenance',
@@ -32,10 +35,23 @@ export class CategoryMaintenanceComponent implements OnInit{
  rows: number = 10;
  totalRecords: number = 0;
 
-  constructor(private categoriaService:CategoriaService){}
+ //
+ subCategoria: CategoriasResponse[] = [];
+ formCategoria: FormGroup;
+ idSubCategoria:number = 0;
+
+  constructor(private categoriaService:CategoriaService,
+    private fb:FormBuilder,
+  ){
+    this.formCategoria = this.fb.group({
+      nombre: [],
+      idCategoriaPadre: [],
+    });
+  }
   ngOnInit(): void {
     this.listarCategorias();
     this.listarAllCategorias();
+    this.listarSubCategorias();
   }
   switchToTableView() {
     this.isTableView = true;
@@ -55,12 +71,13 @@ export class CategoryMaintenanceComponent implements OnInit{
   }
 
   openEditDialog(category:any) {
+    this.formCategoria.patchValue({
+      nombre: category.nombre,
+      idCategoriaPadre: category.idCategoriaPadre,
+    })
+    this.idSubCategoria = category.idCategoria;
     this.dialogTitle = 'Editar Categoría';
     this.dialogActionButton = 'Guardar';
-    this.categoryName = category.name;
-    this.subCategoryName = category.subCategory;
-    this.categoryStatus = category.active;
-    this.selectedCategory = category;
     this.isAddEditDialogOpen = true;
   }
 
@@ -68,6 +85,7 @@ export class CategoryMaintenanceComponent implements OnInit{
     this.isAddEditDialogOpen = false;
   }
 
+  //FUNCIONALIDAD
   listarCategorias(){
     this.categoriaService.listarCategoria().subscribe({
       next: (res: CategoriaResponse[]) =>{
@@ -83,23 +101,43 @@ export class CategoryMaintenanceComponent implements OnInit{
     });
   }
 
+  listarSubCategorias(){
+    this.categoriaService.listarSubCategoria().subscribe({
+      next: (res: CategoriasResponse[]) =>{
+        this.subCategoria = res;
+      }
+    })
+  }
+
+
+  agregarSubCategoria(){
+    let req = this.formCategoria.value as CategoriaRequest
+    this.categoriaService.crearSubCategoria(req).subscribe({
+      next: (res:CustomResponse) => {
+        alert(res.message);
+      }
+    })
+  }
+
+  editarSubCategoria(){
+    let req = this.formCategoria.value as CategoriaRequest
+    req.idCategoria = this.idSubCategoria;
+    this.categoriaService.actulizarSubCategoria(req).subscribe({
+      next: (res:CustomResponse) => {
+        alert(res.message);
+      }
+    })
+  }
   saveCategory() {
     if (this.dialogActionButton === 'Agregar') {
-      this.categories.push({
-        name: this.categoryName,
-        subCategory: this.subCategoryName,
-        active: this.categoryStatus
-      });
+      this.agregarSubCategoria();
     } else if (this.dialogActionButton === 'Guardar') {
-      this.selectedCategory.name = this.categoryName;
-      this.selectedCategory.subCategory = this.subCategoryName;
-      this.selectedCategory.active = this.categoryStatus;
+      this.editarSubCategoria();
     }
     this.isAddEditDialogOpen = false;
   }
-
+  //UI
   openConfirmDialog(category:any) {
-    this.selectedCategory = category;
     this.isConfirmDialogOpen = true;
   }
 

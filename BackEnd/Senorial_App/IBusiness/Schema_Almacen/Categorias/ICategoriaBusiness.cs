@@ -1,4 +1,5 @@
-﻿using IBusiness.Schema_Generico.CRUD;
+﻿using CommonModels.Common;
+using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Response.Schema_Almacen.Categorias;
 using System;
@@ -19,5 +20,11 @@ namespace IBusiness.Schema_Almacen.Categorias
         Task<bool> DeleteUiCategoria(int id);
         Task<List<CategoriaResponse>> ListarCategoriasPadresAsync();
         Task<List<CategoriaResponse>> ListarSubCategoriaAsync(int idCategoria);
+        Task<List<CategoriaResponse>> ListarTodasSubCategoriaAsync();
+
+        Task<CustomResponse> CrearCategoriaPadre(CategoriaRequest req);
+        Task<CustomResponse> CrearSubCategoria(CategoriaRequest req);
+        Task<CustomResponse> EditarCategoriPadre(CategoriaRequest req);
+        Task<CustomResponse> EditarsubCategori(CategoriaRequest req);
     }
 }

@@ -7,8 +7,10 @@ using DBSenorialModels.View.Producto;
 using IBusiness.Schema_Generico.Imagenes;
 using IBusiness.Schema_Ventas.Productos;
 using IRepository.Schema_Ventas.Productos;
+using IRepository.Schema_Ventas.ProductoSucursales;
 using IServices.Cloud;
 using Repository.Schema_Ventas.Productos;
+using Repository.Schema_Ventas.ProductoSucursales;
 using RequestResponseModels.Request.CloudinaryReq;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Generico.Imagenes;
@@ -32,6 +34,8 @@ namespace Business.Schema_Ventas.Productos
         private readonly IProductoRepository _productoRepository;
         private readonly ICloudinaryService _cloudinary;
         private readonly IImagenesBusiness _imagenesBusiness;
+
+        private readonly IProductoSucursalRepository _productoSucursalRepository;
         private readonly IMapper _mapper;
         public ProductoBusiness(IMapper mapper)
         {
@@ -39,6 +43,7 @@ namespace Business.Schema_Ventas.Productos
             _productoRepository = new ProductoRepository();
             _cloudinary = new CloudinaryService();
             _imagenesBusiness = new ImagenesBusiness(mapper);
+            _productoSucursalRepository = new ProductoSucursalRepository();
         }
         #endregion
         #region CRUD
@@ -212,6 +217,7 @@ namespace Business.Schema_Ventas.Productos
         #region NewProduct
         public async Task<CustomResponse> CrearNuevoProductoAsync(ProductDashRequest req)
         {
+            //Registro Imagen
             UploadImageResponse resImage = await _imagenesBusiness.SubirImagenAsync(req.File);
             ImagenesRequest reqImgaen = new()
             {
@@ -219,6 +225,7 @@ namespace Business.Schema_Ventas.Productos
                 Url = resImage.Url,
             };
             ImagenesResponse resdbImagen = await _imagenesBusiness.Create(reqImgaen);
+            //Registro Producto
             Producto producto = new Producto()
             {
                 IdCategoria = req.IdCategoria,
@@ -228,7 +235,20 @@ namespace Business.Schema_Ventas.Productos
                 PrecioVenta = req.PricioCompra,
                 Nombre = req.Nombre,
             };
-            await _productoRepository.Create(producto);
+            producto = await _productoRepository.Create(producto);
+            //Registrar Producto Sucursal
+            ProductoSucursal sucursal = new()
+            {
+                IdUnidad = 1,
+                IdCategoria = req.IdCategoria,
+                IdSucursal = 1,
+                IdProducto = producto.IdProducto,
+                Precio = producto.PrecioVenta,
+                Cantidad = 0
+            };
+            await _productoSucursalRepository.Create(sucursal);
+
+            //Respuesta
             CustomResponse res = new() { Code = "201", Message = "Se registro Correctamente" };
             return res;
         }

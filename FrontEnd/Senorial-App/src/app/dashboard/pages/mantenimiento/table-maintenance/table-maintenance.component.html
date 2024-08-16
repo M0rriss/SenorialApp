@@ -30,27 +30,30 @@
     </div>
 
     <!-- Add/Edit Mesa Dialog -->
-    <div class="dialog-overlay" [ngClass]="{'show': isAddEditDialogOpen}">
-      <div class="add-mesa-dialog">
-        <span class="close-button" (click)="closeAddEditDialog()">&times;</span>
-        <h2 class="dialog-title">{{ dialogTitle }}</h2>
-        <div class="form-row">
-          <label class="form-label">Mesa</label>
-          <input class="form-input" [(ngModel)]="mesaName" placeholder="Mesa Name" />
-        </div>
-        <div class="form-row">
-          <label class="form-label">Estado</label>
-          <select class="form-input" [(ngModel)]="mesaStatus" placeholder="Enter a state">
-            <option [value]="true">Activo</option>
-            <option [value]="false">Inactivo</option>
-          </select>
- </div>
-        <div class="action-buttons">
-          <button class="button discard-button" (click)="closeAddEditDialog()">Cancelar</button>
-          <button class="button add-mesa-button" (click)="saveMesa()">{{ dialogActionButton }}</button>
+     <form action="" [formGroup]="formMesa">
+      <div class="dialog-overlay" [ngClass]="{'show': isAddEditDialogOpen}">
+        <div class="add-mesa-dialog">
+          <span class="close-button" (click)="closeAddEditDialog()">&times;</span>
+          <h2 class="dialog-title">{{ dialogTitle }}</h2>
+          <div class="form-row">
+            <label class="form-label">Mesa</label>
+            <input class="form-input" formControlName="nombre" placeholder="Mesa Name" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Estado</label>
+            <select class="form-input" formControlName="estado"  placeholder="Enter a state">
+              <option [value]="'Activo'">Activo</option>
+              <option [value]="'Inactivo'">Inactivo</option>
+            </select>
+   </div>
+          <div class="action-buttons">
+            <button class="button discard-button" (click)="closeAddEditDialog()">Cancelar</button>
+            <button class="button add-mesa-button" (click)="saveMesa()">{{ dialogActionButton }}</button>
+          </div>
         </div>
       </div>
-    </div>
+     </form>
+ 
 
     <!-- Confirm Dialog -->
     <div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">

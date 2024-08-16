@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CommonModels.Common;
 using DBSenorialModels.Senorial;
 using IBusiness.Schema_Almacen.Categorias;
 using IRepository.Schema_Almacen.Categorias;
@@ -223,6 +224,82 @@ namespace Business.Schema_Almacen.Categorias
             List<Categoria> list = await _categoriaRepository.ListarSubCategoriaAsync(idCategoria);
             List<CategoriaResponse> res = _mapper.Map<List<CategoriaResponse>>(list);
             return res;
+        }
+        public async Task<List<CategoriaResponse>> ListarTodasSubCategoriaAsync()
+        {
+            List<Categoria> list = await _categoriaRepository.ListarTodasSubCategoriasAsync();
+            List<CategoriaResponse> res = _mapper.Map<List<CategoriaResponse>>(list);
+            return res;
+        }
+        public async Task<CustomResponse> CrearCategoriaPadre(CategoriaRequest req)
+        {
+            //AGREGAR CATEGORIA 
+            Categoria categoria = new() 
+            {
+                Nombre = req.Nombre,
+                Estado = true,
+                IdCategoriaPadre = null,
+            };
+            await _categoriaRepository.Create(categoria);
+            //RESPUESTA
+            CustomResponse customResponse = new CustomResponse()
+            {
+                Code = "200",
+                Message = "Se registro correctamente"
+            };
+            return customResponse;
+        }
+        public async Task<CustomResponse> CrearSubCategoria(CategoriaRequest req)
+        {
+            //AGREGAR CATEGORIA 
+            Categoria categoria = new()
+            {
+                Nombre = req.Nombre,
+                Estado = true,
+                IdCategoriaPadre = req.IdCategoriaPadre,
+            };
+            await _categoriaRepository.Create(categoria);
+            //RESPUESTA
+            CustomResponse customResponse = new CustomResponse()
+            {
+                Code = "200",
+                Message = "Se registro correctamente"
+            };
+            return customResponse;
+        }
+
+        public async Task<CustomResponse> EditarCategoriPadre(CategoriaRequest req)
+        {
+            //EDITAR CATEGORIA
+            Categoria categoria =await _categoriaRepository.GetById(req.IdCategoria);
+            categoria.Nombre = req.Nombre;
+            await _categoriaRepository.Update(categoria);
+
+            //RESPUESTA
+            CustomResponse customResponse = new CustomResponse()
+            {
+                Code = "200",
+                Message = "Se actualizo correctamente"
+            };
+            return customResponse;
+
+        }
+        public async Task<CustomResponse> EditarsubCategori(CategoriaRequest req)
+        {
+            //EDITAR CATEGORIA
+            Categoria categoria = await _categoriaRepository.GetById(req.IdCategoria);
+            categoria.Nombre = req.Nombre;
+            categoria.IdCategoriaPadre = req.IdCategoriaPadre;
+            await _categoriaRepository.Update(categoria);
+
+            //RESPUESTA
+            CustomResponse customResponse = new CustomResponse()
+            {
+                Code = "200",
+                Message = "Se actualizo correctamente"
+            };
+            return customResponse;
+
         }
         #endregion New
     }

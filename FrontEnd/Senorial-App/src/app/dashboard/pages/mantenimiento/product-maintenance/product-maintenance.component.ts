@@ -48,10 +48,10 @@ export class ProductMaintenanceComponent implements OnInit {
   }
 
   //FUNCIONALIDAD
-  listarProducto(){
+  listarProducto(page:number = 1, cantidad:number = 10){
     let req:GenericFilterRequest = {
-      numeroPagina:8,
-      cantidad:this.rows,
+      numeroPagina: page,
+      cantidad: cantidad,
       filtros: [],
     }
     this.productService.listarProductos(req).subscribe(
@@ -92,8 +92,11 @@ export class ProductMaintenanceComponent implements OnInit {
     let req = this.formProduct.value as ProductEditRequest;
     const formData = new FormData();
     let archivo:File = this.file;
-
-    formData.append("File",archivo);
+    let newFile = new File([],'');
+    if (archivo) {
+      formData.append("File", archivo);
+    }
+    // formData.append("File",newFile);
     formData.append("IdProducto",this.idProducto.toString());
     formData.append("Nombre",req.nombre);
     formData.append("Description",req.descripcion);
@@ -102,8 +105,8 @@ export class ProductMaintenanceComponent implements OnInit {
     formData.append("PricioCompra",req.precioVenta.toString());
     formData.append("Nuevo",`${this.editar}`);
     this.productService.edidtarProducto(formData).subscribe({
-      next: (data:any)=>{
-        console.log(data);
+      next: (data:CustomResponse)=>{
+        alert(data.message);
       }
     });
   }
@@ -120,7 +123,7 @@ export class ProductMaintenanceComponent implements OnInit {
   }
 
   closeDialog(): void {
-    console.log("d");
+    this.formProduct.reset();
     this.isModalOpen = false;
   }
 
@@ -185,6 +188,6 @@ export class ProductMaintenanceComponent implements OnInit {
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
-    this.listarProducto();
+    this.listarProducto((this.first / this.rows)+1, this.rows);
   }
 }
