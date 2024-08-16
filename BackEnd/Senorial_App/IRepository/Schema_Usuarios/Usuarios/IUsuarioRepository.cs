@@ -1,8 +1,11 @@
 ﻿using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Usuario.User;
 using IRepository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth.Recuperacion;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
 using RequestResponseModels.Request.Schema_Ventas.Cliente;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System;
 using System.Collections.Generic;
@@ -27,6 +30,8 @@ namespace IRepository.Schema_Usuarios.Usuarios
         Task<Usuario> UpdateUiUsuarios(Usuario usuario);
         Task<bool> DeleteUiUsuarios(int id);
         Task<List<Usuario>> ObtenerPorPersonaId(int personaId);
+
+        Task<GenericFilterResponse<VwUsuarios>> GetByFilterViewAsync(GenericFilterRequest request);
 
     }
 }

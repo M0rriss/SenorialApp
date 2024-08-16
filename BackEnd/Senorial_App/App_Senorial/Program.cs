@@ -140,11 +140,11 @@ builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfi
 
 //Migraciones
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetService<DBSenorialContext>();
     context.Database.Migrate();
-}
+}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

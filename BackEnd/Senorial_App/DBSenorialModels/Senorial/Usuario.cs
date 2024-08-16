@@ -36,8 +36,8 @@ public partial class Usuario
     [Column("id_rol")]
     public int IdRol { get; set; }
 
-    //[Column("id_img")]
-    //public int? IdImg { get; set; } 
+    [Column("id_img")]
+    public int? IdImg { get; set; }
 
     [Column("email")]
     [StringLength(100)]

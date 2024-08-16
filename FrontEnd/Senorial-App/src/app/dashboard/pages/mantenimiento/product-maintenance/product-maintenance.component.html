@@ -47,7 +47,7 @@
     <div class="pagination-container">
       <p-paginator
         [rows]="rows"
-        [totalRecords]="totalRecords"
+        [totalRecords]="product.totalRegistros"
         [rowsPerPageOptions]="[5, 10, 20]"
         (onPageChange)="onPageChange($event)"
       ></p-paginator>
@@ -91,8 +91,8 @@
  <div class="form-row">
   <label for="printPlace" class="form-label">Imprimir En</label>
   <select formControlName="derivar" type="text" id="printPlace" class="form-input" placeholder="Select place of print" require>
-    <option [value]="true">Horno</option>
-    <option [value]="false">Cocina</option>
+    <option [value]="'Horno'">Horno</option>
+    <option [value]="'Cocina'">Cocina</option>
   </select>
 </div>
       <div class="form-row">

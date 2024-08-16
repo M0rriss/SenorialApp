@@ -21,7 +21,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
 
     public class ProductoController : ControllerBase
     {
@@ -174,7 +174,6 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
         /// <param name="req">Fltros</param>
         /// <returns></returns>
         [HttpPost]
-        
         [Route("Filtro/Dashboard")]
         public async Task<ActionResult<GenericFilterResponse<ProductoEcommerceResponse>>> ListarProductosDashboard(GenericFilterRequest req)
         {
@@ -193,7 +192,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
         public async Task<ActionResult<CustomResponse>> ActulizarProducto([FromForm] ProductEditDashRequest file)
         {
             CustomResponse res = await _productoBusiness.EditarProductoAsync(file);
-            return StatusCode(201);
+            return StatusCode(201,res);
         }
 
 

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { CategoriaResponse, CategoriasResponse } from '../../../../core/models/dashboard/mantenimiento/categoria/categoria-response';
 import { urlCategoria } from '../../../../core/constants/url-constant';
 import { CategoriaEcommerceResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-ecommerce-response';
+import { CategoriaRequest } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-request';
+import { CustomResponse } from '@app/core/models/generic/custom-response';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,31 @@ export class CategoriaService {
 
   buscarSubCategoria(idCategoria: number):Observable<CategoriaEcommerceResponse[]>{
     var res = this.http.get<CategoriaEcommerceResponse[]>(`${urlCategoria.filttraEcommer}?idCategoria=${idCategoria}`)
+    return res;
+  }
+
+  listarSubCategoria() : Observable<CategoriasResponse[]>{
+    var res = this.http.get<CategoriasResponse[]>(urlCategoria.listarSub)
+    return res;
+  }
+
+  crearCategoriaPadre(req:CategoriaRequest) : Observable<CustomResponse>{
+    var res = this.http.post<CustomResponse>(urlCategoria.crearPadre,req);
+    return res;
+  }
+
+  crearSubCategoria(req:CategoriaRequest) : Observable<CustomResponse>{
+    var res = this.http.post<CustomResponse>(urlCategoria.crearSub,req);
+    return res;
+  }
+
+  actulizarCategoriaPadre(req:CategoriaRequest) : Observable<CustomResponse>{
+    var res = this.http.put<CustomResponse>(urlCategoria.actulizarPadre,req);
+    return res;
+  }
+
+  actulizarSubCategoria(req:CategoriaRequest) : Observable<CustomResponse>{
+    var res = this.http.put<CustomResponse>(urlCategoria.actulizarSub,req);
     return res;
   }
 }

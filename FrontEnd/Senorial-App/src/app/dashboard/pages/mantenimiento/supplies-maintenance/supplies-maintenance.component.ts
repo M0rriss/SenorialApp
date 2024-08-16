@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FiltroInsumoResponse } from '@app/core/models/dashboard/mantenimiento/insumos/filtro-insumo-response';
 import { InsumoRequest } from '@app/core/models/dashboard/mantenimiento/insumos/insumo-request';
 import { InsumoResponse } from '@app/core/models/dashboard/mantenimiento/insumos/insumo-response';
+import { UnidadResponse } from '@app/core/models/dashboard/unidad/unidad-response';
+import { CustomResponse } from '@app/core/models/generic/custom-response';
+import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
+import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { InsumoService } from '@app/dashboard/services/mantenimineto/insumos/insumo.service';
+import { UnidadService } from '@app/dashboard/services/unidad/unidad.service';
 
 @Component({
   selector: 'supplies-maintenance',
@@ -16,39 +22,72 @@ export class SuppliesMaintenanceComponent implements OnInit {
   modalButtonText: string = 'Agregar';
  // Variables para la paginación
  first: number = 0;
- rows: number = 10;
+ rows: number = 5;
  totalRecords: number = 0;
   //SUMINISTRO
   formInsumo:FormGroup;
-  suministro: InsumoResponse[] = [];
-
+  suministro: GenericFilterResponse<FiltroInsumoResponse> = {
+    totalRegistros:0,
+    lista:[]
+  };
+  unidad:UnidadResponse[] = [];
+  length = this.suministro.totalRegistros / 5;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  
+  idInsumo:number = 0;
   constructor(private insumoService:InsumoService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private unidaService:UnidadService
   ){
     this.formInsumo = this.fb.group({
-      insumoNombre : [],
-      unidadMedida : [],
+      nombre : [],
+      idUnidad : [],
     });
   }
   ngOnInit(): void {
-    this.listarSuministro();
+    this.listarUnidades();
+    this.filtrarSuministro();
   }
 
   //FUNCIONAMIENTO
-  listarSuministro(){
-    this.insumoService.listarInsumo()
+  filtrarSuministro(pagina:number = 1, cantidad:number = 5){
+    let req: GenericFilterRequest = {
+      numeroPagina:pagina,
+      cantidad:cantidad,
+      filtros:[],
+    }
+    this.insumoService.filtrarInsumos(req)
       .subscribe({
-        next: (res:InsumoResponse[])=>{
+        next: (res: GenericFilterResponse<FiltroInsumoResponse>)=>{
           this.suministro = res;
         }
       });
   }
+
+  
   agregarInsumo(){
     let req = this.formInsumo.value as InsumoRequest;
+    req.idInsumo = 0;
+    req.url= "";
+
     this.insumoService.crearInsumo(req)
     .subscribe({
-      next: (res: InsumoResponse) => {
-        alert("se registro correctamente")
+      next: (res: CustomResponse) => {
+        alert(res.message);
+      }
+    });
+  }
+  actuliarInsumo(){
+    let req = this.formInsumo.value as InsumoRequest;
+    req.idInsumo = this.idInsumo;
+    req.url= "";
+
+    this.insumoService.actulizarInsumo(req)
+    .subscribe({
+      next: (res: CustomResponse) => {
+        alert(res.message);
       }
     });
   }
@@ -60,7 +99,13 @@ export class SuppliesMaintenanceComponent implements OnInit {
         }
       });
   }
-
+  listarUnidades(){
+    this.unidaService.listarUnidades().subscribe({
+      next: (res:UnidadResponse[])=>{
+        this.unidad = res;
+      }
+    });
+  }
   //UI
   openDialog(action: string): void {
     this.isModalOpen = true;
@@ -74,6 +119,8 @@ export class SuppliesMaintenanceComponent implements OnInit {
   }
 
   closeDialog(): void {
+    this.formInsumo.reset();
+    this.filtrarSuministro();
     this.isModalOpen = false;
   }
 
@@ -81,7 +128,12 @@ export class SuppliesMaintenanceComponent implements OnInit {
     this.openDialog('add');
   }
 
-  editInsumo(): void {
+  editInsumo(insumo:InsumoResponse): void {
+    this.formInsumo.patchValue({
+      nombre : insumo.insumoNombre,
+      idUnidad : insumo.unidadMedida,
+    });
+    this.idInsumo = insumo.idInsumo;
     this.openDialog('edit');
   }
 
@@ -105,6 +157,6 @@ export class SuppliesMaintenanceComponent implements OnInit {
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
-    this.listarSuministro();
+    this.filtrarSuministro((this.first/this.rows)+1,this.rows);
   }
 }

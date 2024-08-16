@@ -88,5 +88,28 @@ namespace Repository.Schema_Almacen.Categorias
 
             return list;
         }
+
+
+        public async Task<List<Categoria>> ListarTodasSubCategoriasAsync()
+        {
+            List<Categoria> list = [];
+            var query = await (from categoria in dbset
+                               where categoria.IdCategoriaPadre != null
+                               select categoria).ToListAsync();
+
+            foreach (var c in query)
+            {
+                Categoria tmp = new()
+                {
+                    IdCategoria = c.IdCategoria,
+                    Nombre = c.Nombre,
+                    Estado = c.Estado,
+                    IdCategoriaPadre = c.IdCategoriaPadre
+                };
+                list.Add(tmp);
+            }
+
+            return list;
+        }
     }
 }

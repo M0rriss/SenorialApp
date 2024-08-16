@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { LoginRequest } from '@app/core/models/login-request';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginRegisterRequest } from '@app/core/models/ecommerce/components/staff-personal/login-register-request';
+import { LoginRequest, LoginResponse } from '@app/core/models/login-request';
 import { AuthService } from '@app/ecommerce/services/auth.service';
 
 @Component({
@@ -12,26 +14,56 @@ export class IniciarSesionComponent {
   isLogin: boolean = true;
   loginError:boolean = false;
   loginForm = this.fb.group({
-    email: ["",Validators.required,Validators.email],
+    email: ["",Validators.required],
     password: ["",Validators.required]
-  })
+  });
+  loginRegistroForm: FormGroup;
   constructor(
     private auth:AuthService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private route:Router
   ){
-
+    this.loginRegistroForm = this.fb.group({
+      nombres: [null,Validators.required],
+      apellidos: [null,Validators.required],
+      tipoDocumento: ['Tipo de Documento',Validators.required],
+      numeroDocumento: [null,Validators.required],
+      celular: [null,Validators.required],
+      emailRegistro: ["",Validators.required],
+      passwordRegistro: ["",Validators.required],
+    });
   }
+  //FUNCIONALIDAD
   logIn(){
     const data:LoginRequest = {...this.loginForm.value} as LoginRequest;
     this.auth.login(data).subscribe({
       next: (res) =>{
         this.loginError = false;
         localStorage.setItem("usuario",JSON.stringify(res));
-        console.log(res);
+        alert(res.message);
+        this.route.navigate(['']);
       },
       error: (_)=>{ this.loginError = true;}
     })
   }
+  registro(){
+    let req = this.loginRegistroForm.value as LoginRegisterRequest;
+    req.email = this.loginRegistroForm.getRawValue().emailRegistro;
+    req.password = this.loginRegistroForm.getRawValue().passwordRegistro;
+    this.auth.Registro(req).subscribe({
+      next: (res:LoginResponse)=>{
+        alert("Se registro correctamente");
+      }
+    })
+  }
+  // recuperar(){
+  //   this.auth.recuperar().subscribe({
+  //     next: ()=>{
+
+  //     }
+  //   });
+  // }
+  //UI
   setActiveForm(value: string):void {
     this.isLogin = !this.isLogin;
   }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Schema_Almacen.Categorias;
+using CommonModels.Common;
 using IBusiness.Schema_Almacen.Categorias;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CategoriaController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -157,6 +158,42 @@ namespace App_Senorial.Controllers.Schema_Almacen.Categorias
         {
             List<CategoriaResponse> list = await _categoriaBusiness.ListarSubCategoriaAsync(idCategoria);
             return Ok(list);
+        }
+        [HttpGet]
+        [Route("SubCategoria")]
+        public async Task<ActionResult> ListarTodasSubCategorias()
+        {
+            List<CategoriaResponse> list = await _categoriaBusiness.ListarTodasSubCategoriaAsync();
+            return Ok(list);
+        }
+
+        [HttpPost]
+        [Route("Create/Padre")]
+        public async Task<ActionResult<CustomResponse>> RegistrarPadre(CategoriaRequest req)
+        {
+            CustomResponse res= await _categoriaBusiness.CrearCategoriaPadre(req);
+            return StatusCode(201,res);
+        }
+        [HttpPost]
+        [Route("Create/Sub")]
+        public async Task<ActionResult<CustomResponse>> RegistrarSub(CategoriaRequest req)
+        {
+            CustomResponse res = await _categoriaBusiness.CrearSubCategoria(req);
+            return StatusCode(201, res);
+        }
+        [HttpPut]
+        [Route("Actulizar/Padre")]
+        public async Task<ActionResult<CustomResponse>> ActulizarPadre(CategoriaRequest req)
+        {
+            CustomResponse res = await _categoriaBusiness.EditarCategoriPadre(req);
+            return StatusCode(200, res);
+        }
+        [HttpPut]
+        [Route("Actulizar/Sub")]
+        public async Task<ActionResult<CustomResponse>> ActulizarSub(CategoriaRequest req)
+        {
+            CustomResponse res = await _categoriaBusiness.EditarsubCategori(req);
+            return StatusCode(200, res);
         }
         #endregion Crud
     }

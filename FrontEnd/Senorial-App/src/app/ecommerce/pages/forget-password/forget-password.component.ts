@@ -6,6 +6,11 @@ import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { InputOtpModule } from 'primeng/inputotp';
 import { PrimeNGConfig } from 'primeng/api';
+import { AuthService } from '@app/ecommerce/services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginRecuperarRequest } from '@app/core/models/ecommerce/components/staff-personal/login-recuperar-request';
+import { CustomResponse } from '@app/core/models/generic/custom-response';
+import { LoginVerificarRequest } from '@app/core/models/ecommerce/components/staff-personal/login-verificar-request';
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
@@ -18,12 +23,50 @@ export class ForgetPasswordComponent implements OnInit{
   newPassword: string = '';
   confirmPassword: string = '';
 
-  constructor(private primengConfig: PrimeNGConfig) {}
+  loginPassForm:FormGroup;
+  constructor(private primengConfig: PrimeNGConfig,
+    private authService:AuthService,
+    private fb:FormBuilder,
+  ) {
+    this.loginPassForm = this.fb.group({
+      nuevoPassword:["",Validators.required],
+      confirmarContraseña:["",Validators.required],
+    })
+  }
   ngOnInit(): void {
     this.primengConfig.ripple = true;
   }
+  //FUNCIONALIDAD
+  recuparear(){
+    let req : LoginRecuperarRequest ={
+      email : this.email
+    } ;
+
+    this.authService.recuperar(req).subscribe({
+      next: (res:CustomResponse) => {
+        alert(res.message);
+      }
+    });
+  }
+
+  validar(){
+    let req : LoginVerificarRequest = {
+      email: this.email,
+    codigoOtp : this.otpValue,
+    nuevoPassword : this.newPassword,
+    confirmarContraseña : this.confirmPassword,
+  };
+    this.authService.verificar(req).subscribe({
+      next: (res:CustomResponse)=>{
+        alert(res.message);
+      }
+    })
+  }
   // Navega al siguiente paso
   nextStep() {
+    if(this.activeStep == 0){
+      this.recuparear()
+    }
     if (this.activeStep < 2) {
       this.activeStep++;
     }
@@ -41,6 +84,7 @@ export class ForgetPasswordComponent implements OnInit{
     if (this.newPassword === this.confirmPassword) {
       // Aquí añadirías la lógica para guardar la nueva contraseña
       console.log('Contraseña guardada con éxito');
+      this.validar();
     } else {
       console.error('Las contraseñas no coinciden');
     }

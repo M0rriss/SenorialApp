@@ -1,8 +1,11 @@
-﻿using DBSenorialModels.Senorial;
+﻿using DBSenorialModels.Data.Migraciones;
+using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Usuario.User;
 using IRepository.Schema_Usuarios.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth.Recuperacion;
+using RequestResponseModels.Request.Schema_Almacen.Insumo;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
 using RequestResponseModels.Request.Schema_Ventas.Cliente;
@@ -149,5 +152,70 @@ namespace Repository.Schema_Usuarios.Usuarios
         {
             return await db.Set<Usuario>().Where(u => u.IdPersona == personaId).ToListAsync();
         }
+        #region MetodosUsuario
+        private async Task<List<VwUsuarios>> ListarUsuarioAsync()
+        {
+            List<VwUsuarios> list = [];
+            var query = await (from user in dbset
+                        join rol in db.Roles
+                            on user.IdRol equals rol.IdRol
+                        join persona in db.Personas
+                            on user.IdPersona equals persona.IdPersona
+                        join img in db.Imagenes
+                            on user.IdImg equals img.Id
+                        select  new 
+                        {
+                            user.IdUsuario,
+                            Nombre = persona.PrimerNombre + persona.ApellidoPaterno,
+                            Rol = rol.Nombre,
+                            persona.Telefono,
+                            Estado = true,
+                            RutaImg = img.ImageData,
+                        }).ToListAsync();
+            foreach (var item in query) 
+            {
+                VwUsuarios tmp = new() 
+                {
+                    IdUsuario = item.IdUsuario,
+                    Nombre = item.Nombre,
+                    Rol = item.Rol,
+                    Telefono = item.Telefono,
+                    Estado = item.Estado,
+                    RutaImg = item.RutaImg,
+                };
+                list.Add(tmp);
+            }
+            return list;
+        }
+        public async Task<GenericFilterResponse<VwUsuarios>> GetByFilterViewAsync(GenericFilterRequest request)
+        {
+            List<VwUsuarios> list = await ListarUsuarioAsync();
+            var query = list.Where(x => x.IdUsuario == x.IdUsuario);
+            request.Filtros.ForEach(j =>
+            {
+                if (!string.IsNullOrEmpty(j.Value))
+                {
+                    switch (j.Name)
+                    {
+                        case "Usuario":
+                            query = query.Where(x => x.IdUsuario == int.Parse(j.Value));
+                            break;
+                    }
+                }
+            });
+
+            GenericFilterResponse<VwUsuarios> res = new();
+
+            res.TotalRegistros = query.Count();
+            res.Lista = query
+                //.Include(x => x.Status)
+                .Skip((request.NumeroPagina - 1) * request.Cantidad)
+                .Take(request.Cantidad)
+                .OrderBy(x => x.IdUsuario)
+                .ToList();
+
+            return res;
+        }
+        #endregion MetodosUsuario
     }
 }

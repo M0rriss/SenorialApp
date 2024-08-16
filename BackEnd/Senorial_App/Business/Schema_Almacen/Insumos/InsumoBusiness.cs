@@ -213,6 +213,7 @@ namespace Business.Schema_Almacen.Insumos
         {
             Insumo insumo = new()
             {
+                IdInsumo = req.IdInsumo,
                 Nombre = req.Nombre,
                 Url = req.Url,
                 IdUnidad = req.IdUnidad,

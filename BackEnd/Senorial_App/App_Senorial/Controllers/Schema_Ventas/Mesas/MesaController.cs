@@ -16,7 +16,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Mesas
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class MesaController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
