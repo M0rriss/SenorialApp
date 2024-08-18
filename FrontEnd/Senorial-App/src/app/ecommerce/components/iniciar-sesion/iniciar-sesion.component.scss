@@ -285,3 +285,23 @@ form {
   white-space      : nowrap;
   border           : 0;
 }
+
+
+// error
+// Estilo para los campos de entrada con error
+.input-field.error,
+.password-input.error,
+.input-field-select select.error {
+  border-color: red;  // Borde rojo para campos con error
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);  // Sombra para destacar el campo
+}
+
+// Estilo para el texto de error
+.error-text {
+  color: red;  // Texto rojo para el mensaje de error
+  font-size: 12px;  // Tamaño pequeño para el mensaje
+  margin-top: 5px;  // Espacio entre el campo y el mensaje de error
+  align-self: flex-start;  // Alineación a la izquierda
+  padding-left: 10px;  // Un poco de espacio desde el borde izquierdo
+  font-weight: 600;  // Peso de fuente consistente con el diseño
+}

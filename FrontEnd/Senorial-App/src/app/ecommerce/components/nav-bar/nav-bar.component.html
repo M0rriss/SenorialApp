@@ -12,11 +12,12 @@
     </div>
     <div class="auth-buttons">
       <button type="button"
-              (click)="toggleActive('login')"
+              (click)="
+              toggleActive('login')"
               class="btn btn-login"
               [ngClass]="{'active': isLoginActive}">
         <img src="./user-icon.svg" alt="user" class="user-icon">
-        Ingresar
+        {{this.user}}
       </button>
       <button type="button" (click)="toggleShop()" class="btn btn-shopping-cart" [ngClass]="{'active': isShopOpen}">
         <img src="./shopping-cart.svg" alt="cart" class="shopping-cart-icon">

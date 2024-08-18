@@ -1,21 +1,27 @@
 ﻿using AutoMapper;
 using Azure;
 using Azure.Core;
+using Business.Schema_Generico.Imagenes;
+using CommonModels.Common;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Usuario.User;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Vml.Office;
 using Google.Apis.Auth;
+using IBusiness.Schema_Generico.Imagenes;
 using IBusiness.Schema_Usuarios.Personas;
 using IBusiness.Schema_Usuarios.Roles;
 using IBusiness.Schema_Usuarios.Usuarios;
+using IRepository.Schema_Generico.Imagenes;
 using IRepository.Schema_Usuarios.Personas;
 using IRepository.Schema_Usuarios.Roles;
 using IRepository.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Ventas.Clientes;
 using IRepository.Schema_Ventas.Empleados;
 using Microsoft.Extensions.Logging;
+using Repository.Schema_Generico.Imagenes;
 using Repository.Schema_Usuarios.Personas;
 using Repository.Schema_Usuarios.Roles;
 using Repository.Schema_Usuarios.Usuarios;
@@ -27,6 +33,7 @@ using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Usuarios.Persona;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
 using RequestResponseModels.Response.Auth;
+using RequestResponseModels.Response.CloudinaryRes;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Usuarios.Persona;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
@@ -47,6 +54,8 @@ namespace Business.Schema_Usuarios.Usuarios
         private readonly IClienteRepository _clienteRepository;
         private readonly IEmpleadoRepository _empleadoRepository;
         private readonly IRolesRepository _rolesRepository;
+        private readonly IImagenesBusiness _imagenesBusiness;
+        private readonly IImagenesRepository _imagenesRepository;
         private readonly OtpGenerator _otpGenerator;
         private readonly SendEmailWithGoogleSMTP _sendEmailService;
         private readonly Dictionary<string, OtpData> _otpStorage;
@@ -62,6 +71,8 @@ namespace Business.Schema_Usuarios.Usuarios
             _sendEmailService = new SendEmailWithGoogleSMTP();
             _otpStorage = new Dictionary<string, OtpData>();
             _empleadoRepository = new EmpleadoRepository();
+            _imagenesBusiness = new ImagenesBusiness(mapper);
+            _imagenesRepository = new ImagenesRepository();
         }
         #endregion
         #region CRUD
@@ -660,6 +671,114 @@ namespace Business.Schema_Usuarios.Usuarios
             return true;
         }
         #endregion
+
+        #region MetodoUsuario
+        public async Task<GenericFilterResponse<VwUsuarios>> ListarUsuarioAsync(GenericFilterRequest req)
+        {
+            return await _usuarioRepository.GetByFilterViewAsync(req);
+        }
+
+        public async Task<CustomResponse> CrearNuevoUsuarioAsync(UsuarioAddRequest req)
+        {
+            EncriptarDesencriptar encriptar = new();
+            //Registra Imagen
+            UploadImageResponse imagen = await _imagenesBusiness.SubirImagenAsync(req.File);
+            Imagene img = new()
+            {
+                FileName = imagen.PublicId,
+                ImageData = imagen.Url,
+            };
+            img = await _imagenesRepository.Create(img);
+
+            //Crear Persona
+            Guid guid = Guid.NewGuid();
+            string guidString = guid.ToString();
+            Persona persona = new() 
+            {
+                PrimerNombre = "test",
+                SegundoNombre = "",
+                ApellidoMaterno = "test",
+                ApellidoPaterno = "",
+                NroDocumento = guidString,
+                Email = req.Email,
+                Telefono = req.Contact,
+                Direccion = "",
+                IdTipoDocumento = 1,
+                TipoPersona = "Natural",
+                RazonSocial = "",
+                Genero = "",
+            };
+            persona = await _personaRepository.Create(persona);
+            
+            //Crear Usuario
+            Usuario usuario = new()
+            {
+                UserName = guidString,
+                Password = encriptar.AES_encriptar(req.Password),
+                CreatedAt = DateTime.Now,
+                IdPersona = persona.IdPersona,
+                UpdateAt = DateTime.Now,
+                IdRol = req.Role,
+                Email = req.Email,
+                CambiarPassword = "",
+                CodigoRecuperacion = "",
+                IdImg = img.Id,
+            };
+            await _usuarioRepository.Create(usuario);
+
+            //Respuesta
+            CustomResponse res = new()
+            {
+                Code = "2000",
+                Message = "Se registro Correctamente"
+            };
+            return res;
+        }
+        public async Task<CustomResponse> ActulizarUsuarioAsync(UsuarioUpdateRequest req)
+        {
+            //Campos
+            EncriptarDesencriptar encriptar = new();
+            Imagene img = new();
+            Usuario user = await _usuarioRepository.GetById(req.IdUsuario);
+            if(user == null)
+            {
+                throw new Exception("Usuaro No encontrado");
+            }
+            Persona persona = await _personaRepository.GetById(user.IdPersona);
+
+            //Registra Imagen
+            if (req.Nuevo) 
+            {
+                UploadImageResponse imagen = await _imagenesBusiness.SubirImagenAsync(req.File);
+                img.FileName = imagen.PublicId;
+                img.ImageData = imagen.Url;
+                img = await _imagenesRepository.Create(img);
+            }
+            else
+            {
+                 img = await _imagenesRepository.GetById(user.IdImg);
+            }
+            //Editar Persona
+            persona.Telefono = req.Contact;
+            persona.Email = req.Email;
+            await _personaRepository.Update(persona);
+
+            //Editar Usuario
+            user.Email = req.Email;
+            user.IdRol = req.Role;
+            user.Password = encriptar.AES_encriptar(req.Password);
+            await _usuarioRepository.Update(user);
+
+            //Respuesta
+            CustomResponse res = new()
+            {
+                Code = "2000",
+                Message = "Se actulizo Correctamente"
+            };
+
+            return res;
+        }
+        #endregion MetodoUsuario
     }
 }
 

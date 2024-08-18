@@ -22,7 +22,7 @@ namespace IRepository.Schema_Generico.CRUD
         /// </summary>
         /// <param name="id">ID del registro</param>
         /// <returns>Tarea que representa el registro de tipo <typeparamref name="T"/></returns>
-        Task<T> GetById(int id);
+        Task<T> GetById(object id);
 
         /// <summary>
         /// Crear un nuevo registro en la tabla <typeparamref name="T"/> de forma asincrónica.

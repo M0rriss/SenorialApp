@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MesaRequest } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-request';
 import { MesaResponse } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-response';
 import { MesaService } from '@app/dashboard/services/mantenimineto/mesa/mesa.service';
 
@@ -26,7 +28,16 @@ export class TableMaintenanceComponent implements OnInit {
 
   //MESAS
   mesasList:MesaResponse[] = [];
-  constructor(private mesaService:MesaService){}
+  formMesa:FormGroup;
+  idMesa: number = 0;
+  constructor(private mesaService:MesaService,
+    private fb:FormBuilder
+  ){
+    this.formMesa = this.fb.group({
+      nombre:[],
+      estado:[]
+    })
+  }
   ngOnInit(): void {
     this.listarMesas();
   }
@@ -40,7 +51,24 @@ export class TableMaintenanceComponent implements OnInit {
         }
       });
   }
-
+  crearMesa(){
+    let req = this.formMesa.value as MesaRequest;
+    req.idMesa=0;
+    this.mesaService.crearRegistro(req).subscribe({
+      next: (res: MesaResponse)=>{
+        alert("registro Correcto")
+      }
+    })
+  }
+  editarMesa(){
+    let req = this.formMesa.value as MesaRequest;
+    req.idMesa = this.idMesa;
+    this.mesaService.actulizarRegistro(req).subscribe({
+      next: (res: MesaResponse)=>{
+        alert("registro Correcto")
+      }
+    })
+  }
   // Abrir diálogo de agregar mesa
   openAddDialog() {
     this.dialogTitle = 'Add Mesas';
@@ -53,6 +81,11 @@ export class TableMaintenanceComponent implements OnInit {
 
   // Abrir diálogo de editar mesa
   openEditDialog(mesa: any) {
+    this.formMesa.patchValue({
+      nombre: mesa.nombre,
+      estado: mesa.estado
+    });
+    this.idMesa = mesa.idMesa;
     this.dialogTitle = 'Edit Mesas';
     this.dialogActionButton = 'Save Changes';
     this.mesaName = mesa.name;
@@ -63,11 +96,13 @@ export class TableMaintenanceComponent implements OnInit {
 
   // Guardar mesa (agregar o editar)
   saveMesa() {
-    if (this.selectedMesa) {
+    if (this.selectedMesa == null) {
+      this.crearMesa()
       // Editar mesa existente
       this.selectedMesa.name = this.mesaName;
       this.selectedMesa.active = this.mesaStatus === 'Active';
     } else {
+      this.editarMesa();
       // Agregar nueva mesa
       this.mesas.push({
         name: this.mesaName,

@@ -884,7 +884,8 @@ public partial class DBSenorialContext : DbContext
                 IdRol = 1, // Asigna el Id del rol de Administrador
                 IdPersona = 1, // Asigna el Id de la persona asociada al usuario
                 Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", // Admin-Victor1
-                UserName = "admin"
+                UserName = "admin",
+                IdImg = 1,
             }
         );
         });

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Schema_Ventas.ProductoSucursal
+namespace Business.Schema_Ventas.ProductoSucursals
 {
     public class ProductoSucursalBusiness
     {

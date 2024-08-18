@@ -5,6 +5,7 @@ import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-r
 import { LocalComponent } from '@app/dashboard/pages/local/local.component';
 import { CardProductService } from '@app/ecommerce/service/components/card-product/card-product.service';
 import { NotificationService } from '@app/shared/services/toast/notification.service';
+import { PusherService } from '@app/ecommerce/services/pusher/pusher.service';
 
 @Component({
   selector: 'ecommerce-home-page',
@@ -17,6 +18,9 @@ export class HomePageComponent implements OnInit{
  rows: number = 10;
  totalRecords: number = 0;
 
+ fitro1:number = 0;
+ fritro2:number = 0;
+
 
 
   products: GenericFilterResponse<CardProductResponse> = {
@@ -24,22 +28,32 @@ export class HomePageComponent implements OnInit{
     totalRegistros: 0,
   };
   list: CardProductResponse[] = [];
-  constructor(private cardProductService:CardProductService){}
+  constructor(
+    private cardProductService:CardProductService,
+    private pusherService: PusherService
+  ){}
   ngOnInit(): void {
     this.listarProductos();
+    this.pusherService.bindEvent('my-event', (data: any) => {
+      console.log("Evento recibido:", data);
+      // Puedes manejar la data recibida aquí
+    });
+    
   }
 
   optenerFiltro(data:number){
+    this.fitro1 = data;
     this.listarProductos(data.toString());
   }
   recibirSubCategoria(data:number){
+    this.fritro2= data;
     this.listarProductos("",data.toString());
   }
 
-  listarProductos(idCategoria:string = "",idSubCategoria:string=""):void{
+  listarProductos(idCategoria:string = "",idSubCategoria:string="",page:number = 0):void{
     let req: GenericFilterRequest = {
-      numeroPagina: 1,
-      cantidad : 10,
+      numeroPagina: page,
+      cantidad : this.rows,
       filtros: [
         {
           name:"Categoria",
@@ -84,7 +98,18 @@ export class HomePageComponent implements OnInit{
     onPageChange(event: any) {
       this.first = event.first;
       this.rows = event.rows;
-      this.listarProductos();
+      if(this.fritro2 != 0){
+        this.listarProductos('',this.fritro2.toString(),(this.first/this.rows)+1)
+      }else
+      if(this.fitro1 != 0){
+        this.listarProductos(this.fitro1.toString(),'',(this.first/this.rows)+1);
+      }
+      else{
+        this.listarProductos('','',(this.first/this.rows)+1);
+      }
+      
+      
+      
     }
 }
 

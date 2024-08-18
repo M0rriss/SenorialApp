@@ -1,8 +1,12 @@
-﻿using IBusiness.Schema_Generico.CRUD;
+﻿using CommonModels.Common;
+using DBSenorialModels.View.Usuario.User;
+using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth;
 using RequestResponseModels.Request.Auth.Recuperacion;
+using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Request.Schema_Usuarios.Usuario;
 using RequestResponseModels.Response.Auth;
+using RequestResponseModels.Response.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Usuarios.Usuario;
 using System;
 using System.Collections.Generic;
@@ -32,6 +36,9 @@ namespace IBusiness.Schema_Usuarios.Usuarios
         Task<UsuarioUiResponse> UpdateUiUsuarios(UsuarioUiUpdateRequest usuario);
         Task<bool> DeleteUiUser(int idUsuario);
 
+        Task<GenericFilterResponse<VwUsuarios>> ListarUsuarioAsync(GenericFilterRequest req);
 
+        Task<CustomResponse> CrearNuevoUsuarioAsync(UsuarioAddRequest req);
+        Task<CustomResponse> ActulizarUsuarioAsync(UsuarioUpdateRequest req);
     }
 }

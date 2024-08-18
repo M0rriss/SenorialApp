@@ -1600,13 +1600,13 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 8, 13, 16, 34, 27, 561, DateTimeKind.Local).AddTicks(9294),
+                            FechaActualizacion = new DateTime(2024, 8, 14, 17, 17, 5, 586, DateTimeKind.Local).AddTicks(2969),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 8, 13, 16, 34, 27, 561, DateTimeKind.Local).AddTicks(9296),
+                            FechaActualizacion = new DateTime(2024, 8, 14, 17, 17, 5, 586, DateTimeKind.Local).AddTicks(2971),
                             IdSucursal = 2
                         });
                 });
@@ -3107,7 +3107,8 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("email");
 
                     b.Property<int?>("IdImg")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id_img");
 
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
@@ -3156,8 +3157,9 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 13, 16, 34, 27, 565, DateTimeKind.Local).AddTicks(5051),
+                            CreatedAt = new DateTime(2024, 8, 14, 17, 17, 5, 590, DateTimeKind.Local).AddTicks(251),
                             Email = "admin@admin.com",
+                            IdImg = 1,
                             IdPersona = 1,
                             IdRol = 1,
                             Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=",

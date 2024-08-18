@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardProductResponse } from '@app/core/models/ecommerce/components/card-product/card-product-response';
+import { LoginResponse } from '@app/core/models/login-request';
 
 
 @Component({
@@ -7,7 +8,7 @@ import { CardProductResponse } from '@app/core/models/ecommerce/components/card-
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   isMenuOpen = false;
   isMenuActive = false;
   isLoginOpen = false;
@@ -16,12 +17,26 @@ export class NavBarComponent {
   isShoppingCartActive = false;
   isShopOpen = false;
 
-  //
-
+  //CAMPOS
+  user:string = "Ingresar";
   
   constructor(){
   }
+  ngOnInit(): void {
+    this.cargarInforUser();
+  }
 
+  //FUNCIONALIDAD
+  cargarInforUser(){
+    const data = localStorage.getItem('usuario') ?? '';
+    if(data == ''){
+      return;
+    }
+    const json = JSON.parse(data) as LoginResponse;
+    this.user = "Usuario";
+  }
+  
+  //UI
   toggleShop() {
     this.isShopOpen = !this.isShopOpen;
   }
@@ -34,16 +49,29 @@ export class NavBarComponent {
   }
 
   toggleActive(buttonType: string) {
-    if (buttonType === 'login') {
-      this.isLoginOpen = !this.isLoginOpen;
-      this.isLoginActive = !this.isLoginActive;
-      this.closeOtherPanels('login');
-    } else if (buttonType === 'shopping-cart') {
-      this.isShoppingCartOpen = !this.isShoppingCartOpen;
-      this.isShoppingCartActive = !this.isShoppingCartActive;
-      this.closeOtherPanels('shopping-cart');
+    if(this.user == "Ingresar"){
+      if (buttonType === 'login') {
+        this.isLoginOpen = !this.isLoginOpen;
+        this.isLoginActive = !this.isLoginActive;
+        this.closeOtherPanels('login');
+      } else if (buttonType === 'shopping-cart') {
+        this.isShoppingCartOpen = !this.isShoppingCartOpen;
+        this.isShoppingCartActive = !this.isShoppingCartActive;
+        this.closeOtherPanels('shopping-cart');
+      }
+    }
+    else{
+      if (buttonType === 'shopping-cart') {
+        this.isShoppingCartOpen = !this.isShoppingCartOpen;
+        this.isShoppingCartActive = !this.isShoppingCartActive;
+        this.closeOtherPanels('shopping-cart');
+      }
+      else{
+        alert("Ya inicio Seccion");
+      }
     }
   }
+ 
 
   closeOtherPanels(activePanel: string) {
     if (activePanel !== 'menu') {

@@ -25,6 +25,7 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
   //
   formMetodoPago: FormGroup;
   metodoPago: MetodoPagoResponse[] = [];
+  idPago:number = 0;
 
   constructor(private metodoPagoService:MetodoPagoService,
     private fb:FormBuilder,
@@ -57,7 +58,27 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
         }
       });
   }
+  editarMetodoPago(){
+    let req = this.formMetodoPago.value as MetodoPagoRequest;
+    req.estado = true;
+    req.idMetodo = this.idPago;
+    this.metodoPagoService.updateMetodoPago(req)
+      .subscribe({
+        next: (res:MetodoPagoResponse)=>{
+          alert("mensaje agregado");
+        }
+      });
+  }
+  seveMetodoPago(){
+    if(this.modalTitle == 'Agregar Método de Pago'){
+      this.crearMetodoPago();
+    }
+    else{
+      this.editarMetodoPago();
+    }
+  }
   //UI
+
   openDialog(action: string): void {
     this.isModalOpen = true;
     if (action === 'add') {
@@ -77,7 +98,11 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
     this.openDialog('add');
   }
 
-  editMetodoPago(): void {
+  editMetodoPago(pago:MetodoPagoResponse): void {
+    this.formMetodoPago.patchValue({
+      descripcion: pago.descripcion
+    })
+    this.idPago = pago.idMetodo;
     this.openDialog('edit');
   }
 

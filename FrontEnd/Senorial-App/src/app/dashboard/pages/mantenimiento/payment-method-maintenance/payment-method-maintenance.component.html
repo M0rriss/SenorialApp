@@ -33,7 +33,7 @@
             <td>
               <div class="action-buttons">
                 <!-- <i class="add-icon fa-solid fa-circle-plus" (click)="addMetodoPago()"></i> -->
-                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editMetodoPago()"></i>
+                <i class="edit-icon fa-regular fa-pen-to-square" (click)="editMetodoPago(item)"></i>
                 <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog()"></i>
               </div>
             </td>
@@ -62,14 +62,14 @@
   <div class="add-metodo-pago-dialog">
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
-    <form [formGroup]="formMetodoPago" (submit)="crearMetodoPago()">
+    <form [formGroup]="formMetodoPago" (submit)="seveMetodoPago()">
       <div class="form-row">
         <label for="metodo-pago" class="form-label">Método de Pago</label>
         <input formControlName="descripcion" type="text" id="metodo-pago" class="form-input" placeholder="Ingrese el método de pago" required>
       </div>
       <div class="form-row">
         <label class="form-label">Estado</label>
-        <select class="form-input" [(ngModel)]="paymentStatus">
+        <select class="form-input" >
           <option [value]="true">Activo</option>
           <option [value]="false">Inactivo</option>
         </select>
