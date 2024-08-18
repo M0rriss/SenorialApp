@@ -41,6 +41,7 @@ export class UserMaintenanceComponent implements OnInit {
     private fb:FormBuilder
   ){
     this.formUsuario = this.fb.group({
+      nombre:[],
       email: [],
       password: [],
       role: [],
@@ -100,6 +101,7 @@ export class UserMaintenanceComponent implements OnInit {
 
   editUser(): void {
     this.formUsuario.patchValue({
+      nombre:"",
       email: "",
       password: "",
       role: "",

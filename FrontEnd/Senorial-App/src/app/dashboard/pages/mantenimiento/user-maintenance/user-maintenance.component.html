@@ -75,30 +75,41 @@
           <input  type="file" id="fileInput" class="hidden-file-input" (change)="handleFileInput($event)">
         </div>
       </div>
+      
+      
+       <!-- Campo Nombres -->
+       <div class="form-row">
+        <label for="nombres" class="form-label">Nombres</label>
+        <input formControlName="nombres" type="text" id="nombres" class="form-input" placeholder="Ingrese sus nombres" required>
+      </div>
+        <!-- Campo Email -->
       <div class="form-row">
         <label for="email" class="form-label">Email</label>
         <input formControlName="email" type="email" id="email" class="form-input" placeholder="Enter your email" required>
       </div>
+      
+      <!-- Campo Password -->
       <div class="form-row">
         <label for="password" class="form-label">Password</label>
         <input formControlName="password" type="password" id="password" class="form-input" placeholder="Enter your password" required>
       </div>
+      
+      <!-- Campo Role -->
       <div class="form-row">
         <label for="role" class="form-label">Role</label>
-        <input formControlName="role" type="text" id="role" class="form-input" placeholder="Enter your role" required>
-      </div>
-      <div class="form-row">
-        <label for="contact" class="form-label">Contact Number</label>
-        <input formControlName="contact" type="tel" id="contact" class="form-input" placeholder="Enter your contact number" required>
-      </div>
-      <div class="form-row">
-        <label for="state" class="form-label">State</label>
-        <select class="form-input" type="text" id="state" class="form-input" value="Activo" placeholder="Activo" required>
-          <option [value]="true">Activo</option>
-          <option [value]="false">Inactivo</option>
+        <select formControlName="role" type="text" id="role" class="form-input" placeholder="Enter your role" required>
+        
+            <!-- <option [value]="false">Inactivo</option> -->
+        
+       
         </select>
       </div>
-
+      
+      <!-- Campo Número de Contacto -->
+      <div class="form-row">
+        <label for="contact" class="form-label">Telefono</label>
+        <input formControlName="contact" type="tel" id="contact" class="form-input" placeholder="Enter your contact number" required>
+      </div>
       <div class="action-buttons">
         <button type="button" class="button discard-button" (click)="closeDialog()">Descartar</button>
         <button type="submit" class="button add-user-button">{{modalButtonText}}</button>
