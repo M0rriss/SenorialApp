@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
 import { AuthInterceptor } from '@app/service/auth.interceptor';
 import { PaginatorModule } from 'primeng/paginator';
 import { PrimeIcons } from 'primeng/api';
+import { PusherService } from '@app/ecommerce/services/pusher/pusher.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,8 @@ import { PrimeIcons } from 'primeng/api';
 
   ],
   providers: [
+    PusherService,
+      
     MessageService,
     provideHttpClient(withInterceptors([AuthInterceptor]))
   ],

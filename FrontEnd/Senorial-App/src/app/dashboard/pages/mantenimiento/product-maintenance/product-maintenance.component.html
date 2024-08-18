@@ -61,7 +61,7 @@
     <span class="close-button" (click)="closeDialog()">&times;</span>
     <h2 class="dialog-title">{{modalTitle}}</h2>
     <form [formGroup]="formProduct" (submit)="productAcciones()"  >
-      <div class="image-upload-container"  (click)="triggerFileInput()">
+      <div class="image-upload-container">
         <div class="upload-image-preview">
           <i class="fa-regular fa-image"></i>
         </div>
@@ -81,7 +81,10 @@
       </div>
       <div class="form-row">
         <label for="category" class="form-label">Categoria</label>
-        <input formControlName="idCategoria" type="text" id="category" class="form-input" placeholder="Select product category" required>
+        <select formControlName="idCategoria" type="text" id="category" class="form-input" placeholder="Select product category" required>
+          <!-- <option [value]="'Horno'">Horno</option>
+           <option [value]="'Cocina'">Cocina</option> -->
+        </select>
       </div>
      <!--  <div class="form-row">
         <label for="printPlace" class="form-label">Imprimir En</label>

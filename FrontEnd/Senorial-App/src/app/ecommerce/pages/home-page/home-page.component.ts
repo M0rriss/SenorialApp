@@ -5,6 +5,7 @@ import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-r
 import { LocalComponent } from '@app/dashboard/pages/local/local.component';
 import { CardProductService } from '@app/ecommerce/service/components/card-product/card-product.service';
 import { NotificationService } from '@app/shared/services/toast/notification.service';
+import { PusherService } from '@app/ecommerce/services/pusher/pusher.service';
 
 @Component({
   selector: 'ecommerce-home-page',
@@ -27,9 +28,17 @@ export class HomePageComponent implements OnInit{
     totalRegistros: 0,
   };
   list: CardProductResponse[] = [];
-  constructor(private cardProductService:CardProductService){}
+  constructor(
+    private cardProductService:CardProductService,
+    private pusherService: PusherService
+  ){}
   ngOnInit(): void {
     this.listarProductos();
+    this.pusherService.bindEvent('my-event', (data: any) => {
+      console.log("Evento recibido:", data);
+      // Puedes manejar la data recibida aquí
+    });
+    
   }
 
   optenerFiltro(data:number){

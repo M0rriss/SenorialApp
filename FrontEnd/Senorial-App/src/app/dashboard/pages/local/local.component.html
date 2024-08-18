@@ -33,6 +33,32 @@
           </div>
         </div>
       </div>
+      <!-- <section class="table-info-container">
+        <div class="table-info-wrapper">
+          <h2 class="table-info-title">Información del Mesa</h2>
+          <div class="table-status-container">
+            <div class="table-status-wrapper">
+              <button 
+                *ngFor="let estado of estados" 
+                class="status-item" 
+                [ngClass]="{ 'selected': estado === pedido.estado }"
+              >
+                <div class="status-content">
+                  <div class="status-icon" 
+                       [ngClass]="{
+                         'status-available': estado === 'disponible',
+                         'status-occupied': estado === 'ocupado',
+                         'status-billed': estado === 'facturado'
+                       }">
+                    <span class="visually-hidden">{{ estado }}</span>
+                  </div>
+                  <span class="status-text">{{ estadoText[estado] }}</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section> -->
     </section>
     <section class="table-grid">
       <div class="table-row">

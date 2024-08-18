@@ -50,12 +50,12 @@
           <label for="name" class="visually-hidden">Nombre</label>
           <input formControlName="nombres" type="text" id="name" class="input-field" placeholder="Nombre" />
           @if(this.loginRegistroForm.get('nombres')?.errors &&  loginRegistroForm.touched){
-            <p>Campo requerido</p>
+            <p class="error-text">Campo requerido</p>
           }
           <label for="surname" class="visually-hidden">Apellidos</label>
           <input formControlName="apellidos" type="text" id="surname" class="input-field" placeholder="Apellidos" />
           @if(this.loginRegistroForm.get('apellidos')?.errors &&  loginRegistroForm.touched){
-            <p>Campo requerido</p>
+            <p class="error-text">Campo requerido</p>
           }
           <div class="input-field-select select-wrapper">
             <label for="document-type" class="visually-hidden">Tipo de Documento</label>
@@ -69,23 +69,23 @@
           @if(this.loginRegistroForm.get('tipoDocumento')?.errors 
           &&  loginRegistroForm.touched
           ){
-            <p>Campo requerido</p>
+            <p class="error-text">Campo requerido</p>
           }
           <label for="document-number" class="visually-hidden">Numero de documento</label>
           <input formControlName="numeroDocumento" type="text" id="document-number" class="input-field"
             placeholder="Numero de documento" />
             @if(this.loginRegistroForm.get('numeroDocumento')?.errors &&  loginRegistroForm.touched){
-              <p>Campo requerido</p>
+              <p class="error-text">Campo requerido</p>
             }
           <label for="phone" class="visually-hidden">Celular</label>
           <input formControlName="celular" type="tel" id="phone" class="input-field" placeholder="Celular" />
           @if(this.loginRegistroForm.get('celular')?.errors &&  loginRegistroForm.touched){
-            <p>Campo requerido</p>
+            <p class="error-text">Campo requerido</p>
           }
           <label for="email" class="visually-hidden">Correo Electronico</label>
           <input formControlName="emailRegistro" type="email" id="email" class="input-field" placeholder="Correo Electronico" />
           @if(this.loginRegistroForm.get('emailRegistro')?.errors &&  loginRegistroForm.touched){
-            <p>Campo requerido</p>
+            <p class="error-text">Campo requerido</p>
           }
           <div class="password-container">
             <label for="login-password" class="visually-hidden">Password</label>
@@ -95,7 +95,7 @@
               (click)="togglePasswordVisibility('login-password', 'toggle-login-password')"></i>
           </div>
           @if(this.loginRegistroForm.get('passwordRegistro')?.errors &&  loginRegistroForm.touched){
-            <p>Campo requerido</p>
+            <p class="error-text">Campo requerido</p>
           }
           <div class="social-login">
             <span class="social-login-text">Regístrate con:</span>

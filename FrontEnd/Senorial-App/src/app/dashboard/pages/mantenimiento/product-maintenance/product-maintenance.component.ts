@@ -22,7 +22,7 @@ export class ProductMaintenanceComponent implements OnInit {
   idProducto:number = 0;
  // Variables para la paginación
  first: number = 0;
- rows: number = 10;
+ rows: number = 5;
  totalRecords: number = 0;
   //Campos
   product:GenericFilterResponse<ProductDashResponse> = {
@@ -48,7 +48,7 @@ export class ProductMaintenanceComponent implements OnInit {
   }
 
   //FUNCIONALIDAD
-  listarProducto(page:number = 1, cantidad:number = 10){
+  listarProducto(page:number = 1, cantidad:number = 5){
     let req:GenericFilterRequest = {
       numeroPagina: page,
       cantidad: cantidad,

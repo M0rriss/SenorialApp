@@ -56,6 +56,7 @@ export class IniciarSesionComponent {
       }
     })
   }
+  
   // recuperar(){
   //   this.auth.recuperar().subscribe({
   //     next: ()=>{
