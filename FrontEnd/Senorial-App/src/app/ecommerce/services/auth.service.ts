@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { urlAuth } from '@app/core/constants/url-constant';
+import { LoginDashResponse, LoginEcommerceResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { LoginRecuperarRequest } from '@app/core/models/ecommerce/components/staff-personal/login-recuperar-request';
 import { LoginRegisterRequest } from '@app/core/models/ecommerce/components/staff-personal/login-register-request';
 import { LoginVerificarRequest } from '@app/core/models/ecommerce/components/staff-personal/login-verificar-request';
@@ -16,8 +17,8 @@ export class AuthService {
   constructor(
     private http:HttpClient
   ) { }
-  login(data: LoginRequest) : Observable<LoginResponse>{
-    return this.http.post<LoginResponse>(urlAuth.loginEcommerce, data);
+  login(data: LoginRequest) : Observable<LoginEcommerceResponse>{
+    return this.http.post<LoginEcommerceResponse>(urlAuth.loginEcommerce, data);
   }
   //ECOMMERCE
   Registro(req: LoginRegisterRequest) : Observable<LoginResponse>{

@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using UtilitySecurity.CrearToken;
 using UtilitySecurity.Encriptar;
 using Microsoft.AspNetCore.Authorization;
+using DBSenorialModels.View.Auth.Usuario;
 namespace Business.Auth
 {
     public class AuthBusiness : IAuthBusiness
@@ -103,7 +104,14 @@ namespace Business.Auth
         public async Task<LoginDashboardResponse> LoginDashboard(LoginUserRequest request)
         {
             var result = new LoginDashboardResponse();
-            UsuarioResponse usuario = await _usuarioBusiness.BuscarPorCorreo(request.Email);
+            VwUsuario usuario = await _usuarioBusiness.BuscarPorCorreo(request.Email);
+            //Validar Rol
+            if (usuario.IdRol == 5) 
+            {
+                result.Success = false;
+                result.Message = "No cuenta con permisos";
+                return result;
+            }
             if (usuario == null)
             {
                 // Usuario no encontrado
@@ -131,10 +139,13 @@ namespace Business.Auth
             result.Success = true;
             result.Message = "Login correcto";
             result.RefreshToken = refreshToken.Token;
-            result.Usuario = new UsuarioResponse
+            result.InfoUser = new()
             {
+                IdPersona = usuario.IdPerson,
                 Email = usuario.Email,
-                IdRol = usuario.IdRol
+                IdRol = usuario.IdRol,
+                Nombre= usuario.Nombre,
+                Rol = usuario.Rol
             };
 
             return result;
@@ -143,7 +154,7 @@ namespace Business.Auth
         public async Task<LoginEcommerceResponse> LoginEcommerce(LoginUserRequest request)
         {
             var result = new LoginEcommerceResponse();
-            UsuarioResponse usuario = await _usuarioBusiness.BuscarCorreoEcommerce(request.Email);
+            VwUsuario usuario = await _usuarioBusiness.BuscarPorCorreo(request.Email);
             if (usuario == null) return result;
 
             string newPassword = _encriptar.AES_encriptar(request.Password);
@@ -156,8 +167,15 @@ namespace Business.Auth
 
             result.Success = true;
             result.Message = "Login Correcto";
-            result.RefreshToken= refreshToken.Token;    
-            result.Usuario = new UsuarioResponse { Email = request.Email };
+            result.RefreshToken= refreshToken.Token;
+            result.infoUsuario = new()
+            {
+                IdRol = usuario.IdRol,
+                Email = usuario.Email,
+                Nombre = usuario.Nombre,
+                IdPersona = usuario.IdPerson,
+                Rol = usuario.Rol
+            };
             return result;
         }
 

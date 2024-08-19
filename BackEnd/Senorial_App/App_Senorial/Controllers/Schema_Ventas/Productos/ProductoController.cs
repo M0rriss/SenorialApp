@@ -187,11 +187,16 @@ namespace App_Senorial.Controllers.Schema_Ventas.Productos
             CustomResponse res = await _productoBusiness.CrearNuevoProductoAsync(file);
             return StatusCode(201,res);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Actulizar")]
-        public async Task<ActionResult<CustomResponse>> ActulizarProducto([FromForm] ProductEditDashRequest file)
+        public async Task<ActionResult<CustomResponse>> ActulizarProducto([FromForm] ProductEditDashRequest req)
         {
-            CustomResponse res = await _productoBusiness.EditarProductoAsync(file);
+            CustomResponse res = await _productoBusiness.EditarProductoAsync(req);
             return StatusCode(201,res);
         }
 

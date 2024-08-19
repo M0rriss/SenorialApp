@@ -14,6 +14,8 @@ const subRutas = {
     metodoPago: `${dominio}/api/MetodoPago`,
     //UNIDAD
     unidad: `${dominio}/api/UnidadMedicion`,
+    //ROLES
+    rol: `${dominio}/api/Roles`,
 }
 
 //MANTENIMIENTO
@@ -65,6 +67,10 @@ export const urlMesa = {
 
 export const urlUnidad = {
     generic : `${subRutas.unidad}`,
+}
+
+export const urlRol = {
+    generic : `${subRutas.rol}`
 }
 //AUTH
 export const urlAuth = {

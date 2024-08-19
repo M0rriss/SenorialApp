@@ -180,7 +180,7 @@ namespace Business.Schema_Ventas.Productos
                     DetalleProducto = i.DetalleProducto,
                     NombreProducto = i.NombreProducto,
                     PrecioVenta = i.PrecioVenta,
-                    RutaImagen = i.RutaImagen
+                    RutaImagen = i.RutaImagen,
                 };
                 res.Lista.Add(tmp);
             }
@@ -205,7 +205,9 @@ namespace Business.Schema_Ventas.Productos
                     DetalleProducto = i.DetalleProducto,
                     NombreProducto = i.NombreProducto,
                     PrecioVenta = i.PrecioVenta,
-                    RutaImagen = i.RutaImagen
+                    RutaImagen = i.RutaImagen,
+                    IdCategoria = i.IdCategoria
+
                 };
                 res.Lista.Add(tmp);
             }

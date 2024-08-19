@@ -10,6 +10,7 @@ import { CheckOutComponent } from './pages/check-out/check-out.component';
 import { SelectPaymentComponent } from './pages/select-payment/select-payment.component';
 import { NotFoundError } from 'rxjs';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
+import { userGuard } from '@app/guard/user.guard';
 
 const routes: Routes = [
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   },
   {
     path      :'userAcount',
+    canActivate: [userGuard],
     component : UserAccountComponent
   },
   {

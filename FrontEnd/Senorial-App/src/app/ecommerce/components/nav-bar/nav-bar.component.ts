@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginDashResponse, LoginEcommerceResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { CardProductResponse } from '@app/core/models/ecommerce/components/card-product/card-product-response';
 import { LoginResponse } from '@app/core/models/login-request';
 
@@ -20,7 +22,9 @@ export class NavBarComponent implements OnInit {
   //CAMPOS
   user:string = "Ingresar";
   
-  constructor(){
+  constructor(
+    private route:Router
+  ){
   }
   ngOnInit(): void {
     this.cargarInforUser();
@@ -32,8 +36,9 @@ export class NavBarComponent implements OnInit {
     if(data == ''){
       return;
     }
-    const json = JSON.parse(data) as LoginResponse;
-    this.user = "Usuario";
+    const json = JSON.parse(data) as LoginEcommerceResponse;
+
+    this.user = json.infoUsuario.nombre.substring(0,json.infoUsuario.nombre.indexOf(' '));
   }
   
   //UI
@@ -67,7 +72,7 @@ export class NavBarComponent implements OnInit {
         this.closeOtherPanels('shopping-cart');
       }
       else{
-        alert("Ya inicio Seccion");
+        this.route.navigate(['userAcount']);
       }
     }
   }

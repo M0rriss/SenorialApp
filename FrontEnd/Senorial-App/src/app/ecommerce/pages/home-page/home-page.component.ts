@@ -34,10 +34,10 @@ export class HomePageComponent implements OnInit{
   ){}
   ngOnInit(): void {
     this.listarProductos();
-    this.pusherService.bindEvent('my-event', (data: any) => {
-      console.log("Evento recibido:", data);
-      // Puedes manejar la data recibida aquí
-    });
+    // this.pusherService.bindEvent('my-event', (data: any) => {
+    //   console.log("Evento recibido:", data);
+    //   // Puedes manejar la data recibida aquí
+    // });
     
   }
 

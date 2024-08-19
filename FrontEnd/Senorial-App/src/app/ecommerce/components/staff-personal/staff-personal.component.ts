@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginDashResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { LoginRequest, LoginResponse } from '@app/core/models/login-request';
+import { StaffPersonalService } from '@app/ecommerce/service/components/staff-personal/staff-personal.service';
 import { AuthService } from '@app/ecommerce/services/auth.service';
 
 @Component({
@@ -18,7 +20,7 @@ export class StaffPersonalComponent {
   //Formularo
   formLoginDash: FormGroup;
 
-  constructor(private authService:AuthService,
+  constructor(private staffService:StaffPersonalService,
     private fb:FormBuilder,
     private route:Router
   ){
@@ -32,9 +34,9 @@ export class StaffPersonalComponent {
     // Ya mejoran lo arlerts
     let req: LoginRequest = this.formLoginDash.value as LoginRequest;
 
-    this.authService.login(req).subscribe({
+    this.staffService.loginDashboard(req).subscribe({
 
-      next: (res:LoginResponse)=>{
+      next: (res:LoginDashResponse)=>{
         // convertir un json en cadena de texto
         let data = JSON.stringify(res);
         // Almacenamiento en session store

@@ -15,6 +15,7 @@ namespace RequestResponseModels.Response.Schema_Ventas.Productos
         private string _derivar = string.Empty;
         private string _categoria = string.Empty;
         private string _rutaImagen = string.Empty;
+        private int _idCategoria = 0;
 
         public int IdProducto { get => _idProducto; set => _idProducto = value; }
         public string NombreProducto { get => _nombreProducto; set => _nombreProducto = value; }
@@ -23,5 +24,6 @@ namespace RequestResponseModels.Response.Schema_Ventas.Productos
         public string Derivar { get => _derivar; set => _derivar = value; }
         public string Categoria { get => _categoria; set => _categoria = value; }
         public string RutaImagen { get => _rutaImagen; set => _rutaImagen = value; }
+        public int IdCategoria { get => _idCategoria; set => _idCategoria = value; }
     }
 }

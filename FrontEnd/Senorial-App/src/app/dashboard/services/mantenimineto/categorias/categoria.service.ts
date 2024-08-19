@@ -15,7 +15,6 @@ export class CategoriaService {
   constructor(protected http:HttpClient) { }
 
   listarCategoria(): Observable<CategoriaResponse[]>{
-    
     var res = this.http.get<CategoriaResponse[]>(urlCategoria.listar);
     return res;
   }

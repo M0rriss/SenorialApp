@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Data.Migraciones;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Auth.Usuario;
 using DBSenorialModels.View.Usuario.User;
 using IRepository.Schema_Usuarios.Usuarios;
 using Microsoft.EntityFrameworkCore;
@@ -30,10 +31,39 @@ namespace Repository.Schema_Usuarios.Usuarios
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public Usuario ObtenerPorCorreo(string email)
+        public async Task<VwUsuario> ObtenerPorCorreo(string email)
         {
-            var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
-            return usuario;
+            VwUsuario list = new();
+            var query = await (from user in dbset
+                        join rol in db.Roles
+                            on user.IdRol equals rol.IdRol
+                        join person in db.Personas
+                            on user.IdPersona equals person.IdPersona
+                        where user.Email == email
+                        select new
+                        {
+                            user.IdPersona,
+                            user.IdRol,
+                            user.Email,
+                            Nombre = person.PrimerNombre + " " + person.ApellidoPaterno,
+                            Rol = rol.Nombre,
+                            user.Password,
+                            user.IdUsuario,
+                        }).ToListAsync();
+
+            foreach (var u in query)
+            {
+                list.Nombre = u.Nombre;
+                list.Email = u.Email;
+                list.IdPerson = u.IdPersona;
+                list.IdRol = u.IdRol;
+                list.Rol = u.Rol;
+                list.Password = u.Password;
+                list.IdUsuario = u.IdUsuario;
+            }
+            return list;
+            /*var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+            return usuario;*/
         }
         /// <summary>
         /// ECOMMERCE
@@ -166,8 +196,11 @@ namespace Repository.Schema_Usuarios.Usuarios
                         select  new 
                         {
                             user.IdUsuario,
-                            Nombre = persona.PrimerNombre + persona.ApellidoPaterno,
+                            Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
                             Rol = rol.Nombre,
+                            rol.IdRol,
+                            user.Password,
+                            user.Email,
                             persona.Telefono,
                             Estado = true,
                             RutaImg = img.ImageData,
@@ -182,6 +215,9 @@ namespace Repository.Schema_Usuarios.Usuarios
                     Telefono = item.Telefono,
                     Estado = item.Estado,
                     RutaImg = item.RutaImg,
+                    Email = item.Email,
+                    Password = item.Password,
+                    IdRol  = item.IdRol,
                 };
                 list.Add(tmp);
             }

@@ -57,6 +57,7 @@ export class TableMaintenanceComponent implements OnInit {
     this.mesaService.crearRegistro(req).subscribe({
       next: (res: MesaResponse)=>{
         alert("registro Correcto")
+        this.closeAddEditDialog();
       }
     })
   }
@@ -66,6 +67,8 @@ export class TableMaintenanceComponent implements OnInit {
     this.mesaService.actulizarRegistro(req).subscribe({
       next: (res: MesaResponse)=>{
         alert("registro Correcto")
+        this.closeAddEditDialog();
+
       }
     })
   }
@@ -114,6 +117,8 @@ export class TableMaintenanceComponent implements OnInit {
 
   // Cerrar diálogo de agregar/editar
   closeAddEditDialog() {
+    this.listarMesas();
+    this.formMesa.reset();
     this.isAddEditDialogOpen = false;
   }
 

@@ -67,6 +67,7 @@ namespace Repository.Schema_Ventas.Productos
                                    product.PrecioVenta,
                                    product.Derivar,
                                    categoria.Nombre,
+                                   categoria.IdCategoria,
                                    imagen.ImageData,
                                }).ToListAsync();
             foreach (var item in query)
@@ -80,6 +81,7 @@ namespace Repository.Schema_Ventas.Productos
                     Derivar = item.Derivar,
                     Categoria = item.Nombre,
                     RutaImagen = item.ImageData,
+                    IdCategoria = item.IdCategoria,
                 };
                 list.Add(tmp);
             }

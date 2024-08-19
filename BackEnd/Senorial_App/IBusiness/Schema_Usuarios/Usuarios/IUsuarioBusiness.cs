@@ -1,4 +1,5 @@
 ﻿using CommonModels.Common;
+using DBSenorialModels.View.Auth.Usuario;
 using DBSenorialModels.View.Usuario.User;
 using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth;
@@ -18,7 +19,7 @@ namespace IBusiness.Schema_Usuarios.Usuarios
 {
     public interface IUsuarioBusiness : ICrudBusiness<UsuarioRequest, UsuarioResponse>
     {
-        Task<UsuarioResponse> BuscarPorCorreo(string email);
+        Task<VwUsuario> BuscarPorCorreo(string email);
         Task<UsuarioResponse> BuscarCorreoEcommerce(string email);
         Task<UsuarioResponse> BuscarCorreoMobile(string email);
         Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request);

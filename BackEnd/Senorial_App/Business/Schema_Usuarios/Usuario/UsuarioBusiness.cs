@@ -4,6 +4,7 @@ using Azure.Core;
 using Business.Schema_Generico.Imagenes;
 using CommonModels.Common;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Auth.Usuario;
 using DBSenorialModels.View.Usuario.User;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2016.Excel;
@@ -147,9 +148,9 @@ namespace Business.Schema_Usuarios.Usuarios
         }
         #endregion
         #region LOGIN
-        public async Task<UsuarioResponse> BuscarPorCorreo(string email)
+        public async Task<VwUsuario> BuscarPorCorreo(string email)
         {
-            var usuario = _mapper.Map<UsuarioResponse>(_usuarioRepository.ObtenerPorCorreo(email));
+            VwUsuario usuario =  await _usuarioRepository.ObtenerPorCorreo(email);
             return usuario;
 
         }
@@ -746,6 +747,8 @@ namespace Business.Schema_Usuarios.Usuarios
             }
             Persona persona = await _personaRepository.GetById(user.IdPersona);
 
+            
+
             //Registra Imagen
             if (req.Nuevo) 
             {
@@ -764,9 +767,12 @@ namespace Business.Schema_Usuarios.Usuarios
             await _personaRepository.Update(persona);
 
             //Editar Usuario
+            if(user.Password != req.Password)
+            {
+                user.Password = encriptar.AES_encriptar(req.Password);
+            }
             user.Email = req.Email;
             user.IdRol = req.Role;
-            user.Password = encriptar.AES_encriptar(req.Password);
             await _usuarioRepository.Update(user);
 
             //Respuesta
