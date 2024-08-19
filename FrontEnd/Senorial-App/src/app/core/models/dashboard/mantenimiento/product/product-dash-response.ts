@@ -5,5 +5,6 @@ export interface ProductDashResponse {
     precioVenta: number,
     derivar: string,
     categoria: string,
-    rutaImagen: string
+    rutaImagen: string;
+    idCategoria: number;
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Auth.Usuario;
 using IBusiness.Schema_Ventas.Cajas;
 using IRepository.Schema_Usuarios.Usuarios;
 using IRepository.Schema_Ventas.AperturaCajas;
@@ -125,7 +126,7 @@ namespace Business.Schema_Ventas.Cajas
             var email = _httpContextAccessor.HttpContext.User.Identity.Name;
 
             // Buscar el usuario usando el correo del usuario autenticado
-            var usuario = _usuarioRepository.ObtenerPorCorreo(email);
+            VwUsuario usuario = await _usuarioRepository.ObtenerPorCorreo(email);
             if (usuario == null)
             {
                 throw new Exception("Usuario no encontrado para el correo autenticado");

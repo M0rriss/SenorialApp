@@ -1,4 +1,5 @@
 ﻿using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Auth.Usuario;
 using DBSenorialModels.View.Usuario.User;
 using IRepository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Auth.Recuperacion;
@@ -17,7 +18,7 @@ namespace IRepository.Schema_Usuarios.Usuarios
 {
     public interface IUsuarioRepository : ICrudRepository<Usuario>
     {
-        Usuario ObtenerPorCorreo(string email);
+        Task<VwUsuario> ObtenerPorCorreo(string email);
         Usuario ObtenerCorreoEccomerce(string email);
         Usuario ObtenerCorreoMobile(string email);
         Task<Usuario> RegistrarUsuarioEcommerce(Usuario usuario);

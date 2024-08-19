@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'user-account-ecommerce',
@@ -9,7 +10,16 @@ export class UserAccountComponent {
 
   showPasswordFields = false;
 
+  constructor(
+    private router:Router
+  ){}
+
   togglePasswordFields() {
     this.showPasswordFields = !this.showPasswordFields;
+  }
+
+  cerrarSesion(){
+    localStorage.removeItem('usuario');
+    this.router.navigate(['']);
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginDashResponse, LoginEcommerceResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { LoginRegisterRequest } from '@app/core/models/ecommerce/components/staff-personal/login-register-request';
 import { LoginRequest, LoginResponse } from '@app/core/models/login-request';
 import { AuthService } from '@app/ecommerce/services/auth.service';
@@ -37,11 +38,11 @@ export class IniciarSesionComponent {
   logIn(){
     const data:LoginRequest = {...this.loginForm.value} as LoginRequest;
     this.auth.login(data).subscribe({
-      next: (res) =>{
+      next: (res:LoginEcommerceResponse) =>{
         this.loginError = false;
         localStorage.setItem("usuario",JSON.stringify(res));
         alert(res.message);
-        this.route.navigate(['']);
+        this.route.navigate(['userAcount']);
       },
       error: (_)=>{ this.loginError = true;}
     })
@@ -53,6 +54,8 @@ export class IniciarSesionComponent {
     this.auth.Registro(req).subscribe({
       next: (res:LoginResponse)=>{
         alert("Se registro correctamente");
+        this.loginRegistroForm.reset();
+        this.setActiveForm('login');
       }
     })
   }

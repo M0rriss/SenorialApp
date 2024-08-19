@@ -55,6 +55,7 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
       .subscribe({
         next: (res:MetodoPagoResponse)=>{
           alert("mensaje agregado");
+          this.closeDialog();
         }
       });
   }
@@ -66,6 +67,7 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
       .subscribe({
         next: (res:MetodoPagoResponse)=>{
           alert("mensaje agregado");
+          this.closeDialog();
         }
       });
   }
@@ -91,6 +93,7 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
   }
 
   closeDialog(): void {
+    this.listarMetodosPago  ();
     this.isModalOpen = false;
   }
 

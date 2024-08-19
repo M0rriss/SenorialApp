@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBSenorialModels.View.Usuario.User
+namespace DBSenorialModels.View.Auth.Usuario
 {
-    public class VwUsuarios
+    public class VwUsuario
     {
-        public int IdUsuario { get; set; }
+        public int IdPerson { get; set; } = 0;
         public string Nombre { get; set; } = string.Empty;
         public string Rol { get; set; } = string.Empty;
         public int IdRol { get; set; } = 0;
-        public string Password { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Telefono { get; set; } = string.Empty;
-        public string RutaImg { get; set; } = string.Empty;
-        public bool Estado { get; set; }
+        public string Password { get; set; } = string.Empty;
+        public int IdUsuario { get; set; } = 0;
     }
 }

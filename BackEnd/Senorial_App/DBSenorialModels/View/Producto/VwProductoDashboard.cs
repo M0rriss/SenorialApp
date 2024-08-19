@@ -15,5 +15,6 @@ namespace DBSenorialModels.View.Producto
         public string Derivar { get; set; } = string.Empty;
         public string Categoria { get; set; } = string.Empty;
         public string RutaImagen { get; set; } = string.Empty;
+        public int IdCategoria { get; set; } = 0;
     }
 }

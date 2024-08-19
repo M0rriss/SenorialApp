@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UsuarioAddRequest } from '@app/core/models/dashboard/mantenimiento/usuario/usuario-add-request';
+import { UsuarioEditRequest } from '@app/core/models/dashboard/mantenimiento/usuario/usuario-edit-request';
 import { UsuarioResponse } from '@app/core/models/dashboard/mantenimiento/usuario/usuario-response';
+import { RolResponse } from '@app/core/models/dashboard/roles/rol-response';
 import { CustomResponse } from '@app/core/models/generic/custom-response';
 import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { UsuarioService } from '@app/dashboard/services/mantenimineto/usuario/usuario.service';
+import { RolesService } from '@app/dashboard/services/roles/roles.service';
 
 @Component({
   selector: 'user-maintenance',
@@ -35,10 +38,12 @@ export class UserMaintenanceComponent implements OnInit {
   totalRegistros:0
  }
  file:any;
-
+ roles: RolResponse[] = [];
+ idUsuario:number = 0;
   constructor(
     private usuarioService:UsuarioService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private rolService:RolesService
   ){
     this.formUsuario = this.fb.group({
       nombre:[],
@@ -50,12 +55,23 @@ export class UserMaintenanceComponent implements OnInit {
   }
   ngOnInit(): void {
     this.listarUsuarios();
+    this.listarRoles();
   }
+
   //FUNCIONALIDAD
-  listarUsuarios(){
+  listarRoles(){
+    this.rolService.getAll().subscribe(
+      {
+        next: (res: RolResponse[])=>{
+          this.roles = res;
+        }
+      }
+    );
+  }
+  listarUsuarios(page:number = 1){
     let req:GenericFilterRequest = {
-      numeroPagina:1,
-      cantidad:5,
+      numeroPagina:page,
+      cantidad:this.rows,
       filtros:[],
     }
     this.usuarioService.listarUsuarios(req).subscribe({
@@ -67,16 +83,31 @@ export class UserMaintenanceComponent implements OnInit {
   crearNuevoUsuario(){
     let req = this.formUsuario.value as UsuarioAddRequest
     req.file = this.file;
-    console.log(req);
     this.usuarioService.crearUsuario(req).subscribe({
       next: (res:CustomResponse)=>{
         alert(res.message);
+        this.closeDialog();
+      }
+    })
+  }
+  actulizarUsuario(){
+    let req = this.formUsuario.value as UsuarioEditRequest
+    req.file = this.file;
+    req.idUsuario = this.idUsuario;
+    req.nuevo = false;
+    this.usuarioService.actulizarUsuario(req).subscribe({
+      next: (res:CustomResponse)=>{
+        alert(res.message);
+        this.closeDialog();
       }
     })
   }
   accionesModal(){
     if(this.modalTitle == "Agregar Usuario"){
       this.crearNuevoUsuario();
+    }
+    else{
+      this.actulizarUsuario();
     }
   }
   //UI
@@ -92,6 +123,8 @@ export class UserMaintenanceComponent implements OnInit {
   }
 
   closeDialog(): void {
+    this.listarUsuarios();
+    this.formUsuario.reset();
     this.isModalOpen = false;
   }
 
@@ -99,13 +132,14 @@ export class UserMaintenanceComponent implements OnInit {
     this.openDialog('add');
   }
 
-  editUser(): void {
+  editUser(user: UsuarioResponse): void {
+    this.idUsuario = user.idUsuario;
     this.formUsuario.patchValue({
-      nombre:"",
-      email: "",
-      password: "",
-      role: "",
-      contact: "",
+      nombre:user.nombre,
+      email: user.email,
+      password: user.password,
+      role: user.idRol,
+      contact: user.telefono,
     });
     this.openDialog('edit');
   }
@@ -150,6 +184,6 @@ export class UserMaintenanceComponent implements OnInit {
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
-
+    this.listarUsuarios((this.first / this.rows)+1);
   }
 }

@@ -82,6 +82,9 @@
       <div class="form-row">
         <label for="category" class="form-label">Categoria</label>
         <select formControlName="idCategoria" type="text" id="category" class="form-input" placeholder="Select product category" required>
+          @for (item of categorias; track $index) {
+            <option [value]="item.idCategoria">{{item.nombre}}</option>
+          }
           <!-- <option [value]="'Horno'">Horno</option>
            <option [value]="'Cocina'">Cocina</option> -->
         </select>

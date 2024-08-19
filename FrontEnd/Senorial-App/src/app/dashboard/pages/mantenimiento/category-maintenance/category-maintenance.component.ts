@@ -4,6 +4,7 @@ import { CategoriaResponse, CategoriasResponse } from '@app/core/models/dashboar
 import { CustomResponse } from '@app/core/models/generic/custom-response';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CategoriaRequest } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-request';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'category-maintenance',
@@ -42,6 +43,7 @@ export class CategoryMaintenanceComponent implements OnInit{
 
   constructor(private categoriaService:CategoriaService,
     private fb:FormBuilder,
+    private toastService:NotificationService
   ){
     this.formCategoria = this.fb.group({
       nombre: [],
@@ -82,6 +84,9 @@ export class CategoryMaintenanceComponent implements OnInit{
   }
 
   closeAddEditDialog() {
+    this.listarSubCategorias();
+    this.listarCategorias();
+    this.formCategoria.reset();
     this.isAddEditDialogOpen = false;
   }
 
@@ -115,6 +120,7 @@ export class CategoryMaintenanceComponent implements OnInit{
     this.categoriaService.crearSubCategoria(req).subscribe({
       next: (res:CustomResponse) => {
         alert(res.message);
+        this.closeAddEditDialog();
       }
     })
   }
@@ -124,7 +130,9 @@ export class CategoryMaintenanceComponent implements OnInit{
     req.idCategoria = this.idSubCategoria;
     this.categoriaService.actulizarSubCategoria(req).subscribe({
       next: (res:CustomResponse) => {
+        this.toastService.showSuccess("Test",res.message,false);
         alert(res.message);
+        this.closeAddEditDialog();
       }
     })
   }
@@ -142,6 +150,7 @@ export class CategoryMaintenanceComponent implements OnInit{
   }
 
   closeConfirmDialog() {
+  
     this.isConfirmDialogOpen = false;
   }
 

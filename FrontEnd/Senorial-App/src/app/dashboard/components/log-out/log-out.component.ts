@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginDashResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { LoginResponse } from '@app/core/models/login-request';
 
 @Component({
@@ -8,12 +10,28 @@ import { LoginResponse } from '@app/core/models/login-request';
 })
 export class LogOutComponent implements OnInit {
   //Var local
-  constructor(){}
+  usuario: LoginDashResponse = {
+    infoUser: {
+      email: "",
+      idPersona: 0,
+      idRol: 0,
+      nombre: "",
+      rol: "",
+    },
+    message: "",
+    refreshToken: "",
+    success: true,
+    token: "",
+    tokenCreated: "",
+    tokenExpires: "",
+  }
+  constructor(
+    private route:Router
+  ) { }
   ngOnInit(): void {
     this.cargarInfoUser();
   }
 
-  email:string = ''
   isConfirmDialogOpen: boolean = false;
   closeConfirmDialog(): void {
     this.isConfirmDialogOpen = false;
@@ -23,6 +41,8 @@ export class LogOutComponent implements OnInit {
     this.isConfirmDialogOpen = false;
   }
   confirmDelete(): void {
+    sessionStorage.removeItem('user');
+    this.route.navigate(['']);
     // Lógica para confirmar eliminación de producto
     this.deleteProduct();
   }
@@ -31,9 +51,9 @@ export class LogOutComponent implements OnInit {
     this.isConfirmDialogOpen = true;
   }
 
-  cargarInfoUser(): void{
-    var info:string = sessionStorage.getItem('user') || '';
-    let user = JSON.parse(info) as LoginResponse;
-    this.email = user.usuario.email;
+  cargarInfoUser(): void {
+    var info: string = sessionStorage.getItem('user') || '';
+    let user = JSON.parse(info) as LoginDashResponse;
+    this.usuario = user;
   }
 }

@@ -1,4 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { LoginDashResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { LoginResponse } from '@app/core/models/login-request';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
@@ -6,7 +7,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   if(json == ''){
     return next(req);
   }
-  let user = JSON.parse(json) as LoginResponse;
+  let user = JSON.parse(json) as LoginDashResponse;
   const token = user.token;
   const modreq = req.clone({
     

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CategoriaResponse, CategoriasResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-response';
 import { ProductDashResponse } from '@app/core/models/dashboard/mantenimiento/product/product-dash-response';
 import { ProductEditRequest } from '@app/core/models/dashboard/mantenimiento/product/product-edit-request';
 import { ProductResponse } from '@app/core/models/dashboard/mantenimiento/product/product-response';
 import { CustomResponse } from '@app/core/models/generic/custom-response';
 import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
+import { CategoriaService } from '@app/dashboard/services/mantenimineto/categorias/categoria.service';
 import { ProductoService } from '@app/dashboard/services/mantenimineto/producto/producto.service';
 import { PaginatorModule } from 'primeng/paginator';
 
@@ -32,8 +34,10 @@ export class ProductMaintenanceComponent implements OnInit {
   formProduct:FormGroup;
   file:any = [];
   editar: boolean = false;
-
-  constructor(private productService:ProductoService,private fb:FormBuilder){
+  categorias: CategoriasResponse[] = [];
+  constructor(private productService:ProductoService,private fb:FormBuilder,
+    private categoriService:CategoriaService
+  ){
     this.formProduct = this.fb.group({
       nombre: [],
       descripcion: [],
@@ -44,10 +48,18 @@ export class ProductMaintenanceComponent implements OnInit {
   }
   ngOnInit(): void {
     this.listarProducto();
+    this.listarTodasCategorias();
     //this.editarProducto();
   }
 
   //FUNCIONALIDAD
+  listarTodasCategorias(){
+    this.categoriService.listarTodasCategorias().subscribe({
+      next: (res: CategoriasResponse[])=>{
+        this.categorias = res;
+      }
+    });
+  }
   listarProducto(page:number = 1, cantidad:number = 5){
     let req:GenericFilterRequest = {
       numeroPagina: page,
@@ -77,6 +89,7 @@ export class ProductMaintenanceComponent implements OnInit {
     this.productService.crearProducto(formData).subscribe({
       next: (res:CustomResponse)=>{
         alert(res.message);
+        this.closeDialog();
       }
     });
   }
@@ -93,11 +106,10 @@ export class ProductMaintenanceComponent implements OnInit {
     const formData = new FormData();
     let archivo:File = this.file;
     let newFile = new File([],'');
-    if (archivo) {
-      formData.append("File", archivo);
-    }
-    // formData.append("File",newFile);
-    formData.append("IdProducto",this.idProducto.toString());
+    req.idProducto = this.idProducto
+  
+    formData.append("File",archivo);
+    formData.append("IdProducto",req.idProducto.toString());
     formData.append("Nombre",req.nombre);
     formData.append("Description",req.descripcion);
     formData.append("IdCategoria",req.idCategoria.toString());
@@ -124,6 +136,7 @@ export class ProductMaintenanceComponent implements OnInit {
 
   closeDialog(): void {
     this.formProduct.reset();
+    this.listarProducto();
     this.isModalOpen = false;
   }
 
@@ -135,7 +148,7 @@ export class ProductMaintenanceComponent implements OnInit {
     this.formProduct.patchValue({
       nombre: req.nombreProducto,
       descripcion: req.detalleProducto,
-      idCategoria: req.categoria,
+      idCategoria: req.idCategoria,
       derivar: req.derivar,
       precioVenta: req.precioVenta,
     })

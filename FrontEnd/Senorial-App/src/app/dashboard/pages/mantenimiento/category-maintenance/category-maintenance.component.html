@@ -94,15 +94,15 @@
           <h2 class="dialog-title">{{ dialogTitle }}</h2>
           <div class="form-row">
             <label class="form-label">Nombre</label>
-            <input formControlName="nombre" class="form-input" [(ngModel)]="categoryName" placeholder="Nombre de la categoría" />
+            <input formControlName="nombre" class="form-input" placeholder="Nombre de la categoría" />
           </div>
           <div class="form-row">
             <label class="form-label">Subcategoría</label>
-            <input formControlName="idCategoriaPadre" class="form-input" [(ngModel)]="subCategoryName" placeholder="Nombre de la subcategoría" />
+            <input formControlName="idCategoriaPadre" class="form-input" placeholder="Nombre de la subcategoría" />
           </div>
           <div class="form-row">
             <label class="form-label">Estado</label>
-            <select class="form-input" [(ngModel)]="categoryStatus">
+            <select class="form-input">
               <option [value]="true">Activo</option>
               <option [value]="false">Inactivo</option>
             </select>

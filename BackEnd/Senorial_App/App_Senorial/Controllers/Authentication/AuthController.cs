@@ -45,7 +45,10 @@ namespace App_Senorial.Controllers.Authentication
         private readonly EncriptarDesencriptar _encriptar;
         private readonly IPersonaBusiness _personaBusiness;
         private readonly IRolesBusiness _rolesBusiness;
-       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mapper"></param>
         public AuthController(IMapper mapper) 
         {
             _mapper = mapper;
