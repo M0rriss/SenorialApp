@@ -1,5 +1,4 @@
-﻿using DBSenorialModels.Data.Migraciones;
-using DBSenorialModels.Senorial;
+﻿using DBSenorialModels.Senorial;
 using DBSenorialModels.View.Auth.Usuario;
 using DBSenorialModels.View.Usuario.User;
 using IRepository.Schema_Usuarios.Usuarios;

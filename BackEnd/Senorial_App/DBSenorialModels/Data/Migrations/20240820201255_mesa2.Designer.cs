@@ -4,16 +4,19 @@ using DBSenorialModels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DBSenorialModels.Data.Migraciones
+namespace DBSenorialModels.Data.Migrations
 {
     [DbContext(typeof(DBSenorialContext))]
-    partial class DBSenorialContextModelSnapshot : ModelSnapshot
+    [Migration("20240820201255_mesa2")]
+    partial class mesa2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,7 +169,7 @@ namespace DBSenorialModels.Data.Migraciones
                         {
                             IdCategoria = 1,
                             Estado = true,
-                            Nombre = "Hamburguesas"
+                            Nombre = "Hamburguesa"
                         },
                         new
                         {
@@ -217,7 +220,7 @@ namespace DBSenorialModels.Data.Migraciones
                         {
                             IdCategoria = 9,
                             Estado = true,
-                            IdCategoriaPadre = 1,
+                            IdCategoriaPadre = 3,
                             Nombre = "Comida Rápida"
                         },
                         new
@@ -268,6 +271,13 @@ namespace DBSenorialModels.Data.Migraciones
                             Estado = true,
                             IdCategoriaPadre = 5,
                             Nombre = "Jugos y Milkshakes"
+                        },
+                        new
+                        {
+                            IdCategoria = 17,
+                            Estado = true,
+                            IdCategoriaPadre = 1,
+                            Nombre = "Hamburguesas"
                         });
                 });
 
@@ -1124,13 +1134,13 @@ namespace DBSenorialModels.Data.Migraciones
                         {
                             IdInsumo = 1,
                             IdUnidad = 1,
-                            Nombre = "Aceite"
+                            Nombre = "Aceite x Balde"
                         },
                         new
                         {
                             IdInsumo = 2,
                             IdUnidad = 2,
-                            Nombre = "Aceite"
+                            Nombre = "Aceite x Litro"
                         },
                         new
                         {
@@ -1600,13 +1610,13 @@ namespace DBSenorialModels.Data.Migraciones
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 8, 14, 17, 17, 5, 586, DateTimeKind.Local).AddTicks(2969),
+                            FechaActualizacion = new DateTime(2024, 8, 20, 15, 12, 55, 141, DateTimeKind.Local).AddTicks(6733),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 8, 14, 17, 17, 5, 586, DateTimeKind.Local).AddTicks(2971),
+                            FechaActualizacion = new DateTime(2024, 8, 20, 15, 12, 55, 141, DateTimeKind.Local).AddTicks(6736),
                             IdSucursal = 2
                         });
                 });
@@ -1634,6 +1644,62 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("mesa_id_pk");
 
                     b.ToTable("mesas", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMesa = 1,
+                            Estado = true,
+                            Nombre = "Mesa 1"
+                        },
+                        new
+                        {
+                            IdMesa = 2,
+                            Estado = true,
+                            Nombre = "Mesa 2"
+                        },
+                        new
+                        {
+                            IdMesa = 3,
+                            Estado = true,
+                            Nombre = "Mesa 3"
+                        },
+                        new
+                        {
+                            IdMesa = 4,
+                            Estado = true,
+                            Nombre = "Mesa 4"
+                        },
+                        new
+                        {
+                            IdMesa = 5,
+                            Estado = true,
+                            Nombre = "Mesa 5"
+                        },
+                        new
+                        {
+                            IdMesa = 6,
+                            Estado = true,
+                            Nombre = "Mesa 6"
+                        },
+                        new
+                        {
+                            IdMesa = 7,
+                            Estado = true,
+                            Nombre = "Mesa 7"
+                        },
+                        new
+                        {
+                            IdMesa = 8,
+                            Estado = true,
+                            Nombre = "Mesa 8"
+                        },
+                        new
+                        {
+                            IdMesa = 9,
+                            Estado = true,
+                            Nombre = "Mesa 9"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.MetodoPago", b =>
@@ -1893,7 +1959,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 1,
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa clásica",
-                            IdCategoria = 1,
+                            IdCategoria = 17,
                             IdImg = 1,
                             Nombre = "Hamburguesa clásica",
                             PrecioVenta = 9.00m
@@ -1903,7 +1969,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 2,
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa queso tocino",
-                            IdCategoria = 1,
+                            IdCategoria = 17,
                             IdImg = 1,
                             Nombre = "Hamburguesa queso tocino",
                             PrecioVenta = 12.00m
@@ -1913,7 +1979,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 3,
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa señorial",
-                            IdCategoria = 1,
+                            IdCategoria = 17,
                             IdImg = 1,
                             Nombre = "Hamburguesa señorial",
                             PrecioVenta = 15.00m
@@ -2023,7 +2089,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 14,
                             Derivar = "Horno",
                             Descripcion = "Chicharrón señorial",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
                             IdImg = 1,
                             Nombre = "Chicharrón señorial",
                             PrecioVenta = 15.00m
@@ -2033,7 +2099,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 15,
                             Derivar = "Horno",
                             Descripcion = "Lonjitas",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
                             IdImg = 1,
                             Nombre = "Lonjitas",
                             PrecioVenta = 6.00m
@@ -2043,7 +2109,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 16,
                             Derivar = "Cocina",
                             Descripcion = "Chaufa especial",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
                             IdImg = 1,
                             Nombre = "Chaufa especial",
                             PrecioVenta = 10.00m
@@ -2053,7 +2119,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 17,
                             Derivar = "Cocina",
                             Descripcion = "Chaufa mixto",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
                             IdImg = 1,
                             Nombre = "Chaufa mixto",
                             PrecioVenta = 12.00m
@@ -2063,7 +2129,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 18,
                             Derivar = "Cocina",
                             Descripcion = "Spaguetti a lo alfredo",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
                             IdImg = 1,
                             Nombre = "Spaguetti a lo alfredo",
                             PrecioVenta = 14.00m
@@ -3157,7 +3223,7 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 14, 17, 17, 5, 590, DateTimeKind.Local).AddTicks(251),
+                            CreatedAt = new DateTime(2024, 8, 20, 15, 12, 55, 149, DateTimeKind.Local).AddTicks(379),
                             Email = "admin@admin.com",
                             IdImg = 1,
                             IdPersona = 1,

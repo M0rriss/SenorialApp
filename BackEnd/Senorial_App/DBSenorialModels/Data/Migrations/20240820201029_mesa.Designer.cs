@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DBSenorialModels.Data.Migraciones
+namespace DBSenorialModels.Data.Migrations
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240715000343_DBUpdated1")]
-    partial class DBUpdated1
+    [Migration("20240820201029_mesa")]
+    partial class mesa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,7 +169,7 @@ namespace DBSenorialModels.Data.Migraciones
                         {
                             IdCategoria = 1,
                             Estado = true,
-                            Nombre = "Hamburguesas"
+                            Nombre = "Hamburguesa"
                         },
                         new
                         {
@@ -271,6 +271,13 @@ namespace DBSenorialModels.Data.Migraciones
                             Estado = true,
                             IdCategoriaPadre = 5,
                             Nombre = "Jugos y Milkshakes"
+                        },
+                        new
+                        {
+                            IdCategoria = 17,
+                            Estado = true,
+                            IdCategoriaPadre = 1,
+                            Nombre = "Hamburguesas"
                         });
                 });
 
@@ -324,29 +331,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.ToTable("conteo_dinero", "Ventas");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleDashMenu", b =>
-                {
-                    b.Property<int>("IdMenu")
-                        .HasColumnType("int")
-                        .HasColumnName("id_menu");
-
-                    b.Property<int>("IdRol")
-                        .HasColumnType("int")
-                        .HasColumnName("id_rol");
-
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("descripcion");
-
-                    b.HasKey("IdMenu", "IdRol")
-                        .HasName("detalle_dash_menu_id_pk");
-
-                    b.HasIndex("IdRol");
-
-                    b.ToTable("detalle_dash_menu", "Usuarios");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
                     b.Property<int>("IdDetInventario")
@@ -364,14 +348,6 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("int")
                         .HasColumnName("id_inventario");
 
-                    b.Property<decimal>("PrecioCompra")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("precio_compra");
-
-                    b.Property<decimal>("PrecioVenta")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("precio_venta");
-
                     b.Property<int>("StockTotal")
                         .HasColumnType("int")
                         .HasColumnName("stock_total");
@@ -384,6 +360,533 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdInventario");
 
                     b.ToTable("detalle_inventario", "Almacen");
+
+                    b.HasData(
+                        new
+                        {
+                            IdDetInventario = 1,
+                            IdInsumo = 1,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 2,
+                            IdInsumo = 2,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 3,
+                            IdInsumo = 3,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 4,
+                            IdInsumo = 4,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 5,
+                            IdInsumo = 5,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 6,
+                            IdInsumo = 6,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 7,
+                            IdInsumo = 7,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 8,
+                            IdInsumo = 8,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 9,
+                            IdInsumo = 9,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 10,
+                            IdInsumo = 10,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 11,
+                            IdInsumo = 11,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 12,
+                            IdInsumo = 12,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 13,
+                            IdInsumo = 13,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 14,
+                            IdInsumo = 14,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 15,
+                            IdInsumo = 15,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 16,
+                            IdInsumo = 16,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 17,
+                            IdInsumo = 17,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 18,
+                            IdInsumo = 18,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 19,
+                            IdInsumo = 19,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 20,
+                            IdInsumo = 20,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 21,
+                            IdInsumo = 21,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 22,
+                            IdInsumo = 22,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 23,
+                            IdInsumo = 23,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 24,
+                            IdInsumo = 24,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 25,
+                            IdInsumo = 25,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 26,
+                            IdInsumo = 26,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 27,
+                            IdInsumo = 27,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 28,
+                            IdInsumo = 28,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 29,
+                            IdInsumo = 29,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 30,
+                            IdInsumo = 30,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 31,
+                            IdInsumo = 31,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 32,
+                            IdInsumo = 32,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 33,
+                            IdInsumo = 33,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 34,
+                            IdInsumo = 34,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 35,
+                            IdInsumo = 35,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 36,
+                            IdInsumo = 36,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 37,
+                            IdInsumo = 37,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 38,
+                            IdInsumo = 38,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 39,
+                            IdInsumo = 39,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 40,
+                            IdInsumo = 40,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 41,
+                            IdInsumo = 41,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 42,
+                            IdInsumo = 42,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 43,
+                            IdInsumo = 43,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 44,
+                            IdInsumo = 44,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 45,
+                            IdInsumo = 45,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 46,
+                            IdInsumo = 46,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 47,
+                            IdInsumo = 47,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 48,
+                            IdInsumo = 48,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 49,
+                            IdInsumo = 49,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 50,
+                            IdInsumo = 50,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 51,
+                            IdInsumo = 51,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 52,
+                            IdInsumo = 52,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 53,
+                            IdInsumo = 53,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 54,
+                            IdInsumo = 54,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 55,
+                            IdInsumo = 55,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 56,
+                            IdInsumo = 56,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 57,
+                            IdInsumo = 57,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 58,
+                            IdInsumo = 58,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 59,
+                            IdInsumo = 59,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 60,
+                            IdInsumo = 60,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 61,
+                            IdInsumo = 61,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 62,
+                            IdInsumo = 62,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 63,
+                            IdInsumo = 63,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 64,
+                            IdInsumo = 64,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 65,
+                            IdInsumo = 65,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 66,
+                            IdInsumo = 66,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 67,
+                            IdInsumo = 67,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 68,
+                            IdInsumo = 68,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 69,
+                            IdInsumo = 69,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 70,
+                            IdInsumo = 70,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 71,
+                            IdInsumo = 71,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 72,
+                            IdInsumo = 72,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 73,
+                            IdInsumo = 73,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 74,
+                            IdInsumo = 74,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        },
+                        new
+                        {
+                            IdDetInventario = 75,
+                            IdInsumo = 75,
+                            IdInventario = 1,
+                            StockTotal = 12
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.DetallePedido", b =>
@@ -497,6 +1000,11 @@ namespace DBSenorialModels.Data.Migraciones
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmpleado"));
 
+                    b.Property<bool?>("Estado")
+                        .HasMaxLength(100)
+                        .HasColumnType("bit")
+                        .HasColumnName("estado");
+
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
                         .HasColumnName("id_persona");
@@ -538,18 +1046,22 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("datetime")
                         .HasColumnName("fecha_ingreso");
 
+                    b.Property<int>("IdInsumo")
+                        .HasColumnType("int")
+                        .HasColumnName("id_Insumo");
+
                     b.Property<int>("IdInventario")
                         .HasColumnType("int")
                         .HasColumnName("id_inventario");
 
-                    b.Property<string>("Motivo")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("motivo");
+                    b.Property<decimal>("PrecioCompra")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("precio_compra");
 
                     b.HasKey("IdEntrada")
                         .HasName("entrada_id_pk");
+
+                    b.HasIndex("IdInsumo");
 
                     b.HasIndex("IdInventario");
 
@@ -558,26 +1070,34 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Imagene", b =>
                 {
-                    b.Property<int>("IdImg")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_img");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdImg"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("FileName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("nombre");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("ImageData")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("url");
 
-                    b.HasKey("IdImg")
+                    b.HasKey("Id")
                         .HasName("imagenes_id_pk");
 
                     b.ToTable("imagenes", "Generico");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FileName = "test",
+                            ImageData = "https://th.bing.com/th/id/OIP.TpPLUJnbBx_WleAW68PhvQHaFF?rs=1&pid=ImgDetMain"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
@@ -614,13 +1134,13 @@ namespace DBSenorialModels.Data.Migraciones
                         {
                             IdInsumo = 1,
                             IdUnidad = 1,
-                            Nombre = "Aceite"
+                            Nombre = "Aceite x Balde"
                         },
                         new
                         {
                             IdInsumo = 2,
                             IdUnidad = 2,
-                            Nombre = "Aceite"
+                            Nombre = "Aceite x Litro"
                         },
                         new
                         {
@@ -1085,49 +1605,20 @@ namespace DBSenorialModels.Data.Migraciones
                     b.HasIndex("IdSucursal");
 
                     b.ToTable("inventario", "Almacen");
-                });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.MenuDash", b =>
-                {
-                    b.Property<int>("IdMenu")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_menu");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMenu"));
-
-                    b.Property<string>("DataTarget")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("data_target");
-
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("descripcion");
-
-                    b.Property<string>("Icono")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("icono");
-
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("nombre");
-
-                    b.Property<int?>("Parent")
-                        .HasColumnType("int")
-                        .HasColumnName("parent");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("url");
-
-                    b.HasKey("IdMenu")
-                        .HasName("dashboard_id_pk");
-
-                    b.ToTable("menu_dash", "Usuarios");
+                    b.HasData(
+                        new
+                        {
+                            IdInventario = 1,
+                            FechaActualizacion = new DateTime(2024, 8, 20, 15, 10, 28, 826, DateTimeKind.Local).AddTicks(3631),
+                            IdSucursal = 1
+                        },
+                        new
+                        {
+                            IdInventario = 2,
+                            FechaActualizacion = new DateTime(2024, 8, 20, 15, 10, 28, 826, DateTimeKind.Local).AddTicks(3634),
+                            IdSucursal = 2
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Mesa", b =>
@@ -1153,6 +1644,62 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasName("mesa_id_pk");
 
                     b.ToTable("mesas", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMesa = 1,
+                            Estado = true,
+                            Nombre = "Mesa 1"
+                        },
+                        new
+                        {
+                            IdMesa = 2,
+                            Estado = true,
+                            Nombre = "Mesa 2"
+                        },
+                        new
+                        {
+                            IdMesa = 3,
+                            Estado = true,
+                            Nombre = "Mesa 3"
+                        },
+                        new
+                        {
+                            IdMesa = 4,
+                            Estado = true,
+                            Nombre = "Mesa 4"
+                        },
+                        new
+                        {
+                            IdMesa = 5,
+                            Estado = true,
+                            Nombre = "Mesa 5"
+                        },
+                        new
+                        {
+                            IdMesa = 6,
+                            Estado = true,
+                            Nombre = "Mesa 6"
+                        },
+                        new
+                        {
+                            IdMesa = 7,
+                            Estado = true,
+                            Nombre = "Mesa 7"
+                        },
+                        new
+                        {
+                            IdMesa = 8,
+                            Estado = true,
+                            Nombre = "Mesa 8"
+                        },
+                        new
+                        {
+                            IdMesa = 9,
+                            Estado = true,
+                            Nombre = "Mesa 9"
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.MetodoPago", b =>
@@ -1412,7 +1959,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 1,
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa clásica",
-                            IdCategoria = 1,
+                            IdCategoria = 17,
+                            IdImg = 1,
                             Nombre = "Hamburguesa clásica",
                             PrecioVenta = 9.00m
                         },
@@ -1421,7 +1969,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 2,
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa queso tocino",
-                            IdCategoria = 1,
+                            IdCategoria = 17,
+                            IdImg = 1,
                             Nombre = "Hamburguesa queso tocino",
                             PrecioVenta = 12.00m
                         },
@@ -1430,7 +1979,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 3,
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa señorial",
-                            IdCategoria = 1,
+                            IdCategoria = 17,
+                            IdImg = 1,
                             Nombre = "Hamburguesa señorial",
                             PrecioVenta = 15.00m
                         },
@@ -1440,6 +1990,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo a la brasa",
                             IdCategoria = 6,
+                            IdImg = 1,
                             Nombre = "1/4 de pollo a la brasa",
                             PrecioVenta = 12.00m
                         },
@@ -1449,6 +2000,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo broaster",
                             IdCategoria = 6,
+                            IdImg = 1,
                             Nombre = "1/4 de pollo broaster",
                             PrecioVenta = 15.00m
                         },
@@ -1458,6 +2010,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla de pollo",
                             PrecioVenta = 15.00m
                         },
@@ -1467,6 +2020,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo al ajo",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla de pollo al ajo",
                             PrecioVenta = 16.00m
                         },
@@ -1476,6 +2030,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo dietética",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla de pollo dietética",
                             PrecioVenta = 16.00m
                         },
@@ -1485,6 +2040,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Parrilla mixta",
                             IdCategoria = 7,
+                            IdImg = 1,
                             Nombre = "Parrilla mixta",
                             PrecioVenta = 20.00m
                         },
@@ -1494,6 +2050,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Brochetas de pollo",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Brochetas de pollo",
                             PrecioVenta = 15.00m
                         },
@@ -1503,6 +2060,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Pollo a la pizzarola",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Pollo a la pizzarola",
                             PrecioVenta = 20.00m
                         },
@@ -1512,6 +2070,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Bisteck a la parrilla",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Bisteck a la parrilla",
                             PrecioVenta = 18.00m
                         },
@@ -1521,6 +2080,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Chorizo a la parrilla",
                             IdCategoria = 8,
+                            IdImg = 1,
                             Nombre = "Chorizo a la parrilla",
                             PrecioVenta = 11.00m
                         },
@@ -1529,7 +2089,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 14,
                             Derivar = "Horno",
                             Descripcion = "Chicharrón señorial",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Chicharrón señorial",
                             PrecioVenta = 15.00m
                         },
@@ -1538,7 +2099,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 15,
                             Derivar = "Horno",
                             Descripcion = "Lonjitas",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Lonjitas",
                             PrecioVenta = 6.00m
                         },
@@ -1547,7 +2109,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 16,
                             Derivar = "Cocina",
                             Descripcion = "Chaufa especial",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Chaufa especial",
                             PrecioVenta = 10.00m
                         },
@@ -1556,7 +2119,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 17,
                             Derivar = "Cocina",
                             Descripcion = "Chaufa mixto",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Chaufa mixto",
                             PrecioVenta = 12.00m
                         },
@@ -1565,7 +2129,8 @@ namespace DBSenorialModels.Data.Migraciones
                             IdProducto = 18,
                             Derivar = "Cocina",
                             Descripcion = "Spaguetti a lo alfredo",
-                            IdCategoria = 3,
+                            IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Spaguetti a lo alfredo",
                             PrecioVenta = 14.00m
                         },
@@ -1575,6 +2140,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Café pasado",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Café pasado",
                             PrecioVenta = 2.50m
                         },
@@ -1584,6 +2150,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chocolate con panetón",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Chocolate con panetón",
                             PrecioVenta = 5.00m
                         },
@@ -1593,6 +2160,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Leche fresca",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Leche fresca",
                             PrecioVenta = 3.00m
                         },
@@ -1602,6 +2170,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milo",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Milo",
                             PrecioVenta = 3.00m
                         },
@@ -1611,6 +2180,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Café con leche",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Café con leche",
                             PrecioVenta = 4.00m
                         },
@@ -1620,6 +2190,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mates",
                             IdCategoria = 10,
+                            IdImg = 1,
                             Nombre = "Mates",
                             PrecioVenta = 2.00m
                         },
@@ -1629,6 +2200,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 3lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 3lts",
                             PrecioVenta = 14.00m
                         },
@@ -1638,6 +2210,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 2.25lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 2.25lts",
                             PrecioVenta = 11.00m
                         },
@@ -1647,6 +2220,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1.5lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 1.5lts",
                             PrecioVenta = 9.00m
                         },
@@ -1656,6 +2230,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1lts",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 1lts",
                             PrecioVenta = 7.00m
                         },
@@ -1665,6 +2240,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1/2lt",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa de 1/2lt",
                             PrecioVenta = 4.00m
                         },
@@ -1674,6 +2250,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa personal",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa personal",
                             PrecioVenta = 2.50m
                         },
@@ -1683,6 +2260,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa pirañita",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Gaseosa pirañita",
                             PrecioVenta = 1.50m
                         },
@@ -1692,6 +2270,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Refresco de maracuya (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Refresco de maracuya (Jarra)",
                             PrecioVenta = 8.00m
                         },
@@ -1701,6 +2280,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Chicha morada (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Chicha morada (Jarra)",
                             PrecioVenta = 8.00m
                         },
@@ -1710,6 +2290,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Limonada Frozen (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Limonada Frozen (Jarra)",
                             PrecioVenta = 12.00m
                         },
@@ -1719,6 +2300,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Limonada Americana (Jarra)",
                             IdCategoria = 11,
+                            IdImg = 1,
                             Nombre = "Limonada Americana (Jarra)",
                             PrecioVenta = 11.00m
                         },
@@ -1728,6 +2310,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de pisco",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de pisco",
                             PrecioVenta = 30.00m
                         },
@@ -1737,6 +2320,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de vino",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de vino",
                             PrecioVenta = 40.00m
                         },
@@ -1746,6 +2330,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de ron",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de ron",
                             PrecioVenta = 35.00m
                         },
@@ -1755,6 +2340,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Caliente de whisky",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Caliente de whisky",
                             PrecioVenta = 45.00m
                         },
@@ -1764,6 +2350,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Cerveza en lata",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Cerveza en lata",
                             PrecioVenta = 6.00m
                         },
@@ -1773,6 +2360,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Cerveza negra",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Cerveza negra",
                             PrecioVenta = 10.00m
                         },
@@ -1782,6 +2370,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Cerveza de trigo",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Cerveza de trigo",
                             PrecioVenta = 10.00m
                         },
@@ -1791,6 +2380,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Vino queirolo (Vaso)",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Vino queirolo (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -1800,6 +2390,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Whisky (Vaso)",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Whisky (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -1809,6 +2400,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Pisco Vargas (Vaso)",
                             IdCategoria = 12,
+                            IdImg = 1,
                             Nombre = "Pisco Vargas (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -1818,6 +2410,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mojito",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Mojito",
                             PrecioVenta = 15.90m
                         },
@@ -1827,6 +2420,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Machu Picchu",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Machu Picchu",
                             PrecioVenta = 17.90m
                         },
@@ -1836,6 +2430,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Daikiri",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Daikiri",
                             PrecioVenta = 15.90m
                         },
@@ -1845,6 +2440,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Piña colada",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Piña colada",
                             PrecioVenta = 16.90m
                         },
@@ -1854,6 +2450,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Pisco sour",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Pisco sour",
                             PrecioVenta = 15.90m
                         },
@@ -1863,6 +2460,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Naranjita",
                             IdCategoria = 13,
+                            IdImg = 1,
                             Nombre = "Naranjita",
                             PrecioVenta = 15.00m
                         },
@@ -1872,6 +2470,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Alitas en salsa BBQ",
                             IdCategoria = 14,
+                            IdImg = 1,
                             Nombre = "Alitas en salsa BBQ",
                             PrecioVenta = 35.00m
                         },
@@ -1881,6 +2480,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Alitas broaster",
                             IdCategoria = 14,
+                            IdImg = 1,
                             Nombre = "Alitas broaster",
                             PrecioVenta = 35.00m
                         },
@@ -1890,6 +2490,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Tequeños especiales",
                             IdCategoria = 14,
+                            IdImg = 1,
                             Nombre = "Tequeños especiales",
                             PrecioVenta = 20.00m
                         },
@@ -1899,6 +2500,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Durazno en almíbar",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Durazno en almíbar",
                             PrecioVenta = 5.00m
                         },
@@ -1908,6 +2510,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Helado 02 bolas",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Helado 02 bolas",
                             PrecioVenta = 4.00m
                         },
@@ -1917,6 +2520,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Helado 03 bolas",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Helado 03 bolas",
                             PrecioVenta = 6.00m
                         },
@@ -1926,6 +2530,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Gelatina",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Gelatina",
                             PrecioVenta = 3.00m
                         },
@@ -1935,6 +2540,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Flan",
                             IdCategoria = 15,
+                            IdImg = 1,
                             Nombre = "Flan",
                             PrecioVenta = 5.00m
                         },
@@ -1944,6 +2550,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo de papaya",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo de papaya",
                             PrecioVenta = 5.00m
                         },
@@ -1953,6 +2560,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo de fresa con leche",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo de fresa con leche",
                             PrecioVenta = 8.00m
                         },
@@ -1962,6 +2570,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo de plátano",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo de plátano",
                             PrecioVenta = 5.00m
                         },
@@ -1971,6 +2580,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Jugo surtido",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Jugo surtido",
                             PrecioVenta = 5.00m
                         },
@@ -1980,6 +2590,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Ensalada de frutas",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Ensalada de frutas",
                             PrecioVenta = 7.00m
                         },
@@ -1989,6 +2600,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de Oreo",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Milkshake de Oreo",
                             PrecioVenta = 11.90m
                         },
@@ -1998,6 +2610,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de durazno",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Milkshake de durazno",
                             PrecioVenta = 11.90m
                         },
@@ -2007,6 +2620,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de fresa",
                             IdCategoria = 16,
+                            IdImg = 1,
                             Nombre = "Milkshake de fresa",
                             PrecioVenta = 11.90m
                         },
@@ -2016,6 +2630,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Salchipapa clásica",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Salchipapa clásica",
                             PrecioVenta = 7.00m
                         },
@@ -2025,6 +2640,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Salchipapa ayacuchana",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Salchipapa ayacuchana",
                             PrecioVenta = 9.00m
                         },
@@ -2034,6 +2650,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Horno",
                             Descripcion = "Salchipiernita",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Salchipiernita",
                             PrecioVenta = 11.00m
                         },
@@ -2043,6 +2660,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mounstruo",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Mounstruo",
                             PrecioVenta = 18.00m
                         },
@@ -2052,6 +2670,7 @@ namespace DBSenorialModels.Data.Migraciones
                             Derivar = "Cocina",
                             Descripcion = "Mounstrito",
                             IdCategoria = 9,
+                            IdImg = 1,
                             Nombre = "Mounstrito",
                             PrecioVenta = 10.00m
                         });
@@ -2209,9 +2828,9 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnType("datetime")
                         .HasColumnName("fecha_salida");
 
-                    b.Property<int>("IdDetInventario")
+                    b.Property<int>("IdInsumo")
                         .HasColumnType("int")
-                        .HasColumnName("id_det_inventario");
+                        .HasColumnName("id_insumo");
 
                     b.Property<int>("IdInventario")
                         .HasColumnType("int")
@@ -2228,8 +2847,6 @@ namespace DBSenorialModels.Data.Migraciones
 
                     b.HasKey("IdSalida")
                         .HasName("salida_id_pk");
-
-                    b.HasIndex("IdDetInventario");
 
                     b.HasIndex("IdInventario");
 
@@ -2556,7 +3173,8 @@ namespace DBSenorialModels.Data.Migraciones
                         .HasColumnName("email");
 
                     b.Property<int?>("IdImg")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id_img");
 
                     b.Property<int>("IdPersona")
                         .HasColumnType("int")
@@ -2605,8 +3223,9 @@ namespace DBSenorialModels.Data.Migraciones
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 7, 14, 19, 3, 43, 439, DateTimeKind.Local).AddTicks(2930),
+                            CreatedAt = new DateTime(2024, 8, 20, 15, 10, 28, 829, DateTimeKind.Local).AddTicks(8021),
                             Email = "admin@admin.com",
+                            IdImg = 1,
                             IdPersona = 1,
                             IdRol = 1,
                             Password = "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=",
@@ -2830,25 +3449,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("AperturaCaja");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleDashMenu", b =>
-                {
-                    b.HasOne("DBSenorialModels.Senorial.MenuDash", "IdMenuNavigation")
-                        .WithMany("DetalleDashMenus")
-                        .HasForeignKey("IdMenu")
-                        .IsRequired()
-                        .HasConstraintName("menu_id_fk");
-
-                    b.HasOne("DBSenorialModels.Senorial.Role", "IdRolNavigation")
-                        .WithMany("DetalleDashMenus")
-                        .HasForeignKey("IdRol")
-                        .IsRequired()
-                        .HasConstraintName("rol_id_fk");
-
-                    b.Navigation("IdMenuNavigation");
-
-                    b.Navigation("IdRolNavigation");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.Insumo", "Insumo")
@@ -2954,11 +3554,19 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Entrada", b =>
                 {
+                    b.HasOne("DBSenorialModels.Senorial.Insumo", "IdNavigationInsumo")
+                        .WithMany("Entrada")
+                        .HasForeignKey("IdInsumo")
+                        .IsRequired()
+                        .HasConstraintName("entrada_insumo_fk");
+
                     b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
                         .WithMany("Entradas")
                         .HasForeignKey("IdInventario")
                         .IsRequired()
                         .HasConstraintName("inventario_id_entrada_fk");
+
+                    b.Navigation("IdNavigationInsumo");
 
                     b.Navigation("Inventario");
                 });
@@ -3073,11 +3681,11 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Salida", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.DetalleInventario", "DetalleInventario")
-                        .WithMany("Salidas")
-                        .HasForeignKey("IdDetInventario")
+                    b.HasOne("DBSenorialModels.Senorial.Insumo", "IdNavigationInsumo")
+                        .WithMany("Salida")
+                        .HasForeignKey("IdInventario")
                         .IsRequired()
-                        .HasConstraintName("detalle_inventario_id_fk");
+                        .HasConstraintName("salida_insumo_fk");
 
                     b.HasOne("DBSenorialModels.Senorial.Inventario", "Inventario")
                         .WithMany("Salidas")
@@ -3089,7 +3697,7 @@ namespace DBSenorialModels.Data.Migraciones
                         .WithMany("Salida")
                         .HasForeignKey("SucursalIdSucursal");
 
-                    b.Navigation("DetalleInventario");
+                    b.Navigation("IdNavigationInsumo");
 
                     b.Navigation("Inventario");
                 });
@@ -3265,11 +3873,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("DBSenorialModels.Senorial.DetalleInventario", b =>
-                {
-                    b.Navigation("Salidas");
-                });
-
             modelBuilder.Entity("DBSenorialModels.Senorial.Documento", b =>
                 {
                     b.Navigation("Sucursals");
@@ -3290,6 +3893,10 @@ namespace DBSenorialModels.Data.Migraciones
             modelBuilder.Entity("DBSenorialModels.Senorial.Insumo", b =>
                 {
                     b.Navigation("DetalleInventarios");
+
+                    b.Navigation("Entrada");
+
+                    b.Navigation("Salida");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Inventario", b =>
@@ -3299,11 +3906,6 @@ namespace DBSenorialModels.Data.Migraciones
                     b.Navigation("Entradas");
 
                     b.Navigation("Salidas");
-                });
-
-            modelBuilder.Entity("DBSenorialModels.Senorial.MenuDash", b =>
-                {
-                    b.Navigation("DetalleDashMenus");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Mesa", b =>
@@ -3350,8 +3952,6 @@ namespace DBSenorialModels.Data.Migraciones
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Role", b =>
                 {
-                    b.Navigation("DetalleDashMenus");
-
                     b.Navigation("Empleados");
 
                     b.Navigation("Usuarios");

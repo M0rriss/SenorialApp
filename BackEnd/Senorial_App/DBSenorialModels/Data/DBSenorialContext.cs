@@ -155,7 +155,7 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("categoria_producto_fk");
             entity.HasData(
-        new Categoria { IdCategoria = 1, Nombre = "Hamburguesas",       Estado = true },
+        new Categoria { IdCategoria = 1, Nombre = "Hamburguesa" ,       Estado = true },
         new Categoria { IdCategoria = 2, Nombre = "Parrillas y Pollos", Estado = true },
         new Categoria { IdCategoria = 3, Nombre = "Platos de Fondo",    Estado = true },
         new Categoria { IdCategoria = 4, Nombre = "Bebidas",            Estado = true },
@@ -166,14 +166,15 @@ public partial class DBSenorialContext : DbContext
         new Categoria { IdCategoria =  6, Nombre = "Pollos",              Estado = true, IdCategoriaPadre = 2 },
         new Categoria { IdCategoria =  7, Nombre = "Parrillas",           Estado = true, IdCategoriaPadre = 2 },
         new Categoria { IdCategoria =  8, Nombre = "Otros",               Estado = true, IdCategoriaPadre = 2 },
-        new Categoria { IdCategoria =  9, Nombre = "Comida Rápida",       Estado = true, IdCategoriaPadre = 1 },
+        new Categoria { IdCategoria =  9, Nombre = "Comida Rápida",       Estado = true, IdCategoriaPadre = 3 },
         new Categoria { IdCategoria = 10, Nombre = "Bebidas Calientes",   Estado = true, IdCategoriaPadre = 4 },
         new Categoria { IdCategoria = 11, Nombre = "Bebidas Frías",       Estado = true, IdCategoriaPadre = 4 },
         new Categoria { IdCategoria = 12, Nombre = "Licores",             Estado = true, IdCategoriaPadre = 4 },
         new Categoria { IdCategoria = 13, Nombre = "Cócteles",            Estado = true, IdCategoriaPadre = 4 },
         new Categoria { IdCategoria = 14, Nombre = "Piqueos de la Casa",  Estado = true, IdCategoriaPadre = 3 },
         new Categoria { IdCategoria = 15, Nombre = "Postres",             Estado = true, IdCategoriaPadre = 5 },
-        new Categoria { IdCategoria = 16, Nombre = "Jugos y Milkshakes",  Estado = true, IdCategoriaPadre = 5 }
+        new Categoria { IdCategoria = 16, Nombre = "Jugos y Milkshakes",  Estado = true, IdCategoriaPadre = 5 },
+        new Categoria { IdCategoria = 17, Nombre = "Hamburguesas"       , Estado = true, IdCategoriaPadre = 1 }
     );
         });
 
@@ -406,8 +407,8 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("unidad_medida_id_fk");
             entity.HasData(
-            new Insumo { IdInsumo = 1,  Nombre = "Aceite",                IdUnidad = 1 }, // Balde
-            new Insumo { IdInsumo = 2,  Nombre = "Aceite",                IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 1,  Nombre = "Aceite x Balde",                IdUnidad = 1 }, // Balde
+            new Insumo { IdInsumo = 2,  Nombre = "Aceite x Litro",                IdUnidad = 2 }, // Litro
             new Insumo { IdInsumo = 3,  Nombre = "Aceite Sésamo",         IdUnidad = 3 }, // Unidad
             new Insumo { IdInsumo = 4,  Nombre = "Aji",                   IdUnidad = 4 }, // Kilo
             new Insumo { IdInsumo = 5,  Nombre = "Ajicero",               IdUnidad = 5 }, // Ciento
@@ -504,6 +505,17 @@ public partial class DBSenorialContext : DbContext
         modelBuilder.Entity<Mesa>(entity =>
         {
             entity.HasKey(e => e.IdMesa).HasName("mesa_id_pk");
+            entity.HasData(
+                new Mesa {IdMesa = 1, Nombre = "Mesa 1", Estado = true },
+                new Mesa {IdMesa = 2, Nombre = "Mesa 2", Estado = true },
+                new Mesa {IdMesa = 3, Nombre = "Mesa 3", Estado = true },
+                new Mesa {IdMesa = 4, Nombre = "Mesa 4", Estado = true },
+                new Mesa {IdMesa = 5, Nombre = "Mesa 5", Estado = true },
+                new Mesa {IdMesa = 6, Nombre = "Mesa 6", Estado = true },
+                new Mesa {IdMesa = 7, Nombre = "Mesa 7", Estado = true },
+                new Mesa {IdMesa = 8, Nombre = "Mesa 8", Estado = true },
+                new Mesa {IdMesa = 9, Nombre = "Mesa 9", Estado = true }
+                );
         });
 
         modelBuilder.Entity<MetodoPago>(entity =>
@@ -620,9 +632,9 @@ public partial class DBSenorialContext : DbContext
                 .HasConstraintName("img_id_fk");
             entity.HasData(
     // Hamburguesas
-    new Producto { IdProducto =  1, Nombre = "Hamburguesa clásica",           Descripcion = "Hamburguesa clásica",           Derivar = "Horno",  IdCategoria = 1, PrecioVenta =  9.00M, IdImg=1 },
-    new Producto { IdProducto =  2, Nombre = "Hamburguesa queso tocino",      Descripcion = "Hamburguesa queso tocino",      Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 12.00M, IdImg=1 },
-    new Producto { IdProducto =  3, Nombre = "Hamburguesa señorial",          Descripcion = "Hamburguesa señorial",          Derivar = "Horno",  IdCategoria = 1, PrecioVenta = 15.00M, IdImg=1 },
+    new Producto { IdProducto =  1, Nombre = "Hamburguesa clásica",           Descripcion = "Hamburguesa clásica",           Derivar = "Horno",  IdCategoria = 17, PrecioVenta =  9.00M, IdImg=1 },
+    new Producto { IdProducto =  2, Nombre = "Hamburguesa queso tocino",      Descripcion = "Hamburguesa queso tocino",      Derivar = "Horno",  IdCategoria = 17, PrecioVenta = 12.00M, IdImg=1 },
+    new Producto { IdProducto =  3, Nombre = "Hamburguesa señorial",          Descripcion = "Hamburguesa señorial",          Derivar = "Horno",  IdCategoria = 17, PrecioVenta = 15.00M, IdImg=1 },
 
     // Pollos y Parrillas
     new Producto { IdProducto =  4, Nombre = "1/4 de pollo a la brasa",       Descripcion = "1/4 de pollo a la brasa",       Derivar = "Horno",  IdCategoria = 6, PrecioVenta = 12.00M, IdImg=1 },
@@ -637,11 +649,11 @@ public partial class DBSenorialContext : DbContext
     new Producto { IdProducto = 13, Nombre = "Chorizo a la parrilla",         Descripcion = "Chorizo a la parrilla",         Derivar = "Horno",  IdCategoria = 8, PrecioVenta = 11.00M, IdImg=1 },
 
     // Platos de Fondo
-    new Producto { IdProducto = 14, Nombre = "Chicharrón señorial",           Descripcion = "Chicharrón señorial",           Derivar = "Horno",  IdCategoria = 3, PrecioVenta = 15.00M, IdImg=1 },
-    new Producto { IdProducto = 15, Nombre = "Lonjitas",                      Descripcion = "Lonjitas",                      Derivar = "Horno",  IdCategoria = 3, PrecioVenta =  6.00M, IdImg=1 },
-    new Producto { IdProducto = 16, Nombre = "Chaufa especial",               Descripcion = "Chaufa especial",               Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 10.00M, IdImg=1 },
-    new Producto { IdProducto = 17, Nombre = "Chaufa mixto",                  Descripcion = "Chaufa mixto",                  Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 12.00M, IdImg=1 },
-    new Producto { IdProducto = 18, Nombre = "Spaguetti a lo alfredo",        Descripcion = "Spaguetti a lo alfredo",        Derivar = "Cocina", IdCategoria = 3, PrecioVenta = 14.00M, IdImg=1 },
+    new Producto { IdProducto = 14, Nombre = "Chicharrón señorial",           Descripcion = "Chicharrón señorial",           Derivar = "Horno",  IdCategoria = 9, PrecioVenta = 15.00M, IdImg=1 },
+    new Producto { IdProducto = 15, Nombre = "Lonjitas",                      Descripcion = "Lonjitas",                      Derivar = "Horno",  IdCategoria = 9, PrecioVenta =  6.00M, IdImg=1 },
+    new Producto { IdProducto = 16, Nombre = "Chaufa especial",               Descripcion = "Chaufa especial",               Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 10.00M, IdImg=1 },
+    new Producto { IdProducto = 17, Nombre = "Chaufa mixto",                  Descripcion = "Chaufa mixto",                  Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 12.00M, IdImg=1 },
+    new Producto { IdProducto = 18, Nombre = "Spaguetti a lo alfredo",        Descripcion = "Spaguetti a lo alfredo",        Derivar = "Cocina", IdCategoria = 9, PrecioVenta = 14.00M, IdImg=1 },
 
     // Bebidas Calientes
     new Producto { IdProducto = 19, Nombre = "Café pasado",                   Descripcion = "Café pasado",                   Derivar = "Cocina", IdCategoria = 10, PrecioVenta =  2.50M, IdImg=1 },

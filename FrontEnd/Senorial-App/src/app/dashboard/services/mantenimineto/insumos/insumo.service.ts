@@ -14,8 +14,8 @@ import { Observable } from 'rxjs';
 })
 export class InsumoService {
 
-  constructor(protected http:HttpClient) { 
-    
+  constructor(protected http:HttpClient) {
+
   }
 
   listarInsumo(): Observable<InsumoResponse[]>{
@@ -26,8 +26,8 @@ export class InsumoService {
     var res = this.http.post<CustomResponse>(urlSuministro.crear,req);
     return res;
   }
-  actulizarInsumo(req:InsumoRequest): Observable<CustomResponse>{
-    var res = this.http.put<CustomResponse>(urlSuministro.actulizar,req);
+  actualizarInsumo(req:InsumoRequest): Observable<CustomResponse>{
+    var res = this.http.put<CustomResponse>(urlSuministro.update,req);
     return res;
   }
   eliminarInsumo(idInsumo:number): Observable<boolean>{
