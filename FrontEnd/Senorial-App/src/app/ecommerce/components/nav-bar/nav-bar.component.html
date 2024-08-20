@@ -21,6 +21,7 @@
       </button>
       <button type="button" (click)="toggleShop()" class="btn btn-shopping-cart" [ngClass]="{'active': isShopOpen}">
         <img src="./shopping-cart.svg" alt="cart" class="shopping-cart-icon">
+        <!-- <span *ngIf="products.length > 0">s/ {{ total }}</span> -->
       </button>
     </div>
   </div>

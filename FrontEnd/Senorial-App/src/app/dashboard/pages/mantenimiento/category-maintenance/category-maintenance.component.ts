@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CategoriaService } from '../../../services/mantenimineto/categorias/categoria.service';
 import { CategoriaResponse, CategoriasResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-response';
 import { CustomResponse } from '@app/core/models/generic/custom-response';
@@ -9,7 +9,9 @@ import { NotificationService } from '@app/shared/services/toast/notification.ser
 @Component({
   selector: 'category-maintenance',
   templateUrl: './category-maintenance.component.html',
-  styleUrl: './category-maintenance.component.scss'
+  styleUrl: './category-maintenance.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class CategoryMaintenanceComponent implements OnInit{
   isTableView: boolean = true;
@@ -43,7 +45,8 @@ export class CategoryMaintenanceComponent implements OnInit{
 
   constructor(private categoriaService:CategoriaService,
     private fb:FormBuilder,
-    private toastService:NotificationService
+    private notificationService: NotificationService,
+
   ){
     this.formCategoria = this.fb.group({
       nombre: [],
@@ -119,7 +122,7 @@ export class CategoryMaintenanceComponent implements OnInit{
     let req = this.formCategoria.value as CategoriaRequest
     this.categoriaService.crearSubCategoria(req).subscribe({
       next: (res:CustomResponse) => {
-        alert(res.message);
+        this.notificationService.showSuccess(res.message, "Se agrego correctamente");
         this.closeAddEditDialog();
       }
     })
@@ -130,8 +133,7 @@ export class CategoryMaintenanceComponent implements OnInit{
     req.idCategoria = this.idSubCategoria;
     this.categoriaService.actulizarSubCategoria(req).subscribe({
       next: (res:CustomResponse) => {
-        this.toastService.showSuccess("Test",res.message,false);
-        alert(res.message);
+        this.notificationService.showSuccess(res.message, "Se actualizo correctamente");
         this.closeAddEditDialog();
       }
     })
@@ -150,7 +152,7 @@ export class CategoryMaintenanceComponent implements OnInit{
   }
 
   closeConfirmDialog() {
-  
+
     this.isConfirmDialogOpen = false;
   }
 

@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MetodoPagoRequest } from '@app/core/models/dashboard/mantenimiento/metodo-pago/metodo-pago-request';
 import { MetodoPagoResponse } from '@app/core/models/dashboard/mantenimiento/metodo-pago/metodo-pago-response';
 import { MetodoPagoService } from '@app/dashboard/services/mantenimineto/metodo-pago/metodo-pago.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'payment-method-maintenance',
   templateUrl: './payment-method-maintenance.component.html',
-  styleUrl: './payment-method-maintenance.component.scss'
+  styleUrl: './payment-method-maintenance.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class PaymentMethodMaintenanceComponent implements OnInit {
   isModalOpen: boolean = false;
@@ -29,6 +32,8 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
 
   constructor(private metodoPagoService:MetodoPagoService,
     private fb:FormBuilder,
+    private notificationService: NotificationService,
+
   ){
     this.formMetodoPago = this.fb.group({
       descripcion : [],
@@ -54,10 +59,13 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
     this.metodoPagoService.crearMetodoPago(req)
       .subscribe({
         next: (res:MetodoPagoResponse)=>{
-          alert("mensaje agregado");
-          this.closeDialog();
-        }
-      });
+          this.notificationService.showSuccess('Creado exitosamente', 'Éxito');
+        this.closeDialog();
+      },
+      error: () => {
+        this.notificationService.showError('Error al crear', 'Error');
+      }
+    });
   }
   editarMetodoPago(){
     let req = this.formMetodoPago.value as MetodoPagoRequest;
@@ -66,10 +74,13 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
     this.metodoPagoService.updateMetodoPago(req)
       .subscribe({
         next: (res:MetodoPagoResponse)=>{
-          alert("mensaje agregado");
-          this.closeDialog();
-        }
-      });
+          this.notificationService.showSuccess('Actualizado exitosamente', 'Éxito');
+        this.closeDialog();
+      },
+      error: () => {
+        this.notificationService.showError('Error al actualizar', 'Error');
+      }
+    });
   }
   seveMetodoPago(){
     if(this.modalTitle == 'Agregar Método de Pago'){

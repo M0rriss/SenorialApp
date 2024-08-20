@@ -233,8 +233,8 @@ namespace Business.Schema_Ventas.Productos
                 IdCategoria = req.IdCategoria,
                 IdImg = resdbImagen.IdImg,
                 Descripcion = req.Description,
-                Derivar = req.Inprimir,
-                PrecioVenta = req.PricioCompra,
+                Derivar = req.Imprimir,
+                PrecioVenta = req.PrecioCompra,
                 Nombre = req.Nombre,
             };
             producto = await _productoRepository.Create(producto);
@@ -273,8 +273,8 @@ namespace Business.Schema_Ventas.Productos
             resProduct.IdCategoria = req.IdCategoria;
             resProduct.IdImg = idImagen;
             resProduct.Descripcion = req.Description;
-            resProduct.Derivar = req.Inprimir;
-            resProduct.PrecioVenta = req.PricioCompra;
+            resProduct.Derivar = req.Imprimir;
+            resProduct.PrecioVenta = req.PrecioCompra;
             resProduct.Nombre = req.Nombre;
             
             await _productoRepository.Update(resProduct);

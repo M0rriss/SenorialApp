@@ -1,5 +1,7 @@
 @use "sass:math";
-
+@import "node_modules/primeng/resources/themes/aura-light-blue/theme.css";
+@import "node_modules/primeng/resources/primeng.css";
+@import "node_modules/primeicons/primeicons.css";
 // Variables para colores y estilos
 $primary-color: #181C2E;
 $secondary-color: #FF910F;
@@ -284,6 +286,7 @@ $kebab-hover-color: #ff0000;
     border: 3px solid #ccd1d9;
     border-radius: 18px;
     margin-bottom: 10px;
+    height: 80px;
   }
 
   .category-name {

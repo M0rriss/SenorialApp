@@ -38,13 +38,13 @@
           <h2 class="table-info-title">Información del Mesa</h2>
           <div class="table-status-container">
             <div class="table-status-wrapper">
-              <button 
-                *ngFor="let estado of estados" 
-                class="status-item" 
+              <button
+                *ngFor="let estado of estados"
+                class="status-item"
                 [ngClass]="{ 'selected': estado === pedido.estado }"
               >
                 <div class="status-content">
-                  <div class="status-icon" 
+                  <div class="status-icon"
                        [ngClass]="{
                          'status-available': estado === 'disponible',
                          'status-occupied': estado === 'ocupado',
@@ -60,6 +60,24 @@
         </div>
       </section> -->
     </section>
+    <!-- PUSHER -->
+  <!--   <section class="table-grid">
+      <div class="table-row">
+        <div *ngFor="let mesa of cruzado" class="table-column">
+          <div class="table-card">
+            <div class="table-header">
+              {{ mesa.nombre }}
+            </div>
+            <div class="table-body">
+              <p>ID: {{ mesa.idMesa }}</p>
+              <p>xEstado: {{ mesa.estado }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section> -->
+
     <section class="table-grid">
       <div class="table-row">
         <div class="table-column">
