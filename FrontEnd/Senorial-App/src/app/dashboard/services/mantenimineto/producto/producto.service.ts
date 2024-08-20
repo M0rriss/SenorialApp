@@ -26,7 +26,7 @@ export class ProductoService extends CrudService<ProductResponse,ProductRequest>
         return res;
     }
 
-    edidtarProducto(formData:FormData):Observable<CustomResponse>{
+    editarProductos(formData:FormData):Observable<CustomResponse>{
         var res = this.http.put<CustomResponse>(urlProducto.update,formData);
         return res;
     }

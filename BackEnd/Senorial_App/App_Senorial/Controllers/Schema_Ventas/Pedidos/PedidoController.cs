@@ -13,7 +13,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoBusiness _pedidoBusiness;

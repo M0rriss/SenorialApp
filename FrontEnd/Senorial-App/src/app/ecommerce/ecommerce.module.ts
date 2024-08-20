@@ -17,7 +17,9 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PaginatorModule } from 'primeng/paginator';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { InputOtpModule } from 'primeng/inputotp';
+import { ToastModule } from 'primeng/toast';
 
 // Componentes
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
@@ -40,7 +42,7 @@ import { ShoppingCartComponent } from '@components-ecommerce/shopping-cart/shopp
 import { StaffPersonalComponent } from '@components-ecommerce/staff-personal/staff-personal.component';
 import { StorePickUpComponent } from '@pages-ecommerce/store-pick-up/store-pick-up.component';
 import { UserAccountComponent } from '@pages-ecommerce/user-account/user-account.component';
-import { InputOtpModule } from 'primeng/inputotp';
+
 
 @NgModule({
   declarations: [
@@ -86,10 +88,10 @@ import { InputOtpModule } from 'primeng/inputotp';
     PaginatorModule,
     BrowserModule,
     BrowserAnimationsModule,
+    ToastModule,
     InputTextModule,
     PasswordModule,
     InputOtpModule,
-
   ],
   exports: [
     // Exportación de componentes y módulos que se usarán en otros módulos
@@ -106,6 +108,7 @@ import { InputOtpModule } from 'primeng/inputotp';
     InputSwitchModule,
     ProgressSpinnerModule,
   ],
+  providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EcommerceModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UsuarioAddRequest } from '@app/core/models/dashboard/mantenimiento/usuario/usuario-add-request';
 import { UsuarioEditRequest } from '@app/core/models/dashboard/mantenimiento/usuario/usuario-edit-request';
@@ -9,11 +9,14 @@ import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-re
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { UsuarioService } from '@app/dashboard/services/mantenimineto/usuario/usuario.service';
 import { RolesService } from '@app/dashboard/services/roles/roles.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'user-maintenance',
   templateUrl: './user-maintenance.component.html',
-  styleUrl: './user-maintenance.component.scss'
+  styleUrl: './user-maintenance.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class UserMaintenanceComponent implements OnInit {
 
@@ -43,7 +46,9 @@ export class UserMaintenanceComponent implements OnInit {
   constructor(
     private usuarioService:UsuarioService,
     private fb:FormBuilder,
-    private rolService:RolesService
+    private rolService:RolesService,
+    private notificationService: NotificationService,
+
   ){
     this.formUsuario = this.fb.group({
       nombre:[],
@@ -85,8 +90,11 @@ export class UserMaintenanceComponent implements OnInit {
     req.file = this.file;
     this.usuarioService.crearUsuario(req).subscribe({
       next: (res:CustomResponse)=>{
-        alert(res.message);
+        this.notificationService.showSuccess(res.message,'Usuario creado');
         this.closeDialog();
+      },
+      error: (err) => {
+        this.notificationService.showError('Error', 'Hubo un problema al crear el usuario.');
       }
     })
   }
@@ -97,10 +105,14 @@ export class UserMaintenanceComponent implements OnInit {
     req.nuevo = false;
     this.usuarioService.actulizarUsuario(req).subscribe({
       next: (res:CustomResponse)=>{
-        alert(res.message);
+        this.notificationService.showSuccess( res.message ,'Usuario actualizado');
         this.closeDialog();
+      },
+      error: (err) => {
+        this.notificationService.showError('Error', 'Hubo un problema al actualizar el usuario.');
       }
     })
+    this.listarUsuarios();
   }
   accionesModal(){
     if(this.modalTitle == "Agregar Usuario"){
@@ -147,6 +159,7 @@ export class UserMaintenanceComponent implements OnInit {
   deleteUser(): void {
     // Lógica para eliminar usuario
     this.isConfirmDialogOpen = false;
+    this.notificationService.showSuccess('Usuario eliminado', 'El usuario fue eliminado exitosamente.');
   }
 
   openConfirmDialog(): void {

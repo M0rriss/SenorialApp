@@ -12,6 +12,6 @@
     "\\Senorial_App\\Business\\Auth",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\Business\\Auth\\AuthBusiness.cs",
+  "SelectedNode": "\\Senorial_App\\App_Senorial\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }

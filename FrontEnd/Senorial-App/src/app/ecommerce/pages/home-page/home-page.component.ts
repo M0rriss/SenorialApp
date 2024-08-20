@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CardProductResponse } from '@app/core/models/ecommerce/components/card-product/card-product-response';
 import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
@@ -10,7 +10,9 @@ import { PusherService } from '@app/ecommerce/services/pusher/pusher.service';
 @Component({
   selector: 'ecommerce-home-page',
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  styleUrl: './home-page.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class HomePageComponent implements OnInit{
   // Variables para la paginación
@@ -30,15 +32,13 @@ export class HomePageComponent implements OnInit{
   list: CardProductResponse[] = [];
   constructor(
     private cardProductService:CardProductService,
-    private pusherService: PusherService
+    private pusherService: PusherService,
+    private notificationService: NotificationService,
   ){}
   ngOnInit(): void {
     this.listarProductos();
-    // this.pusherService.bindEvent('my-event', (data: any) => {
-    //   console.log("Evento recibido:", data);
-    //   // Puedes manejar la data recibida aquí
-    // });
-    
+
+
   }
 
   optenerFiltro(data:number){
@@ -83,7 +83,7 @@ export class HomePageComponent implements OnInit{
       }
       for(var i of this.list){
         if(i.idProducto == data.idProducto){
-          alert("Produto ya esta agregado");
+          this.notificationService.showWarn('Producto ya agregado', 'El producto ya está en la lista.');
           valid = false;
           break;
         }
@@ -92,6 +92,7 @@ export class HomePageComponent implements OnInit{
         this.list.push(data);
         let json = JSON.stringify(this.list);
         localStorage.setItem('product',json);
+        this.notificationService.showSuccess('Producto agregado', 'El producto se agregó.');
       }
 
     }
@@ -107,9 +108,9 @@ export class HomePageComponent implements OnInit{
       else{
         this.listarProductos('','',(this.first/this.rows)+1);
       }
-      
-      
-      
+
+
+
     }
 }
 

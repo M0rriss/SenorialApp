@@ -15,7 +15,7 @@
           </div>
         </header>
         <main class="login-form-container">
-          <h1 class="login-title">Solo el personal autorizado podra ingresar por aqui:</h1>
+          <h1 class="login-title">Solo el personal autorizado:</h1>
           <form [formGroup]="formLoginDash" (submit)="loginDash()">
             <label for="email" class="visually-hidden">Email del persona</label>
             <input formControlName="email" type="email" id="email" class="input-field" placeholder="Email del personal" required />
@@ -54,4 +54,4 @@
   <footer-ecommerce></footer-ecommerce>
   </div>
 
-
+  <p-toast/>

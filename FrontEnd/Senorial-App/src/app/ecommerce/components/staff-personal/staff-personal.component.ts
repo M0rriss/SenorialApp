@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginDashResponse } from '@app/core/models/dashboard/login/login-dash-response';
 import { LoginRequest, LoginResponse } from '@app/core/models/login-request';
 import { StaffPersonalService } from '@app/ecommerce/service/components/staff-personal/staff-personal.service';
 import { AuthService } from '@app/ecommerce/services/auth.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'staff-personal',
   templateUrl: './staff-personal.component.html',
-  styleUrl: './staff-personal.component.scss'
+  styleUrl: './staff-personal.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class StaffPersonalComponent {
   public showPassword: boolean = false;
@@ -22,7 +25,8 @@ export class StaffPersonalComponent {
 
   constructor(private staffService:StaffPersonalService,
     private fb:FormBuilder,
-    private route:Router
+    private route:Router,
+    private notificationService: NotificationService
   ){
     this.formLoginDash = this.fb.group({
       email: [],
@@ -42,24 +46,25 @@ export class StaffPersonalComponent {
         // Almacenamiento en session store
         sessionStorage.setItem("user",data);
         // rutear a dashboard
-        alert(res.message);
-        this.route.navigate(['dashboard']);
+        this.notificationService.showSuccess(res.message,'Se ha iniciado sesión correctamente');
+        //this.notificationService.displaySuccessToast('Login exitoso', 'Se ha iniciado sesión correctamente', 5000);
+        setTimeout(() => {
+          this.route.navigate(['dashboard']);
+      }, 1500);
+        //this.route.navigate(['dashboard']);
       },
-
-      error: (err)=>{
-        //Manejo de errores
+      error: (err) => {
         var error = err.error.errors;
         var correct = err.error;
-    
-        if(error == undefined){
-          alert(correct);
-        }
-        else{
-          if(error.Email != null){
-            alert(error.Email[0]);
+
+        if (error == undefined) {
+          this.notificationService.showError('Error', correct);
+        } else {
+          if (error.Email != null) {
+            this.notificationService.showWarn('Error en el email', error.Email[0]);
           }
-          if(error.Password != undefined){
-            alert(error.Password[0])
+          if (error.Password != undefined) {
+            this.notificationService.showWarn('Error en la contraseña', error.Password[0]);
           }
         }
       }

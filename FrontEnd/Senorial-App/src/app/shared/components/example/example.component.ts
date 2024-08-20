@@ -13,7 +13,7 @@ export class ExampleComponent {
   }
 
   showLightErrorToast() {
-    this.notificationService.showError('Error', 'Ocurrió un problema.', true); // Modo claro
+    this.notificationService.showError('Error', 'Ocurrió un problema.'); // Modo claro
   }
 }
 /* Estilos base para el toast */

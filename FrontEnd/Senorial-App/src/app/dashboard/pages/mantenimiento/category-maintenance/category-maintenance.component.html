@@ -36,7 +36,7 @@
             </td> -->
             <td>
               <div class="action-buttons">
-                <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(category)" ></i>
+                <!-- <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(category)" ></i> -->
                 <i class="delete-icon fa-solid fa-trash" ></i>
               </div>
             </td>
@@ -59,17 +59,17 @@
     <div *ngIf="!isTableView" class="categories-container">
       <div class="categories-wrapper">
         <header class="category-header">
-          <h2 class="category-header-title">Categorias</h2>
+          <h2 class="category-header-title">Sub Categoria</h2>
           <button class="category-button" (click)="openAddDialog()">
             <i class="fa-solid fa-circle-plus category-icon"></i>
-            <span>Categoria</span>
+            <span>SubCategoria</span>
           </button>
         </header>
 
         <div class="categories-list">
           @for (item of subCategoria; track $index) {
             <div class="category-item">
-          
+
               <h3 class="category-name">{{ item.nombre }}</h3>
                 <div class="category-actions">
                   <label class="switch">
@@ -81,7 +81,7 @@
                 </div>
             </div>
           }
-          
+
         </div>
       </div>
     </div>
@@ -94,11 +94,15 @@
           <h2 class="dialog-title">{{ dialogTitle }}</h2>
           <div class="form-row">
             <label class="form-label">Nombre</label>
-            <input formControlName="nombre" class="form-input" placeholder="Nombre de la categoría" />
+            <input formControlName="nombre" class="form-input" placeholder="Nombre de la subcategoría" />
           </div>
           <div class="form-row">
-            <label class="form-label">Subcategoría</label>
-            <input formControlName="idCategoriaPadre" class="form-input" placeholder="Nombre de la subcategoría" />
+            <label class="form-label">Categoria</label>
+            <select formControlName="idCategoriaPadre" class="form-input" placeholder="Nombre de la subcategoría">
+              @for (item of subCategoria; track $index) {
+                <option [value]="item.idCategoriaPadre">{{item.nombre}}</option>
+              }
+            </select>
           </div>
           <div class="form-row">
             <label class="form-label">Estado</label>
@@ -113,9 +117,9 @@
           </div>
         </div>
       </div>
-  
+
      </form>
-    
+
     <!-- Confirm Dialog -->
     <div class="confirm-dialog-overlay" [ngClass]="{'show': isConfirmDialogOpen}">
       <div class="confirm-dialog">
@@ -129,3 +133,4 @@
     </div>
   </div>
 </section>
+<p-toast/>

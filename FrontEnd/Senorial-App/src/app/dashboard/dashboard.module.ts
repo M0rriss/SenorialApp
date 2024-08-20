@@ -20,6 +20,10 @@ import { PaymentMethodMaintenanceComponent } from './pages/mantenimiento/payment
 import { CategoryMaintenanceComponent } from './pages/mantenimiento/category-maintenance/category-maintenance.component';
 import { TableMaintenanceComponent } from './pages/mantenimiento/table-maintenance/table-maintenance.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -50,7 +54,11 @@ import { PaginatorModule } from 'primeng/paginator';
     FormsModule,
     ReactiveFormsModule,
     PaginatorModule,
-    
-  ]
+    BrowserModule,
+    BrowserAnimationsModule,
+    ToastModule,
+
+  ],
+  providers: [MessageService],
 })
 export class DashboardModule { }

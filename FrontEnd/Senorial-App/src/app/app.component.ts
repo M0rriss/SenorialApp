@@ -8,9 +8,5 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent {
   title = 'Senorial-App';
-  constructor(private primengConfig: PrimeNGConfig) {}
 
-  ngOnInit() {
-      this.primengConfig.ripple = true;
-  }
 }

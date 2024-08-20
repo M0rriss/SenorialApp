@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MesaRequest } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-request';
 import { MesaResponse } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-response';
 import { MesaService } from '@app/dashboard/services/mantenimineto/mesa/mesa.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'table-maintenance',
   templateUrl: './table-maintenance.component.html',
-  styleUrl: './table-maintenance.component.scss'
+  styleUrl: './table-maintenance.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class TableMaintenanceComponent implements OnInit {
   mesas = [
@@ -31,7 +34,9 @@ export class TableMaintenanceComponent implements OnInit {
   formMesa:FormGroup;
   idMesa: number = 0;
   constructor(private mesaService:MesaService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private notificationService: NotificationService,
+
   ){
     this.formMesa = this.fb.group({
       nombre:[],
@@ -56,21 +61,26 @@ export class TableMaintenanceComponent implements OnInit {
     req.idMesa=0;
     this.mesaService.crearRegistro(req).subscribe({
       next: (res: MesaResponse)=>{
-        alert("registro Correcto")
+        this.notificationService.showSuccess('Mesa creada exitosamente', "Exito");
         this.closeAddEditDialog();
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al crear la mesa.');
       }
-    })
+    });
   }
   editarMesa(){
     let req = this.formMesa.value as MesaRequest;
     req.idMesa = this.idMesa;
     this.mesaService.actulizarRegistro(req).subscribe({
       next: (res: MesaResponse)=>{
-        alert("registro Correcto")
+        this.notificationService.showSuccess('Mesa actualizada exitosamente');
         this.closeAddEditDialog();
-
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al actualizar la mesa.');
       }
-    })
+    });
   }
   // Abrir diálogo de agregar mesa
   openAddDialog() {

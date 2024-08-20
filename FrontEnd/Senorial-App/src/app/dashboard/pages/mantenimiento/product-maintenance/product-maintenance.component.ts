@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CategoriaResponse, CategoriasResponse } from '@app/core/models/dashboard/mantenimiento/categoria/categoria-response';
 import { ProductDashResponse } from '@app/core/models/dashboard/mantenimiento/product/product-dash-response';
@@ -9,12 +9,15 @@ import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-re
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { CategoriaService } from '@app/dashboard/services/mantenimineto/categorias/categoria.service';
 import { ProductoService } from '@app/dashboard/services/mantenimineto/producto/producto.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'product-maintenance',
   templateUrl: './product-maintenance.component.html',
-  styleUrl: './product-maintenance.component.scss'
+  styleUrl: './product-maintenance.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class ProductMaintenanceComponent implements OnInit {
   isModalOpen: boolean = false;
@@ -36,7 +39,9 @@ export class ProductMaintenanceComponent implements OnInit {
   editar: boolean = false;
   categorias: CategoriasResponse[] = [];
   constructor(private productService:ProductoService,private fb:FormBuilder,
-    private categoriService:CategoriaService
+    private categoriService:CategoriaService,
+    private notificationService: NotificationService,
+
   ){
     this.formProduct = this.fb.group({
       nombre: [],
@@ -84,12 +89,15 @@ export class ProductMaintenanceComponent implements OnInit {
     formData.append("Nombre",req.nombre);
     formData.append("Description",req.descripcion);
     formData.append("IdCategoria",req.idCategoria.toString());
-    formData.append("Inprimir",req.derivar);
-    formData.append("PricioCompra",req.precioVenta.toString());
+    formData.append("Imprimir",req.derivar);
+    formData.append("PrecioCompra",req.precioVenta.toString());
     this.productService.crearProducto(formData).subscribe({
       next: (res:CustomResponse)=>{
-        alert(res.message);
+        this.notificationService.showSuccess( res.message ,'Producto creado');
         this.closeDialog();
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al crear el producto.');
       }
     });
   }
@@ -107,18 +115,23 @@ export class ProductMaintenanceComponent implements OnInit {
     let archivo:File = this.file;
     let newFile = new File([],'');
     req.idProducto = this.idProducto
-  
+
     formData.append("File",archivo);
     formData.append("IdProducto",req.idProducto.toString());
     formData.append("Nombre",req.nombre);
     formData.append("Description",req.descripcion);
     formData.append("IdCategoria",req.idCategoria.toString());
-    formData.append("Inprimir",req.derivar);
-    formData.append("PricioCompra",req.precioVenta.toString());
+    formData.append("Imprimir",req.derivar);
+    formData.append("PrecioCompra",req.precioVenta.toString());
     formData.append("Nuevo",`${this.editar}`);
-    this.productService.edidtarProducto(formData).subscribe({
+    this.productService.editarProductos(formData).subscribe({
       next: (data:CustomResponse)=>{
-        alert(data.message);
+        this.notificationService.showSuccess( data.message , 'Producto actualizado');
+        this.closeDialog();
+
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al actualizar el producto.');
       }
     });
   }

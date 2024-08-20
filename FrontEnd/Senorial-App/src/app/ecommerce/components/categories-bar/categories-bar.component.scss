@@ -130,8 +130,7 @@ section {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-
-  &.active, // Mantener el botón seleccionado cuando está activo
+ // Mantener el botón seleccionado cuando está activo
   &:hover,
   &:active {
     background-color: $secondary-color;
@@ -149,6 +148,8 @@ section {
   width: calc(100% - 64px); /* Ajustamos el ancho restando los márgenes laterales */
   max-width: 1200px; /* Opcional: limita el ancho máximo */
   border-bottom: 2px solid $primary-color; /* Añadir línea divisoria */
+  font-weight: 700;
+  //font-size: 24px;
 
   @media (max-width: 1366px) {
     width: calc(100% - 32px); /* Ajustamos para pantallas más pequeñas */

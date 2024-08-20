@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FiltroInsumoResponse } from '@app/core/models/dashboard/mantenimiento/insumos/filtro-insumo-response';
 import { InsumoRequest } from '@app/core/models/dashboard/mantenimiento/insumos/insumo-request';
@@ -9,11 +9,14 @@ import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-re
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
 import { InsumoService } from '@app/dashboard/services/mantenimineto/insumos/insumo.service';
 import { UnidadService } from '@app/dashboard/services/unidad/unidad.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 @Component({
   selector: 'supplies-maintenance',
   templateUrl: './supplies-maintenance.component.html',
-  styleUrl: './supplies-maintenance.component.scss'
+  styleUrl: './supplies-maintenance.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class SuppliesMaintenanceComponent implements OnInit {
   isModalOpen: boolean = false;
@@ -35,11 +38,13 @@ export class SuppliesMaintenanceComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
-  
+
   idInsumo:number = 0;
   constructor(private insumoService:InsumoService,
     private fb:FormBuilder,
-    private unidaService:UnidadService
+    private unidaService:UnidadService,
+    private notificationService: NotificationService,
+
   ){
     this.formInsumo = this.fb.group({
       nombre : [],
@@ -66,7 +71,7 @@ export class SuppliesMaintenanceComponent implements OnInit {
       });
   }
 
-  
+
   agregarInsumo(){
     let req = this.formInsumo.value as InsumoRequest;
     req.idInsumo = 0;
@@ -75,11 +80,15 @@ export class SuppliesMaintenanceComponent implements OnInit {
     this.insumoService.crearInsumo(req)
     .subscribe({
       next: (res: CustomResponse) => {
-        alert(res.message);
+        this.notificationService.showSuccess( res.message ,'Insumo creado exitosamente');
+        this.closeDialog();
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al crear el insumo.');
       }
     });
   }
-  actuliarInsumo(){
+  editarInsumo(){
     let req = this.formInsumo.value as InsumoRequest;
     req.idInsumo = this.idInsumo;
     req.url= "";
@@ -87,7 +96,11 @@ export class SuppliesMaintenanceComponent implements OnInit {
     this.insumoService.actulizarInsumo(req)
     .subscribe({
       next: (res: CustomResponse) => {
-        alert(res.message);
+        this.notificationService.showSuccess( res.message , 'Insumo actualizado exitosamente');
+        this.closeDialog();
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al actualizar el insumo.');
       }
     });
   }
