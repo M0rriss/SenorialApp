@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Schema_Ventas.Mesas;
 using Business.Schema_Ventas.Productos;
+using DBSenorialModels.View.Mesa;
 using IBusiness.Schema_Ventas.Mesas;
 using IBusiness.Schema_Ventas.Productos;
 using Microsoft.AspNetCore.Authorization;
@@ -103,6 +104,21 @@ namespace App_Senorial.Controllers.Schema_Ventas.Mesas
             return Ok(result);
         }
         #endregion CRUD METHODS
-
+        #region MESA LOCAL
+        [HttpGet]
+        [Route("MesaLocal")]
+        public async Task<ActionResult> GetMesaLocal()
+        {
+            var result = await _mesaBusiness.MesasLocal();
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("DetalleMesa")]
+        public async Task<ActionResult> GetDetalleMesaLocal()
+        {
+            var result = await _mesaBusiness.ObtenerDetallesDeMesas();
+            return Ok(result);
+        }
+        #endregion
     }
 }

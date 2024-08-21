@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:m_senorial/router/router.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 void main() async {
-  // await dotenv.load(fileName: "./modules/enviroment/enviroments.env");
+ await Hive.initFlutter();
+  Hive.openBox('security');
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -12,16 +15,18 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // This widget is the root of your application.flutter run
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
+  
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       
       title: 'Señorial0',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        
       ),
       routerConfig: router, 
     );

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Azure.Core;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Mesa;
 using IBusiness.Schema_Ventas.Mesas;
 using IRepository.Schema_Ventas.Mesas;
 using Repository.Schema_Ventas.Mesas;
@@ -154,6 +155,17 @@ namespace Business.Schema_Ventas.Mesas
         }
         #endregion
 
+        #region MESA LOCAL
+        public async Task<List<VwMesa>> MesasLocal()
+        {
+            return await _mesaRepository.MesasLocal();
+        }
+        public async Task<List<VwMesaDetalle>> ObtenerDetallesDeMesas()
+        {
+            return await _mesaRepository.ObtenerDetallesDeMesasAsync();
+        }
+        #endregion
+
         private bool ConvertToBoolean(string estado)
         {
             if (string.IsNullOrEmpty(estado))
@@ -165,5 +177,7 @@ namespace Business.Schema_Ventas.Mesas
 
             throw new ArgumentException("Estado no válido. Debe ser 'Activo' o 'Inactivo'.");
         }
+
+       
     }
 }

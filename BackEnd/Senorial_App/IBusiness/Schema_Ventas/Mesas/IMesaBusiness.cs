@@ -1,4 +1,5 @@
-﻿using IBusiness.Schema_Generico.CRUD;
+﻿using DBSenorialModels.View.Mesa;
+using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Ventas.Mesas;
 using RequestResponseModels.Response.Schema_Ventas.Mesas;
 using System;
@@ -12,5 +13,7 @@ namespace IBusiness.Schema_Ventas.Mesas
     public interface IMesaBusiness : ICrudBusiness<MesaRequest, MesaResponse>
     {
         Task<MesaResponse> UpdateMesa(MesaUpdateRequest request);
+        Task<List<VwMesa>> MesasLocal();
+        Task<List<VwMesaDetalle>> ObtenerDetallesDeMesas();
     }
 }
