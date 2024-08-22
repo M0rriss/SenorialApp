@@ -11,6 +11,6 @@
     "\\Senorial_App\\Business\\Auth",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\Mesas\\MesaController.cs",
+  "SelectedNode": "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\Pedidos\\PedidoController.cs",
   "PreviewInSolutionExplorer": false
 }

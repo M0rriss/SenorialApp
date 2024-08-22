@@ -11,6 +11,7 @@ import { SelectPaymentComponent } from './pages/select-payment/select-payment.co
 import { NotFoundError } from 'rxjs';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { userGuard } from '@app/guard/user.guard';
+import { ChatbotComponent } from '@app/shared/components/chatbot/chatbot.component';
 
 const routes: Routes = [
 
@@ -54,6 +55,10 @@ const routes: Routes = [
   {
     path      :'forgot-password',
     component : ForgetPasswordComponent
+  },
+  {
+    path      :'chatbot',
+    component : ChatbotComponent
   },
   {
     path      :'e-commerce',

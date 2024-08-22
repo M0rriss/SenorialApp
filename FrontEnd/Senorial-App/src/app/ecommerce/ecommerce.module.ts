@@ -92,6 +92,8 @@ import { UserAccountComponent } from '@pages-ecommerce/user-account/user-account
     InputTextModule,
     PasswordModule,
     InputOtpModule,
+    FormsModule,
+
   ],
   exports: [
     // Exportación de componentes y módulos que se usarán en otros módulos
@@ -107,6 +109,7 @@ import { UserAccountComponent } from '@pages-ecommerce/user-account/user-account
     InputMaskModule,
     InputSwitchModule,
     ProgressSpinnerModule,
+
   ],
   providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -852,8 +852,8 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdTipoPedido).HasName("tipo_pedido_id_pk");
             entity.HasData(
-            new TipoPedido { IdTipoPedido = 1, Descripcion = "Para Comer Aqui" },
-            new TipoPedido { IdTipoPedido = 2, Descripcion = "Para Llevar" });
+            new TipoPedido { IdTipoPedido = 1, Descripcion = "Indoor" },
+            new TipoPedido { IdTipoPedido = 2, Descripcion = "PickUp" });
         });
 
         modelBuilder.Entity<TipoTransaccion>(entity =>
