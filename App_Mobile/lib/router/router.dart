@@ -1,23 +1,41 @@
 import 'package:go_router/go_router.dart';
+import 'package:m_senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
+import 'package:m_senorial/pages/auth/Edit-Profile/PersonalEdit.dart';
+import 'package:m_senorial/pages/auth/Edit-Profile/PersonalInfo.dart';
+import 'package:m_senorial/pages/auth/Register-Data/RegisterData.dart';
+import 'package:m_senorial/pages/Order/Registrar-Pedidos/TakeOutRegister.dart';
+import 'package:m_senorial/pages/home/Welcome-S/Welcome.dart';
 import 'package:m_senorial/pages/auth/forget-password/ForgetPassword.dart';
 import 'package:m_senorial/pages/auth/recovery-password/Recoverypassword.dart';
 import 'package:m_senorial/pages/auth/verification/Verified.dart';
+import 'package:m_senorial/pages/categories/categorie/Categories.dart';
 import 'package:m_senorial/pages/home/Home.dart';
+import 'package:m_senorial/pages/products/product-list/ProductsList.dart';
+import 'package:m_senorial/pages/tables/add-tables/AddTables.dart';
 import 'package:m_senorial/pages/tables/sales-table/SalesTable.dart';
 import 'package:m_senorial/pages/auth/login/Login.dart';
-import 'package:m_senorial/pages/auth/signup/Signup.dart';
+import 'package:m_senorial/pages/tables/edit-tables/EditTables.dart';
+import 'package:m_senorial/pages/home/Welcome-S/Loading.dart';
+import 'package:m_senorial/pages/auth/Edit-Profile/MenuLogin.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
+      builder: (context, state) => Welcome(),
+    ),
+    GoRoute(
+      path: '/loading',
+      builder: (context, state) {
+        final destination = state.extra as String? ?? '/login';
+        return Loading(destination: destination);
+      },
+    ),
+    GoRoute(
+      path: '/login',
       builder: (context, state) => Login(),
       routes: [
-        GoRoute(
-          path: 'signup',
-          builder: (context, state) => SignUp(),
-        ),
         GoRoute(
           path: 'forgetpassword',
           builder: (context, state) => ForgetPassword(),
@@ -38,31 +56,57 @@ final GoRouter router = GoRouter(
       path: '/home',
       builder: (context, state) => const Home(),
       routes: [
+        // Rutas para "Comer Aquí"
         GoRoute(
           path: 'salestable',
           builder: (context, state) => Salestable(),
+          routes: [
+            GoRoute(
+              path: 'categories',
+              builder: (context, state) => Categories(),
+              routes: [
+                GoRoute(
+                  path: 'productslist',
+                  builder: (context, state) => ProductsList(),
+                  routes: [
+                    GoRoute(
+                      path: 'ordermenu',
+                      builder: (context, state) {
+                        final selectedProducts = state.extra as List<String>?; 
+                        return OrderMenuIndoor(selectedProducts: selectedProducts ?? []);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        // Rutas para "Para Llevar"
+        GoRoute(
+          path: 'takeoutregister',
+          builder: (context, state) => TakeOutRegister(),
+          routes: [
+            GoRoute(
+              path: 'registerdata',
+              builder: (context, state) => RegisterData(),
+              routes: [
+                GoRoute(
+                  path: 'categories',
+                  builder: (context, state) => Categories(),
+                  routes: [
+                    GoRoute(
+                      path: 'productslist',
+                      builder: (context, state) => ProductsList(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),
+    // Agrega otras rutas aquí si es necesario
   ],
 );
-
-
-//home: Login(),
-      /*
-      initialRoute: '/',
-      routes:{
-        '/':(context) => OrderMenu(),
-        '/signup':(context) => Sigup(),
-        '/forgotpassword':(context) => ForgotPassword(),
-        '/home': (context) => const Home(),
-        '/verified': (context) => Verified(),
-        '/tables': (context) => Tables(),
-        '/tablesregister': (context) => TablesRegister(),
-        '/categories': (context) => Categories(),
-        '/productslist':(context) => ProductsList(),
-        '/ordersuccessful':(context) => OrderSuccessful(),
-        '/ordermenu':(context) => OrderMenu(), 
-      }
-      */
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),

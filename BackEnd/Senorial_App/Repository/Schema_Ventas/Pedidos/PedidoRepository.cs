@@ -1,4 +1,5 @@
 ﻿using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Pedidos;
 using IRepository.Schema_Ventas.Pedidos;
 using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
@@ -62,6 +63,28 @@ namespace Repository.Schema_Ventas.Pedidos
             await db.SaveChangesAsync();
             return true;
         }
+        public async Task<List<VwPedido>> ObtenerPedidosAsync()
+        {
+            var query = await (from p in db.Pedidos
+                               join m in db.Mesas on p.IdMesa equals m.IdMesa
+                               join e in db.Empleados on p.IdEmpleado equals e.IdEmpleado
+                               join ppl in db.Personas on e.IdPersona equals ppl.IdPersona
+                               join tp in db.TipoPedidos on p.IdTipoPedido equals tp.IdTipoPedido
+                               join dp in db.DetallePedidos on p.IdPedido equals dp.IdPedido
+                               group dp by new { p.IdPedido, m.Nombre, ppl.PrimerNombre, tp.Descripcion, p.Estado } into grouped
+                               select new VwPedido
+                               {
+                                   IdPedido = grouped.Key.IdPedido,
+                                   NombreMesa = grouped.Key.Nombre,
+                                   NombreEmpleado = grouped.Key.PrimerNombre,
+                                   TipoPedido = grouped.Key.Descripcion,
+                                   CantidadTotal = grouped.Sum(x => x.Cantidad),
+                                   Estado = grouped.Key.Estado
+                               }).ToListAsync();
+
+            return query;
+        }
+
 
     }
 }

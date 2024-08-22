@@ -1,6 +1,7 @@
 import { subscribeOn } from "rxjs"
 
 const dominio = "https://localhost:7283"
+//const dominio = "http://senorialapp.somee.com"
 
 const subRutas = {
     //AUTH
@@ -54,11 +55,11 @@ export const urlMetodoPago = {
 
 export const urlSuministro = {
     listar: `${subRutas.suministro}/Listado`,
-    actulizar: `${subRutas.suministro}/Actulizar/Insumo`,
+    actualizar: `${subRutas.suministro}/Actualizar/Insumo`,
     delete: `${subRutas.suministro}`,
     filtro: `${subRutas.suministro}/Filtro`,
     crear: `${subRutas.suministro}/Crear`,
-    update: `${subRutas.suministro}/Actulizar`,
+    update: `${subRutas.suministro}/Actualizar`,
 }
 
 export const urlMesa = {

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/my_buttonTwo.dart';
-import 'package:m_senorial/components/my_buttonTables.dart'; // Verifica esta importación
-import 'package:m_senorial/components/my_circularbutton.dart'; // Verifica esta importación
-import 'package:m_senorial/components/status.dart'; // Verifica esta importación
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:m_senorial/components/Buttons/buttonTwo.dart';
+import 'package:m_senorial/components/Buttons/buttonTables.dart';
+import 'package:m_senorial/components/Buttons/buttonback.dart';
+import 'package:m_senorial/components/Extras/status.dart';
+import 'package:m_senorial/components/Buttons/buttonUser.dart';
 
 class Salestable extends StatefulWidget {
   Salestable({Key? key}) : super(key: key);
@@ -13,112 +16,88 @@ class Salestable extends StatefulWidget {
 
 class _SalestableState extends State<Salestable> {
   final codeController = TextEditingController();
-  List<int> mesas = [1]; // Lista inicial de mesas
+  List<int> mesas = List<int>.generate(9, (index) => index + 1);
 
-  void agregarMesa() {
-    setState(() {
-      mesas.add(mesas.length + 1); // Agregar una nueva mesa con el siguiente número
-    });
-  }
-
-  void Tables() {
-    Navigator.pushNamed(context, '/Salestable');
+  void navCategories() {
+    context.go('/home/salestable/categories');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(height: 45),
             Row(
               children: [
-                SizedBox(width: 20),
-                MyCircularButton(
+                const SizedBox(width: 20),
+                ButtonBack(
                   onTap: () {
-                    Tables();
+                    Navigator.pop(context);
                   },
-                  text: '',
-                  diameter: 50,
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Ventas',
-                      style: TextStyle(
-                        fontSize: 16,
+                      'VENTAS',
+                      style: GoogleFonts.sen(
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 228, 129, 15),
+                        color: const Color.fromRGBO(252, 110, 42, 1),
                       ),
                     ),
-                    SizedBox(height: 0),
                     Text(
                       'Mauricio',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.sen(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: const Color.fromRGBO(103, 103, 103, 1),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(width: 100),
-                my_buttonTwo(
-                  buttonback: 12,
+                const SizedBox(width: 83),
+                MyButtonTwo(
                   onTap: () {
-                    Tables();
+                    // Deja vacío si no quieres que haga nada
                   },
                   text: 'Mesas',
-                  color: Color.fromARGB(255, 236, 152, 57),
+                  color: const Color.fromRGBO(255, 145, 15, 1),
                 ),
-                MyCircularButton(
-                  onTap: () {
-                    Tables();
-                  },
-                  text: '',
-                  diameter: 50,
+                const SizedBox(width: 2),
+                UserButton(
+                  onTap: () {},
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            StatusRow(), // Verifica esta clase y su importación
-            SizedBox(height: 90),
+            const SizedBox(height: 85),
+            StatusRow(),
+            const SizedBox(height: 30),
             Center(
-              child: Padding(
-                padding: const EdgeInsets.all(2.0,), // Ajusta el padding según necesites
+              child: Container(
+                width: 280,
                 child: GridView.builder(
-                  shrinkWrap: true, // Añadir esta línea para evitar problemas de scroll dentro de SingleChildScrollView
-                  physics: NeverScrollableScrollPhysics(), // Para evitar problemas de desplazamiento
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // Número de columnas
-                    crossAxisSpacing: 1, // Espaciado horizontal entre los elementos
-                    mainAxisSpacing: 1, // Espaciado vertical entre los elementos
-                    childAspectRatio: (1.2/0.7),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 25,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 74 / 60, // Ajusta el aspect ratio
                   ),
-                  itemCount: mesas.length + 1, // Añade uno para el botón de agregar mesa
+                  itemCount: mesas.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (index < mesas.length) {
-                      return My_ButtonTables(
-                        onTap: () {
-                          // Lógica de onTap aquí
-                        },
-                        text: mesas[index].toString(), // Número de la mesa
-                        color: Color.fromRGBO(254, 240, 211, 1),
-                        status: '3',
-                        statusColor: Color.fromRGBO(171, 174, 188, 1),
-                      );
-                    } else {
-                      return My_ButtonTables(
-                        onAddMesa: agregarMesa,
-                        onTap: () {},
-                        color: Color.fromRGBO(254, 240, 211, 1),
-                        status: '',
-                        statusColor: Colors.transparent,
-                        text: '',
-                      );
-                    }
+                    return ButtonTables(
+                      onTap: navCategories, // Navega a Categories al hacer clic en una mesa
+                      text: mesas[index].toString(),
+                      color: const Color.fromRGBO(254, 240, 211, 1),
+                      status: '0 items',
+                      statusColor: const Color.fromRGBO(171, 174, 188, 1),
+                      width: 74,
+                      height: 60,
+                    );
                   },
                 ),
               ),

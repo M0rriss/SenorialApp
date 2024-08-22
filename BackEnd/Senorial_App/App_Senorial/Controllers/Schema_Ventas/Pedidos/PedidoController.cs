@@ -115,5 +115,14 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
         }
 
         #endregion CRUD METHODS
+        #region PEDIDO DASHBOARD
+        [HttpGet]
+        [Route("PedidosLocal")]
+        public async Task<ActionResult> GetPedidosLocal()
+        {
+            var result = await _pedidoBusiness.ObtenerPedidos();
+            return Ok(result);
+        }
+        #endregion CRUD METHODS
     }
 }

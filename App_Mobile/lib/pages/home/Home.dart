@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/square_icon.dart';
+import 'package:go_router/go_router.dart';
+import 'package:m_senorial/components/Extras/square_icon.dart';
+
+enum ActionType { comerAqui, paraLlevar }
 
 class Home extends StatelessWidget {
-  const Home({Key? key});
+  const Home({Key? key}) : super(key: key);
+
+  void _handleOnTap(BuildContext context, ActionType actionType) {
+  switch (actionType) {
+    case ActionType.comerAqui:
+      context.go('/home/salestable');
+      break;
+    case ActionType.paraLlevar:
+      context.go('/home/takeoutregister'); // Asegúrate de usar el path correcto
+      break;
+  }
+}
+
 
   Widget _buildContainer({
+    required BuildContext context,
     required double left,
     required double top,
     required String text,
     required String imagePath,
+    required ActionType actionType,
   }) {
     return Container(
       width: 195,
-      height: 220, // Ajusta según sea necesario para el tamaño deseado
+      height: 220,
       child: Column(
         children: [
           GestureDetector(
-            onTap: () {
-              print('$text tapped');
-              // Navegar o realizar otra acción
-            },
+            onTap: () => _handleOnTap(context, actionType),
             child: Container(
               width: 195,
               height: 177,
@@ -69,17 +83,21 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildContainer(
+                context: context,
                 left: 117,
                 top: 157,
                 text: 'Comer Aqui',
                 imagePath: 'lib/imagenes/Aqui.png',
+                actionType: ActionType.comerAqui,
               ),
               SizedBox(height: 40),
               _buildContainer(
+                context: context,
                 left: 118,
                 top: 473,
                 text: 'Para llevar',
                 imagePath: 'lib/imagenes/Llevar.png',
+                actionType: ActionType.paraLlevar,
               ),
             ],
           ),
@@ -88,29 +106,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-  //   @override
-  //   Widget build (BuildContext context){
-  //     return Scaffold(
-  //       appBar: AppBar(),
-  //       body:const Column(
-          
-  //         children:[ 
-  //           SizedBox(height: 131,),
-  //           Center(
-  //             child: SquareIcon(imagePath: 'lib/imagenes/ParaComerAqui.svg'),
-  //           ), 
-  //           const SizedBox(height: 6,),
-  //           Text(
-  //             "demo"
-  //           ),
-  //           const SizedBox(height: 109,),
-  //           Center(
-  //             child: SquareIcon(imagePath: 'lib/images/ParaLlevar.svg'),
-  //           ),
-  //           const SizedBox(height: 6,),
-  //           Text("Demo"),
-  //         ],
-  //       ),
-  //     );
-  //   }
-  // }

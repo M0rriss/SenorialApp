@@ -209,7 +209,7 @@ namespace Business.Schema_Almacen.Insumos
             response.Code = "2000";
             return response;
         }
-        public async Task<CustomResponse> ActulizarInsumoAsync(InsumoRequest req)
+        public async Task<CustomResponse> ActualizarInsumoAsync(InsumoRequest req)
         {
             Insumo insumo = new()
             {

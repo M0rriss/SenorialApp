@@ -1,4 +1,5 @@
 ﻿using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Mesa;
 using IRepository.Schema_Generico.CRUD;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,7 @@ namespace IRepository.Schema_Ventas.Mesas
 {
     public interface IMesaRepository : ICrudRepository<Mesa>
     {
+        Task<List<VwMesa>> MesasLocal();
+        Task<List<VwMesaDetalle>> ObtenerDetallesMesaAsync(int idMesa, int idPedido);
     }
 }

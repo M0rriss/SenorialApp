@@ -20,6 +20,6 @@ namespace IBusiness.Schema_Almacen.Insumos
         Task<bool> DeleteUiInsumo(int idInsumo);
         Task<GenericFilterResponse<InsumoUiRequest>> FiltroInsumoAsync(GenericFilterRequest req);
         Task<CustomResponse> CrearInsumoAsync(InsumoRequest req);
-        Task<CustomResponse> ActulizarInsumoAsync(InsumoRequest req);
+        Task<CustomResponse> ActualizarInsumoAsync(InsumoRequest req);
     }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/my_button.dart';
-import 'package:m_senorial/components/my_form_text.dart';
-import 'package:m_senorial/components/my_input_Text.dart';
-import 'package:m_senorial/components/my_text_center.dart';
-import 'package:m_senorial/components/my_text_title.dart';
+import 'package:m_senorial/components/Buttons/button.dart';
+import 'package:m_senorial/components/Buttons/buttonback.dart';
+import 'package:m_senorial/components/Extras/my_form_text.dart';
+import 'package:m_senorial/components/Inputs/my_input_text.dart';
+import 'package:m_senorial/components/Texts/my_text_center.dart';
+import 'package:m_senorial/components/Texts/my_text_title.dart';
 
 class Recoverypassword extends StatefulWidget {
   Recoverypassword({super.key});
@@ -77,10 +78,24 @@ class _RecoverypasswordState extends State<Recoverypassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(height: 42),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  const SizedBox(width: 17),
+                  ButtonBack(
+                    onTap: () {
+                      Navigator.of(context).pop(); // Volver a la pantalla anterior
+                    },
+                  ),
+                  const SizedBox(width: 70),
+                ],
+              ),
+            ),
             const SizedBox(height: 10,),
             // Title
             const MyTextTitle(contenText: 'Cambio de Contraseña'),

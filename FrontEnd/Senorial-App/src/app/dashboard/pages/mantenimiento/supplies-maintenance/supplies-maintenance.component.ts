@@ -93,7 +93,7 @@ export class SuppliesMaintenanceComponent implements OnInit {
     req.idInsumo = this.idInsumo;
     req.url= "";
 
-    this.insumoService.actulizarInsumo(req)
+    this.insumoService.actualizarInsumo(req)
     .subscribe({
       next: (res: CustomResponse) => {
         this.notificationService.showSuccess( res.message , 'Insumo actualizado exitosamente');

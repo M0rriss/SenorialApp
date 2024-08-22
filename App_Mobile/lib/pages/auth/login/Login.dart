@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
-import 'package:m_senorial/components/my_button.dart';
-import 'package:m_senorial/components/my_input_Text.dart';
-import 'package:m_senorial/components/my_text_center.dart';
-import 'package:m_senorial/components/my_text_title.dart';
-import 'package:m_senorial/components/square_icon.dart';
+import 'package:hive/hive.dart';
+import 'package:m_senorial/components/Buttons/button.dart';
+import 'package:m_senorial/components/Inputs/my_input_text.dart';
+import 'package:m_senorial/components/Texts/my_text_center.dart';
+import 'package:m_senorial/components/Texts/my_text_title.dart';
+import 'package:m_senorial/components/Extras/square_icon.dart';
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
 
@@ -59,11 +59,13 @@ class _LoginState extends State<Login> {
 
    void login() async {
     final dio = Dio();
-    final response = await dio.post('https://localhost:7283/api/Auth/Login/Mobile',
+    final response = await dio.post('http://senorialapp.somee.com/api/Auth/Login/Mobile',
       data: {'email': emailController.text, 'password': passwordController.text},
     );
 
-    //print(response.data);
+    var box = Hive.box("security");
+                      box.put("userName", response.data['usuario']['email']);
+                      box.put("token",response.data['token']);
 
     if (response.data['success'] == true) {
       // Navegar a la pantalla principal o realizar la acción de inicio de sesión
@@ -79,12 +81,8 @@ class _LoginState extends State<Login> {
     } 
   }
 
-  void signUp() {
-    context.go('/signup');
-  }
-
   void forgotPassword() {
-    context.go('/forgetpassword');
+    context.go('/login/forgetpassword');
   }
 
   @override
@@ -232,7 +230,6 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(width: 10,),
                   InkWell(
-                    onTap: () => signUp(),
                     child: const Text(
                       "SIGN UP",
                       style: TextStyle(

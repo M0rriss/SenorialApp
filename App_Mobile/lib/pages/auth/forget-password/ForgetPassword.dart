@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/my_button.dart';
-import 'package:m_senorial/components/my_form_text.dart';
-import 'package:m_senorial/components/my_input_Text.dart';
-import 'package:m_senorial/components/my_text_center.dart';
-import 'package:m_senorial/components/my_text_title.dart';
+import 'package:m_senorial/components/Buttons/button.dart';
+import 'package:m_senorial/components/Buttons/buttonback.dart';
+import 'package:m_senorial/components/Extras/my_form_text.dart';
+import 'package:m_senorial/components/Inputs/my_input_text.dart';
+import 'package:m_senorial/components/Texts/my_text_center.dart';
 import 'package:go_router/go_router.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -30,10 +30,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     isEmailValid.dispose();
     super.dispose();
   }
-   void verified() {
-    print("hola");
-    context.go('/forgetpassword/verified');
-     /* Navigator.pushNamed(context, '/Salestable'); */
+
+  void verified() {
+    context.go('/login/forgetpassword/verified?email=${Uri.encodeComponent(gmailController.text)}');
   }
 
   void _validateEmail() {
@@ -43,10 +42,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   }
 
   void forgotPassword() {
-    // Imprimir el correo en la consola
     print('Email: ${gmailController.text}');
-    // Aquí puedes agregar la lógica para enviar el correo de recuperación de contraseña
-    // Supongamos que esta función verifica si el correo está registrado
     bool emailRegistered = checkIfEmailRegistered(gmailController.text);
     
     if (!emailRegistered) {
@@ -55,7 +51,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   }
 
   bool checkIfEmailRegistered(String email) {
-    // Simular que sólo el correo 'test@example.com' está registrado
     return email == 'yairnosde@gmail.com';
   }
 
@@ -82,35 +77,50 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(height: 42),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  const SizedBox(width: 17),
+                  ButtonBack(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  const SizedBox(width: 70),
+                ],
+              ),
+            ),
+            Text(
+              'Forgot Password',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 15),
-            // Title
-            const MyTextTitle(contenText: 'Forgot Password'),
-            const SizedBox(height: 53,),
-            // Sub title
             const MyTextCenter(text: 'Ingrese su correo para resetear su password'),
-            const SizedBox(height: 111,),
-            // Form
+            const SizedBox(height: 111),
             const MyFormText(text: "Ingrese su Email"),
-            const SizedBox(height: 6,), 
+            const SizedBox(height: 6),
             MyInputText(
               controller: gmailController,
               hintText: "example@gmail.com",
               obscureText: false,
               fillColor: Colors.grey[200] ?? Colors.grey,
             ),
-            const SizedBox(height: 15,),
-            // Button
+            const SizedBox(height: 15),
             ValueListenableBuilder<bool>(
               valueListenable: isEmailValid,
               builder: (context, value, child) {
                 return MyButton(
                   onTap: () => verified(),
                   text: 'SEND CODE',
-                  isEnabled: value, // Pasar el estado de habilitado
+                  isEnabled: value,
                 );
               },
             ),
@@ -120,5 +130,3 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
 }
-
-

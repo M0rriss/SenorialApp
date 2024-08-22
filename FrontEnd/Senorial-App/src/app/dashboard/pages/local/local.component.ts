@@ -13,6 +13,7 @@ export class LocalComponent implements OnInit {
     private pusherService: PusherService,
     private mesaService: MesaService
   ){}
+
 ngOnInit(): void {
   console.log("second")
     this.pusherService.bindEvent('my-event', (data: any) => {
@@ -65,5 +66,80 @@ onPageChange(event: any) {
   //this.listarEmpleados();
 }
 
+// areas = ["piso 1", "piso 2", "patio"];
+// mesas: any[] = [];
+// constructor(
+//   private mesaService: MesasService,
+//   ){}
+
+// ngOnInit(): void {
+//   /*this.mesaService.getMesasByArea('piso 1').subscribe({
+//     next: (data) => console.log(data)
+//   });*/
+//   this.getMesas(this.areas[0]);
+// }
+// ngOnInit(): void {
+//   // Leer las mesas desde Backend C#
+//   this.getMesasApi().subscribe({
+//       next: (data) => {
+//           this.mesas = data;
+//           this.getMesasRT().subscribe({
+//               // Llamas al realtime
+//               const mesasRt = [{ mid: 1, st: 3 }, { mid: 2, st: 0 }];
+//               for (const mesa of this.mesas) {
+//                   mesa.estado = mesasRt.find(m => m.mid == mesa.id)?.st ?? mesa.estado;
+//               }
+//           });
+//       }
+//   });
+
+//   this.getMesas(this.areas[0]);
+//}
+
+// changeArea(event: any) {
+//   let value = event.target.value;
+//   console.log('mesa:', value);
+
+//   this.getMesas(value);
+// }
+
+// getMesas(area: string) {
+//   this.mesaService.getMesasByArea(area).subscribe({
+//     next: (data) => {
+//       console.log(data);
+//       this.mesas = data;
+//     }
+//   });
+// }
+
+// changeEstado(mesa: any, newState: string) {
+//   mesa.estado = newState;
+//   this.mesaService.updateMesa(mesa);
+// }
+
+// updateMesaImagen(mesa:any, event: any) {
+//   const files: {[key: string]: File} = event.target.files;
+//   // {'archivo.jpg': FILE}
+//   if(!files[0]) return;
+
+//   const fileName = `mesa-${mesa.id}`;
+//   const ref = this.mesaService.uploadMesaImagenRef(fileName);
+//   const task = this.mesaService.uploadMesaImagen(fileName, files[0]);
+//   task.percentageChanges().subscribe({
+//     next: (data)=> console.log('percent', data),
+//   });
+//   task.snapshotChanges().pipe(
+//     tap(console.log),
+//     finalize(
+//       () => ref.getDownloadURL().subscribe(
+//         URL => this.updateImage(mesa, URL)
+//       )
+//     ),
+//   ).subscribe();
+// }
+// updateImage(mesa: any, image: string){
+//   mesa.foto = image;
+//   this.mesaService.updateMesa(mesa);
+// }
 
 }

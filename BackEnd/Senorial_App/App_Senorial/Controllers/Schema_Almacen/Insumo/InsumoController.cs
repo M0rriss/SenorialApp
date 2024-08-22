@@ -115,10 +115,10 @@ namespace App_Senorial.Controllers.Schema_Almacen.Insumo
             return StatusCode(201,res);
         }
         [HttpPut]
-        [Route("Actulizar")]
-        public async Task<ActionResult<CustomResponse>> ActulizarInsumo([FromBody] InsumoRequest req)
+        [Route("Actualizar")]
+        public async Task<ActionResult<CustomResponse>> ActualizarInsumo([FromBody] InsumoRequest req)
         {
-            CustomResponse res = await _insumoBusiness.ActulizarInsumoAsync(req);
+            CustomResponse res = await _insumoBusiness.ActualizarInsumoAsync(req);
             return StatusCode(200, res);
         }
         #endregion POST
