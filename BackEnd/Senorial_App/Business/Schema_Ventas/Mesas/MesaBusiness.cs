@@ -160,9 +160,9 @@ namespace Business.Schema_Ventas.Mesas
         {
             return await _mesaRepository.MesasLocal();
         }
-        public async Task<List<VwMesaDetalle>> ObtenerDetallesDeMesas()
+        public async Task<List<VwMesaDetalle>> ObtenerDetallesMesa(int idMesa, int idPedido)
         {
-            return await _mesaRepository.ObtenerDetallesDeMesasAsync();
+            return await _mesaRepository.ObtenerDetallesMesaAsync(idMesa, idPedido);
         }
         #endregion
 

@@ -19,4 +19,8 @@ public partial class TipoPedido
 
     [InverseProperty("IdTipoPedidoNavigation")]
     public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
+
+    [InverseProperty("TipoPedido")]
+    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+
 }

@@ -1,4 +1,5 @@
 ﻿using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Pedidos;
 using IRepository.Schema_Generico.CRUD;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace IRepository.Schema_Ventas.Pedidos
         Task<Pedido> CreatePedido(Pedido pedido);
         Task<Pedido> UpdatePedido(Pedido pedido);
         Task<bool> DeletePedido(int id);
+        Task<List<VwPedido>> ObtenerPedidosAsync();
     }
 }

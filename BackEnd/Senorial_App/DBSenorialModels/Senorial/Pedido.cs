@@ -14,6 +14,8 @@ namespace DBSenorialModels.Senorial
         [Key]
         [Column("id_pedido")]
         public int IdPedido { get; set; }
+        [Column("id_empleado")]
+        public int IdEmpleado { get; set; }
 
         [Column("id_mesa")]
         public int IdMesa { get; set; }
@@ -22,20 +24,26 @@ namespace DBSenorialModels.Senorial
         public DateTime FechaPedido { get; set; }
 
         [Column("estado")]
-        [StringLength(50)]
-        public string Estado { get; set; } // "Carrito", "Preparandose", "Listo para servir", etc.
+        public int? Estado { get; set; } // "Carrito", "Preparandose", "Listo para servir", 1,2,3
 
         [Column("total", TypeName = "decimal(10, 2)")]
         public decimal Total { get; set; }
 
-        [Column("tipo_pedido")]
-        [StringLength(50)]
-        public string TipoPedido { get; set; } // "Indoor" or "PickUp"
+        [Column("id_tipo_pedido")]
+        public int IdTipoPedido { get; set; } // "Indoor" or "PickUp"
+
+        [ForeignKey("IdTipoPedido")]
+        [InverseProperty("Pedidos")] 
+        public virtual TipoPedido TipoPedido { get; set; }
 
         [InverseProperty("Pedido")]
         public virtual ICollection<DetallePedido> Detalles { get; set; } = new List<DetallePedido>();
 
         [ForeignKey("IdMesa")]
         public virtual Mesa Mesa { get; set; } // Para obtener el nombre de la mesa
+
+        [ForeignKey("IdEmpleado")]
+        [InverseProperty("Pedidos")]  
+        public virtual Empleado Empleado { get; set; }
     }
 }

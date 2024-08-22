@@ -114,9 +114,9 @@ namespace App_Senorial.Controllers.Schema_Ventas.Mesas
         }
         [HttpGet]
         [Route("DetalleMesa")]
-        public async Task<ActionResult> GetDetalleMesaLocal()
+        public async Task<ActionResult> GetDetalleMesaLocal([FromQuery] int IdMesa, int IdPedido)
         {
-            var result = await _mesaBusiness.ObtenerDetallesDeMesas();
+            var result = await _mesaBusiness.ObtenerDetallesMesa(IdMesa, IdPedido);
             return Ok(result);
         }
         #endregion

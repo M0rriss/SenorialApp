@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using DBSenorialModels.Estados;
 using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Pedidos;
 using IBusiness.Schema_Ventas.Pedidos;
 using IRepository.Schema_Ventas.Pedidos;
 using Microsoft.AspNetCore.Identity;
@@ -64,6 +66,9 @@ namespace Business.Schema_Ventas.Pedidos
         //      mesas);
 
             var pedido = _mapper.Map<Pedido>(request);
+            pedido.Estado = EstadoOrden.Pendiente.IdEstadoOrden;
+            //pedido.IdPedido = request.IdPedido;
+            //pedido.IdTipoPedido = request.IdTipoPedido;
             pedido = await _pedidoRepository.CreatePedido(pedido);
             var response = _mapper.Map<PedidoResponse>(pedido);
             return response;
@@ -81,5 +86,11 @@ namespace Business.Schema_Ventas.Pedidos
         {
             return await _pedidoRepository.DeletePedido(id);
         }
+        #region PEDIDOS DASHBOARD
+        public async Task<List<VwPedido>> ObtenerPedidos()
+        {
+            return await _pedidoRepository.ObtenerPedidosAsync();
+        }
+        #endregion
     }
 }

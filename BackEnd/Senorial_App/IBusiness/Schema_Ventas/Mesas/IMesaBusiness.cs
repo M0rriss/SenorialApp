@@ -14,6 +14,6 @@ namespace IBusiness.Schema_Ventas.Mesas
     {
         Task<MesaResponse> UpdateMesa(MesaUpdateRequest request);
         Task<List<VwMesa>> MesasLocal();
-        Task<List<VwMesaDetalle>> ObtenerDetallesDeMesas();
+        Task<List<VwMesaDetalle>> ObtenerDetallesMesa(int idMesa, int idPedido);
     }
 }

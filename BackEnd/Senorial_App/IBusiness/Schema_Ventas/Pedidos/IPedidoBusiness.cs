@@ -1,4 +1,5 @@
-﻿using RequestResponseModels.Request.Schema_Ventas.Pedidos;
+﻿using DBSenorialModels.View.Pedidos;
+using RequestResponseModels.Request.Schema_Ventas.Pedidos;
 using RequestResponseModels.Response.Schema_Ventas.Pedidos;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace IBusiness.Schema_Ventas.Pedidos
         Task<PedidoResponse> CreatePedido(PedidoRequest request);
         Task<PedidoResponse> UpdatePedido(PedidoRequest request);
         Task<bool> DeletePedido(int id);
+        Task<List<VwPedido>> ObtenerPedidos();
     }
 }

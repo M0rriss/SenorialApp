@@ -4,6 +4,7 @@ using DBSenorialModels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migrations
 {
     [DbContext(typeof(DBSenorialContext))]
-    partial class DBSenorialContextModelSnapshot : ModelSnapshot
+    [Migration("20240822014111_estado")]
+    partial class estado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1607,13 +1610,13 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 8, 21, 22, 38, 29, 688, DateTimeKind.Local).AddTicks(5141),
+                            FechaActualizacion = new DateTime(2024, 8, 21, 20, 41, 9, 496, DateTimeKind.Local).AddTicks(8111),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 8, 21, 22, 38, 29, 688, DateTimeKind.Local).AddTicks(5143),
+                            FechaActualizacion = new DateTime(2024, 8, 21, 20, 41, 9, 496, DateTimeKind.Local).AddTicks(8114),
                             IdSucursal = 2
                         });
                 });
@@ -1633,8 +1636,7 @@ namespace DBSenorialModels.Data.Migrations
                         .HasColumnName("estado");
 
                     b.Property<int?>("EstadoMesaLocal")
-                        .HasColumnType("int")
-                        .HasColumnName("estado_mesa_local");
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -1777,10 +1779,6 @@ namespace DBSenorialModels.Data.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("fecha_pedido");
 
-                    b.Property<int>("IdEmpleado")
-                        .HasColumnType("int")
-                        .HasColumnName("id_empleado");
-
                     b.Property<int>("IdMesa")
                         .HasColumnType("int")
                         .HasColumnName("id_mesa");
@@ -1795,8 +1793,6 @@ namespace DBSenorialModels.Data.Migrations
 
                     b.HasKey("IdPedido")
                         .HasName("pedido_id_pk");
-
-                    b.HasIndex("IdEmpleado");
 
                     b.HasIndex("IdMesa");
 
@@ -3228,7 +3224,7 @@ namespace DBSenorialModels.Data.Migrations
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 21, 22, 38, 29, 693, DateTimeKind.Local).AddTicks(872),
+                            CreatedAt = new DateTime(2024, 8, 21, 20, 41, 9, 500, DateTimeKind.Local).AddTicks(2977),
                             Email = "admin@admin.com",
                             IdImg = 1,
                             IdPersona = 1,
@@ -3600,12 +3596,6 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Pedido", b =>
                 {
-                    b.HasOne("DBSenorialModels.Senorial.Empleado", "Empleado")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdEmpleado")
-                        .IsRequired()
-                        .HasConstraintName("empleado_pedido_fk");
-
                     b.HasOne("DBSenorialModels.Senorial.Mesa", "Mesa")
                         .WithMany("Pedidos")
                         .HasForeignKey("IdMesa")
@@ -3617,8 +3607,6 @@ namespace DBSenorialModels.Data.Migrations
                         .HasForeignKey("IdTipoPedido")
                         .IsRequired()
                         .HasConstraintName("tipo_pedido_pedido_fk");
-
-                    b.Navigation("Empleado");
 
                     b.Navigation("Mesa");
 
@@ -3901,8 +3889,6 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Empleado", b =>
                 {
-                    b.Navigation("Pedidos");
-
                     b.Navigation("Venta");
                 });
 

@@ -18,7 +18,9 @@ public partial class Mesa
     public string? Nombre { get; set; }
     [Column("estado")]
     [StringLength(100)]
-    public bool? Estado { get; set; }
+    public bool? Estado { get; set; } // MANTENIMINETO ACTIVO /INACTIVO
+    [Column("estado_mesa_local")]
+    public int?  EstadoMesaLocal { get; set; }//DISPONIBLE, OCUPADO, FACTURADO
 
     [InverseProperty("IdMesaNavigation")]
     public virtual ICollection<Ambiente> Ambientes { get; set; } = new List<Ambiente>();

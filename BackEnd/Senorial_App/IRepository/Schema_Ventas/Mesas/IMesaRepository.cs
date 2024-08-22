@@ -12,6 +12,6 @@ namespace IRepository.Schema_Ventas.Mesas
     public interface IMesaRepository : ICrudRepository<Mesa>
     {
         Task<List<VwMesa>> MesasLocal();
-        Task<List<VwMesaDetalle>> ObtenerDetallesDeMesasAsync();
+        Task<List<VwMesaDetalle>> ObtenerDetallesMesaAsync(int idMesa, int idPedido);
     }
 }

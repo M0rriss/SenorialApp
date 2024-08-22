@@ -575,6 +575,17 @@ public partial class DBSenorialContext : DbContext
                   .HasForeignKey(d => d.IdPedido)
                   .OnDelete(DeleteBehavior.ClientSetNull)
                   .HasConstraintName("pedido_detalle_pedido_fk"); // Foreign Key to DetallePedido
+
+            entity.HasOne(d => d.TipoPedido)
+                  .WithMany(p => p.Pedidos)
+                  .HasForeignKey(d => d.IdTipoPedido)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("tipo_pedido_pedido_fk"); // Foreign Key to TipoPedido
+            entity.HasOne(d => d.Empleado) // Relación con Empleado
+                  .WithMany(p => p.Pedidos)
+                  .HasForeignKey(d => d.IdEmpleado)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("empleado_pedido_fk");
         });
 
         modelBuilder.Entity<Persona>(entity =>
