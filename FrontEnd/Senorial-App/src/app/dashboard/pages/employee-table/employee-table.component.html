@@ -9,7 +9,7 @@
       </div>
       <div class="buttons">
         <button class="action-button" (click)="openDialog('add')">Agregar</button>
-        <button class="action-button" (click)="openDialog('edit')">Editar</button>
+        <!-- <button class="action-button" (click)="openDialog('edit')">Editar</button> -->
       </div>
     </div>
     <table class="employees-table">
@@ -24,6 +24,9 @@
           <th>Rol</th>
           <th>Estado</th>
           <th>Sucursal</th>
+          <th>
+           Acciones
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -35,6 +38,9 @@
           <td>75372286</td>
           <td>DNI12345678</td>
           <td>Mozo</td>
+          <td>
+            <i class="edit-icon fa-regular fa-pen-to-square"  (click)="openDialog('edit')">Editar></i>
+          </td>
           <td>
             <label class="switch">
               <input type="checkbox" checked>

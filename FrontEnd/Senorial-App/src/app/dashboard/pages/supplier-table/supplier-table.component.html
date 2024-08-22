@@ -9,7 +9,7 @@
           </div>
           <div class="buttons">
               <button class="action-button" (click)="openDialog('add')">Agregar</button>
-              <button class="action-button" (click)="openDialog('edit')">Editar</button>
+             <!--  <button class="action-button" (click)="openDialog('edit')">Editar</button> -->
           </div>
       </div>
       <table class="suppliers-table">
@@ -21,6 +21,7 @@
                   <th>Telefono</th>
                   <th>Documento <img src="sort_icon_url" alt="" class="sort-icon"></th>
                   <th>Distribuye</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody>
@@ -31,6 +32,9 @@
                   <td>930418642</td>
                   <td>75372286</td>
                   <td><span class="tag">Pollos</span></td>
+                  <td>
+                    <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit')"></i>
+                  </td>
               </tr>
               <tr>
                   <td>#20463</td>
@@ -39,6 +43,9 @@
                   <td>912345678</td>
                   <td>87654321</td>
                   <td><span class="tag">Verduras</span></td>
+                  <td>
+                    <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit')"></i>
+                  </td>
               </tr>
               <tr>
                   <td>#20464</td>
@@ -47,6 +54,9 @@
                   <td>923456789</td>
                   <td>98765432</td>
                   <td><span class="tag">Frutas</span></td>
+                  <td>
+                    <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit')"></i>
+                  </td>
               </tr>
           </tbody>
       </table>
