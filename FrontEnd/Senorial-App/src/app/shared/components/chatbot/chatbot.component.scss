@@ -12,19 +12,21 @@
   align-items: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 .icon-container.icon-transition {
   width: 320px;
-  height: 400px;
+  height: 600px;
   border-radius: 15px;
   transform: translateY(-50px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #2e2e2e, #181C2E);
-  transition: all 0.5s ease-in-out;
+  background: linear-gradient(180deg, #181C2E, #c2c2c2); /* Cambié el color del fondo */
 }
 
 .icon-container.icon-transition .icon {
@@ -34,21 +36,12 @@
 .icon {
   font-size: 30px;
   color: white;
-  transition: all 0.5s ease-in-out;
 }
 
 .chatbot-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 320px;
-  height: 400px;
-  max-width: 90%;
-  background: linear-gradient(135deg, #2e2e2e, #181C2E);
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  transition: all 0.5s ease-in-out;
+  width: 100%;
+  height: 100%;
+  background: transparent;
 }
 
 .modal-content {
@@ -56,6 +49,7 @@
   padding: 20px;
   border-radius: 15px;
   height: 100%;
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -95,13 +89,13 @@
 }
 
 .greeting-text {
-  font-size: 20px; /* Ajuste de tamaño */
+  font-size: 20px;
   font-weight: 700;
   margin: 0 0 10px;
 }
 
 .greeting-subtext {
-  font-size: 14px; /* Ajuste de tamaño */
+  font-size: 14px;
   font-weight: 400;
   margin: 0;
 }
@@ -115,13 +109,14 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 10px;
+  margin-top: 20px;
   scrollbar-color: #181C2E transparent;
   scrollbar-width: thin;
 }
 
 .message-item {
   max-width: 75%;
-  padding: 8px; /* Ajuste de padding */
+  padding: 8px;
   border-radius: 15px;
   font-size: 14px;
   line-height: 1.4;
@@ -194,4 +189,52 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+//typing bot and user
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 0;
+  margin-left: 10px;
+}
+
+.dot {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  animation: typing 1s infinite;
+}
+.bot-typing .dot {
+  background-color: #ffffff; /* Color blanco para el bot */
+}
+
+.user-typing .dot {
+  background-color: #000000; /* Color diferenciado para el usuario, puedes cambiarlo al color que prefieras */
+}
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.bot-typing {
+  justify-content: flex-start;
+}
+
+.user-typing {
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
 }

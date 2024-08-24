@@ -6,6 +6,7 @@
   @for (item of products.lista; track $index) {
   <card-product (produto)="verCarga($event)"  [Producto]="item"></card-product>
   }
+
 </main>
 <!-- Componente de Paginación -->
 <div class="pagination-container">
@@ -15,9 +16,9 @@
    [rowsPerPageOptions]="[5, 10, 20]"
    (onPageChange)="onPageChange($event)"
  ></p-paginator>
-</div>
-<div class="chatbot">
+ <div class="chatbot">
   <chatbot></chatbot>
+</div>
 </div>
 <footer-ecommerce></footer-ecommerce>
 </div>

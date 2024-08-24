@@ -207,7 +207,7 @@ namespace Business.Auth
 
         public async Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request)
         {
-            return await _usuarioBusiness.UsuarioRegistroMoblie(request);
+            return await _usuarioBusiness.UsuarioRegistroMobile(request);
         }
     }
     #endregion

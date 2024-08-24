@@ -25,13 +25,16 @@
           <a routerLink="/forgot-password" class="forgot-password">¿Olvidaste tu contraseña?</a>
           <div class="social-login">
             <span class="social-login-text">Inicia sesión con:</span>
-            <img src="./googleIconWeb.svg" alt="Google Icon" class="google-icon">
+            <asl-google-signin-button class="google-login" style="background-color: transparent; border-style: none;">
+              <img src="./googleIconWeb.svg" alt="Google Icon"  class="google-icon">
+            </asl-google-signin-button>
           </div>
           <button type="submit" class="submit-btn">Ingresar</button>
         </form>
       </div>
     </div>
   </section>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </ng-template>
 
 <ng-template [ngIf]="!isLogin">
@@ -66,7 +69,7 @@
             </select>
             <i class="fa-solid fa-sort-down select-icon"></i>
           </div>
-          @if(this.loginRegistroForm.get('tipoDocumento')?.errors 
+          @if(this.loginRegistroForm.get('tipoDocumento')?.errors
           &&  loginRegistroForm.touched
           ){
             <p class="error-text">Campo requerido</p>
@@ -99,7 +102,7 @@
           }
           <div class="social-login">
             <span class="social-login-text">Regístrate con:</span>
-            <img src="./googleIconWeb.svg" alt="Google Icon" class="google-icon">
+            <img src="./googleIconWeb.svg" alt="Google Icon"  class="google-icon">
           </div>
           <button type="submit" [disabled]="this.loginRegistroForm.invalid" class="register-button">Registrarse</button>
         </form>
@@ -107,3 +110,4 @@
     </div>
   </section>
 </ng-template>
+<p-toast/>

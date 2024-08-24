@@ -35,4 +35,8 @@ export class AuthService {
     var res = this.http.put<CustomResponse>(urlAuth.verificarEcommerce, req);
     return res;
   }
+ // Login con Google
+ loginWithGoogle(idToken: string): Observable<LoginEcommerceResponse> {
+  return this.http.post<LoginEcommerceResponse>(urlAuth.googleSignInEcommerce, { tokenId: idToken });
+}
 }

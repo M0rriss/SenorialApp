@@ -17,6 +17,9 @@ const subRutas = {
     unidad: `${dominio}/api/UnidadMedicion`,
     //ROLES
     rol: `${dominio}/api/Roles`,
+    // ? LOCAL
+    localmesas: `${dominio}/api/Mesa`
+    // * PEDIDOS
 }
 
 //MANTENIMIENTO
@@ -80,5 +83,13 @@ export const urlAuth = {
     loginEcommerce: `${subRutas.auth}/Login/Ecommerce`,
     registerEcommerce: `${subRutas.auth}/ecommerce/registro`,
     recuperEcommerce: `${subRutas.auth}/SendRecoveryCode/ecommerce`,
-    verificarEcommerce: `${subRutas.auth}/RecoveryPassword/ecommerce`
+    verificarEcommerce: `${subRutas.auth}/RecoveryPassword/ecommerce`,
+    googleSignInEcommerce:  `${subRutas.auth}/google-signin/ecommerce`
 }
+// LOCAL
+export const urlLocal ={
+  listar : `${subRutas.localmesas}/MesaLocal`,
+  listarDetalle: `${subRutas.localmesas}/DetalleMesa`
+  //https://localhost:7283/api/Mesa/DetalleMesa?IdMesa=1&IdPedido=3
+}
+//PEDIDOS

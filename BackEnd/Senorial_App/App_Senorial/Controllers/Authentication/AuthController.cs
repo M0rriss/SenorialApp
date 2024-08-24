@@ -159,7 +159,7 @@ namespace App_Senorial.Controllers.Authentication
                 return BadRequest("NO DEBE CONTENER ESPACION EN BLANCO");
             }
 
-            var response = await _usuarioBusiness.UsuarioRegistroMoblie(req);
+            var response = await _usuarioBusiness.UsuarioRegistroMobile(req);
 
             return Ok(response);
         }

@@ -42,7 +42,8 @@ import { ShoppingCartComponent } from '@components-ecommerce/shopping-cart/shopp
 import { StaffPersonalComponent } from '@components-ecommerce/staff-personal/staff-personal.component';
 import { StorePickUpComponent } from '@pages-ecommerce/store-pick-up/store-pick-up.component';
 import { UserAccountComponent } from '@pages-ecommerce/user-account/user-account.component';
-
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { UserAccountComponent } from '@pages-ecommerce/user-account/user-account
     PasswordModule,
     InputOtpModule,
     FormsModule,
+    SocialLoginModule
 
   ],
   exports: [
@@ -111,7 +113,22 @@ import { UserAccountComponent } from '@pages-ecommerce/user-account/user-account
     ProgressSpinnerModule,
 
   ],
-  providers: [MessageService],
+  providers: [MessageService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '468788154430-n20dduv7dr1l9rli5skivolpd9ist4lq.apps.googleusercontent.com'  // Reemplaza con tu Client ID
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EcommerceModule { }

@@ -24,7 +24,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import "angular2-navigate-with-data";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MessageService } from 'primeng/api';
     BrowserModule,
     BrowserAnimationsModule,
     ToastModule,
+    RouterModule
 
   ],
   providers: [MessageService],
