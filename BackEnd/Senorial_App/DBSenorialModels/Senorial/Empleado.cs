@@ -41,4 +41,6 @@ public partial class Empleado
     public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
     [InverseProperty("Empleado")]
     public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+    [InverseProperty("Empleado")]
+    public virtual ICollection<PedidoLlevar> PedidosLlevar { get; set; } = new List<PedidoLlevar>();
 }

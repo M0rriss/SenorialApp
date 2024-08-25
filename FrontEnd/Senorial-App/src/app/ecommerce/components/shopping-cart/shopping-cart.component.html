@@ -35,7 +35,7 @@
               <i class="fa-solid fa-trash remove-icon" (click)="removeItem(item)"></i>
             </div>
             <div class="item-footer">
-              <p class="item-price">S/. {{ item.precioVenta * item.quantity}}</p>
+              <p class="item-price">S/. {{ item.precioVenta  * item.quantity | number:'1.2-2'}}</p>
               <div class="add-more">
                 <div class="add-more-icons">
                   <i class="fa-solid fa-circle-minus add-more-icon" (click)="decrementQuantity(item)"></i>
@@ -62,7 +62,7 @@
         </p>
       </section>
     }
-    
+
 
     <div class="cart-divider" role="separator"></div>
 

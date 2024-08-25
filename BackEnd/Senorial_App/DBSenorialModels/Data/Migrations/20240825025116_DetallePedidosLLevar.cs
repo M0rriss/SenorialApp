@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class mesa : Migration
+    public partial class DetallePedidosLLevar : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,7 +84,8 @@ namespace DBSenorialModels.Data.Migrations
                     id_mesa = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: true)
+                    estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: true),
+                    estado_mesa_local = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,30 +277,6 @@ namespace DBSenorialModels.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "pedidos",
-                schema: "Ventas",
-                columns: table => new
-                {
-                    id_pedido = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_mesa = table.Column<int>(type: "int", nullable: false),
-                    fecha_pedido = table.Column<DateTime>(type: "datetime", nullable: false),
-                    estado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    total = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    tipo_pedido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pedido_id_pk", x => x.id_pedido);
-                    table.ForeignKey(
-                        name: "mesa_pedido_fk",
-                        column: x => x.id_mesa,
-                        principalSchema: "Ventas",
-                        principalTable: "mesas",
-                        principalColumn: "id_mesa");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "documentos",
                 schema: "Ventas",
                 columns: table => new
@@ -419,35 +396,6 @@ namespace DBSenorialModels.Data.Migrations
                         principalSchema: "Ventas",
                         principalTable: "apertura_cajas",
                         principalColumn: "id_apertura");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "detalle_pedido",
-                schema: "Ventas",
-                columns: table => new
-                {
-                    id_detalle_pedido = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_pedido = table.Column<int>(type: "int", nullable: false),
-                    id_producto = table.Column<int>(type: "int", nullable: false),
-                    cantidad = table.Column<int>(type: "int", nullable: false),
-                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("detalle_pedido_id_pk", x => x.id_detalle_pedido);
-                    table.ForeignKey(
-                        name: "pedido_detalle_pedido_fk",
-                        column: x => x.id_pedido,
-                        principalSchema: "Ventas",
-                        principalTable: "pedidos",
-                        principalColumn: "id_pedido");
-                    table.ForeignKey(
-                        name: "producto_detalle_pedido_fk",
-                        column: x => x.id_producto,
-                        principalSchema: "Ventas",
-                        principalTable: "productos",
-                        principalColumn: "id_producto");
                 });
 
             migrationBuilder.CreateTable(
@@ -687,6 +635,80 @@ namespace DBSenorialModels.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "pedidoLlevar",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_pedido_llevar = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_empleado = table.Column<int>(type: "int", nullable: false),
+                    id_cliente = table.Column<int>(type: "int", nullable: false),
+                    fecha_pedido = table.Column<DateTime>(type: "datetime", nullable: false),
+                    estado = table.Column<int>(type: "int", nullable: true),
+                    total = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    id_tipo_pedido = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pedido_llevar_id_pk", x => x.id_pedido_llevar);
+                    table.ForeignKey(
+                        name: "cliente_pedido_llevar_fk",
+                        column: x => x.id_cliente,
+                        principalSchema: "Ventas",
+                        principalTable: "cliente",
+                        principalColumn: "id_cliente");
+                    table.ForeignKey(
+                        name: "empleado_pedido_llevar_fk",
+                        column: x => x.id_empleado,
+                        principalSchema: "Ventas",
+                        principalTable: "empleado",
+                        principalColumn: "id_empleado");
+                    table.ForeignKey(
+                        name: "tipo_pedido_llevar_fk",
+                        column: x => x.id_tipo_pedido,
+                        principalSchema: "Ventas",
+                        principalTable: "tipo_pedido",
+                        principalColumn: "id_tipo_pedido");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "pedidos",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_pedido = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_empleado = table.Column<int>(type: "int", nullable: false),
+                    id_mesa = table.Column<int>(type: "int", nullable: false),
+                    fecha_pedido = table.Column<DateTime>(type: "datetime", nullable: false),
+                    estado = table.Column<int>(type: "int", nullable: true),
+                    total = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    id_tipo_pedido = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pedido_id_pk", x => x.id_pedido);
+                    table.ForeignKey(
+                        name: "empleado_pedido_fk",
+                        column: x => x.id_empleado,
+                        principalSchema: "Ventas",
+                        principalTable: "empleado",
+                        principalColumn: "id_empleado");
+                    table.ForeignKey(
+                        name: "mesa_pedido_fk",
+                        column: x => x.id_mesa,
+                        principalSchema: "Ventas",
+                        principalTable: "mesas",
+                        principalColumn: "id_mesa");
+                    table.ForeignKey(
+                        name: "tipo_pedido_pedido_fk",
+                        column: x => x.id_tipo_pedido,
+                        principalSchema: "Ventas",
+                        principalTable: "tipo_pedido",
+                        principalColumn: "id_tipo_pedido");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ventas",
                 schema: "Ventas",
                 columns: table => new
@@ -860,6 +882,64 @@ namespace DBSenorialModels.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "detalle_pedido_llevar",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_detalle_pedido_llevar = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_pedido_llevar = table.Column<int>(type: "int", nullable: false),
+                    id_producto = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("detalle_pedido_llevar_id_pk", x => x.id_detalle_pedido_llevar);
+                    table.ForeignKey(
+                        name: "pedido_llevar_detalle_fk",
+                        column: x => x.id_pedido_llevar,
+                        principalSchema: "Ventas",
+                        principalTable: "pedidoLlevar",
+                        principalColumn: "id_pedido_llevar");
+                    table.ForeignKey(
+                        name: "producto_detalle_pedido_llevar_fk",
+                        column: x => x.id_producto,
+                        principalSchema: "Ventas",
+                        principalTable: "productos",
+                        principalColumn: "id_producto");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "detalle_pedido",
+                schema: "Ventas",
+                columns: table => new
+                {
+                    id_detalle_pedido = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_pedido = table.Column<int>(type: "int", nullable: false),
+                    id_producto = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    precio_unitario = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("detalle_pedido_id_pk", x => x.id_detalle_pedido);
+                    table.ForeignKey(
+                        name: "pedido_detalle_pedido_fk",
+                        column: x => x.id_pedido,
+                        principalSchema: "Ventas",
+                        principalTable: "pedidos",
+                        principalColumn: "id_pedido");
+                    table.ForeignKey(
+                        name: "producto_detalle_pedido_fk",
+                        column: x => x.id_producto,
+                        principalSchema: "Ventas",
+                        principalTable: "productos",
+                        principalColumn: "id_producto");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "detalle_venta",
                 schema: "Ventas",
                 columns: table => new
@@ -917,18 +997,18 @@ namespace DBSenorialModels.Data.Migrations
             migrationBuilder.InsertData(
                 schema: "Ventas",
                 table: "mesas",
-                columns: new[] { "id_mesa", "estado", "nombre" },
+                columns: new[] { "id_mesa", "estado", "estado_mesa_local", "nombre" },
                 values: new object[,]
                 {
-                    { 1, true, "Mesa 1" },
-                    { 2, true, "Mesa 2" },
-                    { 3, true, "Mesa 3" },
-                    { 4, true, "Mesa 4" },
-                    { 5, true, "Mesa 5" },
-                    { 6, true, "Mesa 6" },
-                    { 7, true, "Mesa 7" },
-                    { 8, true, "Mesa 8" },
-                    { 9, true, "Mesa 9" }
+                    { 1, true, null, "Mesa 1" },
+                    { 2, true, null, "Mesa 2" },
+                    { 3, true, null, "Mesa 3" },
+                    { 4, true, null, "Mesa 4" },
+                    { 5, true, null, "Mesa 5" },
+                    { 6, true, null, "Mesa 6" },
+                    { 7, true, null, "Mesa 7" },
+                    { 8, true, null, "Mesa 8" },
+                    { 9, true, null, "Mesa 9" }
                 });
 
             migrationBuilder.InsertData(
@@ -985,8 +1065,8 @@ namespace DBSenorialModels.Data.Migrations
                 columns: new[] { "id_tipo_pedido", "descripcion" },
                 values: new object[,]
                 {
-                    { 1, "Para Comer Aqui" },
-                    { 2, "Para Llevar" }
+                    { 1, "Indoor" },
+                    { 2, "PickUp" }
                 });
 
             migrationBuilder.InsertData(
@@ -1017,7 +1097,7 @@ namespace DBSenorialModels.Data.Migrations
                     { 6, true, 2, "Pollos" },
                     { 7, true, 2, "Parrillas" },
                     { 8, true, 2, "Otros" },
-                    { 9, true, 1, "Comida Rápida" },
+                    { 9, true, 3, "Comida Rápida" },
                     { 10, true, 4, "Bebidas Calientes" },
                     { 11, true, 4, "Bebidas Frías" },
                     { 12, true, 4, "Licores" },
@@ -1117,8 +1197,8 @@ namespace DBSenorialModels.Data.Migrations
                 columns: new[] { "id_inventario", "fecha_actualizacion", "id_sucursal" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 20, 15, 10, 28, 826, DateTimeKind.Local).AddTicks(3631), 1 },
-                    { 2, new DateTime(2024, 8, 20, 15, 10, 28, 826, DateTimeKind.Local).AddTicks(3634), 2 }
+                    { 1, new DateTime(2024, 8, 24, 21, 51, 13, 999, DateTimeKind.Local).AddTicks(1127), 1 },
+                    { 2, new DateTime(2024, 8, 24, 21, 51, 13, 999, DateTimeKind.Local).AddTicks(1133), 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -1294,7 +1374,7 @@ namespace DBSenorialModels.Data.Migrations
                 schema: "Usuarios",
                 table: "usuario",
                 columns: new[] { "id_usuario", "cambiar_password", "codigo_recuperacion", "created_at", "email", "id_img", "id_persona", "id_rol", "password", "update_at", "user_name" },
-                values: new object[] { 1, "", "", new DateTime(2024, 8, 20, 15, 10, 28, 829, DateTimeKind.Local).AddTicks(8021), "admin@admin.com", 1, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
+                values: new object[] { 1, "", "", new DateTime(2024, 8, 24, 21, 51, 14, 4, DateTimeKind.Local).AddTicks(143), "admin@admin.com", 1, 1, 1, "eQEguXgFEjSmgVeXYX+rexPeMAQ7AOMpdD8MPNqCe6s=", null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ambiente_id_mesa",
@@ -1355,6 +1435,18 @@ namespace DBSenorialModels.Data.Migrations
                 name: "IX_detalle_pedido_id_producto",
                 schema: "Ventas",
                 table: "detalle_pedido",
+                column: "id_producto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_detalle_pedido_llevar_id_pedido_llevar",
+                schema: "Ventas",
+                table: "detalle_pedido_llevar",
+                column: "id_pedido_llevar");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_detalle_pedido_llevar_id_producto",
+                schema: "Ventas",
+                table: "detalle_pedido_llevar",
                 column: "id_producto");
 
             migrationBuilder.CreateIndex(
@@ -1424,10 +1516,40 @@ namespace DBSenorialModels.Data.Migrations
                 column: "id_sucursal");
 
             migrationBuilder.CreateIndex(
+                name: "IX_pedidoLlevar_id_cliente",
+                schema: "Ventas",
+                table: "pedidoLlevar",
+                column: "id_cliente");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pedidoLlevar_id_empleado",
+                schema: "Ventas",
+                table: "pedidoLlevar",
+                column: "id_empleado");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pedidoLlevar_id_tipo_pedido",
+                schema: "Ventas",
+                table: "pedidoLlevar",
+                column: "id_tipo_pedido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pedidos_id_empleado",
+                schema: "Ventas",
+                table: "pedidos",
+                column: "id_empleado");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_pedidos_id_mesa",
                 schema: "Ventas",
                 table: "pedidos",
                 column: "id_mesa");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pedidos_id_tipo_pedido",
+                schema: "Ventas",
+                table: "pedidos",
+                column: "id_tipo_pedido");
 
             migrationBuilder.CreateIndex(
                 name: "IX_personas_tipo_documento",
@@ -1652,6 +1774,10 @@ namespace DBSenorialModels.Data.Migrations
                 schema: "Ventas");
 
             migrationBuilder.DropTable(
+                name: "detalle_pedido_llevar",
+                schema: "Ventas");
+
+            migrationBuilder.DropTable(
                 name: "detalle_venta",
                 schema: "Ventas");
 
@@ -1673,6 +1799,10 @@ namespace DBSenorialModels.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "pedidos",
+                schema: "Ventas");
+
+            migrationBuilder.DropTable(
+                name: "pedidoLlevar",
                 schema: "Ventas");
 
             migrationBuilder.DropTable(

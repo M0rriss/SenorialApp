@@ -9,6 +9,7 @@ import { CardProductResponse } from '@app/core/models/ecommerce/components/card-
 })
 export class ShoppingCartComponent implements OnInit {
   isShopOpen = false;
+  @Output() cartUpdated = new EventEmitter<number>();
   //Campos
 
   products: CardProductResponse[] = []
@@ -48,7 +49,12 @@ export class ShoppingCartComponent implements OnInit {
   get total() {
     return this.subtotal;
   }
-
+  updateCart() {
+    const json = JSON.stringify(this.products);
+    localStorage.setItem("product", json);
+    const total = this.products.reduce((acc, item) => acc + item.precioVenta * item.quantity, 0);
+    this.cartUpdated.emit(total);  // Emitir el nuevo total del carrito
+  }
   incrementQuantity(item: CardProductResponse) {
     // item.quantity++;
     for(var i of this.products)
@@ -56,9 +62,12 @@ export class ShoppingCartComponent implements OnInit {
       if(item.idProducto == i.idProducto){
           i.quantity++;
       }
+
     }
+
     var json =JSON.stringify(this.products);
     localStorage.setItem("product",json);
+    this.updateCart();
   }
 
   decrementQuantity(item: any) {
@@ -71,6 +80,7 @@ export class ShoppingCartComponent implements OnInit {
         }
         var json =JSON.stringify(this.products);
         localStorage.setItem("product",json);
+        this.updateCart();
     }
   }
 
@@ -78,8 +88,8 @@ export class ShoppingCartComponent implements OnInit {
 
     for(var i of this.products){
       if(i.idProducto == item.idProducto){
-        let index = this.products.indexOf(item); 
-      
+        let index = this.products.indexOf(item);
+
         if(index == this.products.length - 1 ){
           this.products = this.products.slice(0,index);
         break;
@@ -98,6 +108,7 @@ export class ShoppingCartComponent implements OnInit {
     }
     var json =JSON.stringify(this.products);
     localStorage.setItem("product",json);
+    this.updateCart();
     // const index = this.cartItems.indexOf(item);
     // if (index > -1) {
     //   this.cartItems.splice(index, 1);
@@ -112,6 +123,7 @@ export class ShoppingCartComponent implements OnInit {
     }
     let res = JSON.parse(json);
     this.products = res as CardProductResponse[];
+    this.updateCart();
   }
 
 }

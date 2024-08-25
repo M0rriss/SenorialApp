@@ -10,8 +10,10 @@
     "\\Senorial_App\\Business\\Auth",
     "\\Senorial_App\\Business\\Schema_Usuarios",
     "\\Senorial_App\\Business\\Schema_Usuarios\\Usuario",
+    "\\Senorial_App\\Business\\Schema_Ventas",
+    "\\Senorial_App\\Business\\Schema_Ventas\\Mesas",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\Business\\Auth\\AuthBusiness.cs",
+  "SelectedNode": "\\Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs",
   "PreviewInSolutionExplorer": false
 }

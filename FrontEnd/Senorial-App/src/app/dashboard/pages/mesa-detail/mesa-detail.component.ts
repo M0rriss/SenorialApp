@@ -44,9 +44,9 @@ export class MesaDetailComponent implements OnInit{
       this.listadoDetallado(this.local.idMesa, this.local.idPedido);
     } else {
       this.notification.showWarn('Warn', 'Tiene que seleccionar una mesa.');
-      
+
+      this.router.navigate(['dashboard']);
     }
-    this.router.navigate(['dashboard']);
   }
 
   listadoDetallado(idMesa: number, idPedido: number){

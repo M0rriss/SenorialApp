@@ -127,7 +127,7 @@ namespace Business.Schema_Almacen.Proveedores
             }
 
             // Verificar y separar nombres y apellidos
-            var nombreCompleto = request.ProveedorNombre.Split(' ');
+            var nombreCompleto = request.ProveedorNombreCompleto.Split(' ');
             if (nombreCompleto.Length < 2)
             {
                 throw new ArgumentException("Debe proporcionar al menos un nombre y un apellido.");
@@ -137,19 +137,22 @@ namespace Business.Schema_Almacen.Proveedores
 
             var persona = new Persona
             {
+                
                 PrimerNombre = primerNombre,
                 ApellidoPaterno = apellidoPaterno,
                 Email = request.Correo.ToLower(),
                 Telefono = request.Telefono,
                 NroDocumento = request.Dni,
                 Genero = "",
-                IdTipoDocumento = 1
+                IdTipoDocumento = 1,
+                TipoPersona  = "Natural",
             };
 
             var personaCreada = await _personaRepository.Create(persona);
 
             var nuevoProveedor = new Proveedor
             {
+                IdProveedor = request.IdProveedor,
                 IdPersona = personaCreada.IdPersona,
                 Vende = request.Distribuye
             };

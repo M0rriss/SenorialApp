@@ -16,7 +16,8 @@ namespace RequestResponseModels.Response.Schema_Almacen.Proveedor
     }
     public class ProveedorUiResponse
     {
-        public string ProveedorNombre { get; set; }
+        public int IdProveedor { get; set; }
+        public string ProveedorNombreCompleto { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
         public string Dni { get; set; }

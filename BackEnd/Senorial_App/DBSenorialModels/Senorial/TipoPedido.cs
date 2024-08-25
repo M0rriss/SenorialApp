@@ -22,5 +22,7 @@ public partial class TipoPedido
 
     [InverseProperty("TipoPedido")]
     public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+    [InverseProperty("TipoPedido")]
+    public virtual ICollection<PedidoLlevar> PedidosLlevar { get; set; } = new List<PedidoLlevar>();
 
 }

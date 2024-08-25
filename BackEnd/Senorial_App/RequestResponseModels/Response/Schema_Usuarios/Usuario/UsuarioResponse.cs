@@ -26,6 +26,7 @@ namespace RequestResponseModels.Response.Schema_Usuarios.Usuario
     }
     public class UsuarioUiResponse
     {
+        public int IdUsuario { get; set; }
         public string Nombres { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }

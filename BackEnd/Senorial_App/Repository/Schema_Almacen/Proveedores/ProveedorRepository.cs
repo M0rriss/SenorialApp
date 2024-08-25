@@ -36,7 +36,8 @@ namespace Repository.Schema_Almacen.Proveedores
                     pro => pro.IdPersona,
                     (p, pro) => new ProveedorUiRequest
                     {
-                        ProveedorNombre = $"{p.PrimerNombre} {p.ApellidoPaterno}",
+                        IdProveedor = p.IdPersona,
+                        ProveedorNombreCompleto = $"{p.PrimerNombre} {p.ApellidoPaterno}",
                         Correo = p.Email,
                         Telefono = p.Telefono,
                         Dni = p.NroDocumento,

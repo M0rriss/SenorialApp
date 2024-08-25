@@ -1,16 +1,44 @@
-import { Component } from '@angular/core';
-
+import { Component, ViewEncapsulation } from '@angular/core';
+import {
+  ConfirmationService,
+  MessageService,
+} from "primeng/api";
 @Component({
   selector: 'orders-dashboard',
   templateUrl: './orders.component.html',
-  styleUrl: './orders.component.scss'
+  styleUrl: './orders.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class OrdersComponent {
+
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+) {}
+confirmPayment(event: Event) {
+  this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: '¿Deseas proceder con el Pago?',
+      acceptLabel: 'Boleta',
+      rejectLabel: 'Factura',
+      acceptButtonStyleClass: 'custom-accept-button',
+      rejectButtonStyleClass: 'custom-reject-button',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.messageService.add({ severity: 'contrast', summary: 'Boleta Seleccionada', detail: 'Has seleccionado Boleta', life: 3000 });
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'contrast', summary: 'Factura Seleccionada', detail: 'Has seleccionado Factura', life: 3000 });
+      }
+  });
+}
   // Variables para la paginación
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
 
+  isEmployee: boolean = true;
 
   statusTabs = [
     { label: 'Todos', color: '#abaebc' },
@@ -21,31 +49,28 @@ export class OrdersComponent {
   ];
 
   orders = [
+    // Pedidos para llevar (PickUp)
     {
       status: 'Ready to serve', table: 1, customerName: 'Mauricio', items: [
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' },
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' },
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' },
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' },
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' },
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' },
+        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' }
       ],
       orderType: 'PickUp'
     },
+    {
+      status: 'Invoice', table: 4, customerName: 'Mauricio', items: [
+        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/bc656a6c49f29511278ef0db6230e8afb39b1d1cfe88af681bfe8f7344a6547c?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
+      ],
+      orderType: 'PickUp'
+    },
+    // Pedidos para comer aquí (Indoor)
     {
       status: 'Cancelled', table: 2, customerName: 'Mauricio', items: [
         { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/0b170496c4b0a21debaf737164dd77e647143b2fdc9cf06bfbd494626a79de70?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
       ],
-      orderType: 'PickUp'
-    },
-    {
-      status: 'Being Cooked', table: 3, customerName: 'Mauricio', items: [
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/bc656a6c49f29511278ef0db6230e8afb39b1d1cfe88af681bfe8f7344a6547c?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
-      ],
       orderType: 'Indoor'
     },
     {
-      status: 'Invoice', table: 4, customerName: 'Mauricio', items: [
+      status: 'Being Cooked', table: 3, customerName: 'Mauricio', items: [
         { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/bc656a6c49f29511278ef0db6230e8afb39b1d1cfe88af681bfe8f7344a6547c?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
       ],
       orderType: 'Indoor'
@@ -117,6 +142,7 @@ export class OrdersComponent {
     const index = this.selectedOrder.items.indexOf(item);
     if (index > -1) {
       this.selectedOrder.items.splice(index, 1);
+
     }
   }
 

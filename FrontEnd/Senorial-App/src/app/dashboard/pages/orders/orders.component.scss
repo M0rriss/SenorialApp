@@ -1,5 +1,7 @@
 @use 'sass:math';
-
+@import "node_modules/primeng/resources/themes/aura-light-blue/theme.css";
+@import "node_modules/primeng/resources/primeng.css";
+@import "node_modules/primeicons/primeicons.css";
 $primary-color                  : #181C2E;
 $secondary-color                : #FF910F;
 $white-color                    : #ffffff;
@@ -292,13 +294,18 @@ body {
     margin-top   : 10px;
 }
 
-.table-number-summary {
+.table-number-summary, .pay-button {
     background-color: $table-card-bg;
     color        : $text-color;
     padding      : 8px 24px;
     border-radius: 36px;
     font-size    : 14px;
     font-weight  : 600;
+
+    cursor:pointer;
+    border       : 2px solid #bc9254;
+
+
 }
 
 .action-buttons {
@@ -340,6 +347,7 @@ body {
     padding      : 10px;
     margin-bottom: 10px;
     position     : relative;
+    transition-property: transform;
 }
 
 .delete-item-button {
@@ -461,7 +469,36 @@ body {
         color        : darken($text-color, 10%);
     }
 }
+.p-confirm-popup-content{
+  padding: 1.125rem;
+}
+.custom-accept-button {
+  background: #faa742;
+  border-color: #FF910F;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
 
+.custom-reject-button {
+  background: #343438;
+  border-color: #2b2b2f;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+.custom-accept-button:hover {
+  background: #FF910F;
+  color: #fff;
+}
+
+.custom-reject-button:hover {
+  background: #2b2b2f;
+  color: #fff;
+}
 @media (max-width: 1366px) and (max-height: 760px) {
     .order-info-container {
         padding    : 10px;

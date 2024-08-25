@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CardProductResponse } from '@app/core/models/ecommerce/components/card-product/card-product-response';
 import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
 import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
@@ -22,7 +22,6 @@ export class HomePageComponent implements OnInit{
 
  fitro1:number = 0;
  fritro2:number = 0;
-
 
 
   products: GenericFilterResponse<CardProductResponse> = {
@@ -108,9 +107,9 @@ export class HomePageComponent implements OnInit{
       else{
         this.listarProductos('','',(this.first/this.rows)+1);
       }
-
-
-
     }
+
+
+
 }
 

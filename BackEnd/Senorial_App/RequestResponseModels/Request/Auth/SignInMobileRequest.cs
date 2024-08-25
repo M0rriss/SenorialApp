@@ -11,6 +11,7 @@ namespace RequestResponseModels.Request.Auth
 {
     public class SignInMobileRequest
     {
+        
         public string Nombres { get; set; }
         //public string Apellidos { get; set; }
         public string TipoDoc { get; set; } = "DNI";

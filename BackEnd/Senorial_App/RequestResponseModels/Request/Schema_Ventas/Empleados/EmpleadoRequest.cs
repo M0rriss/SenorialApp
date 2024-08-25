@@ -18,6 +18,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
     }
     public class EmpleadosUiRequest
     {
+        public int IdEmpleado { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         [EmailAddress]
@@ -28,7 +29,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
         public string Identificacion { get; set; }
         public string Rol { get; set; }
         public string Estado { get; set; }
-        public string Sucursal { get; set; } = null;
+        //public string Sucursal { get; set; } = null;
 
 
 
@@ -46,7 +47,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
         public string Identificacion { get; set; }
         public string Rol { get; set; }
         public string Estado { get; set; }
-        public string Sucursal { get; set; } = null;
+        //public string Sucursal { get; set; } = null;
 
 
 

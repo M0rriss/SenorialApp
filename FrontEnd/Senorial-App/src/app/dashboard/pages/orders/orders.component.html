@@ -54,7 +54,7 @@
 
 <!-- Order Summary Modal -->
 <div class="modal-background" *ngIf="selectedOrder" (click)="closeOrderModal()">
-  <section class="order-summary" (click)="$event.stopPropagation()">
+  <section class="order-summary" [ngClass]="{'takeaway': selectedOrder.orderType === 'PickUp', 'dine-in': selectedOrder.orderType === 'Indoor'}" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h2 class="summary-title">Resumen del Pedido</h2>
       <button class="close-button" (click)="closeOrderModal()">
@@ -63,8 +63,10 @@
     </div>
     <div class="summary-content">
       <div class="summary-header">
-        <div class="table-number-summary">Mesa {{ selectedOrder.table }}</div>
+        <button class="table-number-summary" *ngIf="selectedOrder.orderType === 'Indoor'">Mesa {{ selectedOrder.table }}</button>
         <div class="action-buttons">
+          <!-- Botón para pagar que dispara el popup -->
+          <button class="pay-button" *ngIf="selectedOrder.orderType === 'PickUp'" (click)="confirmPayment($event)">Ir a Pagar</button>
           <button class="ready-button" (click)="markAsReady()">Listo</button>
           <button class="cancel-button" (click)="openCancelModal()">Cancelar Orden</button>
         </div>
@@ -85,6 +87,7 @@
     </div>
   </section>
 </div>
+
 <!-- Cancel Order Modal -->
 <div class="modal-background" *ngIf="isCancelModalOpen" (click)="closeCancelModal()">
   <section class="cancel-modal" (click)="$event.stopPropagation()">
@@ -96,3 +99,6 @@
     </div>
   </section>
 </div>
+<!-- Confirm Popup -->
+<p-confirmPopup #confirmPopupRef></p-confirmPopup>
+<p-toast></p-toast>
