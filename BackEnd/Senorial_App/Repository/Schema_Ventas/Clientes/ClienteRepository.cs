@@ -35,7 +35,8 @@ namespace Repository.Schema_Ventas.Clientes
                     pc => pc.p.IdTipoDocumento,
                     tp => tp.IdTipoDocumento,
                     (pc, tp) => new ClienteUiRequest
-                    {
+                    { 
+                        IdCliente = pc.p.IdPersona,
                         Nombres = pc.p.PrimerNombre + " " + pc.p.ApellidoPaterno,
                         Correo = pc.p.Email,
                         Telefono = pc.p.Telefono,

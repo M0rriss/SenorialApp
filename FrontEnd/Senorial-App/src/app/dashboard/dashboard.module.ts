@@ -22,9 +22,15 @@ import { TableMaintenanceComponent } from './pages/mantenimiento/table-maintenan
 import { PaginatorModule } from 'primeng/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import "angular2-navigate-with-data";
+import { RouterModule } from '@angular/router';
+// PrimeNG Modules
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-
+import { ButtonModule } from 'primeng/button';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -57,8 +63,16 @@ import { MessageService } from 'primeng/api';
     BrowserModule,
     BrowserAnimationsModule,
     ToastModule,
+    RouterModule,
+    ButtonModule,
+    ConfirmPopupModule,
+    DialogModule,
+    InputTextModule
+
 
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
+
+
 })
 export class DashboardModule { }

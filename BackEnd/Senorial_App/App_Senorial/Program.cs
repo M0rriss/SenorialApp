@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "origins",
                       builder =>
                       {
-                          //builder.WithOrigins("http://127.0.0.1:7283");
+                          //builder.WithOrigins("http://127.0.0.1:4200");
                           builder.AllowAnyOrigin();
                           builder.AllowAnyMethod();//get post put delete patch 
                           builder.AllowAnyHeader();//
@@ -147,7 +147,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsProduction())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

@@ -219,7 +219,7 @@ namespace Business.Schema_Usuarios.Usuarios
             return _mapper.Map<SignInEcommerceResponse>(nuevoUsuario);
         }
 
-        public async Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request)
+        public async Task<SignInMobileResponse> UsuarioRegistroMobile(SignInMobileRequest request)
         {
             if (request == null)
             {
@@ -319,6 +319,7 @@ namespace Business.Schema_Usuarios.Usuarios
                 TipoPersona = "Natural",
                 IdTipoDocumento = 1,
                 Telefono = "",
+                Genero = "",
                 // Otros campos necesarios
             });
 

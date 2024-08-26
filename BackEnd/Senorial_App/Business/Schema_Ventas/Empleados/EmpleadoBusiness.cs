@@ -148,16 +148,16 @@ namespace Business.Schema_Ventas.Empleados
                 Telefono = request.Telefono,
                 NroDocumento = request.Identificacion,
                 Genero = "",
-                IdTipoDocumento = 1
+                IdTipoDocumento = 1,
             };
 
             await _personaRepository.Create(persona);
 
-            var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
-            if (sucursal == null)
-            {
-                throw new ArgumentException("La sucursal especificada no existe.");
-            }
+            //var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
+            //if (sucursal == null)
+            //{
+            //    throw new ArgumentException("La sucursal especificada no existe.");
+            //}
 
             var rol = await _rolesRepository.GetByRol(request.Rol);
             if (rol == null)
@@ -171,7 +171,7 @@ namespace Business.Schema_Ventas.Empleados
             {
                 IdPersona = persona.IdPersona,
                 IdRol = rol.IdRol,
-                IdSucursal = sucursal.IdSucursal,
+                //IdSucursal = sucursal.IdSucursal,
                 Estado = estado
             };
 
@@ -181,15 +181,15 @@ namespace Business.Schema_Ventas.Empleados
             // Map the inserted entity back to the response model
             var response = _mapper.Map<EmpleadosUiResponse>(empleado);
             response.Persona = _mapper.Map<PersonaResponse>(persona);
-            response.Sucursal = sucursal.Nombre;
+            //response.Sucursal = sucursal.Nombre;
 
             return response;
         }
 
         public async Task<EmpleadosUiResponse> UpdateUiEmpleado(EmpleadoUpdateUiRequest request)
-        {
+         {
             // Buscar el empleado por su ID
-            var empleadoExistente =  _empleadoRepository.BuscarporId(request.IdEmpleado);
+            var empleadoExistente = await _empleadoRepository.BuscarporId(request.IdEmpleado);
             if (empleadoExistente == null)
             {
                 throw new ArgumentException("El empleado especificado no existe.");
@@ -231,11 +231,11 @@ namespace Business.Schema_Ventas.Empleados
             await _personaRepository.Update(personaExistente);
 
             // Obtener la sucursal por nombre
-            var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
-            if (sucursal == null)
-            {
-                throw new ArgumentException("La sucursal especificada no existe.");
-            }
+            //var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
+            //if (sucursal == null)
+            //{
+            //    throw new ArgumentException("La sucursal especificada no existe.");
+            //}
 
             // Actualizar el rol del empleado y la sucursal
             var rol = await _rolesRepository.GetByRol(request.Rol);
@@ -245,14 +245,21 @@ namespace Business.Schema_Ventas.Empleados
             }
 
             empleadoExistente.IdRol = rol.IdRol;
-            empleadoExistente.IdSucursal = sucursal.IdSucursal;
+            //empleadoExistente.IdSucursal = sucursal.IdSucursal;
+            // Actualizar el estado del empleado
+            var estado = request.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase)
+                ? true
+                : request.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase)
+                ? false
+                : (bool?)null;
 
+            empleadoExistente.Estado = estado;
             await _empleadoRepository.Update(empleadoExistente);
 
             // Mapear y devolver la respuesta
             var response = _mapper.Map<EmpleadosUiResponse>(empleadoExistente);
             response.Persona = _mapper.Map<PersonaResponse>(personaExistente);
-            response.Sucursal = sucursal.Nombre;
+            //response.Sucursal = sucursal.Nombre;
 
             return response;
         }

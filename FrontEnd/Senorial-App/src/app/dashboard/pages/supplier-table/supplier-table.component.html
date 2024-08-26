@@ -1,107 +1,88 @@
 <section class="suppliers-section">
   <side-bar></side-bar> <!-- Componente de sidebar -->
   <div class="content">
-      <h1 class="section-title">Proveedores</h1>
-      <div class="action-bar">
-          <div class="search-container">
-            <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
-              <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, telefono o correo">
-          </div>
-          <div class="buttons">
-              <button class="action-button" (click)="openDialog('add')">Agregar</button>
-             <!--  <button class="action-button" (click)="openDialog('edit')">Editar</button> -->
-          </div>
+    <h1 class="section-title">Proveedores</h1>
+    <div class="action-bar">
+      <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
+        <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, teléfono o correo">
       </div>
-      <table class="suppliers-table">
-          <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Proveedor Nombre <img src="sort_icon_url" alt="" class="sort-icon"></th>
-                  <th>Correo <img src="sort_icon_url" alt="" class="sort-icon"></th>
-                  <th>Telefono</th>
-                  <th>Documento <img src="sort_icon_url" alt="" class="sort-icon"></th>
-                  <th>Distribuye</th>
-                  <th>Acciones</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td>#20462</td>
-                  <td>Felix Lujan</td>
-                  <td>fifisor-gloglo.com</td>
-                  <td>930418642</td>
-                  <td>75372286</td>
-                  <td><span class="tag">Pollos</span></td>
-                  <td>
-                    <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit')"></i>
-                  </td>
-              </tr>
-              <tr>
-                  <td>#20463</td>
-                  <td>Maria Rodriguez</td>
-                  <td>maria-example.com</td>
-                  <td>912345678</td>
-                  <td>87654321</td>
-                  <td><span class="tag">Verduras</span></td>
-                  <td>
-                    <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit')"></i>
-                  </td>
-              </tr>
-              <tr>
-                  <td>#20464</td>
-                  <td>Juan Perez</td>
-                  <td>juan-example.com</td>
-                  <td>923456789</td>
-                  <td>98765432</td>
-                  <td><span class="tag">Frutas</span></td>
-                  <td>
-                    <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit')"></i>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-<!-- Componente de Paginación -->
-<div class="pagination-container">
-  <p-paginator
-    [rows]="rows"
-    [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="[5, 10, 20]"
-    (onPageChange)="onPageChange($event)"
-  ></p-paginator>
-</div>
+      <div class="buttons">
+        <button class="action-button" (click)="openDialog('add')">Agregar</button>
+      </div>
+    </div>
+    <table class="suppliers-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre </th>
+          <th>Correo </th>
+          <th>Teléfono</th>
+          <th>Documento </th>
+          <th>Distribuye</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proveedor of suppliers">
+          <td>{{ proveedor.idProveedor }}</td>
+          <td>{{ proveedor.proveedorNombreCompleto }}</td>
+          <td>{{ proveedor.correo }}</td>
+          <td>{{ proveedor.telefono }}</td>
+          <td>{{ proveedor.dni }}</td>
+          <td><span class="tag">{{ proveedor.distribuye }}</span></td>
+          <td>
+            <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit', proveedor)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Componente de Paginación -->
+    <div class="pagination-container">
+      <p-paginator
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)"
+      ></p-paginator>
+    </div>
   </div>
 
   <!-- Modal para agregar/editar proveedor -->
-  <div id="supplier-modal" class="modal" [ngClass]="{'show': isModalOpen}">
-      <div class="modal-content">
-          <span class="close-button" (click)="closeDialog()">&times;</span>
-          <h2 id="modal-title" class="dialog-title">{{modalTitle}}</h2>
-          <form>
-              <div class="form-row">
-                  <label for="name" class="form-label">Nombre</label>
-                  <input type="text" id="name" class="form-input" placeholder="Enter provider name" required>
-              </div>
-              <div class="form-row">
-                  <label for="email" class="form-label">Correo</label>
-                  <input type="email" id="email" class="form-input" placeholder="Enter provider email" required>
-              </div>
-              <div class="form-row">
-                  <label for="phone" class="form-label">Telefono</label>
-                  <input type="tel" id="phone" class="form-input" placeholder="Enter provider phone" required>
-              </div>
-              <div class="form-row">
-                  <label for="dni" class="form-label">Documento</label>
-                  <input type="text" id="dni" class="form-input" placeholder="Enter provider Doc" required>
-              </div>
-              <div class="form-row">
-                  <label for="role" class="form-label">Distribuye</label>
-                  <input type="text" id="role" class="form-input" placeholder="Enter provider role" required>
-              </div>
-              <div class="form-actions">
-                  <button type="button" class="btn btn-discard" (click)="closeDialog()">Cancelar</button>
-                  <button type="submit" class="btn btn-submit">{{modalButtonText}}</button>
-              </div>
-          </form>
+  <!-- Modal para agregar/editar proveedor -->
+<div id="supplier-modal" class="modal" [ngClass]="{'show': isModalOpen}">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeDialog()">&times;</span>
+    <h2 id="modal-title" class="dialog-title">{{modalTitle}}</h2>
+    <!-- Vinculación del formulario con FormGroup -->
+    <form [formGroup]="formSupplier" (ngSubmit)="submitForm()">
+      <div class="form-row">
+        <label for="name" class="form-label">Nombre</label>
+        <input formControlName="proveedorNombreCompleto" type="text" id="name" class="form-input" placeholder="Enter provider name" required>
       </div>
+      <div class="form-row">
+        <label for="email" class="form-label">Correo</label>
+        <input formControlName="correo" type="email" id="email" class="form-input" placeholder="Enter provider email" required>
+      </div>
+      <div class="form-row">
+        <label for="phone" class="form-label">Telefono</label>
+        <input formControlName="telefono" type="tel" id="phone" class="form-input" placeholder="Enter provider phone" required>
+      </div>
+      <div class="form-row">
+        <label for="dni" class="form-label">Documento</label>
+        <input formControlName="dni" type="text" id="dni" class="form-input" placeholder="Enter provider Doc" required>
+      </div>
+      <div class="form-row">
+        <label for="distribuye" class="form-label">Distribuye</label>
+        <input formControlName="distribuye" type="text" id="distribuye" class="form-input" placeholder="Enter provider role" required>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-discard" (click)="closeDialog()">Cancelar</button>
+        <button type="submit" class="btn btn-submit">{{modalButtonText}}</button>
+      </div>
+    </form>
   </div>
+</div>
+
 </section>
+<p-toast/>

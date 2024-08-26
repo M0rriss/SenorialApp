@@ -123,6 +123,13 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
             var result = await _pedidoBusiness.ObtenerPedidos();
             return Ok(result);
         }
+        [HttpGet]
+        [Route("DetPedidos")]
+        public async Task<ActionResult> GetDetallePedidosLocal()
+        {
+            var result = await _pedidoBusiness.DetallePedido();
+            return Ok(result);
+        }
         #endregion CRUD METHODS
     }
 }

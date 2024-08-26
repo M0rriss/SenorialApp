@@ -5,11 +5,10 @@
     <div class="action-bar">
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, telefono o correo" />
+        <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, teléfono o correo" />
       </div>
       <div class="buttons">
         <button class="action-button" (click)="openDialog('add')">Agregar</button>
-        <!-- <button class="action-button" (click)="openDialog('edit')">Editar</button> -->
       </div>
     </div>
     <table class="employees-table">
@@ -19,49 +18,44 @@
           <th>Nombre</th>
           <th>Apellidos</th>
           <th>Correo</th>
-          <th>Telefono</th>
+          <th>Teléfono</th>
           <th>Identificación</th>
           <th>Rol</th>
           <th>Estado</th>
-          <th>Sucursal</th>
-          <th>
-           Acciones
-          </th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>#20462</td>
-          <td>Felix</td>
-          <td>Apellido</td>
-          <td>fifisor-gloglo.com</td>
-          <td>75372286</td>
-          <td>DNI12345678</td>
-          <td>Mozo</td>
-          <td>
-            <i class="edit-icon fa-regular fa-pen-to-square"  (click)="openDialog('edit')">Editar></i>
-          </td>
+        <tr *ngFor="let empleado of employees">
+          <td>{{ empleado.idEmpleado }}</td>
+          <td>{{ empleado.nombres }}</td>
+          <td>{{ empleado.apellidos }}</td>
+          <td>{{ empleado.correo }}</td>
+          <td>{{ empleado.telefono }}</td>
+          <td>{{ empleado.identificacion }}</td>
+          <td>{{ empleado.rol }}</td>
           <td>
             <label class="switch">
-              <input type="checkbox" checked>
+              <input type="checkbox" [checked]="empleado.estado === 'Activo'">
               <span class="slider round"></span>
             </label>
-            <span class="status-label">Activo</span>
+            <span class="status-label">{{ empleado.estado }}</span>
           </td>
-          <td>Pio Pata</td>
+          <td>
+            <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit', empleado)"></i>
+          </td>
         </tr>
-        <!-- Más filas según sea necesario -->
       </tbody>
     </table>
     <!-- Componente de Paginación -->
- <div class="pagination-container">
-  <p-paginator
-    [rows]="rows"
-    [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="[5, 10, 20]"
-    (onPageChange)="onPageChange($event)"
-  ></p-paginator>
-</div>
+    <div class="pagination-container">
+      <p-paginator
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)"
+      ></p-paginator>
+    </div>
   </div>
 
   <!-- Modal para agregar/editar empleado -->
@@ -69,38 +63,39 @@
     <div class="modal-content">
       <span class="close-button" (click)="closeDialog()">&times;</span>
       <h2 id="modal-title" class="dialog-title">{{modalTitle}}</h2>
-      <form>
+      <form [formGroup]="formEmployee" (submit)="employeeAcciones()">
         <div class="form-row">
           <label for="name" class="form-label">Nombre</label>
-          <input type="text" id="name" class="form-input" placeholder="Enter your name" required>
+          <input formControlName="nombres" type="text" id="name" class="form-input" placeholder="Ingresa el nombre" required>
         </div>
         <div class="form-row">
           <label for="lastname" class="form-label">Apellidos</label>
-          <input type="text" id="lastname" class="form-input" placeholder="Enter your last name" required>
+          <input formControlName="apellidos" type="text" id="lastname" class="form-input" placeholder="Ingresa los apellidos" required>
         </div>
         <div class="form-row">
           <label for="email" class="form-label">Correo</label>
-          <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+          <input formControlName="correo" type="email" id="email" class="form-input" placeholder="Ingresa el correo" required>
         </div>
         <div class="form-row">
-          <label for="phone" class="form-label">Telefono</label>
-          <input type="tel" id="phone" class="form-input" placeholder="Enter your phone" required>
+          <label for="phone" class="form-label">Teléfono</label>
+          <input formControlName="telefono" type="tel" id="phone" class="form-input" placeholder="Ingresa el teléfono" required>
         </div>
         <div class="form-row">
           <label for="identification" class="form-label">Identificación</label>
-          <input type="text" id="identification" class="form-input" placeholder="Enter your identify" required>
+          <input formControlName="identificacion" type="text" id="identification" class="form-input" placeholder="Ingresa la identificación" required>
         </div>
         <div class="form-row">
           <label for="role" class="form-label">Rol</label>
-          <input type="text" id="role" class="form-input" placeholder="Enter your role" required>
+          <select formControlName="rol" id="role" class="form-input" required>
+            <option *ngFor="let item of roles" [value]="item.idRol">{{item.nombre}}</option>
+          </select>
         </div>
         <div class="form-row">
           <label for="status" class="form-label">Estado</label>
-          <input type="text" id="status" class="form-input" placeholder="Enter your status" required>
-        </div>
-        <div class="form-row">
-          <label for="branch" class="form-label">Sucursal</label>
-          <input type="text" id="branch" class="form-input" placeholder="Enter your location" required>
+          <select formControlName="estado" id="status" class="form-input" required>
+            <option [value]="'Activo'">Activo</option>
+            <option [value]="'Inactivo'">Inactivo</option>
+          </select>
         </div>
         <div class="form-actions">
           <button type="button" class="btn btn-discard" (click)="closeDialog()">Cancelar</button>
@@ -110,3 +105,4 @@
     </div>
   </div>
 </section>
+<p-toast/>

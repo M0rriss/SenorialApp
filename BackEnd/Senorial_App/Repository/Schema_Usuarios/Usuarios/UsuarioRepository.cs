@@ -140,6 +140,7 @@ namespace Repository.Schema_Usuarios.Usuarios
               (up, r) => new { up.u, up.p, r })
         .Select(upr => new UsuarioUiRequest
         {
+            IdUsuario = upr.u.IdUsuario ,
             Nombres = upr.p.PrimerNombre + " " + upr.p.SegundoNombre + " " + upr.p.ApellidoPaterno + " " + upr.p.ApellidoMaterno,
             Correo = upr.p.Email,
             Telefono = upr.p.Telefono,

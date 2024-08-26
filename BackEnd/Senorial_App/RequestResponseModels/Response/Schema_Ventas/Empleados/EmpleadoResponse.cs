@@ -26,9 +26,9 @@ namespace RequestResponseModels.Response.Schema_Ventas.Empleados
         public string Identificacion { get; set; }
         public string Rol { get; set; }
         public string Estado { get; set; }
-        public string Sucursal { get; set; } = null;
+        //public string Sucursal { get; set; } = null;
         public PersonaResponse Persona { get; set; }
-        public SucursalResponse Sucursales { get; set; }
+        //public SucursalResponse Sucursales { get; set; }
 
     }
 }

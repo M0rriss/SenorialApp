@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
-import { ExampleComponent } from './components/example/example.component';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 
 @NgModule({
   declarations: [
-    ExampleComponent
+
+    ChatbotComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +21,8 @@ import { MessageService } from 'primeng/api';
     ToastModule
   ],
   exports:[
-    DialogModule
+    DialogModule,
+    ChatbotComponent
   ],
   providers: [MessageService],
 })

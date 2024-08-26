@@ -19,15 +19,17 @@ export class NavBarComponent implements OnInit {
   isShoppingCartActive = false;
   isShopOpen = false;
 
+  totalCartAmount: number = 0;
   //CAMPOS
   user:string = "Ingresar";
-  
+
   constructor(
     private route:Router
   ){
   }
   ngOnInit(): void {
     this.cargarInforUser();
+    this.loadCartTotal();
   }
 
   //FUNCIONALIDAD
@@ -40,7 +42,7 @@ export class NavBarComponent implements OnInit {
 
     this.user = json.infoUsuario.nombre.substring(0,json.infoUsuario.nombre.indexOf(' '));
   }
-  
+
   //UI
   toggleShop() {
     this.isShopOpen = !this.isShopOpen;
@@ -62,6 +64,7 @@ export class NavBarComponent implements OnInit {
       } else if (buttonType === 'shopping-cart') {
         this.isShoppingCartOpen = !this.isShoppingCartOpen;
         this.isShoppingCartActive = !this.isShoppingCartActive;
+        this.loadCartTotal();
         this.closeOtherPanels('shopping-cart');
       }
     }
@@ -76,7 +79,7 @@ export class NavBarComponent implements OnInit {
       }
     }
   }
- 
+
 
   closeOtherPanels(activePanel: string) {
     if (activePanel !== 'menu') {
@@ -92,5 +95,18 @@ export class NavBarComponent implements OnInit {
       this.isShoppingCartActive = false;
     }
   }
+  loadCartTotal() {
+    const productsJson = localStorage.getItem("product");
+  if (productsJson) {
+    const products: CardProductResponse[] = JSON.parse(productsJson);
+    this.totalCartAmount = products.reduce((acc, item) => acc + item.precioVenta * item.quantity, 0);
+  } else {
+    this.totalCartAmount = 0;
+  }
+  }
 
+  onCartUpdated(total: number) {
+    this.totalCartAmount = total;  // Actualiza el total cuando se recibe un evento de actualización
+
+  }
 }

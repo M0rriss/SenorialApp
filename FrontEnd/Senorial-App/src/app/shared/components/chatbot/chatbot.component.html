@@ -1,0 +1,43 @@
+<div class="icon-container" [ngClass]="{'icon-transition': isModalOpen}" (click)="toggleModal($event)">
+  <div *ngIf="isModalOpen" class="chatbot-container" (click)="stopClose($event)">
+    <div class="modal-content">
+      <span class="close-button" (click)="toggleModal($event)">&times;</span>
+      <section class="chat-bot" aria-label="Chatbot Assistant">
+        <header class="greeting-container">
+          <h1 class="greeting-text">Hola Usuario 👋</h1>
+          <p class="greeting-subtext">¿En qué te puedo ayudar?</p>
+        </header>
+
+        <!-- Lista de mensajes -->
+        <article class="messages-list">
+          <div *ngFor="let message of messages" [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}" class="message-item">
+            <p>{{ message.text }}</p>
+          </div>
+          <!-- Indicador de escribiendo del bot -->
+          <div *ngIf="isBotTyping" class="typing-indicator bot-typing">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+
+          <!-- Indicador de escribiendo del usuario -->
+          <div *ngIf="isUserTyping" class="typing-indicator user-typing">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </article>
+
+        <!-- Contenedor para enviar nuevos mensajes -->
+        <form class="reply-container" (ngSubmit)="sendMessage()" (input)="userTyping()">
+          <label for="replyInput" class="visually-hidden">Escribe una respuesta</label>
+          <input type="text" id="replyInput" name="replyInput" class="reply-input" placeholder="Escribe una respuesta..." aria-label="Escribe una respuesta" [(ngModel)]="newMessage">
+          <button type="submit" class="send-button" aria-label="Enviar mensaje">
+            <i class="fas fa-paper-plane send-icon"></i>
+          </button>
+        </form>
+      </section>
+    </div>
+  </div>
+  <i class="fas fa-headset icon" *ngIf="!isModalOpen"></i>
+</div>

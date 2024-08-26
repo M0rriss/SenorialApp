@@ -27,6 +27,9 @@ export class UserMaintenanceComponent implements OnInit {
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Agregar Usuario';
   modalButtonText: string = 'Agregar';
+  isUserEnabled: boolean = true;
+  confirmDialogDescription: string = '';
+  confirmDialogTitle: string = '';
  // Variables para la paginación
  first: number = 0;
  rows: number = 10;
@@ -162,8 +165,16 @@ export class UserMaintenanceComponent implements OnInit {
     this.notificationService.showSuccess('Usuario eliminado', 'El usuario fue eliminado exitosamente.');
   }
 
-  openConfirmDialog(): void {
-    this.isConfirmDialogOpen = true;
+  openConfirmDialog(isEnabled: boolean): void {
+    this.isUserEnabled = isEnabled;
+  if (this.isUserEnabled) {
+    this.confirmDialogTitle = '¿Quieres inhabilitar el usuario?';
+    this.confirmDialogDescription = '¿Estás seguro que quieres inhabilitar a este usuario?';
+  } else {
+    this.confirmDialogTitle = '¿Quieres habilitar el usuario?';
+    this.confirmDialogDescription = '¿Estás seguro que quieres habilitar a este usuario?';
+  }
+  this.isConfirmDialogOpen = true;
   }
 
   closeConfirmDialog(): void {

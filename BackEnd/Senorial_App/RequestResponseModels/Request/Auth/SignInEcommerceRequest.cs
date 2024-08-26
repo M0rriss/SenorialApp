@@ -11,6 +11,7 @@ namespace RequestResponseModels.Request.Auth
 {
     public class SignInEcommerceRequest
     {
+       
         public string Nombres { get; set; } 
         public string Apellidos { get; set; }
         public string TipoDocumento { get; set; } = "DNI";

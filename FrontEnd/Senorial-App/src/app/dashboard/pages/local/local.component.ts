@@ -1,40 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { DetalleMesaResponse } from '@app/core/models/dashboard/local/detalle/detalle-mesa-response';
+import { LocalMesaResponse } from '@app/core/models/dashboard/local/local-mesa-response';
 import { MesaResponse } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-response';
+import { MesaslocalService } from '@app/dashboard/services/local-mesa/mesaslocal.service';
 import { MesaService } from '@app/dashboard/services/mantenimineto/mesa/mesa.service';
 import { PusherService } from '@app/ecommerce/services/pusher/pusher.service';
 
 @Component({
   selector: 'app-local',
   templateUrl: './local.component.html',
-  styleUrl: './local.component.scss'
+  styleUrl: './local.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class LocalComponent implements OnInit {
   constructor(
     private pusherService: PusherService,
-    private mesaService: MesaService
+    private localmesaService : MesaslocalService ,
+    private router: Router
   ){}
+localMesasDash : LocalMesaResponse[] = [];
 
 ngOnInit(): void {
-  console.log("second")
-    this.pusherService.bindEvent('my-event', (data: any) => {
-      console.log("Evento recibido:", data);
-      this.MesasWebSockets = data;
-      console.log("data",data)
-      this.cruzado = this.actualizarEstadoMesas(this.MesasApi, this.MesasWebSockets);
-      // Puedes manejar la data recibida aquí
-    });
+  // console.log("second")
+  //   this.pusherService.bindEvent('my-event', (data: any) => {
+  //     console.log("Evento recibido:", data);
+  //     this.MesasWebSockets = data;
+  //     console.log("data",data)
+  //     this.cruzado = this.actualizarEstadoMesas(this.MesasApi, this.MesasWebSockets);
+  //     // Puedes manejar la data recibida aquí
+  //   });
     this.listarMesas();
 }
+
+navigateToDetail(mesa: LocalMesaResponse) {
+  this.router.navigate(['/mesadetail'], { state: { mesa } });
+}
+
 listarMesas(){
-  this.mesaService.getAll()
+  this.localmesaService.listarMesasLocal$()
   .subscribe({
-    next: (data: MesaResponse[])=>{
-      this.MesasApi = data;
-      this.cruzado = this.actualizarEstadoMesas(this.MesasApi, this.MesasWebSockets);
+    next: (data: LocalMesaResponse[])=>{
+      this.localMesasDash = data;
+     // this.cruzado = this.actualizarEstadoMesas(this.MesasApi, this.MesasWebSockets);
 
     }
   });
 }
+
+
+
 
 //variables
 MesasApi: any[]=[];

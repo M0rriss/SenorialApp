@@ -97,6 +97,7 @@ namespace Repository.Schema_Ventas.Productos
                 .Include(p => p.Categoria)
                 .Select(p => new ProductoUiResponse
                 {
+                    IdProducto = p.IdProducto,
                     Nombre = p.Nombre,
                     Descripcion = p.Descripcion,
                     Derivar = p.Derivar,

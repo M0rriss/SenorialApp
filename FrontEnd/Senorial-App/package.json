@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^2.3.0",
     "@angular/animations": "^18.0.0",
     "@angular/common": "^18.0.0",
     "@angular/compiler": "^18.0.0",
@@ -21,7 +22,9 @@
     "@angular/router": "^18.0.0",
     "@flaticon/flaticon-uicons": "^3.3.1",
     "@fortawesome/fontawesome-free": "^6.6.0",
+    "@react-oauth/google": "^0.12.1",
     "@types/pusher-js": "^4.2.2",
+    "angular2-navigate-with-data": "^1.1.11",
     "font-awesome": "^4.7.0",
     "glob": "^11.0.0",
     "lru-cache": "^11.0.0",

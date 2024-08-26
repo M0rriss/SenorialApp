@@ -29,24 +29,31 @@ namespace Repository.Schema_Ventas.Mesas
                                from p in pedidosGroup.DefaultIfEmpty()
                                join dp in db.DetallePedidos on p.IdPedido equals dp.IdPedido into detallesGroup
                                from dp in detallesGroup.DefaultIfEmpty()
-                               group new { p, dp } by new { p.IdPedido, m.Nombre, m.EstadoMesaLocal } into grouped
+                               group new { p, dp } by new { p.IdPedido, m.IdMesa, m.Nombre, m.EstadoMesaLocal } into grouped
                                select new
                                {
                                    IdPedido = grouped.Key.IdPedido.ToString() ?? "0",
+                                   IdMesa = grouped.Key.IdMesa,
                                    NombreMesa = grouped.Key.Nombre,
                                    Precio = grouped.Sum(x => (x.dp != null) ? x.dp.Cantidad * x.dp.PrecioUnitario : 0.00M),
                                    Cantidad = grouped.Sum(x => (x.dp != null) ? x.dp.Cantidad : 0),
-                                   EstadoMesaLocal = grouped.Key.EstadoMesaLocal 
+                                   EstadoMesaLocal = grouped.Key.EstadoMesaLocal
                                }).ToListAsync();
 
-            lst = query.Select(item => new VwMesa
-            {
-                IdPedido = Convert.ToInt32(item.IdPedido),
-                Nombre = item.NombreMesa,
-                Precio = item.Precio,
-                Cantidad = item.Cantidad,
-                Estado = item.EstadoMesaLocal, 
-            }).ToList();
+            lst = query
+                .OrderBy(item => int.Parse(new string(item.NombreMesa.Where(char.IsDigit).ToArray()))) // Ordenar por el número en el nombre de la mesa
+                .ThenBy(item => item.IdPedido != "0" && !string.IsNullOrEmpty(item.IdPedido))  // Las mesas con IdPedido != "0" o no null al final
+                .ToList()
+                .Select(item => new VwMesa
+                {
+                    IdPedido = Convert.ToInt32(item.IdPedido),
+                    IdMesa = item.IdMesa,
+                    Nombre = item.NombreMesa,
+                    Precio = item.Precio,
+                    Cantidad = item.Cantidad,
+                    Estado = item.EstadoMesaLocal,
+                })
+                .ToList();
 
             return lst;
         }

@@ -23,7 +23,7 @@ namespace IBusiness.Schema_Usuarios.Usuarios
         Task<UsuarioResponse> BuscarCorreoEcommerce(string email);
         Task<UsuarioResponse> BuscarCorreoMobile(string email);
         Task<SignInEcommerceResponse> UsuarioRegistroEcommerce(SignInEcommerceRequest request);
-        Task<SignInMobileResponse> UsuarioRegistroMoblie(SignInMobileRequest request);
+        Task<SignInMobileResponse> UsuarioRegistroMobile(SignInMobileRequest request);
         Task<bool> EnviarCodigoRecuperacionMovil(EnviarCodigoRecuperacionMovilRequest request);
         Task<bool> EnviarCodigoRecuperacionEcommerce(EnviarCodigoRecuperacionEcommerceRequest request);
         Task<UsuarioResponse> RestablecerContrasenaMovil(RestablecerPasswordMovilRequest request);

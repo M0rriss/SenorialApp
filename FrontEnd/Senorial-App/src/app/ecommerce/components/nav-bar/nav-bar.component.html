@@ -21,6 +21,7 @@
       </button>
       <button type="button" (click)="toggleShop()" class="btn btn-shopping-cart" [ngClass]="{'active': isShopOpen}">
         <img src="./shopping-cart.svg" alt="cart" class="shopping-cart-icon">
+        <span class="price-cart" *ngIf="totalCartAmount > 0">s/. {{ totalCartAmount | number:'1.2-2'}}</span>
         <!-- <span *ngIf="products.length > 0">s/ {{ total }}</span> -->
       </button>
     </div>
@@ -42,5 +43,5 @@
 
 <!-- Carrito de Compras -->
 <div *ngIf="isShopOpen" class="shopping-cart-container open closed">
-  <shopping-cart></shopping-cart>
+  <shopping-cart (cartUpdated)="onCartUpdated($event)"></shopping-cart>
 </div>

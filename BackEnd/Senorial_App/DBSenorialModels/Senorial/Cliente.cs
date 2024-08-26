@@ -22,4 +22,6 @@ public partial class Cliente
 
     [InverseProperty("IdClienteNavigation")]
     public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
+    [InverseProperty("Cliente")]
+    public virtual ICollection<PedidoLlevar> PedidosLlevar { get; set; } = new List<PedidoLlevar>();
 }

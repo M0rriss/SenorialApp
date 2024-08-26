@@ -84,7 +84,22 @@ namespace Repository.Schema_Ventas.Pedidos
 
             return query;
         }
+        public async Task<List<VwDetPedido>> DetallePedidoAsync()
+        {
+            var query = await (from dp in db.DetallePedidos
+                               join p in db.Productos on dp.IdProducto equals p.IdProducto
+                               join i in db.Imagenes on p.IdImg equals i.Id
+                               select new VwDetPedido
+                               {
+                                   IdPedido = dp.IdPedido,
+                                   NombreProducto = p.Nombre,
+                                   DescripcionProducto = p.Descripcion, 
+                                   PrecioProducto = p.PrecioVenta,
+                                   UrlImagen = i.ImageData
+                               }).ToListAsync();
 
+            return query;
+        }
 
     }
 }

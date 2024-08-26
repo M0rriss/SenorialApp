@@ -36,14 +36,17 @@ namespace Repository.Schema_Ventas.Empleados
             s => s.IdSucursal,
             (epr, s) => new EmpleadosUiRequest
             {
+                IdEmpleado = epr.Empleado.IdPersona,
                 Nombres = epr.Persona.PrimerNombre + " " + epr.Persona.SegundoNombre,
                 Apellidos = epr.Persona.ApellidoPaterno + " " + epr.Persona.ApellidoMaterno,
                 Correo = epr.Persona.Email,
                 Telefono = epr.Persona.Telefono,
                 Identificacion = epr.Persona.NroDocumento,
                 Rol = epr.Rol.Nombre,
-                Estado = epr.Empleado.Estado.HasValue && epr.Empleado.Estado.Value ? "Activo" : "Inactivo", // Manejo explícito de nullables
-                Sucursal = s.Nombre
+                Estado = epr.Empleado.Estado.HasValue
+                            ? (epr.Empleado.Estado.Value ? "Activo" : "Inactivo")
+                            : "Activo", // Manejo explícito de nullables
+                
             })
         .ToListAsync();
         }
@@ -70,11 +73,11 @@ namespace Repository.Schema_Ventas.Empleados
             await db.SaveChangesAsync();
             return true;    
         }
-        public Empleado BuscarporId(int id)
+        public async Task<Empleado> BuscarporId(int id)
         {
-            var empleado = dbset. Where(e => e.IdEmpleado == id).FirstOrDefault();
+            var empleado = await dbset.FirstOrDefaultAsync(e => e.IdEmpleado == id);
             return empleado;
         }
-       
+        
     }
 }

@@ -1,5 +1,5 @@
-<section class="clients-section">
-  <side-bar></side-bar> <!-- Tu componente de sidebar -->
+<!-- <section class="clients-section">
+  <side-bar></side-bar>
   <div class="content">
     <h2 class="section-title">Clientes</h2>
     <div class="search-container">
@@ -19,7 +19,7 @@
           <th>DNI</th>
           <th>Correo</th>
           <th>Telefono</th>
-            <th>Acciones</th>
+
         </tr>
       </thead>
       <tbody>
@@ -41,7 +41,7 @@
         </tr>
       </tbody>
     </table>
-    <!-- Componente de Paginación -->
+
  <div class="pagination-container">
   <p-paginator
     [rows]="rows"
@@ -52,4 +52,49 @@
 </div>
   </div>
 
+</section> -->
+<section class="clients-section">
+  <side-bar></side-bar> <!-- Tu componente de sidebar -->
+  <div class="content">
+    <h2 class="section-title">Clientes</h2>
+    <div class="search-container">
+      <div class="search-wrapper">
+        <div class="search-input">
+          <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
+          <input type="text" placeholder="Buscar por nombre, DNI, telefono o correo" class="search-field" />
+        </div>
+      </div>
+      <button class="reset-button" >Reset</button>
+    </div>
+    <table class="clients-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Correo</th>
+          <th>Telefono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of customer">
+          <td>{{ client.idCliente }}</td>
+          <td>{{ client.nombres }}</td>
+          <td>{{ client.dni }}</td>
+          <td>{{ client.correo }}</td>
+          <td>{{ client.telefono }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Componente de Paginación -->
+    <div class="pagination-container">
+      <p-paginator
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)"
+      ></p-paginator>
+    </div>
+  </div>
 </section>
+<p-toast/>

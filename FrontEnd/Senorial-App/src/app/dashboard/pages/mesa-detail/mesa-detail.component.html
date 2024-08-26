@@ -7,63 +7,23 @@
           <div class="order-details">
             <div class="order-items">
               <div class="table-info">
-                <div class="table-number">Mesa 1</div>
-                <div class="table-total">S/.68.00</div>
+                <div class="table-number">{{local.nombre}}</div>
+                <div class="table-total">S/. {{local.precio | number:'1.2-2'}}</div>
               </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
-              <div class="order-item">
-                <div class="item-name">1x Combo</div>
-                <div class="item-price">S/.68.00</div>
-              </div>
+              @for (item of mesaDetalle; track $index) {
+
+                <div class="order-item">
+                  <div class="item-name"> {{item.cantidadItems}} x {{item.nombreProducto}}</div>
+                  <div class="item-price">S/. {{item.subTotal | number:'1.2-2'}}</div>
+                </div>
+              }
+
               <div class="order-separator"></div>
             </div>
           </div>
         </div>
         <footer class="order-summary-footer">
-          <div class="total-amount">Monto Total: S/.68.00</div>
+          <div class="total-amount">Monto Total: S/. {{local.precio | number:'1.2-2' }}</div>
           <div class="attendant-info">Atendido Por : Victor</div>
           <div class="receipt-options">
             <div
@@ -88,3 +48,4 @@
     </section>
   </main>
 </div>
+<p-toast/>

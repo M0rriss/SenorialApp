@@ -13,7 +13,7 @@ namespace App_Senorial.Controllers.Schema_Almacen.Proveedor
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProveedorController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR

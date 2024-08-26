@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migrations
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240820201029_mesa")]
-    partial class mesa
+    [Migration("20240825025116_DetallePedidosLLevar")]
+    partial class DetallePedidosLLevar
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -220,7 +220,7 @@ namespace DBSenorialModels.Data.Migrations
                         {
                             IdCategoria = 9,
                             Estado = true,
-                            IdCategoriaPadre = 1,
+                            IdCategoriaPadre = 3,
                             Nombre = "Comida Rápida"
                         },
                         new
@@ -924,6 +924,41 @@ namespace DBSenorialModels.Data.Migrations
                     b.ToTable("detalle_pedido", "Ventas");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.DetallePedidoLlevar", b =>
+                {
+                    b.Property<int>("IdDetallePedidoLlevar")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_detalle_pedido_llevar");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetallePedidoLlevar"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int")
+                        .HasColumnName("cantidad");
+
+                    b.Property<int>("IdPedidoLlevar")
+                        .HasColumnType("int")
+                        .HasColumnName("id_pedido_llevar");
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("int")
+                        .HasColumnName("id_producto");
+
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("precio_unitario");
+
+                    b.HasKey("IdDetallePedidoLlevar")
+                        .HasName("detalle_pedido_llevar_id_pk");
+
+                    b.HasIndex("IdPedidoLlevar");
+
+                    b.HasIndex("IdProducto");
+
+                    b.ToTable("detalle_pedido_llevar", "Ventas");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleVenta", b =>
                 {
                     b.Property<int>("IdDetalleVenta")
@@ -1610,13 +1645,13 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 8, 20, 15, 10, 28, 826, DateTimeKind.Local).AddTicks(3631),
+                            FechaActualizacion = new DateTime(2024, 8, 24, 21, 51, 13, 999, DateTimeKind.Local).AddTicks(1127),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 8, 20, 15, 10, 28, 826, DateTimeKind.Local).AddTicks(3634),
+                            FechaActualizacion = new DateTime(2024, 8, 24, 21, 51, 13, 999, DateTimeKind.Local).AddTicks(1133),
                             IdSucursal = 2
                         });
                 });
@@ -1634,6 +1669,10 @@ namespace DBSenorialModels.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("bit")
                         .HasColumnName("estado");
+
+                    b.Property<int?>("EstadoMesaLocal")
+                        .HasColumnType("int")
+                        .HasColumnName("estado_mesa_local");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -1768,25 +1807,25 @@ namespace DBSenorialModels.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPedido"));
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int?>("Estado")
+                        .HasColumnType("int")
                         .HasColumnName("estado");
 
                     b.Property<DateTime>("FechaPedido")
                         .HasColumnType("datetime")
                         .HasColumnName("fecha_pedido");
 
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int")
+                        .HasColumnName("id_empleado");
+
                     b.Property<int>("IdMesa")
                         .HasColumnType("int")
                         .HasColumnName("id_mesa");
 
-                    b.Property<string>("TipoPedido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("tipo_pedido");
+                    b.Property<int>("IdTipoPedido")
+                        .HasColumnType("int")
+                        .HasColumnName("id_tipo_pedido");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(10, 2)")
@@ -1795,9 +1834,58 @@ namespace DBSenorialModels.Data.Migrations
                     b.HasKey("IdPedido")
                         .HasName("pedido_id_pk");
 
+                    b.HasIndex("IdEmpleado");
+
                     b.HasIndex("IdMesa");
 
+                    b.HasIndex("IdTipoPedido");
+
                     b.ToTable("pedidos", "Ventas");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.PedidoLlevar", b =>
+                {
+                    b.Property<int>("IdPedidoLlevar")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_pedido_llevar");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPedidoLlevar"));
+
+                    b.Property<int?>("Estado")
+                        .HasColumnType("int")
+                        .HasColumnName("estado");
+
+                    b.Property<DateTime>("FechaPedido")
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha_pedido");
+
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int")
+                        .HasColumnName("id_cliente");
+
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int")
+                        .HasColumnName("id_empleado");
+
+                    b.Property<int>("IdTipoPedido")
+                        .HasColumnType("int")
+                        .HasColumnName("id_tipo_pedido");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("total");
+
+                    b.HasKey("IdPedidoLlevar")
+                        .HasName("pedido_llevar_id_pk");
+
+                    b.HasIndex("IdCliente");
+
+                    b.HasIndex("IdEmpleado");
+
+                    b.HasIndex("IdTipoPedido");
+
+                    b.ToTable("pedidoLlevar", "Ventas");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
@@ -3014,12 +3102,12 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdTipoPedido = 1,
-                            Descripcion = "Para Comer Aqui"
+                            Descripcion = "Indoor"
                         },
                         new
                         {
                             IdTipoPedido = 2,
-                            Descripcion = "Para Llevar"
+                            Descripcion = "PickUp"
                         });
                 });
 
@@ -3223,7 +3311,7 @@ namespace DBSenorialModels.Data.Migrations
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 20, 15, 10, 28, 829, DateTimeKind.Local).AddTicks(8021),
+                            CreatedAt = new DateTime(2024, 8, 24, 21, 51, 14, 4, DateTimeKind.Local).AddTicks(143),
                             Email = "admin@admin.com",
                             IdImg = 1,
                             IdPersona = 1,
@@ -3487,6 +3575,25 @@ namespace DBSenorialModels.Data.Migrations
                     b.Navigation("Producto");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.DetallePedidoLlevar", b =>
+                {
+                    b.HasOne("DBSenorialModels.Senorial.PedidoLlevar", "PedidoLlevar")
+                        .WithMany("DetallesLlevar")
+                        .HasForeignKey("IdPedidoLlevar")
+                        .IsRequired()
+                        .HasConstraintName("pedido_llevar_detalle_fk");
+
+                    b.HasOne("DBSenorialModels.Senorial.Producto", "Producto")
+                        .WithMany("DetallePedidoLlevar")
+                        .HasForeignKey("IdProducto")
+                        .IsRequired()
+                        .HasConstraintName("producto_detalle_pedido_llevar_fk");
+
+                    b.Navigation("PedidoLlevar");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.DetalleVenta", b =>
                 {
                     b.HasOne("DBSenorialModels.Senorial.Producto", "Producto")
@@ -3595,13 +3702,56 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Pedido", b =>
                 {
+                    b.HasOne("DBSenorialModels.Senorial.Empleado", "Empleado")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("IdEmpleado")
+                        .IsRequired()
+                        .HasConstraintName("empleado_pedido_fk");
+
                     b.HasOne("DBSenorialModels.Senorial.Mesa", "Mesa")
                         .WithMany("Pedidos")
                         .HasForeignKey("IdMesa")
                         .IsRequired()
                         .HasConstraintName("mesa_pedido_fk");
 
+                    b.HasOne("DBSenorialModels.Senorial.TipoPedido", "TipoPedido")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("IdTipoPedido")
+                        .IsRequired()
+                        .HasConstraintName("tipo_pedido_pedido_fk");
+
+                    b.Navigation("Empleado");
+
                     b.Navigation("Mesa");
+
+                    b.Navigation("TipoPedido");
+                });
+
+            modelBuilder.Entity("DBSenorialModels.Senorial.PedidoLlevar", b =>
+                {
+                    b.HasOne("DBSenorialModels.Senorial.Cliente", "Cliente")
+                        .WithMany("PedidosLlevar")
+                        .HasForeignKey("IdCliente")
+                        .IsRequired()
+                        .HasConstraintName("cliente_pedido_llevar_fk");
+
+                    b.HasOne("DBSenorialModels.Senorial.Empleado", "Empleado")
+                        .WithMany("PedidosLlevar")
+                        .HasForeignKey("IdEmpleado")
+                        .IsRequired()
+                        .HasConstraintName("empleado_pedido_llevar_fk");
+
+                    b.HasOne("DBSenorialModels.Senorial.TipoPedido", "TipoPedido")
+                        .WithMany("PedidosLlevar")
+                        .HasForeignKey("IdTipoPedido")
+                        .IsRequired()
+                        .HasConstraintName("tipo_pedido_llevar_fk");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Empleado");
+
+                    b.Navigation("TipoPedido");
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
@@ -3870,6 +4020,8 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Cliente", b =>
                 {
+                    b.Navigation("PedidosLlevar");
+
                     b.Navigation("Venta");
                 });
 
@@ -3880,6 +4032,10 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Empleado", b =>
                 {
+                    b.Navigation("Pedidos");
+
+                    b.Navigation("PedidosLlevar");
+
                     b.Navigation("Venta");
                 });
 
@@ -3925,6 +4081,11 @@ namespace DBSenorialModels.Data.Migrations
                     b.Navigation("Detalles");
                 });
 
+            modelBuilder.Entity("DBSenorialModels.Senorial.PedidoLlevar", b =>
+                {
+                    b.Navigation("DetallesLlevar");
+                });
+
             modelBuilder.Entity("DBSenorialModels.Senorial.Persona", b =>
                 {
                     b.Navigation("Clientes");
@@ -3938,6 +4099,8 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Producto", b =>
                 {
+                    b.Navigation("DetallePedidoLlevar");
+
                     b.Navigation("DetallePedidos");
 
                     b.Navigation("DetalleVentas");
@@ -3986,6 +4149,10 @@ namespace DBSenorialModels.Data.Migrations
 
             modelBuilder.Entity("DBSenorialModels.Senorial.TipoPedido", b =>
                 {
+                    b.Navigation("Pedidos");
+
+                    b.Navigation("PedidosLlevar");
+
                     b.Navigation("Venta");
                 });
 

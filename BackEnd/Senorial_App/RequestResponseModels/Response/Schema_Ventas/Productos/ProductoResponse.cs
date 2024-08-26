@@ -17,6 +17,7 @@ namespace RequestResponseModels.Response.Schema_Ventas.Productos
     }
     public class ProductoUiResponse
     {
+        public int IdProducto { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Derivar { get; set; }

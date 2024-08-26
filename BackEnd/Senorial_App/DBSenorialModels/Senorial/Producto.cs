@@ -37,6 +37,9 @@ public partial class Producto
     public virtual Categoria Categoria { get; set; } = null!;
     [InverseProperty("Producto")]
     public virtual ICollection<DetallePedido> DetallePedidos { get; set; } = new List<DetallePedido>();
+    [InverseProperty("Producto")]
+    public virtual ICollection<DetallePedidoLlevar> DetallePedidoLlevar  { get; set; } = new List<DetallePedidoLlevar>();
+
 
     [InverseProperty("Producto")]
     public virtual ICollection<DetalleVenta> DetalleVentas { get; set; } = new List<DetalleVenta>();

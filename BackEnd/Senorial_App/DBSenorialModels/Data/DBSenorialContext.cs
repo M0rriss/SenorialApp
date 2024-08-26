@@ -31,10 +31,10 @@ public partial class DBSenorialContext : DbContext
     //public virtual DbSet<Compra> Compras { get; set; }
     public virtual DbSet<ConteoDinero> ConteoDinero { get; set; }
 
-    //public virtual DbSet<DetalleCompra> DetalleCompras { get; set; }
 
     public virtual DbSet<DetalleInventario> DetalleInventarios { get; set; }
 
+    //public virtual DbSet<DetalleCompra> DetalleCompras { get; set; }
     //public virtual DbSet<DetalleProduccion> DetalleProduccions { get; set; }
 
     public virtual DbSet<DetallePedido> DetallePedidos { get; set; }
@@ -67,6 +67,8 @@ public partial class DBSenorialContext : DbContext
 
     public virtual DbSet<Proveedor> Proveedors { get; set; }
     public virtual DbSet<Pedido> Pedidos { get; set; }
+    public virtual DbSet<PedidoLlevar> PedidosLlevar { get; set; }
+    public virtual DbSet<DetallePedidoLlevar> DetallePedidosLlevar { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -407,8 +409,8 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("unidad_medida_id_fk");
             entity.HasData(
-            new Insumo { IdInsumo = 1,  Nombre = "Aceite x Balde",                IdUnidad = 1 }, // Balde
-            new Insumo { IdInsumo = 2,  Nombre = "Aceite x Litro",                IdUnidad = 2 }, // Litro
+            new Insumo { IdInsumo = 1,  Nombre = "Aceite x Balde",        IdUnidad = 1 }, // Balde
+            new Insumo { IdInsumo = 2,  Nombre = "Aceite x Litro",        IdUnidad = 2 }, // Litro
             new Insumo { IdInsumo = 3,  Nombre = "Aceite Sésamo",         IdUnidad = 3 }, // Unidad
             new Insumo { IdInsumo = 4,  Nombre = "Aji",                   IdUnidad = 4 }, // Kilo
             new Insumo { IdInsumo = 5,  Nombre = "Ajicero",               IdUnidad = 5 }, // Ciento
@@ -586,6 +588,50 @@ public partial class DBSenorialContext : DbContext
                   .HasForeignKey(d => d.IdEmpleado)
                   .OnDelete(DeleteBehavior.ClientSetNull)
                   .HasConstraintName("empleado_pedido_fk");
+        });
+        modelBuilder.Entity<PedidoLlevar>(entity =>
+        {
+            entity.HasKey(e => e.IdPedidoLlevar).HasName("pedido_llevar_id_pk"); // Primary Key
+
+            entity.HasOne(d => d.TipoPedido)
+                  .WithMany(p => p.PedidosLlevar)
+                  .HasForeignKey(d => d.IdTipoPedido)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("tipo_pedido_llevar_fk"); // Foreign Key to TipoPedido
+
+            entity.HasOne(d => d.Empleado)
+                  .WithMany(p => p.PedidosLlevar)
+                  .HasForeignKey(d => d.IdEmpleado)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("empleado_pedido_llevar_fk"); // Foreign Key to Empleado
+
+            entity.HasOne(d => d.Cliente)
+                  .WithMany(p => p.PedidosLlevar)
+                  .HasForeignKey(d => d.IdCliente)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("cliente_pedido_llevar_fk"); // Foreign Key to Cliente
+
+            entity.HasMany(d => d.DetallesLlevar)
+                  .WithOne(p => p.PedidoLlevar)
+                  .HasForeignKey(d => d.IdPedidoLlevar)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("pedido_llevar_detalle_fk"); // Foreign Key to DetallePedidoLlevar
+        });
+        modelBuilder.Entity<DetallePedidoLlevar>(entity =>
+        {
+            entity.HasKey(e => e.IdDetallePedidoLlevar).HasName("detalle_pedido_llevar_id_pk"); // Primary Key
+                       
+            entity.HasOne(d => d.PedidoLlevar)
+                  .WithMany(p => p.DetallesLlevar)
+                  .HasForeignKey(d => d.IdPedidoLlevar)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("pedido_llevar_detalle_fk"); // Foreign Key to PedidoLlevar
+
+            entity.HasOne(d => d.Producto)
+                  .WithMany(p => p.DetallePedidoLlevar)
+                  .HasForeignKey(d => d.IdProducto)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("producto_detalle_pedido_llevar_fk"); // Foreign Key to Producto
         });
 
         modelBuilder.Entity<Persona>(entity =>
@@ -852,8 +898,8 @@ public partial class DBSenorialContext : DbContext
         {
             entity.HasKey(e => e.IdTipoPedido).HasName("tipo_pedido_id_pk");
             entity.HasData(
-            new TipoPedido { IdTipoPedido = 1, Descripcion = "Para Comer Aqui" },
-            new TipoPedido { IdTipoPedido = 2, Descripcion = "Para Llevar" });
+            new TipoPedido { IdTipoPedido = 1, Descripcion = "Indoor" },
+            new TipoPedido { IdTipoPedido = 2, Descripcion = "PickUp" });
         });
 
         modelBuilder.Entity<TipoTransaccion>(entity =>

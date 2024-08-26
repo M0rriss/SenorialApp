@@ -61,7 +61,7 @@
       </section> -->
     </section>
     <!-- PUSHER -->
-    <section class="table-grid">
+    <!-- <section class="table-grid">
       <div class="table-row">
         <div *ngFor="let mesa of cruzado" class="table-column">
           <div class="table-card">
@@ -76,9 +76,9 @@
         </div>
       </div>
 
-    </section>
+    </section> -->
 
-    <section class="table-grid">
+    <!-- <section class="table-grid">
       <div class="table-row">
         <div class="table-column">
           <div class="table-card" routerLink="/mesadetail">
@@ -177,6 +177,27 @@
           </div>
         </div>
       </div>
+    </section> -->
+    <section class="table-grid">
+      <div class="table-row">
+        <div *ngFor="let mesa of localMesasDash" class="table-column">
+          <div class="table-card" (click)="navigateToDetail(mesa)">
+            <div class="table-header">
+              <div class="table-status-dot" [ngClass]="{
+                'status-occupied': mesa.estado === 1,
+                'status-available': mesa.estado === 2,
+                'status-billed': mesa.estado === 3
+              }"></div>
+              <span class="table-price">S/.{{ mesa.precio | number:'1.2-2' }}</span>
+            </div>
+            <span class="table-number">{{ mesa.nombre }}</span>
+            <div class="table-footer">
+              <span class="table-items">{{ mesa.cantidad }} items</span>
+              <i class="fa-solid fa-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
      <!-- Componente de Paginación -->
  <div class="pagination-container">
@@ -189,3 +210,4 @@
 </div>
   </main>
 </div>
+<p-toast/>

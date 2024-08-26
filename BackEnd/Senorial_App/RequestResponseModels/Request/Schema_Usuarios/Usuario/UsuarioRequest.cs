@@ -28,7 +28,7 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
     }
     public class UsuarioUiRequest
     {
-        //public int IdUsuario { get; set; }
+        public int IdUsuario { get; set; }
         public string Nombres { get; set; }
         [EmailAddress]
         public string Correo { get; set; }

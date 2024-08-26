@@ -18,17 +18,21 @@ export class PaymentMethodMaintenanceComponent implements OnInit {
   modalTitle: string = 'Agregar Método de Pago';
   modalButtonText: string = 'Agregar';
 
-//
+  //Estado del método de pago
 paymentStatus:boolean = true /* para los estados inactivo activo */
 
  // Variables para la paginación
  first: number = 0;
  rows: number = 10;
  totalRecords: number = 0;
-  //
+  //Formulario
   formMetodoPago: FormGroup;
   metodoPago: MetodoPagoResponse[] = [];
   idPago:number = 0;
+// Variables para el diálogo de confirmación
+confirmDialogTitle: string = '';
+confirmDialogDescription: string = '';
+currentMetodoPago: MetodoPagoResponse | null = null;
 
   constructor(private metodoPagoService:MetodoPagoService,
     private fb:FormBuilder,
@@ -125,17 +129,29 @@ paymentStatus:boolean = true /* para los estados inactivo activo */
     this.isConfirmDialogOpen = false;
   }
 
-  openConfirmDialog(): void {
+  openConfirmDialog(pago: MetodoPagoResponse, isEnabled: boolean): void {
+    this.currentMetodoPago = pago;
     this.isConfirmDialogOpen = true;
+
+    if (isEnabled) {
+      this.confirmDialogTitle = '¿Quieres inhabilitar el método de pago?';
+      this.confirmDialogDescription = '¿Estás seguro que quieres inhabilitar este método de pago?';
+    } else {
+      this.confirmDialogTitle = '¿Quieres habilitar el método de pago?';
+      this.confirmDialogDescription = '¿Estás seguro que quieres habilitar este método de pago?';
+    }
   }
 
   closeConfirmDialog(): void {
     this.isConfirmDialogOpen = false;
+    this.currentMetodoPago = null;
   }
 
   confirmDelete(): void {
-    // Lógica para confirmar eliminación de método de pago
-    this.deleteMetodoPago();
+    if (this.currentMetodoPago) {
+      this.deleteMetodoPago();
+    }
+    this.closeConfirmDialog();
   }
   // Método para manejar el cambio de página
 onPageChange(event: any) {

@@ -15,7 +15,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmpleadoController : ControllerBase
     {
         #region DECLARACION DE VARIABLE Y CONSTRUCTOR
@@ -36,7 +36,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// RETORNA TODOS LOS REGISTROS DE LA TABLA EMPLEADO
         /// </summary>
         /// <returns>List-CategoriaResponse</returns>
-        [HttpGet]
+        [HttpGet, Route("Listado")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<EmpleadosUiResponse>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
@@ -50,7 +50,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// </summary>
         /// <param name="request">Datos del Empleado a insertar.</param>
         /// <returns>EmpleadoUiResponse insertado.</returns>
-        [HttpPost]
+        [HttpPost, Route("Crear")]
         [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(EmpleadosUiResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
@@ -64,8 +64,8 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// </summary>
         /// <param name="request">Datos actualizados del empleado.</param>
         /// <returns>EmpleadoUiResponse actualizado.</returns>
-        [HttpPut]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(EmpleadosUiResponse))]
+        [HttpPut, Route("Actualizar")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(EmpleadoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Update([FromBody] EmpleadoUpdateUiRequest request)

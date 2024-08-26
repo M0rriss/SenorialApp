@@ -133,7 +133,7 @@ namespace Business.Schema_Ventas.Cajas
             }
 
             // Buscar el empleado asociado al usuario
-            var empleado = _empleadoRepository.BuscarporId(usuario.IdUsuario);
+            var empleado = await _empleadoRepository.BuscarporId(usuario.IdUsuario);
             if (empleado == null)
             {
                 throw new Exception("Empleado no encontrado para el usuario autenticado");

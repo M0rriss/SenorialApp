@@ -126,7 +126,7 @@ header {
           background-color: $secondary-color;
           color           : $white-color;
           height          : 82px;
-          width           : 202px;
+          width           : 240px;
           padding         : 0;
           display         : flex;
           align-items     : center;
@@ -135,11 +135,16 @@ header {
           .shopping-cart-icon {
             width         : 40px;
             height        : 40px;
+            margin-right: 10px;
           }
           &:hover {
             background-color: $primary-color;
             color           : $white-color;
           }
+        }
+        .price-cart {
+          color: #fff;
+          font-size: 24px;
         }
       }
     }

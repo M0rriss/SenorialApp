@@ -18,6 +18,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Cliente
     
     public class ClienteUiRequest
     {
+        public int IdCliente { get; set; }
         public string Nombres { get; set; }
         [EmailAddress]
         public string Correo { get; set; }

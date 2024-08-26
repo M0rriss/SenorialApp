@@ -5,6 +5,7 @@ using DBSenorialModels.View.Usuario.User;
 using IBusiness.Schema_Usuarios.Usuarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using RequestResponseModels.Request.Schema_Almacen.Categorias;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
@@ -40,13 +41,13 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<UsuarioResponse>))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Get()
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(CustomResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(CustomResponse))]
+        public async Task<ActionResult<CustomResponse>> Get()
         {
             //var userClaims = User.Claims;
             var result = _usuarioBusiness.GetUiUsuarios();
-            return Ok(result);
+            return StatusCode(200, result);
         }
         /// <summary>
         /// Crea a los usuarios
@@ -54,12 +55,12 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(List<UsuarioResponse>))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Create([FromBody] UsuarioUiRequest request)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(CustomResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(CustomResponse))]
+        public async Task<ActionResult<CustomResponse>> Create([FromBody] UsuarioUiRequest request)
         {
             var result = await _usuarioBusiness.InsertUiUsuarios(request);
-            return Ok(result);
+            return StatusCode(200, result);
         }
         /// <summary>
         /// Actualizar a los usuarios
@@ -67,12 +68,12 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         /// <returns></returns>
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(UsuarioResponse))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Update([FromBody] UsuarioUiUpdateRequest request)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(CustomResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(CustomResponse))]
+        public async Task<ActionResult<CustomResponse>> Update([FromBody] UsuarioUiUpdateRequest request)
         {
             var result = await _usuarioBusiness.UpdateUiUsuarios(request);
-            return Ok(result);
+            return StatusCode(200, result);
         }
         /// <summary>
         /// Eliminar a los usuarios
@@ -80,12 +81,12 @@ namespace App_Senorial.Controllers.Schema_Usuarios.Usuario
         /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(UsuarioResponse))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
-        public async Task<ActionResult> Delete(int id)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(CustomResponse))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(CustomResponse))]
+        public async Task<ActionResult<CustomResponse>> Delete(int id)
         {
-            await _usuarioBusiness.DeleteUiUser(id);
-            return Ok( "User deleted successfully.");
+          var result =  await _usuarioBusiness.DeleteUiUser(id);
+            return StatusCode(200, result);
         }
 
         [HttpPost]
