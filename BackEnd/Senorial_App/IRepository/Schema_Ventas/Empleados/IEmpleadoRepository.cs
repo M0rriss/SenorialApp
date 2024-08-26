@@ -15,6 +15,6 @@ namespace IRepository.Schema_Ventas.Empleados
         Task<Empleado> InsertUiEmpleado(Empleado empleado);
         Task<Empleado> UpdateUiEmpleado(Empleado empleado);
         Task<bool> DeleteUiEmpleado(int idEmpleado);
-        Empleado BuscarporId(int id);
+        Task<Empleado> BuscarporId(int id);
     }
 }

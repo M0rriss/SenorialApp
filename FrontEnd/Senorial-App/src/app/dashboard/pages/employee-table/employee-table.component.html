@@ -63,7 +63,7 @@
     <div class="modal-content">
       <span class="close-button" (click)="closeDialog()">&times;</span>
       <h2 id="modal-title" class="dialog-title">{{modalTitle}}</h2>
-      <form [formGroup]="formEmployee" (ngSubmit)="employeeAcciones()">
+      <form [formGroup]="formEmployee" (submit)="employeeAcciones()">
         <div class="form-row">
           <label for="name" class="form-label">Nombre</label>
           <input formControlName="nombres" type="text" id="name" class="form-input" placeholder="Ingresa el nombre" required>
@@ -105,3 +105,4 @@
     </div>
   </div>
 </section>
+<p-toast/>

@@ -73,11 +73,11 @@ namespace Repository.Schema_Ventas.Empleados
             await db.SaveChangesAsync();
             return true;    
         }
-        public Empleado BuscarporId(int id)
+        public async Task<Empleado> BuscarporId(int id)
         {
-            var empleado = dbset. Where(e => e.IdEmpleado == id).FirstOrDefault();
+            var empleado = await dbset.FirstOrDefaultAsync(e => e.IdEmpleado == id);
             return empleado;
         }
-       
+        
     }
 }

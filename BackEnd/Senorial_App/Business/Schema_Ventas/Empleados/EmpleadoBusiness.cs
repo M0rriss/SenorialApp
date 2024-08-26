@@ -187,9 +187,9 @@ namespace Business.Schema_Ventas.Empleados
         }
 
         public async Task<EmpleadosUiResponse> UpdateUiEmpleado(EmpleadoUpdateUiRequest request)
-        {
+         {
             // Buscar el empleado por su ID
-            var empleadoExistente =  _empleadoRepository.BuscarporId(request.IdEmpleado);
+            var empleadoExistente = await _empleadoRepository.BuscarporId(request.IdEmpleado);
             if (empleadoExistente == null)
             {
                 throw new ArgumentException("El empleado especificado no existe.");
@@ -246,7 +246,14 @@ namespace Business.Schema_Ventas.Empleados
 
             empleadoExistente.IdRol = rol.IdRol;
             //empleadoExistente.IdSucursal = sucursal.IdSucursal;
+            // Actualizar el estado del empleado
+            var estado = request.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase)
+                ? true
+                : request.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase)
+                ? false
+                : (bool?)null;
 
+            empleadoExistente.Estado = estado;
             await _empleadoRepository.Update(empleadoExistente);
 
             // Mapear y devolver la respuesta

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClienteResponse } from '@app/core/models/dashboard/clientes/cliente-response';
 import { ClienteService } from '@app/dashboard/services/clientes/cliente/cliente.service';
 import { NotificationService } from '@app/shared/services/toast/notification.service';
@@ -6,7 +6,9 @@ import { NotificationService } from '@app/shared/services/toast/notification.ser
 @Component({
   selector: 'app-client-table',
   templateUrl: './client-table.component.html',
-  styleUrl: './client-table.component.scss'
+  styleUrl: './client-table.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class ClientTableComponent implements OnInit {
 // Variables para la paginación

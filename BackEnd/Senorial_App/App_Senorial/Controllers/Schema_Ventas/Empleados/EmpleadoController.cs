@@ -65,7 +65,7 @@ namespace App_Senorial.Controllers.Schema_Ventas.Empleados
         /// <param name="request">Datos actualizados del empleado.</param>
         /// <returns>EmpleadoUiResponse actualizado.</returns>
         [HttpPut, Route("Actualizar")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(EmpleadosUiResponse))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(EmpleadoResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(GenericResponse))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> Update([FromBody] EmpleadoUpdateUiRequest request)

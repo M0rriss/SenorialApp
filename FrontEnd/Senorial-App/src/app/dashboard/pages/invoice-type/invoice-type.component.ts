@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'invoice-type',
   templateUrl: './invoice-type.component.html',
-  styleUrl: './invoice-type.component.scss'
+  styleUrl: './invoice-type.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class InvoiceTypeComponent {
   selectedOption: string = 'boleta';
@@ -13,6 +15,9 @@ export class InvoiceTypeComponent {
   documentValue: string = '';
   isModalOpen = false;
   amount: number = 0.00;
+
+  visible: boolean = false;
+
 
   selectOption(option: string) {
     this.selectedOption = option;
@@ -36,5 +41,8 @@ export class InvoiceTypeComponent {
 
   buscarDatosReniec() {
     // Logic to search for data in Reniec
+  }
+  showDialog() {
+    this.visible = true;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EmpleadoRequest } from '@app/core/models/dashboard/empleados/empleado-request';
 import { EmpleadoResponse } from '@app/core/models/dashboard/empleados/empleado-response';
@@ -10,7 +10,9 @@ import { NotificationService } from '@app/shared/services/toast/notification.ser
 @Component({
   selector: 'app-employee-table',
   templateUrl: './employee-table.component.html',
-  styleUrl: './employee-table.component.scss'
+  styleUrl: './employee-table.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class EmployeeTableComponent implements OnInit {
   isModalOpen: boolean = false;
@@ -102,26 +104,27 @@ employeeAcciones() {
     this.editarEmpleado();
   }
 }
-editEmployee(empleado: EmpleadoResponse): void {
-  this.formEmployee.patchValue({
-    nombres: empleado.nombres,
-    apellidos: empleado.apellidos,
-    correo: empleado.correo,
-    telefono: empleado.telefono,
-    identificacion: empleado.identificacion,
-    rol: empleado.rol,
-    estado: empleado.estado
-  });
+// editEmployee(empleado: EmpleadoResponse): void {
+//   this.formEmployee.patchValue({
+//     nombres: empleado.nombres,
+//     apellidos: empleado.apellidos,
+//     correo: empleado.correo,
+//     telefono: empleado.telefono,
+//     identificacion: empleado.identificacion,
+//     rol: empleado.rol,
+//     estado: empleado.estado
+//   });
 
-    this.idEmpleado = empleado.idEmpleado;
-    this.openDialog('edit');
+//     this.idEmpleado = empleado.idEmpleado;
+//     this.openDialog('edit');
 
-}
+// }
 
 
 
 
 openDialog(action: string, empleado?: EmpleadoResponse): void {
+  console.log(action)
   if (action === 'add') {
     this.modalTitle = 'Agregar Empleado';
     this.modalButtonText = 'Agregar Empleado';

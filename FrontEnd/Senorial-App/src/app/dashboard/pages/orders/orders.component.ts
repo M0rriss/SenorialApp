@@ -27,11 +27,15 @@ confirmPayment(event: Event) {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
           this.messageService.add({ severity: 'contrast', summary: 'Boleta Seleccionada', detail: 'Has seleccionado Boleta', life: 3000 });
+          this.closeOrderModal();
       },
       reject: () => {
           this.messageService.add({ severity: 'contrast', summary: 'Factura Seleccionada', detail: 'Has seleccionado Factura', life: 3000 });
+
+          this.closeOrderModal();
       }
   });
+
 }
   // Variables para la paginación
   first: number = 0;

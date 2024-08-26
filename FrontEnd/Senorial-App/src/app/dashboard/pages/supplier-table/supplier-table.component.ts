@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProveedorResponse } from '@app/core/models/dashboard/proveedores/proveedor.response';
 import { ProveedorService } from '@app/dashboard/services/clientes/proveedor/proveedor.service';
@@ -7,7 +7,9 @@ import { NotificationService } from '@app/shared/services/toast/notification.ser
 @Component({
   selector: 'app-supplier-table',
   templateUrl: './supplier-table.component.html',
-  styleUrl: './supplier-table.component.scss'
+  styleUrl: './supplier-table.component.scss',
+  encapsulation: ViewEncapsulation.None
+
 })
 export class SupplierTableComponent implements OnInit {
   isModalOpen = false;

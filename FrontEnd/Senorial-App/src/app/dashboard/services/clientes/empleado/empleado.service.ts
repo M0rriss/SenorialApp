@@ -14,17 +14,17 @@ export class EmpleadoService {
   constructor(protected http: HttpClient) { }
 
   listarEmpleado(): Observable<EmpleadoResponse[]> {
-    let res = this.http.get<EmpleadoResponse[]>(urlEmplados.listar);
+    var res = this.http.get<EmpleadoResponse[]>(urlEmplados.listar);
     return res;
   }
 
   crearEmpleado(req: EmpleadoRequest): Observable<EmpleadoResponse> {
-    let res = this.http.post<EmpleadoResponse>(urlEmplados.crear, req);
+    var res = this.http.post<EmpleadoResponse>(urlEmplados.crear, req);
     return res;
   }
 
   actualizarEmpleado(req: EmpleadoRequest): Observable<EmpleadoResponse> {
-    let res = this.http.put<EmpleadoResponse>(urlEmplados.actualizar, req);
+    var res = this.http.put<EmpleadoResponse>(urlEmplados.actualizar, req);
     return res;
   }
 }
