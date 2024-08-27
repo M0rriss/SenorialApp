@@ -26,6 +26,9 @@ public class Salida
     [Column("cantidad")]
     public int Cantidad { get; set; }
 
+    [Column("SucursalIdSucursal")]
+    public int SucursalIdSucursal { get; set; }
+
     [Column("motivo")]
     [StringLength(250)]
     public string Motivo { get; set; } = null!;
@@ -33,7 +36,7 @@ public class Salida
     [ForeignKey("IdInventario")]
     public virtual Inventario Inventario { get; set; } = null!;
 
-    [ForeignKey("IdInventario")]
+    [ForeignKey("IdInsumo")]
     [InverseProperty("Salida")]
     public virtual Insumo IdNavigationInsumo { get; set; } = null!;
 }

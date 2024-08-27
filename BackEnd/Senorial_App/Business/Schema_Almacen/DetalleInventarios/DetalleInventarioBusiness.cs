@@ -1,7 +1,10 @@
-﻿using DBSenorialModels.Senorial;
-using IBusiness.Schema_Almacen.DetalleInventarios;
+﻿using CommonModels.Common;
+using DBSenorialModels.Senorial;
+using DBSenorialModels.View.Almacen;
+using DBSenorialModels.View.Almacen.DetalleIngreso;
 using IBusiness.Schema_Almacen.DetalleInventarios;
 using IRepository.Schema_Almacen.DetalleInventarios;
+using Microsoft.AspNetCore.Http.Timeouts;
 using Repository.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Request.Schema_Almacen.DetalleInventarios;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
@@ -84,5 +87,34 @@ namespace Business.Schema_Almacen.DetalleInventarios
         {
             throw new NotImplementedException();
         }
+
+        #region Funcionalidad
+        public async Task<GenericFilterResponse<VwDetalleIngreos>> ListarInventarioAsync(int page, int pagesize, string insumo)
+        {
+            GenericFilterResponse<VwDetalleIngreos> list = await _detalleInventarioRepository.ListardetalleInventarioAsync(page,pagesize, insumo);
+            return list;
+        }
+        public async Task<VwBuscarInsumoDetalle> BuscarSuministroAsync(int idInsumo)
+        {
+            VwBuscarInsumoDetalle res = await _detalleInventarioRepository.BuscarInsumoAsync(idInsumo);
+            return res;
+        }
+
+        public async Task<GenericFilterResponse<VwDetalleInsumos>> ListarDetalleInventario(int page, int pagesize, string insumo)
+        {
+            GenericFilterResponse<VwDetalleInsumos> res = await _detalleInventarioRepository.ListarDetalleInventario(page, pagesize, insumo);
+            return res;
+        }
+
+        public async Task<CustomResponse> EliminarInsumo (int idInsumo)
+        {
+            await _detalleInventarioRepository.EliminarInsumoAsync(idInsumo);
+            CustomResponse res = new() {
+                Code = "2000",
+                Message = "Se elimino correctamente",
+            };
+            return res;
+        }
+        #endregion Funcionalidad
     }
 }

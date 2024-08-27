@@ -10,9 +10,10 @@
     </div>
     <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="text" class="search-input" placeholder="Buscar Insumo o por Fecha" aria-label="Buscar">
+      <input type="text" class="search-input" [(ngModel)]="nombreInsumo"  placeholder="Buscar Insumo o por Fecha" aria-label="Buscar">
     </div>
     </div>
+  
     <table class="inventory-table">
       <thead>
         <tr>
@@ -24,7 +25,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        @for (item of invertario.lista; track $index) {
+          <tr>
+            <td>{{item.insumo}}</td>
+            <td>{{item.unidadMedida}}</td>
+            <td>{{item.stock}}</td>
+            <td>{{item.fecha  |date: 'M/d/yy, h:mm a'}}</td>
+            @if(item.tipo == 'Entradas'){
+              <td><span class="status-tag status-entry">{{item.tipo}}</span></td>
+            }
+            @else {
+              <td><span class="status-tag status-exit">{{item.tipo}}</span></td>
+            }
+            <td></td>
+          </tr>
+        }
+        <!-- <tr>
           <td>Papa</td>
           <td>KG</td>
           <td>50</td>
@@ -44,14 +60,14 @@
           <td>5</td>
           <td>06-11-2024</td>
           <td><span class="status-tag status-exit">Salidas</span></td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
      <!-- Componente de Paginación -->
  <div class="pagination-container">
   <p-paginator
     [rows]="rows"
-    [totalRecords]="totalRecords"
+    [totalRecords]="invertario.totalRegistros"
     [rowsPerPageOptions]="[5, 10, 20]"
     (onPageChange)="onPageChange($event)"
   ></p-paginator>
@@ -69,26 +85,32 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
     </header>
-    <form class="search-navigation" role="search">
-      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    <form [formGroup]="formBuscar" class="search-navigation" role="search">
+      <!-- <i class="fa-solid fa-magnifying-glass search-icon"></i>
       <label for="search-input" class="visually-hidden">Buscar</label>
-      <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" />
+      <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" /> -->
+      <select (change)="buscarInventarioInsumo()" formControlName="insumo">
+        @for (item of inventarioDetalle.lista; track $index) {
+          <option [value]="item.idInsumo"  >{{item.nombre}}</option>
+        }
+      </select>
     </form>
+
     <div class="stock-info">
-      <h2 class="stock-item">{{ selectedItem?.name || 'stock actual:' }}</h2>
-      <div class="stock-details" *ngIf="selectedItem">
+      <h2 class="stock-item">{{ busquedaInsumo.nombre || 'stock actual:' }}</h2>
+      <div class="stock-details" *ngIf="busquedaInsumo">
         <span class="stock-label">stock actual:</span>
-        <span class="stock-value">{{ selectedItem.stock }}</span>
+        <span class="stock-value">{{ busquedaInsumo.stockTotal }}</span>
       </div>
     </div>
-    <ng-container *ngIf="selectedItem">
-      <form>
+    <ng-container *ngIf="busquedaInsumo">
+      <form [formGroup]="formEntrada">
         <label for="quantity-input" class="visually-hidden">Cantidad</label>
-        <input type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
-        <label for="reason-input" class="visually-hidden">Motivo</label>
-        <input type="text" id="reason-input" class="input-field" placeholder="Motivo" />
+        <input formControlName="cantidad" type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
+        <label for="reason-input" class="visually-hidden">Precio</label>
+        <input formControlName="precioCompra" type="text" id="reason-input" class="input-field" placeholder="Motivo" />
         <div class="action-buttons">
-          <button type="submit" class="register-button">Registrar</button>
+          <button type="submit" class="register-button" (click)="agregarEntrada()">Registrar</button>
           <button type="button" class="cancel-button" (click)="closeDialog()">Cancelar</button>
         </div>
       </form>
@@ -103,26 +125,31 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
     </header>
-    <form class="search-navigation" role="search">
-      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    <form [formGroup]="formBuscar"  class="search-navigation" role="search">
+      <!-- <i class="fa-solid fa-magnifying-glass search-icon"></i>
       <label for="search-input" class="visually-hidden">Buscar</label>
-      <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" />
+      <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" /> -->
+      <select (change)="buscarInventarioInsumo()" formControlName="insumo">
+        @for (item of inventarioDetalle.lista; track $index) {
+          <option [value]="item.idInsumo"  >{{item.nombre}}</option>
+        }
+      </select>
     </form>
     <div class="stock-info stock-info-exit">
-      <h2 class="stock-item-out">{{ selectedItem?.name || 'stock actual:' }}</h2>
-      <div class="stock-details" *ngIf="selectedItem">
+      <h2 class="stock-item-out">{{ busquedaInsumo.nombre || 'stock actual:' }}</h2>
+      <div class="stock-details" *ngIf="busquedaInsumo">
         <span class="stock-label-out">stock actual:</span>
-        <span class="stock-value-out">{{ selectedItem.stock }}</span>
+        <span class="stock-value-out">{{ busquedaInsumo.stockTotal }}</span>
       </div>
     </div>
-    <ng-container *ngIf="selectedItem">
-      <form>
+    <ng-container *ngIf="busquedaInsumo">
+      <form [formGroup]="formSalida">
         <label for="quantity-input" class="visually-hidden">Cantidad</label>
-        <input type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
+        <input formControlName="cantidad" type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
         <label for="reason-input" class="visually-hidden">Motivo</label>
-        <input type="text" id="reason-input" class="input-field" placeholder="Motivo" />
+        <input formControlName="motivo" type="text" id="reason-input" class="input-field" placeholder="Motivo" />
         <div class="action-buttons">
-          <button type="submit" class="register-button">Registrar</button>
+          <button type="submit" class="register-button" (click)="agregarSalida()">Registrar</button>
           <button type="button" class="cancel-button" (click)="closeDialog()">Cancelar</button>
         </div>
       </form>
@@ -143,20 +170,17 @@
           <th>Descripcion</th>
           <th>Stock</th>
           <th>Disponibilidad</th>
-          <th>Precio de Compra</th>
-          <th>Precio de Venta</th>
           <th>Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of stocks">
-          <td>{{ item.name }}</td>
-          <td>{{ item.stock }}</td>
-          <td><span class="status" [ngClass]="getStatusClass(item.stock)">{{ getDisponibilidad(item.stock) }}</span></td>
-          <td>{{ item.precioCompra }}</td>
-          <td>{{ item.precioVenta }}</td>
+        <tr *ngFor="let item of inventarioDetalle.lista">
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.stoct }}</td>
+          <td>{{item.disponibilidad}}</td>
+          <!-- <td><span class="status" [ngClass]="getStatusClass(item.stoct)">{{ getDisponibilidad(item.stoct) }}</span></td> -->
           <td>
-            <button class="action-btn" aria-label="Edit" (click)="openEditDialog(item)">
+            <button class="action-btn" aria-label="Edit" >
               <i class="fa-regular fa-pen-to-square" style="color:#624DE3"></i>
             </button>
             <button class="action-btn" aria-label="Delete" (click)="openDeleteDialog(item)">
@@ -169,10 +193,10 @@
      <!-- Componente de Paginación -->
  <div class="pagination-container">
   <p-paginator
-    [rows]="rows"
-    [totalRecords]="totalRecords"
+    [rows]="rows2"
+    [totalRecords]="inventarioDetalle.totalRegistros"
     [rowsPerPageOptions]="[5, 10, 20]"
-    (onPageChange)="onPageChange($event)"
+    (onPageChange)="onPageChange2($event)"
   ></p-paginator>
 </div>
   </section>

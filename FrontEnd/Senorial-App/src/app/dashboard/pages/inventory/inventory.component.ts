@@ -1,5 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { EntradaRequest } from '@app/core/models/dashboard/entrada/entrada-request';
+import { BusqueInventarioInsumoResponse } from '@app/core/models/dashboard/Inventario/busqueda-inventario-insumo-response';
+import { InventarioDetalleResponse } from '@app/core/models/dashboard/Inventario/inventario-detalle-response';
+import { InventarioResponse } from '@app/core/models/dashboard/Inventario/inventario-response';
+import { SalidaRequest } from '@app/core/models/dashboard/salida/salida-request';
+import { CustomResponse } from '@app/core/models/generic/custom-response';
+import { GenericFilterRequest } from '@app/core/models/generic/generic-filter-request';
+import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-response';
+import { EntradaService } from '@app/dashboard/services/entrada/entrada.service';
+import { InventoryService } from '@app/dashboard/services/inventory/inventory.service';
+import { SalidaService } from '@app/dashboard/services/salida/salida.service';
 
 // Interfaz para representar un ítem de inventario
 interface InventoryItem {
@@ -16,10 +27,12 @@ interface InventoryItem {
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss']
 })
-export class InventoryComponent {
+export class InventoryComponent implements OnInit {
   // Variables para la paginación
   first: number = 0;
   rows: number = 10;
+  first2: number = 0;
+  rows2: number = 10;
   totalRecords: number = 0;
 
   // Variables para manejar los diálogos modales
@@ -27,7 +40,7 @@ export class InventoryComponent {
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Editar el Detalle';
   modalButtonText: string = 'Editar';
-  selectedItem: InventoryItem | null = null;
+  selectedItem: InventarioDetalleResponse | null = null;
 
   // Variables para manejar los diálogos de entradas y salidas
   isEntryDialogOpen = false;
@@ -53,22 +66,124 @@ export class InventoryComponent {
     { name: 'Papa', unit: 'KG', stock: 5, disponibilidad: 'Agotados', precioCompra: 'S/.5.00', precioVenta: 'S/.7.00' }
   ];
 
+  formBuscar: FormGroup;
+  formEntrada:FormGroup;
+  formSalida:FormGroup;
   // Constructor para inicializar el formulario
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private InventarioServicio: InventoryService,
+    private entradaService:EntradaService,
+    private salidaService:SalidaService
+  ) {
     this.formDetalle = this.fb.group({
       descripcion: [],
       stock: [],
       precioCompra: [],
       precioVenta: [],
     });
+    this.formBuscar = this.fb.group({
+      insumo:[],
+    });
+    this.formEntrada = this.fb.group({
+      cantidad:[],
+      precioCompra:[],
+    });
+    this.formSalida = this.fb.group({
+      cantidad:[],
+      motivo:[]
+    })
+  }
+  ngOnInit(): void {
+    this.listarInventario();
+    this.listarInventarioDetalle();
+  }
+  //Campos
+  invertario: GenericFilterResponse<InventarioResponse> = {lista:[],totalRegistros:0};
+  inventarioDetalle: GenericFilterResponse<InventarioDetalleResponse> = {lista:[],totalRegistros:0};
+  busquedaInsumo: BusqueInventarioInsumoResponse = {
+idInsumo:0,
+idInventario:0,
+nombre:'',
+stockTotal:0
+  };
+  nombreInsumo: string = '';
+
+  idInsumo: number = 0;
+  //Funcionalidad
+  listarInventario(insumo:string = ''){
+    this.InventarioServicio.listarInventario((this.first / this.rows)+1,this.rows,insumo).subscribe({
+      next: (res:GenericFilterResponse<InventarioResponse>)=>{
+        this.invertario = res;
+      }
+    });
+  }
+  listarInventarioDetalle(){
+    this.InventarioServicio.listarInventarioDetalle((this.first2/this.rows2)+1,this.rows2,'').subscribe({
+      next: (res:GenericFilterResponse<InventarioDetalleResponse>)=>{
+        this.inventarioDetalle = res;
+      }
+    });
+  }
+
+  buscarInventarioInsumo(){
+    this.idInsumo= +this.formBuscar.get('insumo')?.value;
+  
+    this.InventarioServicio.buscarInsumoInvetario(this.idInsumo).subscribe({
+      next: (res:BusqueInventarioInsumoResponse)=>{
+        this.busquedaInsumo = res;
+      }
+    })
+  }
+
+  agregarEntrada(){
+    let req: EntradaRequest ={
+      cantidad : +this.formEntrada.get('cantidad')?.value,
+      precioCompra : +this.formEntrada.get('precioCompra')?.value,
+      idInsumo: this.idInsumo,
+      idInventario: 1,
+    };
+ 
+    this.entradaService.registarEntrada(req).subscribe({
+      next: (res:CustomResponse)=>{
+        alert(res.message);
+        this.closeDialog();
+      }
+    });
+  }
+
+  agregarSalida(){
+    let req: SalidaRequest ={
+      cantidad : +this.formSalida.get('cantidad')?.value,
+      motivo : this.formSalida.get('motivo')?.value,
+      idInsumo: this.idInsumo,
+      idInventario: 1,
+    }
+    this.salidaService.registarSalida(req).subscribe({
+      next:(res:CustomResponse)=>{
+        alert(res.message);
+        this.closeDialog();
+      }
+    })
+  }
+
+  eliminarInsumoInventario(idInsumo:number){
+    this.InventarioServicio.eliminarInsumoInventario(idInsumo).subscribe({
+      next:(res:CustomResponse)=>{
+
+      }
+    })
+  }
+
+  filtrarlistaInventario(){
+    
   }
 
   // Método para abrir el diálogo de edición
-  openEditDialog(item: InventoryItem) {
+  openEditDialog(item: InventarioDetalleResponse) {
     this.selectedItem = item; // Guarda el ítem seleccionado para editar
     this.formDetalle.patchValue({
-      descripcion: item.name,
-      stock: item.stock,
+      descripcion: item.nombre,
+      stock: item.stoct,
       // Ajusta aquí los valores para precioCompra y precioVenta si están en tu InventoryItem
     });
     this.modalTitle = 'Editar el Detalle';
@@ -77,7 +192,7 @@ export class InventoryComponent {
   }
 
   // Método para abrir el diálogo de confirmación de eliminación
-  openDeleteDialog(item: InventoryItem) {
+  openDeleteDialog(item: InventarioDetalleResponse) {
     this.selectedItem = item; // Guarda el ítem seleccionado para eliminar
     this.isConfirmDialogOpen = true;
   }
@@ -86,7 +201,9 @@ export class InventoryComponent {
   confirmDelete(): void {
     if (this.selectedItem) {
       // Lógica para eliminar el ítem seleccionado
-      console.log('Eliminando', this.selectedItem.name);
+      this.eliminarInsumoInventario(this.selectedItem.idInsumo);
+      this.listarInventarioDetalle();
+      console.log('Eliminando', this.selectedItem.nombre);
       // Aquí agregarías la lógica real para eliminar el ítem de la base de datos o el estado
     }
     this.isConfirmDialogOpen = false;
@@ -94,6 +211,7 @@ export class InventoryComponent {
 
   // Método para cerrar diálogos modales
   closeDialog() {
+    this.listarInventario();
     this.isEntryDialogOpen = false;
     this.isExitDialogOpen = false;
     this.selectedItem = null;
@@ -119,11 +237,12 @@ export class InventoryComponent {
   // Método para realizar una búsqueda en el inventario
   onSearch(event: Event) {
     const query = (event.target as HTMLInputElement).value.toLowerCase();
-    this.selectedItem = this.inventory.find(item => item.name.toLowerCase().includes(query)) || null;
+    //this.selectedItem = this.inventory.find(item => item.name.toLowerCase().includes(query)) || null;
   }
 
   // Método para mostrar el detalle del stock
   showStockDetail() {
+    this.listarInventarioDetalle();
     this.isStockDetailVisible = true;
   }
 
@@ -158,6 +277,13 @@ export class InventoryComponent {
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
+    this.listarInventario();
+    // Aquí iría la lógica para manejar el cambio de página
+  }
+  onPageChange2(event: any) {
+    this.first2 = event.first;
+    this.rows2 = event.rows;
+    this.listarInventarioDetalle();
     // Aquí iría la lógica para manejar el cambio de página
   }
 

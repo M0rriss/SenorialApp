@@ -1,4 +1,5 @@
-﻿using IBusiness.Schema_Generico.CRUD;
+﻿using CommonModels.Common;
+using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Almacen.Entradas;
 using RequestResponseModels.Response.Schema_Almacen.Entradas;
 using System;
@@ -11,5 +12,6 @@ namespace IBusiness.Schema_Almacen.Entradas
 {
     public interface IEntradaBusiness : ICrudBusiness<EntradaRequest, EntradaResponse>
     {
+        Task<CustomResponse> RegistrarIngreso(EntradaRequest req);
     }
 }

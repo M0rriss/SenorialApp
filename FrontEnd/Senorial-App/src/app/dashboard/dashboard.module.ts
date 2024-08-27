@@ -31,6 +31,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { Dropdown, DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ButtonModule,
     ConfirmPopupModule,
     DialogModule,
-    InputTextModule
+    InputTextModule,
+    DropdownModule
 
 
   ],

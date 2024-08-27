@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Almacen.Entradas;
+using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
@@ -16,6 +17,24 @@ namespace Repository.Schema_Almacen.Entradas
         public Task<GenericFilterResponse<Entrada>> GetByFilterAsync(GenericFilterRequest request)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> RegistrarIngresoAsync(Entrada entrada)
+        {
+            DetalleInventario? query = await (from detalle in db.DetalleInventarios
+                        where detalle.IdInsumo == entrada.IdInsumo
+                        select detalle).FirstOrDefaultAsync();
+            if (query == null)
+            {
+                throw new Exception("No se enctontro suministro");
+            }
+            entrada.IdInventario = query.IdInventario;
+
+            query.StockTotal += entrada.Cantidad;
+            await Create(entrada);
+            db.DetalleInventarios.Update(query);
+
+            return true;
         }
     }
 }

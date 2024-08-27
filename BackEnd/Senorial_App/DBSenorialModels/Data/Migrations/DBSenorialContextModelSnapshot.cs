@@ -337,6 +337,10 @@ namespace DBSenorialModels.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetInventario"));
 
+                    b.Property<int>("IdEstado")
+                        .HasColumnType("int")
+                        .HasColumnName("Id_Estado");
+
                     b.Property<int>("IdInsumo")
                         .HasColumnType("int")
                         .HasColumnName("id_insumo");
@@ -362,6 +366,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 1,
+                            IdEstado = 1,
                             IdInsumo = 1,
                             IdInventario = 1,
                             StockTotal = 12
@@ -369,6 +374,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 2,
+                            IdEstado = 1,
                             IdInsumo = 2,
                             IdInventario = 1,
                             StockTotal = 12
@@ -376,6 +382,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 3,
+                            IdEstado = 1,
                             IdInsumo = 3,
                             IdInventario = 1,
                             StockTotal = 12
@@ -383,6 +390,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 4,
+                            IdEstado = 1,
                             IdInsumo = 4,
                             IdInventario = 1,
                             StockTotal = 12
@@ -390,6 +398,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 5,
+                            IdEstado = 1,
                             IdInsumo = 5,
                             IdInventario = 1,
                             StockTotal = 12
@@ -397,6 +406,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 6,
+                            IdEstado = 1,
                             IdInsumo = 6,
                             IdInventario = 1,
                             StockTotal = 12
@@ -404,6 +414,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 7,
+                            IdEstado = 1,
                             IdInsumo = 7,
                             IdInventario = 1,
                             StockTotal = 12
@@ -411,6 +422,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 8,
+                            IdEstado = 1,
                             IdInsumo = 8,
                             IdInventario = 1,
                             StockTotal = 12
@@ -418,6 +430,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 9,
+                            IdEstado = 1,
                             IdInsumo = 9,
                             IdInventario = 1,
                             StockTotal = 12
@@ -425,6 +438,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 10,
+                            IdEstado = 1,
                             IdInsumo = 10,
                             IdInventario = 1,
                             StockTotal = 12
@@ -432,6 +446,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 11,
+                            IdEstado = 1,
                             IdInsumo = 11,
                             IdInventario = 1,
                             StockTotal = 12
@@ -439,6 +454,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 12,
+                            IdEstado = 1,
                             IdInsumo = 12,
                             IdInventario = 1,
                             StockTotal = 12
@@ -446,6 +462,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 13,
+                            IdEstado = 1,
                             IdInsumo = 13,
                             IdInventario = 1,
                             StockTotal = 12
@@ -453,6 +470,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 14,
+                            IdEstado = 1,
                             IdInsumo = 14,
                             IdInventario = 1,
                             StockTotal = 12
@@ -460,6 +478,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 15,
+                            IdEstado = 1,
                             IdInsumo = 15,
                             IdInventario = 1,
                             StockTotal = 12
@@ -467,6 +486,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 16,
+                            IdEstado = 1,
                             IdInsumo = 16,
                             IdInventario = 1,
                             StockTotal = 12
@@ -474,6 +494,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 17,
+                            IdEstado = 1,
                             IdInsumo = 17,
                             IdInventario = 1,
                             StockTotal = 12
@@ -481,6 +502,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 18,
+                            IdEstado = 1,
                             IdInsumo = 18,
                             IdInventario = 1,
                             StockTotal = 12
@@ -488,6 +510,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 19,
+                            IdEstado = 1,
                             IdInsumo = 19,
                             IdInventario = 1,
                             StockTotal = 12
@@ -495,6 +518,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 20,
+                            IdEstado = 1,
                             IdInsumo = 20,
                             IdInventario = 1,
                             StockTotal = 12
@@ -502,6 +526,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 21,
+                            IdEstado = 1,
                             IdInsumo = 21,
                             IdInventario = 1,
                             StockTotal = 12
@@ -509,6 +534,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 22,
+                            IdEstado = 1,
                             IdInsumo = 22,
                             IdInventario = 1,
                             StockTotal = 12
@@ -516,6 +542,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 23,
+                            IdEstado = 1,
                             IdInsumo = 23,
                             IdInventario = 1,
                             StockTotal = 12
@@ -523,6 +550,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 24,
+                            IdEstado = 1,
                             IdInsumo = 24,
                             IdInventario = 1,
                             StockTotal = 12
@@ -530,6 +558,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 25,
+                            IdEstado = 1,
                             IdInsumo = 25,
                             IdInventario = 1,
                             StockTotal = 12
@@ -537,6 +566,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 26,
+                            IdEstado = 1,
                             IdInsumo = 26,
                             IdInventario = 1,
                             StockTotal = 12
@@ -544,6 +574,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 27,
+                            IdEstado = 1,
                             IdInsumo = 27,
                             IdInventario = 1,
                             StockTotal = 12
@@ -551,6 +582,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 28,
+                            IdEstado = 1,
                             IdInsumo = 28,
                             IdInventario = 1,
                             StockTotal = 12
@@ -558,6 +590,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 29,
+                            IdEstado = 1,
                             IdInsumo = 29,
                             IdInventario = 1,
                             StockTotal = 12
@@ -565,6 +598,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 30,
+                            IdEstado = 1,
                             IdInsumo = 30,
                             IdInventario = 1,
                             StockTotal = 12
@@ -572,6 +606,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 31,
+                            IdEstado = 1,
                             IdInsumo = 31,
                             IdInventario = 1,
                             StockTotal = 12
@@ -579,6 +614,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 32,
+                            IdEstado = 1,
                             IdInsumo = 32,
                             IdInventario = 1,
                             StockTotal = 12
@@ -586,6 +622,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 33,
+                            IdEstado = 1,
                             IdInsumo = 33,
                             IdInventario = 1,
                             StockTotal = 12
@@ -593,6 +630,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 34,
+                            IdEstado = 1,
                             IdInsumo = 34,
                             IdInventario = 1,
                             StockTotal = 12
@@ -600,6 +638,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 35,
+                            IdEstado = 1,
                             IdInsumo = 35,
                             IdInventario = 1,
                             StockTotal = 12
@@ -607,6 +646,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 36,
+                            IdEstado = 1,
                             IdInsumo = 36,
                             IdInventario = 1,
                             StockTotal = 12
@@ -614,6 +654,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 37,
+                            IdEstado = 1,
                             IdInsumo = 37,
                             IdInventario = 1,
                             StockTotal = 12
@@ -621,6 +662,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 38,
+                            IdEstado = 1,
                             IdInsumo = 38,
                             IdInventario = 1,
                             StockTotal = 12
@@ -628,6 +670,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 39,
+                            IdEstado = 1,
                             IdInsumo = 39,
                             IdInventario = 1,
                             StockTotal = 12
@@ -635,6 +678,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 40,
+                            IdEstado = 1,
                             IdInsumo = 40,
                             IdInventario = 1,
                             StockTotal = 12
@@ -642,6 +686,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 41,
+                            IdEstado = 1,
                             IdInsumo = 41,
                             IdInventario = 1,
                             StockTotal = 12
@@ -649,6 +694,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 42,
+                            IdEstado = 1,
                             IdInsumo = 42,
                             IdInventario = 1,
                             StockTotal = 12
@@ -656,6 +702,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 43,
+                            IdEstado = 1,
                             IdInsumo = 43,
                             IdInventario = 1,
                             StockTotal = 12
@@ -663,6 +710,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 44,
+                            IdEstado = 1,
                             IdInsumo = 44,
                             IdInventario = 1,
                             StockTotal = 12
@@ -670,6 +718,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 45,
+                            IdEstado = 1,
                             IdInsumo = 45,
                             IdInventario = 1,
                             StockTotal = 12
@@ -677,6 +726,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 46,
+                            IdEstado = 1,
                             IdInsumo = 46,
                             IdInventario = 1,
                             StockTotal = 12
@@ -684,6 +734,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 47,
+                            IdEstado = 1,
                             IdInsumo = 47,
                             IdInventario = 1,
                             StockTotal = 12
@@ -691,6 +742,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 48,
+                            IdEstado = 1,
                             IdInsumo = 48,
                             IdInventario = 1,
                             StockTotal = 12
@@ -698,6 +750,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 49,
+                            IdEstado = 1,
                             IdInsumo = 49,
                             IdInventario = 1,
                             StockTotal = 12
@@ -705,6 +758,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 50,
+                            IdEstado = 1,
                             IdInsumo = 50,
                             IdInventario = 1,
                             StockTotal = 12
@@ -712,6 +766,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 51,
+                            IdEstado = 1,
                             IdInsumo = 51,
                             IdInventario = 1,
                             StockTotal = 12
@@ -719,6 +774,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 52,
+                            IdEstado = 1,
                             IdInsumo = 52,
                             IdInventario = 1,
                             StockTotal = 12
@@ -726,6 +782,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 53,
+                            IdEstado = 1,
                             IdInsumo = 53,
                             IdInventario = 1,
                             StockTotal = 12
@@ -733,6 +790,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 54,
+                            IdEstado = 1,
                             IdInsumo = 54,
                             IdInventario = 1,
                             StockTotal = 12
@@ -740,6 +798,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 55,
+                            IdEstado = 1,
                             IdInsumo = 55,
                             IdInventario = 1,
                             StockTotal = 12
@@ -747,6 +806,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 56,
+                            IdEstado = 1,
                             IdInsumo = 56,
                             IdInventario = 1,
                             StockTotal = 12
@@ -754,6 +814,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 57,
+                            IdEstado = 1,
                             IdInsumo = 57,
                             IdInventario = 1,
                             StockTotal = 12
@@ -761,6 +822,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 58,
+                            IdEstado = 1,
                             IdInsumo = 58,
                             IdInventario = 1,
                             StockTotal = 12
@@ -768,6 +830,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 59,
+                            IdEstado = 1,
                             IdInsumo = 59,
                             IdInventario = 1,
                             StockTotal = 12
@@ -775,6 +838,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 60,
+                            IdEstado = 1,
                             IdInsumo = 60,
                             IdInventario = 1,
                             StockTotal = 12
@@ -782,6 +846,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 61,
+                            IdEstado = 1,
                             IdInsumo = 61,
                             IdInventario = 1,
                             StockTotal = 12
@@ -789,6 +854,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 62,
+                            IdEstado = 1,
                             IdInsumo = 62,
                             IdInventario = 1,
                             StockTotal = 12
@@ -796,6 +862,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 63,
+                            IdEstado = 1,
                             IdInsumo = 63,
                             IdInventario = 1,
                             StockTotal = 12
@@ -803,6 +870,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 64,
+                            IdEstado = 1,
                             IdInsumo = 64,
                             IdInventario = 1,
                             StockTotal = 12
@@ -810,6 +878,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 65,
+                            IdEstado = 1,
                             IdInsumo = 65,
                             IdInventario = 1,
                             StockTotal = 12
@@ -817,6 +886,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 66,
+                            IdEstado = 1,
                             IdInsumo = 66,
                             IdInventario = 1,
                             StockTotal = 12
@@ -824,6 +894,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 67,
+                            IdEstado = 1,
                             IdInsumo = 67,
                             IdInventario = 1,
                             StockTotal = 12
@@ -831,6 +902,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 68,
+                            IdEstado = 1,
                             IdInsumo = 68,
                             IdInventario = 1,
                             StockTotal = 12
@@ -838,6 +910,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 69,
+                            IdEstado = 1,
                             IdInsumo = 69,
                             IdInventario = 1,
                             StockTotal = 12
@@ -845,6 +918,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 70,
+                            IdEstado = 1,
                             IdInsumo = 70,
                             IdInventario = 1,
                             StockTotal = 12
@@ -852,6 +926,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 71,
+                            IdEstado = 1,
                             IdInsumo = 71,
                             IdInventario = 1,
                             StockTotal = 12
@@ -859,6 +934,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 72,
+                            IdEstado = 1,
                             IdInsumo = 72,
                             IdInventario = 1,
                             StockTotal = 12
@@ -866,6 +942,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 73,
+                            IdEstado = 1,
                             IdInsumo = 73,
                             IdInventario = 1,
                             StockTotal = 12
@@ -873,6 +950,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 74,
+                            IdEstado = 1,
                             IdInsumo = 74,
                             IdInventario = 1,
                             StockTotal = 12
@@ -880,6 +958,7 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdDetInventario = 75,
+                            IdEstado = 1,
                             IdInsumo = 75,
                             IdInventario = 1,
                             StockTotal = 12
@@ -1642,13 +1721,13 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 8, 24, 21, 51, 13, 999, DateTimeKind.Local).AddTicks(1127),
+                            FechaActualizacion = new DateTime(2024, 8, 26, 15, 52, 36, 473, DateTimeKind.Local).AddTicks(9765),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 8, 24, 21, 51, 13, 999, DateTimeKind.Local).AddTicks(1133),
+                            FechaActualizacion = new DateTime(2024, 8, 26, 15, 52, 36, 473, DateTimeKind.Local).AddTicks(9768),
                             IdSucursal = 2
                         });
                 });
@@ -2927,11 +3006,14 @@ namespace DBSenorialModels.Data.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasColumnName("motivo");
 
-                    b.Property<int?>("SucursalIdSucursal")
-                        .HasColumnType("int");
+                    b.Property<int>("SucursalIdSucursal")
+                        .HasColumnType("int")
+                        .HasColumnName("SucursalIdSucursal");
 
                     b.HasKey("IdSalida")
                         .HasName("salida_id_pk");
+
+                    b.HasIndex("IdInsumo");
 
                     b.HasIndex("IdInventario");
 
@@ -3308,7 +3390,7 @@ namespace DBSenorialModels.Data.Migrations
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 24, 21, 51, 14, 4, DateTimeKind.Local).AddTicks(143),
+                            CreatedAt = new DateTime(2024, 8, 26, 15, 52, 36, 478, DateTimeKind.Local).AddTicks(1352),
                             Email = "admin@admin.com",
                             IdImg = 1,
                             IdPersona = 1,
@@ -3830,7 +3912,7 @@ namespace DBSenorialModels.Data.Migrations
                 {
                     b.HasOne("DBSenorialModels.Senorial.Insumo", "IdNavigationInsumo")
                         .WithMany("Salida")
-                        .HasForeignKey("IdInventario")
+                        .HasForeignKey("IdInsumo")
                         .IsRequired()
                         .HasConstraintName("salida_insumo_fk");
 
@@ -3842,7 +3924,9 @@ namespace DBSenorialModels.Data.Migrations
 
                     b.HasOne("DBSenorialModels.Senorial.Sucursal", null)
                         .WithMany("Salida")
-                        .HasForeignKey("SucursalIdSucursal");
+                        .HasForeignKey("SucursalIdSucursal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IdNavigationInsumo");
 
