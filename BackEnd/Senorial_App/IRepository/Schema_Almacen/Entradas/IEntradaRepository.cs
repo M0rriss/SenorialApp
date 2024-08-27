@@ -10,5 +10,6 @@ namespace IRepository.Schema_Almacen.Entradas
 {
     public interface IEntradaRepository : ICrudRepository<Entrada>
     {
+        Task<bool> RegistrarIngresoAsync(Entrada entrada);
     }
 }

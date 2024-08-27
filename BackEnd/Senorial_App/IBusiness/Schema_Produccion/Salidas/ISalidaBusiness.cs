@@ -1,4 +1,5 @@
-﻿using IBusiness.Schema_Generico.CRUD;
+﻿using CommonModels.Common;
+using IBusiness.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Produccion.Salidas;
 using RequestResponseModels.Response.Schema_Produccion.Salidas;
 using System;
@@ -11,5 +12,6 @@ namespace IBusiness.Schema_Produccion.Salidas
 {
     public interface ISalidaBusiness : ICrudBusiness<SalidaRequest, SalidaResponse>
     {
+        Task<CustomResponse> RegistarSalidaAsync(SalidaRequest req);
     }
 }

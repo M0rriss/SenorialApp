@@ -10,5 +10,6 @@ namespace IRepository.Schema_Produccion.Salidas
 {
     public interface ISalidaRepository : ICrudRepository<Salida>
     {
+        Task<bool> RegistrarSalidaAsync(Salida salida);
     }
 }

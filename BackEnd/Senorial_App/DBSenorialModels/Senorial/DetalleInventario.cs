@@ -22,6 +22,9 @@ public partial class DetalleInventario
     [Column("stock_total")]
     public int StockTotal { get; set; }
 
+    [Column("Id_Estado")]
+    public int IdEstado { get; set; }
+
     [ForeignKey("IdInsumo")]
     [InverseProperty("DetalleInventarios")]
     public virtual Insumo Insumo { get; set; } = null!;

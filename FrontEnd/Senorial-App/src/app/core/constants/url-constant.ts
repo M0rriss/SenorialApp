@@ -6,6 +6,12 @@ const dominio = "https://localhost:7283"
 const subRutas = {
     //AUTH
     auth: `${dominio}/api/Auth`,
+    //INVENTARIO
+    detalleInventario: `${dominio}/api/DetalleInventario`,
+    //ENTRADA
+    entrada: `${dominio}/api/Entrada`,
+    //SALIDA
+    salida: `${dominio}/api/Salida`,
     //MANTENIMINETO
     usuario: `${dominio}/api/Usuario`,
     producto: `${dominio}/api/Producto`,
@@ -25,6 +31,22 @@ const subRutas = {
     proveedores:`${dominio}/api/Proveedor`,
 }
 
+//INVENTARIO
+export const urlInventario = {
+    buscar : `${subRutas.detalleInventario}/Buscar`,
+    listar: `${subRutas.detalleInventario}/Listar`,
+    detalle: `${subRutas.detalleInventario}/Detalle`,
+    eliminar: `${subRutas.detalleInventario}/Eliminar`
+}
+
+//ENTRAD
+export const urlEntradas = {
+    registrar: `${subRutas.entrada}/Registrar`,
+}
+//SALIDAD
+export const urlSalida = {
+    registrar: `${subRutas.salida}/Registrar`,
+}
 //MANTENIMIENTO
 export const urlUsuario = {
     filtro: `${subRutas.usuario}/Filtro`,

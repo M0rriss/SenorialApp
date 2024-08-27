@@ -11,8 +11,8 @@ namespace RequestResponseModels.Request.Schema_Produccion.Salidas
     public class SalidaRequest
     {
         public int IdInventario { get; set; }
-        public DateTime FechaSalida { get; set; }
+        public int IdInsumo { get; set; }
         public int Cantidad { get; set; }
-        public string Motivo { get; set; }
+        public string Motivo { get; set; } = string.Empty;
     }
 }
