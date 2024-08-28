@@ -1,29 +1,32 @@
 @import "node_modules/primeng/resources/themes/aura-light-blue/theme.css";
 @import "node_modules/primeng/resources/primeng.css";
 @import "node_modules/primeicons/primeicons.css";
-
-main{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-    transform: scale(0.75);
-    padding: 0 24px;
-    margin: 20px;
-    justify-content: center;
+html{
+  margin: 0;
+  padding: 0;
 }
-.container{
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto auto auto 1fr;
-}
+// main{
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//     transform: scale(0.75);
+//     padding: 0 24px;
+//     margin: 20px;
+//     justify-content: center;
+// }
+// .container{
+//   min-height: 100vh;
+//   display: grid;
+//   grid-template-rows: auto auto auto 1fr;
+// }
 hr{
   box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
 
 }
-.chatbot{
-  display: flex;
- align-items: flex-end;
- transform: scale(0.80);
-    padding: 0 24px;
-    margin: 20px;
-}
+// .chatbot{
+//   display: flex;
+//  align-items: flex-end;
+//  transform: scale(0.80);
+//     padding: 0 24px;
+//     margin: 20px;
+// }

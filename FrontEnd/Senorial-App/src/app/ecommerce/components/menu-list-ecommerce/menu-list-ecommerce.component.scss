@@ -8,26 +8,25 @@ body {
   font-family      : 'Roboto', sans-serif;
 }
 
-
 .personal-info-card {
   display          : flex;
   flex-direction   : column;
   justify-content  : center;
-  max-width        : 250px;
-  padding          : 10px 20px;
-  border-radius    : 0 0 24px 24px;
+  max-width        : 200px; /* Ajustado para ser más pequeño */
+  padding          : 8px 16px; /* Reducido */
+  border-radius    : 0 0 20px 20px; /* Ligero ajuste para mantener proporción */
   box-shadow       : 0 1px 1px rgba(0, 0, 0, 0.25);
   background-color : $white-color;
-  font-size        : 22px;
+  font-size        : 18px; /* Reducido */
   color            : $primary-color;
   font-weight      : 600;
   text-align       : center;
   line-height      : 120%;
-  position: absolute;
-  top: 100px; /* Ajusta la posición para que quede debajo del header */
-  left:18%; /* Para centrar horizontalmente */
-  transform: translateX(-50%); /* Ajuste fino para centrar */
-  z-index: 1000; /* Asegura que esté sobre otros elementos */
+  position         : absolute;
+  top              : 10%;
+  left             : 9%;
+  transform        : translateX(-50%);
+  z-index          : 1000;
 }
 
 .location-badge,
@@ -35,13 +34,13 @@ body {
 .personal-label {
   display          : flex;
   justify-content  : center;
-  gap              : 10px;
-  padding          : 10px 80px; /* Added padding for all */
+  gap              : 8px; /* Reducido */
+  padding          : 8px 40px; /* Ajustado para mantener equilibrio con el nuevo tamaño */
   border-radius    : 8px;
   color            : $primary-color;
   white-space      : nowrap;
   cursor           : pointer;
-  text-decoration  : none ;
+  text-decoration  : none;
 
   &:hover {
     background-color : $secondary-color;
@@ -51,10 +50,7 @@ body {
 
 .location-icon,
 .phone-icon {
-  aspect-ratio     : 0.95;
-  object-fit       : auto;
-  object-position  : center;
-  width            : 22px;
+  width            : 18px; /* Reducido */
   margin           : auto 0;
 }
 
@@ -63,16 +59,99 @@ body {
 .personal-label {
   font-feature-settings : "clig" off, "liga" off;
   font-family           : 'Roboto', sans-serif;
-  text-decoration       : none ;
+  text-decoration       : none;
   color                 : $primary-color;
 
- &:hover {
-  background-color : $secondary-color;
-  color            : $white-color;
+  &:hover {
+    background-color : $secondary-color;
+    color            : $white-color;
+  }
 }
-}
+
 .divider {
   border-bottom    : 1px solid $gray-color;
   width            : 80%;
-  margin           : 10px auto;
+  margin           : 8px auto; /* Reducido */
+}
+/* Media Queries para Móviles */
+@media (min-width: 420px) {
+  .personal-info-card {
+    max-width        : 170px; /* Ajuste adicional para móviles */
+    padding          : 6px 12px; /* Más pequeño para pantallas móviles */
+    font-size        : 14px; /* Tamaño de fuente reducido */
+    top              : 60px; /* Posicionamiento para que quede más cerca del top */
+    left             : 90px; /* Centrado completo en móviles */
+    transform        : translateX(-50%);
+  }
+
+  .location-badge,
+  .contact-info,
+  .personal-label {
+    padding          : 6px 30px; /* Padding reducido para móviles */
+  }
+
+  .location-icon,
+  .phone-icon {
+    width            : 16px; /* Íconos más pequeños en móviles */
+  }
+
+  .divider {
+    width            : 70%; /* Ajuste adicional en la división */
+    margin           : 6px auto; /* Menor margen en móviles */
+  }
+}
+/* Media Queries para Móviles Medianos (entre 421px y 640px) */
+@media (min-width: 421px) and (min-width: 640px) {
+  .personal-info-card {
+    max-width        : 180px;
+    padding          : 7px 14px;
+    font-size        : 16px;
+    top              : 68px;
+    left             : 98px; /* Centrado horizontal completo */
+    transform        : translateX(-50%);
+  }
+
+  .location-badge,
+  .contact-info,
+  .personal-label {
+    padding          : 7px 35px;
+  }
+
+  .location-icon,
+  .phone-icon {
+    width            : 17px;
+  }
+
+  .divider {
+    width            : 75%;
+    margin           : 7px auto;
+  }
+}
+
+/* Media Queries para Tablets (entre 641px y 991px) */
+@media (min-width: 641px) and (min-width: 991px) {
+  .personal-info-card {
+    max-width        : 190px;
+    padding          : 8px 15px;
+    font-size        : 17px;
+    top              : 78px;
+    left             : 100px; /* Centrado horizontal completo */
+    transform        : translateX(-50%);
+  }
+
+  .location-badge,
+  .contact-info,
+  .personal-label {
+    padding          : 8px 38px;
+  }
+
+  .location-icon,
+  .phone-icon {
+    width            : 18px;
+  }
+
+  .divider {
+    width            : 75%;
+    margin           : 7px auto;
+  }
 }

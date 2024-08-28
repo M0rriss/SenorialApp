@@ -1,28 +1,21 @@
 <header class="header">
   <div class="nav-bar">
     <div class="left-section">
-      <button class="menu-icon-container"
-              (click)="toggleMenu()"
-              [ngClass]="{'active': isMenuActive}">
-        <img  src="./menu-burger.svg" alt="menu" class="menu-icon">
+      <button class="menu-icon-container" (click)="toggleMenu()" [ngClass]="{'active': isMenuActive}">
+        <img src="./menu-burger.svg" alt="menu" class="menu-icon">
       </button>
       <div class="logo">
         <img routerLink="/" src="./SenorialLogoBW.svg" alt="Logo" class="svg-icon">
       </div>
     </div>
     <div class="auth-buttons">
-      <button type="button"
-              (click)="
-              toggleActive('login')"
-              class="btn btn-login"
-              [ngClass]="{'active': isLoginActive}">
+      <button type="button" (click)="toggleActive('login')" class="btn btn-login" [ngClass]="{'active': isLoginActive}">
         <img src="./user-icon.svg" alt="user" class="user-icon">
-        {{this.user}}
+        {{ this.user }}
       </button>
       <button type="button" (click)="toggleShop()" class="btn btn-shopping-cart" [ngClass]="{'active': isShopOpen}">
         <img src="./shopping-cart.svg" alt="cart" class="shopping-cart-icon">
-        <span class="price-cart" *ngIf="totalCartAmount > 0">s/. {{ totalCartAmount | number:'1.2-2'}}</span>
-        <!-- <span *ngIf="products.length > 0">s/ {{ total }}</span> -->
+        <span class="price-cart" *ngIf="totalCartAmount > 0">s/. {{ totalCartAmount | number:'1.2-2' }}</span>
       </button>
     </div>
   </div>

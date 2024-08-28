@@ -1,155 +1,134 @@
-$font-family        : 'Poppins', sans-serif;
-$background-color   : #F5F5F5;
-$white-color        : #ffffff;
-$primary-color      : #181C2E;
-$secondary-color    : #FF910F;
-$shadow-color       : rgba(0, 0, 0, 0.1);
-$gray-color         : #79797c;
+$font-family: 'Poppins', sans-serif;
+$white-color: #ffffff;
+$primary-color: #181C2E;
+$secondary-color: #FF910F;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$gray-color: #79797c;
 
 header {
-  width             : 100vw;
-  transform         : scale(0.75);
-  display           : flex;
-  justify-content   : center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transform: scale(1);
+
 }
 
 .header {
-  background-color  : $white-color;
-  display           : flex;
-  justify-content   : space-between;
-  align-items       : center;
-  padding           : 0 24px;
-  box-shadow        : 0 2px 4px $shadow-color;
-  height            : 114px;
-  width             : 100vw;
+  background-color: $white-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: 0 2px 4px $shadow-color;
+  height: 70px;
+  width: 100%;
+  max-width: 100vw;
 
   .nav-bar {
-    display         : flex;
-    align-items     : center;
-    justify-content : space-between;
-    width           : 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 
     .left-section {
-      display       : flex;
-      align-items   : center;
+      display: flex;
+      align-items: center;
 
       .menu-icon-container {
         display: flex;
         align-items: center;
-        border-style: none;
-        background-color: $white-color;
-        margin-top: 5px;
-
-        &.active {
-          .menu-icon {
-            filter: invert(44%) sepia(91%) saturate(2403%) hue-rotate(357deg) brightness(106%) contrast(101%);
-          }
-        }
+        border: none;
+        background-color: transparent;
 
         .menu-icon {
-          filter: invert(14%) sepia(10%) saturate(2227%) hue-rotate(190deg) brightness(95%) contrast(102%);
+          width: 30px;
+          height: 30px;
           cursor: pointer;
-          width: 60px;
-          height: 60px;
-
-
-          &:hover {
-            filter: invert(44%) sepia(91%) saturate(2403%) hue-rotate(357deg) brightness(106%) contrast(101%);
-          }
         }
       }
+
       .logo {
-        display     : flex;
-        align-items : center;
-        margin-left : 25px;
-        margin-top  : 50px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        margin-top: 24px;
         img {
-          width     : 170px;
-          height    : auto;
+          width: 98px; /* Ajuste de tamaño del logo */
+          height: 90px;
         }
       }
     }
 
     .auth-buttons {
-      display       : flex;
-      gap           : 20px;
-      align-items   : center;
+      display: flex;
+      gap: 20px;
+      align-items: center;
 
       button {
-        display        : flex;
-        align-items    : center;
+        display: flex;
+        align-items: center;
         justify-content: center;
         text-decoration: none;
-        font-weight    : 600;
-        font-size      : 30px;
-        font-family    : $font-family;
-        border-radius  : 50px;
-        height         : 82px;
-        width          : 202px;
-        transition     : background-color 0.3s, color 0.3s;
-        border-style   : none;
-
+        font-weight: 600;
+        font-size: 16px;
+        font-family: $font-family;
+        border-radius: 50px;
+        width: 120px;
+        height: 40px; /* Ajuste de altura */
+        padding: 0 12px; /* Ajuste de padding */
+        transition: background-color 0.3s, color 0.3s;
+        border: none;
 
         &.btn-login {
           background-color: transparent;
-          font-weight     : 500;
-          color           : $primary-color;
-          padding         : 0;
+          font-weight: 500;
+          color: $primary-color;
 
           .user-icon {
-            margin-right  : 8px;
-            width         : 40px;
-            height        : 40px;
-            filter        : invert(44%) sepia(91%) saturate(2403%) hue-rotate(357deg) brightness(106%) contrast(101%);
+            margin-right: 8px;
+            width: 20px; /* Ajuste de tamaño del icono */
+            height: 20px;
+            filter: invert(44%) sepia(91%) saturate(2403%) hue-rotate(357deg) brightness(106%) contrast(101%);
           }
-
-          // &:hover {
-          //   background-color: $primary-color;
-          //   color           : $white-color;
-
-          //   .user-icon {
-          //     filter        : invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(105%) contrast(104%);
-          //   }
-          // }
 
           &.active {
             background-color: $primary-color;
-            color           : $white-color;
+            color: $white-color;
 
             .user-icon {
-              filter        : invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(105%) contrast(104%);
+              filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(105%) contrast(104%);
             }
           }
         }
 
         &.btn-shopping-cart {
           background-color: $secondary-color;
-          color           : $white-color;
-          height          : 82px;
-          width           : 240px;
-          padding         : 0;
-          display         : flex;
-          align-items     : center;
-          justify-content : center;
+          color: $white-color;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
           .shopping-cart-icon {
-            width         : 40px;
-            height        : 40px;
-            margin-right: 10px;
+            width: 20px; /* Ajuste de tamaño del icono */
+            height: 20px;
+            margin-right: 8px;
           }
+
           &:hover {
             background-color: $primary-color;
-            color           : $white-color;
+            color: $white-color;
           }
         }
+
         .price-cart {
           color: #fff;
-          font-size: 24px;
+          font-size: 14px;
         }
       }
     }
   }
 }
+
 .overlay {
   position: fixed;
   top: 0;
@@ -161,15 +140,17 @@ header {
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
 }
+
 .overlay.hidden {
   opacity: 0;
-  z-index: -1;  /* Opcional: para asegurarse de que no interfiera con otros elementos */
+  z-index: -1;
 }
+
 .shopping-cart-container {
   position: fixed;
   top: 0;
   right: 0;
-  width: 400px;
+  width: 300px;
   height: 100vh;
   background-color: $white-color;
   z-index: 1000;
@@ -178,5 +159,85 @@ header {
 
   &.open {
     transform: translateX(0);
+  }
+}
+/* Móviles Pequeños (320px a 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+  .header {
+    height: 60px;
+
+    .nav-bar {
+      .left-section {
+        .menu-icon-container {
+          .menu-icon {
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+        .logo img {
+          width: 70px;
+          height: auto;
+        }
+      }
+
+      .auth-buttons {
+        gap: 8px;
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0; /* Ocultamos el texto */
+          height: 30px;
+          width: 60px;
+          padding: 0;
+
+          /* Estilo específico para el botón de login */
+          &.btn-login {
+            width: 42px;
+            height: 32px;
+            margin: 0 0 0 0;
+          } .user-icon {
+            //margin-right: 8px;
+            width: 20px; /* Ajuste de tamaño del icono */
+            height: 20px;
+            filter: invert(44%) sepia(91%) saturate(2403%) hue-rotate(357deg) brightness(106%) contrast(101%);
+          }
+
+
+          .shopping-cart-icon {
+            width: 24px;
+            height: 24px;
+            display: block; /* Mostramos el ícono por defecto */
+          }
+
+          .price-cart {
+            font-size: 14px;
+            margin-left: 4px;
+            display: none; /* Ocultamos el precio por defecto */
+          }
+
+          /* Si el precio está presente, ocultamos el ícono del carrito */
+          &:has(.price-cart) .shopping-cart-icon {
+            display: none;
+          }
+
+          /* Si no hay precio, mostramos el ícono del carrito */
+          &:not(:has(.price-cart)) .shopping-cart-icon {
+            display: block;
+          }
+
+          /* Si el precio está presente, lo mostramos */
+          &:has(.price-cart) .price-cart {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  .shopping-cart-container {
+    width: 220px;
   }
 }
