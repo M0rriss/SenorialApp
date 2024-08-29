@@ -6,152 +6,143 @@ $white-color      : #ffffff;
 $poppins-font     : 'Poppins', sans-serif;
 
 
-section{
-  width           : 100vw;
+
+section {
+  width: 100vw;
 }
 
 .meal-deal {
-  border-radius    : 12px;
-  box-shadow       : 4px 4px 28px rgba(0, 0, 0, 0.25);
-  border           : 1px solid rgba(0, 0, 0, 0.1);
-  background-color : $white-color;
-  width            : 410px;
-  height           : 230px;
-  padding          : 27px;
-  transition       : transform 0.3s;
-  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.25); /* Redujimos la sombra */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: $white-color;
+  width: 350px; /* Reducimos el ancho del contenedor */
+  height: 200px; /* Reducimos la altura del contenedor */
+  padding: 20px; /* Reducimos el padding */
+  transition: transform 0.3s;
+  margin: 15px; /* Reducimos el margen */
 }
 
 .meal-deal:hover {
-  transform        : scale(1.1);
+  transform: scale(1.05); /* Ajustamos el scale para hover */
 }
-
-
 
 .meal-deal-content {
-  display          : flex;
-  gap              : 20px;
-  align-items      : center;
-  justify-content  : center;
+  display: flex;
+  gap: 15px; /* Reducimos el gap entre elementos */
+  align-items: center;
+  justify-content: center;
 }
-
-
 
 .meal-info {
-  display          : flex;
-  flex-direction   : column;
-  width            : 50%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }
-
-
 
 .meal-details {
-  display          : flex;
-  flex-direction   : column;
-  justify-content  : center;
-  color            : $primary-color;
-  margin           : auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: $primary-color;
+  margin: auto 0;
 }
 
-
-
 .meal-title {
-  font             : 600 20px $poppins-font, sans-serif;
+  font: 600 18px $poppins-font, sans-serif; /* Reducimos el tamaño del texto */
 }
 
 .meal-description {
-  margin-top       : 7px;
-  font             : 400 12px/21px $poppins-font, sans-serif;
+  margin-top: 5px; /* Ajustamos el margen */
+  font: 400 11px/18px $poppins-font, sans-serif; /* Reducimos el tamaño del texto */
 }
 
 .meal-price {
-  color            : $primary-color;
-  margin-top       : 6px;
-  font             : 700 16px $poppins-font, sans-serif;
+  color: $primary-color;
+  margin-top: 5px;
+  font: 700 14px $poppins-font, sans-serif; /* Reducimos el tamaño del texto */
 }
 
 .meal-image {
-  display          : flex;
-  flex-direction   : column;
-  margin-left      : 20px;
-  position         : relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px; /* Reducimos el margen izquierdo */
+  position: relative;
 }
-
-
 
 .image-container {
-  display          : flex;
-  justify-content  : center;
-  align-items      : center;
-  flex-grow        : 1;
-  position         : relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  position: relative;
 }
 
-
 .image-wrapper {
-  display          : flex;
-  flex-direction   : column;
-  overflow         : hidden;
-  position         : relative;
-  width            : 160px;
-  height           : 160px;
-  align-items      : flex-end;
-  padding          : 0;
-  border-radius    : 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  width: 130px; /* Reducimos el tamaño de la imagen */
+  height: 130px;
+  align-items: flex-end;
+  padding: 0;
+  border-radius: 10px;
 }
 
 .background-image {
-  position         : absolute;
-  inset            : 0;
-  height           : 100%;
-  width            : 100%;
-  object-fit       : cover;
-  object-position  : center;
-  border-radius    : 12px;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
 }
 
 .foreground-image {
-  position         : absolute;
-  bottom           : 0;
-  right            : 0;
-  aspect-ratio     : 1.09;
-  object-fit       : auto;
-  object-position  : center;
-  width            : 100%;
-  border-radius    : 12px;
-  margin-top       : 19px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  aspect-ratio: 1.09;
+  object-fit: auto;
+  object-position: center;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 15px;
 }
 
 .visually-hidden {
-  position         : absolute;
-  width            : 1px;
-  height           : 1px;
-  padding          : 0;
-  margin           : -1px;
-  overflow         : hidden;
-  clip             : rect(0, 0, 0, 0);
-  white-space      : nowrap;
-  border           : 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .rounded-container {
-  border-radius    : 38px 0 11px 0;
-  background-color : $white-color;
-  height           : 60px;
-  width            : 67px;
-  position         : absolute; /* Posición absoluta */
-  bottom           : 0; /* Posición en el borde inferior */
-  right            : 0; /* Posición en el borde derecho */
-  display          : flex; /* Centrar el icono */
-  justify-content  : center; /* Centrar el icono */
-  align-items      : center; /* Centrar el icono */
+  border-radius: 30px 0 8px 0;
+  background-color: $white-color;
+  height: 55px; /* Ajustamos el tamaño del contenedor */
+  width: 60px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 
 .plus-icon {
-  color            : $primary-color; /* Color del icono */
-  font-size        : 28px; /* Tamaño del icono */
+  color: $primary-color;
+  font-size: 24px; /* Ajustamos el tamaño del ícono */
 }
+
 
 @media (max-width: 420px) {
 

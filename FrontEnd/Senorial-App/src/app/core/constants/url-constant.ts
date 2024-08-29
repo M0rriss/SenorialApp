@@ -1,7 +1,7 @@
 import { subscribeOn } from "rxjs"
 
-const dominio = "https://localhost:7283"
-//const dominio = "http://senorialapp.somee.com"
+// const dominio = "https://localhost:7283"
+const dominio = "https://senorialapp.somee.com"
 
 const subRutas = {
     //AUTH
