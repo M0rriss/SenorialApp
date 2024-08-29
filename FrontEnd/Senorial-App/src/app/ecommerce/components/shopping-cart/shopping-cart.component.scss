@@ -20,8 +20,8 @@ $overlay-color    : rgba(0, 0, 0, 0.7);
   border-radius: 16px 0 0 16px;
   position: fixed;
   top: 0;
-  left: 50%; /* Posiciona el contenedor en el 50% del ancho del viewport */
-  transform: translateX(-50%);
+  left: 100%; /* Posiciona el contenedor en el 50% del ancho del viewport */
+  transform: translateX(-100%);
   //z-index: 1000;
   transition: transform 0.3s ease-in-out;
 
@@ -240,3 +240,38 @@ $overlay-color    : rgba(0, 0, 0, 0.7);
   transition: opacity 0.3s ease-in-out;
 }
 
+
+/* Media Queries para Móviles */
+@media (max-width: 420px) {
+  .shopping-cart-container,
+  .cart-container {
+    width: 100vw; /* Asegura que cubra todo el ancho en móvil */
+    border-radius: 0; /* Elimina el borde redondeado en móvil */
+    left: 100%; /* Posiciona el carrito desde la izquierda */
+    transform: translateX(-100%); /* Oculta el carrito inicialmente */
+
+    &.open {
+      transform: translateX(0); /* Muestra el carrito cuando está abierto */
+    }
+  }
+
+  .cart-empty-message {
+    margin: 50% 0; /* Ajusta la alineación vertical del mensaje vacío en móvil */
+  }
+}
+/* Media Queries para Móviles */
+@media (max-width: 768px) {
+  .shopping-cart-container,
+  .cart-container {
+    border-radius: 0; /* Elimina el borde redondeado en móvil */
+    left: 100%; /* Posiciona el carrito desde la izquierda */
+    transform: translateX(-100%); /* Oculta el carrito inicialmente */
+    &.open {
+      transform: translateX(0); /* Muestra el carrito cuando está abierto */
+    }
+  }
+
+  .cart-empty-message {
+    margin: 50% 0; /* Ajusta la alineación vertical del mensaje vacío en móvil */
+  }
+}

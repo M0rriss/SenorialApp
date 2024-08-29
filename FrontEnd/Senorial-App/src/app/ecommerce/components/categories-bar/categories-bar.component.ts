@@ -29,6 +29,7 @@ export class CategoriesBarComponent implements OnInit{
   }
   ngOnInit(): void {
     this.listarCategoria();
+    this.iniciarCarrusel();
   }
 
   listarCategoria(){
@@ -61,5 +62,15 @@ export class CategoriesBarComponent implements OnInit{
 
     this.enviarSub.emit(idCategoria);
   }
-
+  iniciarCarrusel() {
+    setInterval(() => {
+      const categoryList = document.querySelector('.category-list');
+      if (categoryList) {
+        categoryList.scrollBy({
+          left: categoryList.clientWidth,
+          behavior: 'smooth'
+        });
+      }
+    }, 3000);
+  }
 }

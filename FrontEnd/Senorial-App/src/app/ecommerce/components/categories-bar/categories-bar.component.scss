@@ -11,8 +11,7 @@ $reply-text-user  : #000;
 $font-family      : 'Poppins', sans-serif;
 
 section {
-  width: 100vw;
-  transform: scale(0.75);
+  width: 100%;
 }
 
 .menu-categories {
@@ -20,22 +19,23 @@ section {
   background-color: var(--reply-bg, $reply-bg);
   display: flex;
   flex-direction: column;
-  font-size: 22px;
-  color: var(--reply-text-user, $reply-text-user);
+  font-size: 16px; /* Reducimos el tamaño del texto */
+  color: $reply-text-user, $reply-text-user;
   font-weight: 600;
   text-align: center;
-  line-height: 160%;
-  height: 120px;
+  line-height: 1;
+  height: 90px; /* Reducimos la altura del contenedor */
   overflow: hidden;
-  padding: 0 24px;
+  padding: 0 14px; /* Reducimos el padding */
+  margin-top: 20px;
 }
 
 .category-list {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  padding: 0px 24px;
+  gap: 10px; /* Reducimos el espacio entre los elementos */
+  padding: 0px 14px;
   overflow-x: auto;
   height: 100%;
 }
@@ -45,32 +45,32 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
+  width: 110px; /* Reducimos el ancho del contenedor */
 }
 
 .category-item {
   justify-content: center;
   border-radius: 10px;
   display: flex;
-  gap: 8px;
+  gap: 2px; /* Reducimos el espacio entre el icono y el texto */
   color: var(--color-neutral-800, $neutral-color);
   font-weight: 700;
   white-space: nowrap;
-  padding: 8px;
+  padding: 4px; /* Reducimos el padding del item */
   transition: background-color 0.3s, color 0.3s;
   text-decoration: none;
   height: 100%;
   align-items: center;
-}
 
-.category-item:hover {
-  background-color: var(--color-secondary, $secondary-color);
-  color: var(--color-white, $white-color);
+  &:hover {
+    background-color: var(--color-secondary, $secondary-color);
+    color: var(--color-white, $white-color);
+  }
 }
 
 .category-icon {
-  width: 80px;
-  height: 80px;
+  width: 58px; /* Reducimos el tamaño del icono */
+  height: 58px; /* Ajustamos la altura en proporción */
   aspect-ratio: 1;
   object-fit: contain;
 }
@@ -80,46 +80,6 @@ section {
   font-family: $font-family;
   margin: auto 0;
 }
-
-@media (max-width: 991px) {
-  .category-list {
-    flex-wrap: wrap;
-    padding: 0 20px;
-  }
-
-  .category-item {
-    white-space: initial;
-  }
-}
-
-.subcategory-list {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 24px;
-
-  // Responsiveness for different screen sizes
-  margin-left: 195px;
-
-  @media (max-width: 1366px) {
-    margin-left: 100px;
-  }
-
-  @media (max-width: 720px) {
-    margin-left: 50px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-.subcategory-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: $primary-color;
-  margin-right: 20px;
-}
-
 .button-subcategorias {
   background-color: $white-color;
   color: $secondary-color;
@@ -129,8 +89,10 @@ section {
   font-weight: 600;
   border-radius: 5px;
   cursor: pointer;
+  margin: 10px 5px 0 0;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
- // Mantener el botón seleccionado cuando está activo
+
+  &.active, // Mantener el botón seleccionado cuando está activo
   &:hover,
   &:active {
     background-color: $secondary-color;
@@ -144,18 +106,36 @@ section {
   justify-content: flex-start;
   align-items: center;
   padding: 8px 24px;
-  margin: 0 auto;  /* Centramos el contenedor */
-  width: calc(100% - 64px); /* Ajustamos el ancho restando los márgenes laterales */
-  max-width: 1200px; /* Opcional: limita el ancho máximo */
   border-bottom: 2px solid $primary-color; /* Añadir línea divisoria */
-  font-weight: 700;
-  //font-size: 24px;
+}
 
-  @media (max-width: 1366px) {
-    width: calc(100% - 32px); /* Ajustamos para pantallas más pequeñas */
+@media (max-width: 991px) {
+  .menu-categories {
+    font-size: 14px;
+    height: 80px;
+    padding: 0 12px;
   }
 
-  @media (max-width: 720px) {
-    width: calc(100% - 16px); /* Ajustamos para pantallas más pequeñas aún */
+  .category-list {
+    flex-direction: row;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    justify-content: flex-start;
+  }
+
+  .category-container {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  .category-item {
+    gap: 2px;
+    padding: 4px;
+  }
+
+  .category-icon {
+    width: 50px;
+    height: 50px;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
 import { StepsModule } from 'primeng/steps';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,10 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginRecuperarRequest } from '@app/core/models/ecommerce/components/staff-personal/login-recuperar-request';
 import { CustomResponse } from '@app/core/models/generic/custom-response';
 import { LoginVerificarRequest } from '@app/core/models/ecommerce/components/staff-personal/login-verificar-request';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
-  styleUrl: './forget-password.component.scss'
+  styleUrl: './forget-password.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ForgetPasswordComponent implements OnInit{
   activeStep: number = 0;
@@ -27,6 +29,7 @@ export class ForgetPasswordComponent implements OnInit{
   constructor(private primengConfig: PrimeNGConfig,
     private authService:AuthService,
     private fb:FormBuilder,
+    private notificationService: NotificationService
   ) {
     this.loginPassForm = this.fb.group({
       nuevoPassword:["",Validators.required],
@@ -44,7 +47,7 @@ export class ForgetPasswordComponent implements OnInit{
 
     this.authService.recuperar(req).subscribe({
       next: (res:CustomResponse) => {
-        alert(res.message);
+        this.notificationService.showSecondary( 'Exito',res.message);
       }
     });
   }
@@ -58,7 +61,7 @@ export class ForgetPasswordComponent implements OnInit{
   };
     this.authService.verificar(req).subscribe({
       next: (res:CustomResponse)=>{
-        alert(res.message);
+        this.notificationService.showSecondary( 'Exito',res.message);
       }
     })
   }
@@ -83,10 +86,7 @@ export class ForgetPasswordComponent implements OnInit{
   saveNewPassword() {
     if (this.newPassword === this.confirmPassword) {
       // Aquí añadirías la lógica para guardar la nueva contraseña
-      console.log('Contraseña guardada con éxito');
-      this.validar();
     } else {
-      console.error('Las contraseñas no coinciden');
     }
   }
  // Envía el email y avanza al siguiente paso
@@ -103,10 +103,8 @@ export class ForgetPasswordComponent implements OnInit{
 // Valida el código OTP y avanza al siguiente paso
 validateOTP() {
   if (this.otpValue === '1234') { // Simulación de validación OTP
-    console.log('OTP validado correctamente');
     this.nextStep();
   } else {
-    console.error('OTP incorrecto, por favor intente nuevamente.');
   }
 }
 }

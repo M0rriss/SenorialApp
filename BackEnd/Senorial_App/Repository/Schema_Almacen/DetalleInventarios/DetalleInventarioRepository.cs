@@ -34,7 +34,7 @@ namespace Repository.Schema_Almacen.DetalleInventarios
                            {
                                IdInventario = di.IdInventario,
                                Insumo = i.Nombre,
-                               Stock = di.StockTotal,
+                               Stock = e.Cantidad,
                                Fecha = e.FechaIngreso,
                                UnidadMedida = u.Descripcion,
                                Tipo = "Entradas"
@@ -48,7 +48,7 @@ namespace Repository.Schema_Almacen.DetalleInventarios
                           {
                               IdInventario = di.IdInventario,
                               Insumo = i.Nombre,
-                              Stock = di.StockTotal,
+                              Stock = s.Cantidad,
                               Fecha = s.FechaSalida,
                               UnidadMedida = u.Descripcion,
                               Tipo = "Salidas"

@@ -83,7 +83,7 @@ export class IniciarSesionComponent {
       next: (res:LoginEcommerceResponse) =>{
         this.loginError = false;
         localStorage.setItem("usuario",JSON.stringify(res));
-        alert(res.message);
+        this.notificationService.showSuccess("Ingreso correctamente");
         this.route.navigate(['userAcount']);
       },
       error: (_)=>{ this.loginError = true;}

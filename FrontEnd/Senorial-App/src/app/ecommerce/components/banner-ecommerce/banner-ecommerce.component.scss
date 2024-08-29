@@ -6,20 +6,13 @@ $white-color      : #ffffff;
 $lato-font        : 'Lato', sans-serif;
 $poppins-font     : 'Poppins', sans-serif;
 
-section {
-  width             : 100vw;
-  transform         : scale(0.75);
-  display           : flex;
-  justify-content   : center;
-}
-
 .contact-container {
   display           : flex;
   justify-content   : center;
   background-color  : $primary-color;
   height            : 72px;
   align-items       : center;
-  width             : 100vw;
+  width             : 100%;
   padding           : 0 24px;
 }
 
@@ -28,7 +21,7 @@ section {
   align-items       : center;
   width             : 100%;
   max-width         : 1200px;
-  justify-content   : space-between;
+  justify-content   : space-around;
   gap               : 40px;
   height            : 72px;
 }
@@ -36,14 +29,14 @@ section {
 .contact-details, .contact-hours-container, .menu-content {
   display           : flex;
   align-items       : center;
-  gap               : 100px;
+  gap               : 30px;
 }
 
 .contact-button {
   border-radius     : 40px;
   background-color  : $secondary-color;
   padding           : 8px 16px;
-  font-size         : 24px;
+  font-size         : 18px;
   font-weight       : 700;
   border            : none;
   color             : $white-color;
@@ -52,7 +45,7 @@ section {
 
 .contact-hours {
   margin            : 0;
-  font-size         : 22px;
+  font-size         : 16px;
   font-weight       : 500;
   color             : $white-color;
   font-family       : $poppins-font;
@@ -60,7 +53,7 @@ section {
 
 .divider {
   color             : $white-color;
-  font-size         : 30px;
+  font-size         : 18px;
 }
 
 .phone-box {
@@ -70,57 +63,57 @@ section {
 }
 
 .phone-icon {
-  font-size         : 32px;
+  font-size         : 24px;
   color             : $white-color;
 }
 
 .phone-number {
-  font-size         : 22px;
+  font-size         : 16px;
   color             : $white-color;
   font-family       : $poppins-font;
 }
 
 .menu-content {
   display           : flex;
-  gap               : 100px; /* Aumentar el espacio entre los elementos */
+  gap               : 20px; /* Ajustar el espacio entre los elementos */
 }
 
 .menu-button {
   border-radius     : 40px;
   background-color  : $secondary-color;
   padding           : 8px 16px;
-  font-size         : 24px;
+  font-size         : 18px;
   font-weight       : 700;
   border            : none;
   color             : $white-color;
   cursor            : pointer;
 }
 
-@media (max-width: 991px) {
-  .contact-container {
-    padding         : 20px;
-  }
-
+/* Móviles y Tabletas (320px a 1024px) */
+@media (max-width: 1024px) {
   .contact-content {
-    flex-direction  : column;
-    gap             : 20px;
+    display: flex;
+    justify-content: center; /* Centramos el botón en el contenedor */
+    gap: 0; /* Eliminamos el espacio extra */
   }
 
-  .contact-details,
-  .menu-content {
-    justify-content : center;
-    flex-wrap       : wrap;
+  .contact-details{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contact-hours-container,
+  .menu-content,
+  .phone-box,
+  .divider {
+    display: none; /* Ocultamos todos los elementos excepto el botón de contacto */
   }
 
-  .contact-button,
-  .menu-button {
-    width           : 100%;
-    text-align      : center;
+  .contact-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
   }
 }
 
-@media (max-width: 640px) {
-  .contact-container {
-    display         : none;
-  }
-}
