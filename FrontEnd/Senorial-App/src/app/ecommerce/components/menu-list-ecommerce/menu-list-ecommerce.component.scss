@@ -74,7 +74,7 @@ body {
   margin           : 8px auto; /* Reducido */
 }
 /* Media Queries para Móviles */
-@media (min-width: 420px) {
+@media (max-width: 420px) {
   .personal-info-card {
     max-width        : 170px; /* Ajuste adicional para móviles */
     padding          : 6px 12px; /* Más pequeño para pantallas móviles */
@@ -101,13 +101,39 @@ body {
   }
 }
 /* Media Queries para Móviles Medianos (entre 421px y 640px) */
-@media (min-width: 421px) and (min-width: 640px) {
+@media (max-width: 421px) {
   .personal-info-card {
-    max-width        : 180px;
+    max-width        : 170px; /* Ajuste adicional para móviles */
+    padding          : 6px 12px; /* Más pequeño para pantallas móviles */
+    font-size        : 14px; /* Tamaño de fuente reducido */
+    top              : 60px; /* Posicionamiento para que quede más cerca del top */
+    left             : 90px; /* Centrado completo en móviles */
+    transform        : translateX(-50%);
+  }
+
+  .location-badge,
+  .contact-info,
+  .personal-label {
+    padding          : 6px 30px; /* Padding reducido para móviles */
+  }
+
+  .location-icon,
+  .phone-icon {
+    width            : 16px; /* Íconos más pequeños en móviles */
+  }
+
+  .divider {
+    width            : 70%; /* Ajuste adicional en la división */
+    margin           : 6px auto; /* Menor margen en móviles */
+  }
+}
+@media (min-width: 640px)  {
+  .personal-info-card {
+    max-width        : 170px;
     padding          : 7px 14px;
-    font-size        : 16px;
-    top              : 68px;
-    left             : 98px; /* Centrado horizontal completo */
+    font-size        : 14px;
+    top              : 60px;
+    left             : 90px; /* Centrado horizontal completo */
     transform        : translateX(-50%);
   }
 
@@ -127,9 +153,8 @@ body {
     margin           : 7px auto;
   }
 }
-
 /* Media Queries para Tablets (entre 641px y 991px) */
-@media (min-width: 641px) and (min-width: 991px) {
+@media (max-width: 641px) and (min-width: 991px) {
   .personal-info-card {
     max-width        : 190px;
     padding          : 8px 15px;

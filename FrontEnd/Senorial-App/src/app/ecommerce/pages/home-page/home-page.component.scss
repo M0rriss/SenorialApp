@@ -5,6 +5,24 @@ html{
   margin: 0;
   padding: 0;
 }
+main{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+@media (max-width: 420px) {
+
+  p-toast{
+  transform: scale(0.60)!important;
+  }
+  main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 // main{
 //   display: flex;
 //   flex-direction: row;
