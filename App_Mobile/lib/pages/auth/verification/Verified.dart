@@ -133,22 +133,21 @@ class _VerifiedState extends State<Verified> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 42),
+            const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  const SizedBox(width: 17),
+                  const SizedBox(width: 5),
                   ButtonBack(
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                  ),
-                  const SizedBox(width: 70),
+                  )
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 70),
             const MyTextTitle(contenText: 'Verificación'),
             const SizedBox(height: 53),
             const MyTextCenter(text: 'Nosotros enviamos un código a su correo'),
@@ -257,7 +256,7 @@ class _VerifiedState extends State<Verified> {
                 ),
               ],
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 60),
             MyButton(
               onTap: Verificado,
               text: 'VERIFY',

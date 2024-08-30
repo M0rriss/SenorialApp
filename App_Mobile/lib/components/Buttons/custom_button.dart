@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
     this.buttonWidth = 81.44, // Ancho por defecto, ajustable según necesidad
     this.buttonHeight = 40, // Alto por defecto, ajustable según necesidad
     this.buttonRadius = 12, // Radio de borde por defecto, ajustable según necesidad
-    this.color = Colors.blue, // Color de fondo por defecto
+    this.color = const Color.fromARGB(255, 223, 224, 225), // Color de fondo por defecto
     this.badgeNumber, // Número a mostrar en el círculo (opcional)
   }) : super(key: key);
 
@@ -55,7 +55,7 @@ class CustomButton extends StatelessWidget {
               child: Container(
                 width: 19.44, // Ancho del círculo
                 height: 19.44, // Alto del círculo
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(23, 1, 29, 1),
                   shape: BoxShape.circle,
                 ),

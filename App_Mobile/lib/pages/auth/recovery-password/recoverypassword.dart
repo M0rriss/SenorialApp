@@ -81,24 +81,23 @@ class _RecoverypasswordState extends State<Recoverypassword> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 42),
+            const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  const SizedBox(width: 17),
+                  const SizedBox(width: 5),
                   ButtonBack(
                     onTap: () {
                       Navigator.of(context).pop(); // Volver a la pantalla anterior
                     },
                   ),
-                  const SizedBox(width: 70),
                 ],
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 70,),
             // Title
-            const MyTextTitle(contenText: 'Cambio de Contraseña'),
+            const MyTextTitle(contenText: 'Password Change'),
             const SizedBox(height: 53,),
             // Sub title
             const MyTextCenter(text: 'Por favor ingrese su nueva contraseña'),

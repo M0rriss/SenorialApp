@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:m_senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
 import 'package:m_senorial/pages/auth/Edit-Profile/PersonalEdit.dart';
@@ -56,7 +57,6 @@ final GoRouter router = GoRouter(
       path: '/home',
       builder: (context, state) => const Home(),
       routes: [
-        // Rutas para "Comer Aquí"
         GoRoute(
           path: 'salestable',
           builder: (context, state) => Salestable(),
@@ -67,13 +67,16 @@ final GoRouter router = GoRouter(
               routes: [
                 GoRoute(
                   path: 'productslist',
-                  builder: (context, state) => ProductsList(),
+                  builder: (context, state) {
+                    final category = state.extra as String? ?? '';
+                    return ProductsList(category: category);
+                  },
                   routes: [
                     GoRoute(
                       path: 'ordermenu',
                       builder: (context, state) {
-                        final selectedProducts = state.extra as List<String>?; 
-                        return OrderMenuIndoor(selectedProducts: selectedProducts ?? []);
+                        final selectedProducts = state.extra as List<Map<String, dynamic>>? ?? [];
+                        return OrderMenuIndoor(selectedProducts: selectedProducts);
                       },
                     ),
                   ],
@@ -82,7 +85,6 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-        // Rutas para "Para Llevar"
         GoRoute(
           path: 'takeoutregister',
           builder: (context, state) => TakeOutRegister(),
@@ -97,7 +99,10 @@ final GoRouter router = GoRouter(
                   routes: [
                     GoRoute(
                       path: 'productslist',
-                      builder: (context, state) => ProductsList(),
+                      builder: (context, state) {
+                        final category = state.extra as String? ?? '';
+                        return ProductsList(category: category);
+                      },
                     ),
                   ],
                 ),

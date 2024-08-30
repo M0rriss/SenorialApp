@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
 
    void login() async {
     final dio = Dio();
-    final response = await dio.post('http://senorialapp.somee.com/api/Auth/Login/Mobile',
+    final response = await dio.post('https://localhost:7283/api/Auth/Login/Mobile',
       data: {'email': emailController.text, 'password': passwordController.text},
     );
 

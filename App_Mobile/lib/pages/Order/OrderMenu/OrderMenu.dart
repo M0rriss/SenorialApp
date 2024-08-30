@@ -88,14 +88,30 @@ class OrderMenu extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 14),
-            ProductWidget(showControls: false), // Usa la versión sin controles
+            ProductWidget(
+              productName: 'Hamburguesa de Pollo',
+              productPrice: 'S/. 30.00',
+              showControls: false,
+            ), // Usa la versión sin controles
             const SizedBox(height: 14),
-            ProductWidget(showControls: false), // Usa la versión sin controles
+            ProductWidget(
+              productName: 'Hamburguesa de Res',
+              productPrice: 'S/. 35.00',
+              showControls: false,
+            ), // Usa la versión sin controles
             const SizedBox(height: 14),
-            ProductWidget(showControls: false), // Usa la versión sin controles
+            ProductWidget(
+              productName: 'Hamburguesa Vegana',
+              productPrice: 'S/. 28.00',
+              showControls: false,
+            ), // Usa la versión sin controles
             const SizedBox(height: 14),
-            ProductWidget(showControls: false), // Usa la versión sin controles
-           // Aquí añadimos la raya vertical centrada con borderRadius
+            ProductWidget(
+              productName: 'Hamburguesa BBQ',
+              productPrice: 'S/. 32.00',
+              showControls: false,
+            ), // Usa la versión sin controles
+            // Aquí añadimos la raya vertical centrada con borderRadius
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100), // Ajusta el borderRadius aquí
@@ -144,13 +160,13 @@ class OrderMenu extends StatelessWidget {
                 color: const Color.fromRGBO(255, 145, 15, 1),
               ),
             ),
-             const SizedBox(height: 15),
-             Center(
+            const SizedBox(height: 15),
+            Center(
               child: MyButtonOrdern(
                 onTap: () {
                   // Acción cuando se presiona el botón
                 },
-                text: 'Hacer Pedido',
+                text: 'Cancelar Pedido',
                 borderRadius: 0,
                 color: const Color.fromRGBO(236, 40, 40, 1),
               ),

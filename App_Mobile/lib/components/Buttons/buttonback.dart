@@ -17,14 +17,14 @@ class ButtonBack extends StatelessWidget {
       child: Container(
         width: 45,
         height: 45,
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(236, 240, 244, 1),
+        decoration: const BoxDecoration(
+        color: Color.fromRGBO(236, 240, 244, 1),
           shape: BoxShape.circle,
         ),
-        child: Center(
+        child: const Center(
           child: FaIcon(
             FontAwesomeIcons.chevronLeft,
-            color: const Color.fromARGB(255, 14, 14, 14),
+            color: Color.fromARGB(255, 14, 14, 14),
             size: defaultIconSize,
           ),
         ),

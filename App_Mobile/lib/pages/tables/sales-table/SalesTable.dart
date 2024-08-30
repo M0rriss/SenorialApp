@@ -6,17 +6,35 @@ import 'package:m_senorial/components/Buttons/buttonTables.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Extras/status.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
+import 'package:m_senorial/models/Response/mesas/mesas-response.dart';
+import 'package:m_senorial/services/mesas/mesa_service.dart';
 
 class Salestable extends StatefulWidget {
-  Salestable({Key? key}) : super(key: key);
+  Salestable({Key? key});
+  final mesasService = MesasService();
 
   @override
   _SalestableState createState() => _SalestableState();
 }
 
 class _SalestableState extends State<Salestable> {
-  final codeController = TextEditingController();
-  List<int> mesas = List<int>.generate(9, (index) => index + 1);
+  List<MesasResponse> mesas = [];
+   @override
+  void initState() {
+    super.initState();
+    listarMesas().then((value)=>{
+      setState(() {
+        mesas = value;
+      })
+    }); // Llamar al método cuando el widget se inicialice
+  }
+  Future<List<MesasResponse>> listarMesas() async {
+    final response = await widget.mesasService.listarMesas();
+    List<MesasResponse> list = response.map((data) => MesasResponse.fromJson(data)).toList();
+    return list;
+     // Actualizar el estado con la lista obtenida
+    
+  }
 
   void navCategories() {
     context.go('/home/salestable/categories');
@@ -91,7 +109,7 @@ class _SalestableState extends State<Salestable> {
                   itemBuilder: (BuildContext context, int index) {
                     return ButtonTables(
                       onTap: navCategories, // Navega a Categories al hacer clic en una mesa
-                      text: mesas[index].toString(),
+                      text: mesas[index].idMesa.toString(),
                       color: const Color.fromRGBO(254, 240, 211, 1),
                       status: '0 items',
                       statusColor: const Color.fromRGBO(171, 174, 188, 1),

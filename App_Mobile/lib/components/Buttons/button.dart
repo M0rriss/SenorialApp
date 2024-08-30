@@ -29,7 +29,7 @@ class MyButton extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           color: isEnabled
-              ? Color.fromARGB(255, 242, 141, 68)
+              ? const Color.fromARGB(255, 242, 141, 68)
               : Colors.grey[400] ?? Colors.grey, // Asegurarse de que no sea nulo
           borderRadius: BorderRadius.circular(12),
         ),

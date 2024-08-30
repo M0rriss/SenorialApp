@@ -1,15 +1,20 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:m_senorial/components/Buttons/buttonList.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Buttons/custom_button.dart';
-
-const List<String> list = <String>['FRIES', 'CHICKEN', 'STEAK', 'MEAL', 'BBQ'];
+import 'package:m_senorial/models/Response/productos/product-response.dart';
+import 'package:m_senorial/models/generic/generic-filter-request.dart';
+import 'package:m_senorial/models/generic/generic-filter-response.dart';
 
 class ProductsList extends StatefulWidget {
-  ProductsList({Key? key}) : super(key: key);
+  final String category;
+
+  const ProductsList({Key? key, required this.category}) : super(key: key);
 
   @override
   _ProductsListState createState() => _ProductsListState();
@@ -17,43 +22,109 @@ class ProductsList extends StatefulWidget {
 
 class _ProductsListState extends State<ProductsList> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> _productos = [
-    'Cheese Burger',
-    'Chicken Burger',
-    'Cheese Burger',
-    'Chicken Burger',
-    'Cheese Burger',
-    'Chicken Burger',
-    'Chicken Burger',
-    'Chicken Burger',
-  ];
-  List<String> _productosFiltrados = [];
+  List<Map<String, dynamic>> _productos = [];
+  List<Map<String, dynamic>> _productosFiltrados = [];
+  List<Map<String, dynamic>> _selectedProducts = [];
   String? selectedValue;
-  int _selectedProductCount = 0; // Contador de productos seleccionados
 
   @override
   void initState() {
     super.initState();
-    _productosFiltrados = _productos;
+     GenericFilterRequest req =
+        GenericFilterRequest(numeroPagina: 1, cantidad: 5, filtros: []);
+    filtarOrdenesPraradas(req).then((value) => {
+          setState(() {
+          print(value);
+          })
+        });
+    // _fetchProductsByCategory(widget.category);
   }
+
+  Future<Response> filtarOrdenesPraradas(GenericFilterRequest req) async {
+    final Dio dio = Dio();
+    var box = Hive.box("security");
+     var token = box.get('token');
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["authorization"] = "Bearer $token";
+    String ruta = "https://localhost:7283/api/Producto/Filtro/Ecommerce";
+    final response = await dio.post(ruta, data: req);
+    return response;
+  }
+
+Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
+    GenericFilterRequest req =
+        GenericFilterRequest(numeroPagina: 1, cantidad: 5, filtros: []);
+    final res = await filtarOrdenesPraradas(req);
+    print(res.data);
+    List<ProductResponse> m = [];
+    for (var i in res.data['lista']) {
+      ProductResponse tmp = ProductResponse.fromJson(i);
+      m.add(tmp);
+    }
+    GenericFilterResponse<ProductResponse> mesa =
+        GenericFilterResponse<ProductResponse>(
+            totalRegistros: res.data['totalRegistros'], lista: m);
+    return mesa;
+  }
+
+  // Future<void> _fetchProductsByCategory(String category) async {
+  //   try {
+  //     Dio dio = Dio();
+  //     GenericFilterRequest request = GenericFilterRequest(numeroPagina: 1, cantidad: 5, filtros: []);
+  //     final response = await dio.post('https://localhost:7283/api/Producto/Filtro/Ecommerce', data:request);
+  //     print(response.data);
+  //     // Verifica si los datos recibidos son válidos
+  //     if (response.statusCode == 200 && response.data is List) {
+  //       final List<Map<String, dynamic>> productos = List<Map<String, dynamic>>.from(
+  //         response.data.map((product) {
+  //           // Asegúrate de que los datos están disponibles y se están extrayendo correctamente
+  //           double precio = 0.0;
+  //           if (product['precio'] != null) {
+  //             try {
+  //               precio = double.parse(product['precio'].toString());
+  //             } catch (e) {
+  //               print('Error al convertir el precio: $e');
+  //             }
+  //           }
+
+  //           return {
+  //             'nombre': product['nombre'] ?? 'Sin nombre',
+  //             'descripcion': product['descripcion'] ?? 'Sin descripción',
+  //             'precio': precio,
+  //           };
+  //         }),
+  //       );
+
+  //       setState(() {
+  //         _productos = productos;
+  //         _productosFiltrados = productos;
+  //       });
+  //     } else {
+  //       print('Error en la estructura de los datos recibidos.');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching products: $e');
+  //   }
+  // }
 
   void _buscarProducto(String consulta) {
     setState(() {
       _productosFiltrados = _productos
           .where((producto) =>
-              producto.toLowerCase().contains(consulta.toLowerCase()))
+              producto['nombre'].toLowerCase().contains(consulta.toLowerCase()))
           .toList();
     });
   }
 
-  void _incrementProductCount() {
+  void _incrementProductCount(String nombre, double precio) {
     setState(() {
-      _selectedProductCount++;
+      _selectedProducts.add({'nombre': nombre, 'precio': precio});
     });
   }
 
   void navCategories() {
-    context.go('/home/salestable/categories/productslist/ordermenu');
+    context.go('/home/salestable/categories/productslist/ordermenu',
+        extra: _selectedProducts);
   }
 
   @override
@@ -78,35 +149,32 @@ class _ProductsListState extends State<ProductsList> {
                   child: DropdownButtonFormField2<String>(
                     isExpanded: true,
                     decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(32),
-                        borderSide: BorderSide(color: Color.fromRGBO(23, 1, 29, 1), width: 2),
+                        borderSide: const BorderSide(
+                            color: Color.fromRGBO(23, 1, 29, 1), width: 2),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(32),
-                        borderSide: BorderSide(color: Color.fromRGBO(225, 122, 20, 1), width: 2),
+                        borderSide: const BorderSide(
+                            color: Color.fromRGBO(225, 122, 20, 1), width: 2),
                       ),
                     ),
                     hint: const Text(
                       '',
                       style: TextStyle(fontSize: 12),
                     ),
-                    items: list
+                    items: _productos
                         .map((item) => DropdownMenuItem<String>(
-                              value: item,
+                              value: item['nombre'],
                               child: Text(
-                                item,
+                                item['nombre'],
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ))
                         .toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return '';
-                      }
-                      return null;
-                    },
                     onChanged: (value) {
                       setState(() {
                         selectedValue = value;
@@ -121,8 +189,8 @@ class _ProductsListState extends State<ProductsList> {
                 CustomButton(
                   onTap: navCategories,
                   text: 'Ordenar',
-                  color: Color.fromRGBO(225, 145, 15, 1),
-                  badgeNumber: _selectedProductCount, // Pasar el número actualizado
+                  color: const Color.fromRGBO(225, 145, 15, 1),
+                  badgeNumber: _selectedProducts.length,
                 ),
                 UserButton(
                   onTap: () {
@@ -139,17 +207,17 @@ class _ProductsListState extends State<ProductsList> {
                 controller: _searchController,
                 onChanged: _buscarProducto,
                 decoration: InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'Buscar...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0),
                   ),
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   suffixIcon: IconButton(
                     onPressed: () {
                       _searchController.clear();
-                      _buscarProducto(''); // Limpiar filtro al vaciar búsqueda
+                      _buscarProducto('');
                     },
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                   ),
                 ),
               ),
@@ -168,11 +236,12 @@ class _ProductsListState extends State<ProductsList> {
                         height: 215,
                         child: ButtonList(
                           onTap: () {},
-                          text: producto,
-                          additionalText: '200gr carne + Lechuga + Queso + Cebolla + Tomate',
-                          extraText: 'S/25.oo',
+                          text: producto['nombre'],
+                          additionalText: producto['descripcion'],
+                          extraText: 'S/${producto['precio'].toStringAsFixed(2)}',
                           icon: Icons.add,
-                          onIconTap: _incrementProductCount, // Pasar el callback para actualizar el contador
+                          onIconTap: () =>
+                              _incrementProductCount(producto['nombre'], producto['precio']),
                         ),
                       ),
                     ],

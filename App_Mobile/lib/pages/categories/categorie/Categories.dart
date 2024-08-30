@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/components/Buttons/buttonCategories.dart';
+
+import 'package:m_senorial/components/Buttons/buttonCategories.dart'; // Asegúrate de que la ruta es correcta
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/modules/response/categoriasresponse/categorias.dart';
+import 'package:m_senorial/models/Response/categorias/categorias-response.dart';
 
 class Categories extends StatefulWidget {
   Categories({Key? key}) : super(key: key);
@@ -19,57 +20,64 @@ class _CategoriesState extends State<Categories> {
   Future listarMesas() async {
     try {
       Dio dio = Dio();
-    var box = Hive.box("security");
-     var token = box.get('token');
-     dio.options.headers['content-Type'] = 'application/json';
-     dio.options.headers["authorization"] = "Bearer $token";
-    final response = await dio.get("http://senorialapp.somee.com/api/Categoria/listar");
-    print(response);
-    final list = response.data as List;
-    return list;
-    }
-    on DioException catch (e){
+      var box = Hive.box("security");
+      var token = box.get('token');
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers["authorization"] = "Bearer $token";
+      final response = await dio.get("https://localhost:7283/api/Categoria/listar");
+      print(response);
+      final list = response.data as List;
+      return list;
+    } on DioException catch (e) {
       print(e);
     }
   }
+
   final TextEditingController _searchController = TextEditingController();
-  List<String> allCategories = [
-    'Hamburguesas',
-    'Parrillas y Pollos',
-    'Platos de Fondo',
-    'Bebidas',
-    'Complementos',
-    'Otros',
-  ];
-  List<String> filteredCategories = [];
-  List<Categorias> list = [];
+  List<CategoriasResponse> list = [];
+
   @override
   void initState() {
     super.initState();
-    listarMesas().then((value) => {
-          setState(() {
-            
-            for (var element in value) {
-            Categorias tmp = Categorias.fromJson(element);
-            list.add(tmp);
-    }
-          })
-        });
+    listarMesas().then((value) {
+      setState(() {
+        for (var element in value) {
+          CategoriasResponse tmp = CategoriasResponse.fromJson(element);
+          list.add(tmp);
+        }
+      });
+    });
   }
 
   void filterCategories(String searchText) {
     setState(() {
-      filteredCategories = allCategories
+      list = list
           .where((category) =>
-              category.toLowerCase().contains(searchText.toLowerCase()))
+              category.nombre.toLowerCase().contains(searchText.toLowerCase()))
           .toList();
     });
   }
 
-  void navProducts() {
-    print('navProducts called');
-    context.go('/home/salestable/categories/productslist');
+  void navProducts(String category) {
+    context.go('/home/salestable/categories/productslist', extra: category);
   }
+
+String getImagePath(String categoryName) {
+  switch (categoryName) {
+    case 'Hamburguesas':
+      return 'lib/imagenes/burger.png';
+    case 'Parrillas y Pollos':
+      return 'lib/imagenes/pollos.png';
+    case 'Platos de Fondo':
+      return 'lib/imagenes/platos-fondo.png';
+    case 'Bebidas':
+      return 'lib/imagenes/bebidas.png';
+    case 'Complementos':
+      return 'lib/imagenes/complementos.png';
+    default:
+      return 'lib/imagenes/burger.png';
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +148,15 @@ class _CategoriesState extends State<Categories> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: MyButtonCategories(
-                      onTap: navProducts,
-                      text: category.nombre
+                      onTap: () => navProducts(category.nombre),
+                      text: category.nombre,
+                      imagePath: getImagePath(category.nombre), // Se obtiene la imagen correcta
                     ),
+                  ),
+                if (list.isEmpty)
+                  const Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text('No se encontraron categorías'),
                   ),
               ],
             ),
