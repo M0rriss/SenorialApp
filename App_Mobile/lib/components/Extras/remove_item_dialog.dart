@@ -6,11 +6,11 @@ class RemoveItemDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(left: 20), // Mueve el texto 33 px a la derecha
@@ -23,8 +23,8 @@ class RemoveItemDialog extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          Padding(
+          const SizedBox(height: 10),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20), // Añade 15 px de margen a ambos lados
             child: Align(
               alignment: Alignment.centerLeft, // Alinea el texto a la izquierda
@@ -34,14 +34,14 @@ class RemoveItemDialog extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Column(
             children: [
               Container(
                 width: 286,
                 height: 45,
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 145, 15, 1),
+                  color: const Color.fromRGBO(255, 145, 15, 1),
                   borderRadius: BorderRadius.circular(74.59),
                 ),
                 child: TextButton(
@@ -49,7 +49,7 @@ class RemoveItemDialog extends StatelessWidget {
                     // Realiza la acción de eliminar
                     Navigator.of(context).pop(); // Cierra el bottom sheet
                   },
-                  child: Text(
+                  child: const Text(
                     'Remove Item',
                     style: TextStyle(
                       fontSize: 16.13,
@@ -59,12 +59,12 @@ class RemoveItemDialog extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Cierra el bottom sheet
                 },
-                child: Text(
+                child: const Text(
                   'Go Back',
                   style: TextStyle(
                     fontSize: 16.13,

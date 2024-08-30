@@ -52,10 +52,10 @@ class PopUpClass extends State<Popup> {
                                           children: [
                                             Expanded(
                                               child: Container(
-                                                child: Text(
+                                                child: const Text(
                                                   '“Campos Requeridos” ',
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(decoration: TextDecoration.none, fontSize: 17, color: const Color(0xff000000), fontWeight: FontWeight.normal),
+                                                  style: TextStyle(decoration: TextDecoration.none, fontSize: 17, color: Color(0xff000000), fontWeight: FontWeight.normal),
                                                   maxLines: 9999,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
@@ -68,10 +68,10 @@ class PopUpClass extends State<Popup> {
                                           children: [
                                             Expanded(
                                               child: Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Todos los campos son requeridos',
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(decoration: TextDecoration.none, fontSize: 13, color: const Color(0xff000000), fontFamily: 'Roboto-Regular', fontWeight: FontWeight.normal),
+                                                  style: TextStyle(decoration: TextDecoration.none, fontSize: 13, color: Color(0xff000000), fontFamily: 'Roboto-Regular', fontWeight: FontWeight.normal),
                                                   maxLines: 9999,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
@@ -94,13 +94,13 @@ class PopUpClass extends State<Popup> {
                       height: 44,
                       child: Stack(
                         children: [
-                          Positioned(
+                          const Positioned(
                             left: 124,
                             top: 11,
                             child: Text(
                               'Ok',
                               textAlign: TextAlign.center,
-                              style: TextStyle(decoration: TextDecoration.none, fontSize: 17, color: const Color(0xffff910f), fontFamily: 'Poppins-SemiBold', fontWeight: FontWeight.normal),
+                              style: TextStyle(decoration: TextDecoration.none, fontSize: 17, color: Color(0xffff910f), fontFamily: 'Poppins-SemiBold', fontWeight: FontWeight.normal),
                               maxLines: 9999,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -112,8 +112,8 @@ class PopUpClass extends State<Popup> {
                             height: 1,
                             child: Container(
                               height: 1,
-                              decoration: BoxDecoration(
-                                color: const Color(0x3d000000),
+                              decoration: const BoxDecoration(
+                                color: Color(0x3d000000),
                               ),
                             ),
                           ),

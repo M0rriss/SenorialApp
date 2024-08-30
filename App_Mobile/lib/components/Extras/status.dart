@@ -46,7 +46,7 @@ class StatusIndicator extends StatelessWidget {
                 child: Text(
                   status,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10, // Tamaño de fuente reducido
                     color: Color.fromARGB(255, 3, 3, 3),
                     fontWeight: FontWeight.bold,
@@ -69,9 +69,9 @@ class StatusRow extends StatelessWidget {
 
  @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center, // Centra los indicadores horizontalmente
-      children: const [
+      children: [
         StatusIndicator(
           status: 'Disponible',
           color: Color.fromARGB(225, 225, 225, 225),

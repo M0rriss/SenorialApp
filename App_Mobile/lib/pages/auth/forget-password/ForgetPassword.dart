@@ -6,6 +6,8 @@ import 'package:m_senorial/components/Inputs/my_input_text.dart';
 import 'package:m_senorial/components/Texts/my_text_center.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../components/Texts/my_text_title.dart';
+
 class ForgetPassword extends StatefulWidget {
   ForgetPassword({super.key});
 
@@ -80,28 +82,22 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 42),
+            const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  const SizedBox(width: 17),
+                  const SizedBox(width: 5),
                   ButtonBack(
                     onTap: () {
                       Navigator.of(context).pop();
                     },
                   ),
-                  const SizedBox(width: 70),
                 ],
               ),
             ),
-            Text(
-              'Forgot Password',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            const SizedBox(height: 70),
+             const MyTextTitle(contenText: 'Forgot Password'),
             const SizedBox(height: 15),
             const MyTextCenter(text: 'Ingrese su correo para resetear su password'),
             const SizedBox(height: 111),

@@ -43,14 +43,14 @@ class EditUsuarioWidget extends StatelessWidget {
           Container(
             width: 48.69, // Tamaño del círculo
             height: 48.69,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromRGBO(236, 240, 244, 1), // Fondo del círculo
               shape: BoxShape.circle,
             ),
             child: Center(
               child: FaIcon(
                 customIcon ?? FontAwesomeIcons.user, // Usa el ícono personalizado si se proporciona
-                color: Color.fromRGBO(255, 122, 40, 1),
+                color: const Color.fromRGBO(255, 122, 40, 1),
                 size: 17.17, // Tamaño del ícono
               ),
             ),
@@ -77,7 +77,7 @@ class EditUsuarioWidget extends StatelessWidget {
               showLogoutIcon
                   ? FontAwesomeIcons.chevronRight // Usa el ícono de flecha para logout
                   : FontAwesomeIcons.chevronRight, // Usa el ícono de flecha por defecto
-              color: Color.fromRGBO(255, 122, 40, 1),
+              color: const Color.fromRGBO(255, 122, 40, 1),
             ),
             onPressed: onEdit,
             iconSize: 17.17,

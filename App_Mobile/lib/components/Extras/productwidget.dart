@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductWidget extends StatefulWidget {
+  final String productName; // Nombre del producto
+  final String productPrice; // Precio del producto
   final bool showControls;
   final VoidCallback? onDelete; // Hacer que onDelete sea opcional
 
-  ProductWidget({this.showControls = true, this.onDelete});
+  ProductWidget({
+    Key? key,
+    required this.productName,
+    required this.productPrice,
+    this.showControls = true,
+    this.onDelete,
+  }) : super(key: key);
 
   @override
   _ProductWidgetState createState() => _ProductWidgetState();
@@ -53,29 +61,29 @@ class _ProductWidgetState extends State<ProductWidget> {
             ),
           ),
           const SizedBox(width: 10),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
-                  'Hamburguesa de Pollo',
-                  style: TextStyle(
+                  widget.productName, // Usa el nombre del producto pasado como parámetro
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  'S/. 30.00',
-                  style: TextStyle(
+                  widget.productPrice, // Usa el precio del producto pasado como parámetro
+                  style: const TextStyle(
                     fontSize: 15,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 20),
-                Row(
+                const SizedBox(height: 20),
+                const Row(
                   children: [
                     FaIcon(
                       FontAwesomeIcons.pen,
@@ -168,7 +176,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 if (widget.showControls && widget.onDelete != null)
                   Positioned(
                     top: 20,
-                    right: -16,
+                    right: -12,
                     child: IconButton(
                       icon: const Icon(Icons.delete),
                       color: const Color.fromRGBO(255, 145, 15, 1),

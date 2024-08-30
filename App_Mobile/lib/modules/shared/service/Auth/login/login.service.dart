@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:m_senorial/modules/request/loginrequest/LoginRequest.dart';
+import 'package:m_senorial/models/auth/LoginRequest.dart';
 import 'package:m_senorial/modules/response/loginresponse/ResponseApi.dart';
 
 class UsuarioServicio {

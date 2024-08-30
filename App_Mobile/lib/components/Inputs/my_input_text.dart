@@ -82,7 +82,7 @@ class _MyInputTextState extends State<MyInputText> {
                     ? IconButton(
                         icon: Icon(
                           _obscureText ? Icons.visibility : Icons.visibility_off,
-                          color: Color.fromRGBO(180, 185, 202, 1),
+                          color: const Color.fromRGBO(180, 185, 202, 1),
                         ),
                         onPressed: () {
                           setState(() {

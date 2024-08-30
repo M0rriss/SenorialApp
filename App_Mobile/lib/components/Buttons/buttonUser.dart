@@ -49,7 +49,7 @@ class UserButton extends StatelessWidget {
             child: Container(
               width: 75.4,
               height: 56.14,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.orange,
                 shape: BoxShape.circle,
               ),

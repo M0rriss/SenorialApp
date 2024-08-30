@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,12 +6,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class MyButtonCategories extends StatelessWidget {
   final VoidCallback? onTap;
   final String text;
+  final String imagePath;
   final Color? color;
 
   const MyButtonCategories({
     Key? key,
     required this.onTap,
     required this.text,
+    required this.imagePath,
     this.color,
   }) : super(key: key);
 
@@ -20,58 +21,59 @@ class MyButtonCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: HoverableSVG(
-        svgPath: 'lib/imagenes/Subtract.svg', // Ruta a tu archivo SVG
-        width: 108, // Cambia el ancho según tus necesidades
-        height: 179.62, // Cambia el alto según tus necesidades
+      child: HoverablePNG(
+        svgPath: 'lib/imagenes/Subtract.svg', 
+        pngPath: imagePath, // Ruta de la imagen PNG
+        width: 108, 
+        height: 179.62, 
         color: color ?? const Color.fromRGBO(254, 240, 211, 1),
         text: text,
-        onTap: onTap, // Pasa el onTap al HoverableSVG
+        onTap: onTap,
       ),
     );
   }
 }
 
-class HoverableSVG extends StatefulWidget {
+class HoverablePNG extends StatefulWidget {
   final String svgPath;
+  final String pngPath;
   final double width;
   final double height;
   final Color color;
   final String text;
-  final VoidCallback? onTap; // Añadido para permitir la acción al hacer clic
+  final VoidCallback? onTap;
 
-  const HoverableSVG({
+  const HoverablePNG({
     Key? key,
     required this.svgPath,
+    required this.pngPath,
     required this.width,
     required this.height,
     required this.color,
     required this.text,
-    this.onTap, // Añadido para permitir la acción al hacer clic
+    this.onTap,
   }) : super(key: key);
 
   @override
-  _HoverableSVGState createState() => _HoverableSVGState();
+  _HoverablePNGState createState() => _HoverablePNGState();
 }
 
-class _HoverableSVGState extends State<HoverableSVG> {
+class _HoverablePNGState extends State<HoverablePNG> {
   Color _iconColor;
   bool _isClicked = false;
 
-  _HoverableSVGState() : _iconColor = const Color.fromRGBO(254, 240, 211, 1);
+  _HoverablePNGState() : _iconColor = const Color.fromRGBO(254, 240, 211, 1);
 
   void _handleTap() {
-    print('Button tapped'); // Añadido para verificar el clic
     setState(() {
       _isClicked = true;
-      _iconColor = Color.fromRGBO(253, 221, 155, 1);
+      _iconColor = const Color.fromRGBO(253, 221, 155, 1);
     });
 
-    // Restaurar el color y estado después de un breve intervalo
     Timer(const Duration(milliseconds: 300), () {
       setState(() {
         _isClicked = false;
-        _iconColor = widget.color; // Color original
+        _iconColor = widget.color;
       });
     });
   }
@@ -81,19 +83,19 @@ class _HoverableSVGState extends State<HoverableSVG> {
     return MouseRegion(
       onEnter: (_) {
         if (!_isClicked) {
-          setState(() => _iconColor = const Color.fromARGB(255, 245, 247, 248)); // Color al pasar el mouse
+          setState(() => _iconColor = const Color.fromRGBO(254, 240, 211, 1));
         }
       },
       onExit: (_) {
         if (!_isClicked) {
-          setState(() => _iconColor = widget.color); // Color al quitar el mouse
+          setState(() => _iconColor = widget.color);
         }
       },
       child: GestureDetector(
         onTap: () {
           _handleTap();
           if (widget.onTap != null) {
-            widget.onTap!(); // Asegúrate de que se llame al onTap pasado
+            widget.onTap!();
           }
         },
         child: Column(
@@ -108,9 +110,15 @@ class _HoverableSVGState extends State<HoverableSVG> {
                   color: _iconColor,
                 ),
                 Positioned(
-                  top: widget.height * 0.4,
-                  left: 0,
-                  right: 0,
+                  top: widget.height * 0.1, // Ajusta la posición vertical de la imagen PNG
+                  child: Image.asset(
+                    widget.pngPath,
+                    width: 97, // Ajusta el ancho de la imagen PNG
+                    height: 97, // Ajusta la altura de la imagen PNG
+                  ),
+                ),
+                Positioned(
+                  bottom: 50, // Ajusta la posición del texto
                   child: Text(
                     widget.text,
                     textAlign: TextAlign.center,
@@ -125,10 +133,10 @@ class _HoverableSVGState extends State<HoverableSVG> {
               ],
             ),
             Transform.translate(
-              offset: const Offset(0, -18), // Desplaza hacia arriba
+              offset: const Offset(0, -18), 
               child: Container(
-                width: 37, // Ancho deseado
-                height: 40.43, // Altura deseada
+                width: 37, 
+                height: 40.43, 
                 decoration: const BoxDecoration(
                   color: Color.fromRGBO(24, 28, 46, 1),
                   shape: BoxShape.circle,

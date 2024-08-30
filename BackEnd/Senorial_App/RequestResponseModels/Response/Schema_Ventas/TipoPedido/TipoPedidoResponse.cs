@@ -11,5 +11,18 @@ namespace RequestResponseModels.Response.Schema_Ventas.TipoPedido
     {
         public int IdTipoPedido { get; set; }
         public string? Descripcion { get; set; }
+        public string DescripcionSpa
+        {
+            get
+            {
+                return IdTipoPedido switch
+                {
+                    1 => "Para Comer Aquí",
+                    2 => "Para Llevar"
+                    
+                };
+            }
+        }
+
     }
 }

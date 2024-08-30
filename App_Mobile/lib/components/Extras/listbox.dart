@@ -14,7 +14,7 @@ class Listbox extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(225, 122, 40, 1),
+          backgroundColor: const Color.fromRGBO(225, 122, 40, 1),
         ),
         body: const MyForm(),
       ),
@@ -63,25 +63,25 @@ class _MyFormState extends State<MyForm> {
             dropdownStyleData: DropdownStyleData(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.09),
-                color: Color.fromARGB(255, 20, 201, 116),
+                color: const Color.fromARGB(255, 20, 201, 116),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromARGB(255, 83, 26, 26).withOpacity(10),
+                    color: const Color.fromARGB(255, 83, 26, 26).withOpacity(10),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: Offset(0, 10),
+                    offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              offset: Offset(0, 20), // Ajusta la posición del menú desplegable
+              offset: const Offset(0, 20), // Ajusta la posición del menú desplegable
             ),
             buttonStyleData: ButtonStyleData(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(32),
-                border: Border.all(color: Color.fromRGBO(225, 122, 40, 1)),
+                border: Border.all(color: const Color.fromRGBO(225, 122, 40, 1)),
               ),
             ),
-            iconStyleData: IconStyleData(
+            iconStyleData: const IconStyleData(
               icon: FaIcon(
                 FontAwesomeIcons.chevronDown, // Cambia el icono a tu preferido
                 color: Color.fromRGBO(236, 108, 4, 1),

@@ -68,7 +68,7 @@ class ButtonList extends StatelessWidget {
                 Text(
                   extraText,
                   style: GoogleFonts.dmSans(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       color: Color.fromARGB(255, 228, 137, 84),
                       fontWeight: FontWeight.bold, // Ajusta el peso si es necesario
                       fontSize: 14,
@@ -78,7 +78,7 @@ class ButtonList extends StatelessWidget {
                 Container(
                   width: 25.17,
                   height: 25.17,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.orange,
                     shape: BoxShape.circle,
                   ),

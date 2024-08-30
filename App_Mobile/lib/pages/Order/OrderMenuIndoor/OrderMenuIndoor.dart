@@ -7,18 +7,11 @@ import 'package:m_senorial/components/Extras/productwidget.dart';
 import 'package:m_senorial/components/Extras/remove_item_dialog.dart'; // Importa el nuevo widget
 
 class OrderMenuIndoor extends StatelessWidget {
-  // Agrega un parámetro al constructor
+  final List<Map<String, dynamic>> selectedProducts; // Almacena los productos seleccionados con nombre y precio
+
   OrderMenuIndoor({Key? key, required this.selectedProducts}) : super(key: key);
 
-  final List<String> selectedProducts; // Almacena los productos seleccionados
-
   final codeController = TextEditingController();
-
-  void mesas() {}
-
-  void OrderMenu(BuildContext context) {
-    Navigator.pushNamed(context, '/ordermenu');
-  }
 
   void showRemoveItemDialog(BuildContext context) {
     showModalBottomSheet(
@@ -27,6 +20,11 @@ class OrderMenuIndoor extends StatelessWidget {
         return RemoveItemDialog(); // Usa el nuevo widget
       },
     );
+  }
+
+  // Calcula el total sumando los precios de los productos seleccionados
+  double calcularTotal() {
+    return selectedProducts.fold(0, (sum, item) => sum + item['precio']);
   }
 
   @override
@@ -46,7 +44,7 @@ class OrderMenuIndoor extends StatelessWidget {
                   },
                 ),
                 const SizedBox(width: 20),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -58,7 +56,7 @@ class OrderMenuIndoor extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Pedido No.16',
+                      'Pedido No.16', // Aquí podrías personalizar el número de pedido si es necesario
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -67,7 +65,7 @@ class OrderMenuIndoor extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(width: 198),
+                const Spacer(),
                 UserButton(
                   onTap: () {
                     // Acción cuando se presiona el botón
@@ -78,7 +76,7 @@ class OrderMenuIndoor extends StatelessWidget {
             const SizedBox(height: 30),
             Row(
               children: [
-                const SizedBox(width: 289),
+                const Spacer(),
                 MyButtonExtras(
                   borderRadius: 10,
                   onTap: () {},
@@ -87,49 +85,29 @@ class OrderMenuIndoor extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            Row(
-              children: [
-                const SizedBox(width: 29),
-                Text(
-                  'Total 04 artículos',
-                  style: TextStyle(
-                    color: Color.fromRGBO(156, 155, 166, 1),
-                    fontSize: 15.7,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
+            Text(
+              'Total ${selectedProducts.length} artículos', // Muestra la cantidad de productos
+              style: const TextStyle(
+                color: Color.fromRGBO(156, 155, 166, 1),
+                fontSize: 15.7,
+                fontWeight: FontWeight.normal,
+              ),
             ),
             const SizedBox(height: 16),
-            ProductWidget(
-              onDelete: () {
-                showRemoveItemDialog(context);
-              },
-            ),
-            const SizedBox(height: 16),
-            ProductWidget(
-              onDelete: () {
-                showRemoveItemDialog(context);
-              },
-            ),
-            const SizedBox(height: 16),
-            ProductWidget(
-              onDelete: () {
-                showRemoveItemDialog(context);
-              },
-            ),
-            const SizedBox(height: 16),
-            ProductWidget(
-              onDelete: () {
-                showRemoveItemDialog(context);
-              },
-            ),
+            for (var producto in selectedProducts)
+              ProductWidget(
+                productName: producto['nombre'],
+                productPrice: 'S/. ${producto['precio'].toStringAsFixed(2)}', // Muestra el precio del producto
+                onDelete: () {
+                  showRemoveItemDialog(context);
+                },
+              ),
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 35.0),
                   child: Text(
                     'Order Subtotal',
                     style: TextStyle(
@@ -141,8 +119,8 @@ class OrderMenuIndoor extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    'S/.120.00', // Aquí deberías calcular la suma real de los productos
-                    style: TextStyle(
+                    'S/. ${calcularTotal().toStringAsFixed(2)}', // Muestra el total calculado
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.normal,
                     ),
@@ -150,22 +128,22 @@ class OrderMenuIndoor extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 45),
-            Center(
-              child: MyButtonOrdern(
-                onTap: () {
-                  // Acción cuando se presiona el botón
-                },
-                text: 'Hacer Pedido',
-                borderRadius: 10,
-                color: Color.fromRGBO(255, 145, 15, 1),
-              ),
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
+           Center(
+  child: MyButtonOrdern(
+    onTap: () {
+      // Acción cuando se presiona el botón 'Hacer Pedido'
+    },
+    text: 'Hacer Pedido',
+    borderRadius: 10,
+    color: const Color.fromRGBO(255, 145, 15, 1),
+  ),
+),
+
+            const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
 }
-
