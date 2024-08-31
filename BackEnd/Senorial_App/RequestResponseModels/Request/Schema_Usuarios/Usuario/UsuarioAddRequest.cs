@@ -16,7 +16,7 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         private string _password = string.Empty;
         private int _role = 0;
         private string _contact = string.Empty;
-
+        private string _nombreCompleto = string.Empty;
         public IFormFile File { get => _file; set => _file = value; }
         [EmailAddress]
         public string Email { get => _email; set => _email = value; }
@@ -26,5 +26,7 @@ namespace RequestResponseModels.Request.Schema_Usuarios.Usuario
         public int Role { get => _role; set => _role = value; }
         [Required]
         public string Contact { get => _contact; set => _contact = value; }
+        [Required]
+        public string NombreCompleto { get => _nombreCompleto; set => _nombreCompleto = value; }
     }
 }

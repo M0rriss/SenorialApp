@@ -103,8 +103,8 @@ namespace Repository.Schema_Almacen.DetalleInventarios
                         select new VwDetalleInsumos
                         {
                             IdInsumo = detalle.IdInsumo,
-                            Disponibilidad = detalle.StockTotal >= 2 && detalle.StockTotal <= 5 ? "Agotando" :
-                                           detalle.StockTotal >= 5 && detalle.StockTotal <= 18 ? "Proceso" :
+                            Disponibilidad = detalle.StockTotal >= 2 && detalle.StockTotal <= 10 ? "Agotandose" :
+                                           detalle.StockTotal >= 11 && detalle.StockTotal <= 18 ? "En Proceso" :
                                            "Disponible",
                             IdInventario = detalle.IdInventario,
                             Nombre = insumos.Nombre,

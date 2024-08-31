@@ -29,7 +29,7 @@
             <td>{{item.telefono}}</td>
             <td class="status-container">
               <label class="switch" >
-                <input type="checkbox" [checked]="item.estado" (click)="openConfirmDialog(item.estado)">
+                <input type="checkbox" [checked]="item.estado">
                 <span class="slider round"></span>
               </label>
               <span class="status-label">Activo</span>
@@ -77,11 +77,12 @@
       </div>
 
 
-       <!-- Campo Nombres -->
-       <div class="form-row">
-        <label for="nombres" class="form-label">Nombres</label>
-        <input formControlName="nombre" type="text" id="nombres" class="form-input" placeholder="Ingrese sus nombres" required>
-      </div>
+        <!-- Campo Nombre Completo -->
+        <div class="form-row">
+          <label for="nombreCompleto" class="form-label">Nombres</label>
+          <input formControlName="nombreCompleto" type="text" id="nombreCompleto" class="form-input" placeholder="Ingrese el nombre y apellido" required>
+        </div>
+
         <!-- Campo Email -->
       <div class="form-row">
         <label for="email" class="form-label">Email</label>

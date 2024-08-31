@@ -6,4 +6,5 @@ export interface UsuarioEditRequest{
     role: number;
     contact:string;
     nuevo: boolean;
+    nombreCompleto:string;
 }

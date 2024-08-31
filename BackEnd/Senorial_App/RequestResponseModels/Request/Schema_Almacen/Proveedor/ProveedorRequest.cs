@@ -30,7 +30,7 @@ namespace RequestResponseModels.Request.Schema_Almacen.Proveedor
     public class ProveedorUpdateUiRequest
     {
         public int IdProveedor { get; set; }
-        public string ProveedorNombre { get; set; }
+        public string ProveedorNombreCompleto { get; set; }
         [EmailAddress]
         public string Correo { get; set; }
         [Phone]

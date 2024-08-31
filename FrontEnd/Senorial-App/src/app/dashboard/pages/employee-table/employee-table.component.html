@@ -36,13 +36,13 @@
           <td>{{ empleado.rol }}</td>
           <td>
             <label class="switch">
-              <input type="checkbox" [checked]="empleado.estado === 'Activo'">
-              <span class="slider round"></span>
+                <input type="checkbox" [checked]="empleado.estado" (change)="onEstadoChange(empleado, $event)">
+                <span class="slider round"></span>
             </label>
-            <span class="status-label">{{ empleado.estado }}</span>
-          </td>
+            <span class="status-label">{{ empleado.estado ? 'Activo' : 'Inactivo' }}</span>
+        </td>
           <td>
-            <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit', empleado)"></i>
+            <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit',empleado)"></i>
           </td>
         </tr>
       </tbody>
@@ -87,14 +87,14 @@
         <div class="form-row">
           <label for="role" class="form-label">Rol</label>
           <select formControlName="rol" id="role" class="form-input" required>
-            <option *ngFor="let item of roles" [value]="item.idRol">{{item.nombre}}</option>
+            <option *ngFor="let item of roles" [value]="item.nombre">{{item.nombre}}</option>
           </select>
         </div>
         <div class="form-row">
           <label for="status" class="form-label">Estado</label>
           <select formControlName="estado" id="status" class="form-input" required>
-            <option [value]="'Activo'">Activo</option>
-            <option [value]="'Inactivo'">Inactivo</option>
+            <option [value]="true">Activo</option>
+            <option [value]="false">Inactivo</option>
           </select>
         </div>
         <div class="form-actions">

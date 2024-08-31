@@ -15,6 +15,6 @@ namespace IRepository.Schema_Almacen.Proveedores
         Task<Proveedor> InsertUiProveedor(Proveedor proveedor);
         Task<Proveedor> UpdateUiProveedor(Proveedor proveedor);
         Task<bool> DeleteUiProveedor(int IdProvedor);
-        Proveedor BuscarporId(int id);
+        Task<Proveedor> BuscarporId(int id);
     }
 }

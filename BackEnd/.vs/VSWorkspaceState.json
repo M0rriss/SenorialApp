@@ -5,15 +5,12 @@
     "\\Senorial_App\\App_Senorial",
     "\\Senorial_App\\App_Senorial\\Controllers",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas",
-    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\Empleados",
-    "\\Senorial_App\\Business",
-    "\\Senorial_App\\Business\\Schema_Ventas",
-    "\\Senorial_App\\Business\\Schema_Ventas\\Mesas",
+    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\TipoPedido",
     "\\Senorial_App\\Repository",
     "\\Senorial_App\\Repository\\Schema_Almacen",
     "\\Senorial_App\\Repository\\Schema_Almacen\\DetalleInventarios",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\App_Senorial\\appsettings.json",
+  "SelectedNode": "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\TipoPedido\\TipoPedidoController.cs",
   "PreviewInSolutionExplorer": false
 }

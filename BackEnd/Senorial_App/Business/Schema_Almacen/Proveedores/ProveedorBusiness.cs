@@ -113,46 +113,44 @@ namespace Business.Schema_Almacen.Proveedores
         public async Task<ProveedorUiResponse> InsertUiProveedor(ProveedorUiRequest request)
         {
             // Validar si el correo ya está registrado
-            var existingEmail = _personaRepository.BuscarCorreo(request.Correo);
+            var existingEmail = await _personaRepository.BuscarCorreo(request.Correo);
             if (existingEmail != null)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
             // Validar si el teléfono ya está registrado
-            var existingPhone = _personaRepository.BuscarTelefono(request.Telefono);
+            var existingPhone = await _personaRepository.BuscarTelefono(request.Telefono);
             if (existingPhone != null)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
 
-            // Verificar y separar nombres y apellidos
-            var nombreCompleto = request.ProveedorNombreCompleto.Split(' ');
-            if (nombreCompleto.Length < 2)
+            // Separar nombres y apellidos
+            var nombres = request.ProveedorNombreCompleto.Split(' ');
+            if (nombres.Length < 2)
             {
                 throw new ArgumentException("Debe proporcionar al menos un nombre y un apellido.");
             }
-            var primerNombre = nombreCompleto[0];
-            var apellidoPaterno = nombreCompleto.Length > 1 ? nombreCompleto[1] : "";
 
             var persona = new Persona
             {
-                
-                PrimerNombre = primerNombre,
-                ApellidoPaterno = apellidoPaterno,
+                PrimerNombre = nombres[0],
+                SegundoNombre = nombres.Length > 2 ? nombres[1] : null,
+                ApellidoPaterno = nombres.Length > 2 ? nombres[2] : nombres[1],
+                ApellidoMaterno = nombres.Length > 3 ? nombres[3] : null,
                 Email = request.Correo.ToLower(),
                 Telefono = request.Telefono,
                 NroDocumento = request.Dni,
-                Genero = "",
-                IdTipoDocumento = 1,
-                TipoPersona  = "Natural",
+                Genero = "",  // Asigna un valor apropiado si es necesario
+                IdTipoDocumento = 1,  // Asegúrate de que el IdTipoDocumento sea el correcto
+                TipoPersona = "Natural",
             };
 
             var personaCreada = await _personaRepository.Create(persona);
 
             var nuevoProveedor = new Proveedor
             {
-                IdProveedor = request.IdProveedor,
                 IdPersona = personaCreada.IdPersona,
                 Vende = request.Distribuye
             };
@@ -160,7 +158,7 @@ namespace Business.Schema_Almacen.Proveedores
             var proveedorCreado = await _proveedorRepository.Create(nuevoProveedor);
 
             var response = _mapper.Map<ProveedorUiResponse>(proveedorCreado);
-            response.Persona = _mapper.Map<PersonaResponse>(persona);
+            response.Persona = _mapper.Map<PersonaResponse>(personaCreada);
 
             return response;
         }
@@ -168,7 +166,7 @@ namespace Business.Schema_Almacen.Proveedores
         public async Task<ProveedorUiResponse> UpdateUiProveedor(ProveedorUpdateUiRequest request)
         {
             // Buscar el proveedor existente
-            var existingProveedor = _proveedorRepository.BuscarporId(request.IdProveedor);
+            var existingProveedor = await _proveedorRepository.BuscarporId(request.IdProveedor);
             if (existingProveedor == null)
             {
                 throw new ArgumentException("Proveedor no encontrado", nameof(existingProveedor));
@@ -182,31 +180,31 @@ namespace Business.Schema_Almacen.Proveedores
             }
 
             // Validar si el nuevo correo está en uso por otra persona
-            var proveedorEmail = _personaRepository.BuscarCorreo(request.Correo);
-            if (proveedorEmail != null && proveedorEmail.IdPersona != existingProveedor.IdPersona)
+            var proveedorEmail = await _personaRepository.BuscarCorreo(request.Correo);
+            if (proveedorEmail != null && proveedorEmail.IdPersona != existingPersona.IdPersona)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
             // Validar si el nuevo teléfono está en uso por otra persona
-            var userWithPhone = _personaRepository.BuscarTelefono(request.Telefono);
-            if (userWithPhone != null && userWithPhone.IdPersona != existingProveedor.IdPersona)
+            var userWithPhone = await _personaRepository.BuscarTelefono(request.Telefono);
+            if (userWithPhone != null && userWithPhone.IdPersona != existingPersona.IdPersona)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
             }
 
             // Separar nombres y apellidos
-            var nombres = request.ProveedorNombre.Split(' ');
+            var nombres = request.ProveedorNombreCompleto.Split(' ');
             if (nombres.Length < 2)
             {
                 throw new ArgumentException("Debe proporcionar al menos un nombre y un apellido.");
             }
-            var primerNombre = nombres[0];
-            var apellidoPaterno = nombres.Length > 1 ? nombres[1] : "";
 
             // Actualizar detalles de la persona
-            existingPersona.PrimerNombre = primerNombre;
-            existingPersona.ApellidoPaterno = apellidoPaterno;
+            existingPersona.PrimerNombre = nombres[0];
+            existingPersona.SegundoNombre = nombres.Length > 2 ? nombres[1] : null;
+            existingPersona.ApellidoPaterno = nombres.Length > 2 ? nombres[2] : nombres[1];
+            existingPersona.ApellidoMaterno = nombres.Length > 3 ? nombres[3] : null;
             existingPersona.Email = request.Correo.ToLower();
             existingPersona.Telefono = request.Telefono;
             existingPersona.NroDocumento = request.Dni;
@@ -223,7 +221,6 @@ namespace Business.Schema_Almacen.Proveedores
             response.Persona = _mapper.Map<PersonaResponse>(existingPersona);
 
             return response;
-
         }
 
         public async Task<bool> DeleteUiProveedor(int idProveedor)

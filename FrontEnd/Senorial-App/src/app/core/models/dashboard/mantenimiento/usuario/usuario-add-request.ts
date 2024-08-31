@@ -4,4 +4,5 @@ export interface UsuarioAddRequest{
     password:string;
     role: number;
     contact:string;
+    nombreCompleto:string
 }

@@ -75,7 +75,7 @@ namespace Business.Schema_Ventas.Empleados
             var empleado = _mapper.Map<Empleado>(entity);
             empleado = await _empleadoRepository.Update(empleado);
             var response = _mapper.Map<EmpleadoResponse>(empleado);
-            return response; ;
+            return response;
         }
 
         public async Task<List<EmpleadoResponse>> UpdateMultiple(List<EmpleadoRequest> list)
@@ -121,14 +121,14 @@ namespace Business.Schema_Ventas.Empleados
         public async Task<EmpleadosUiResponse> InsertUiEmpleado(EmpleadosUiRequest request)
         {
             // Check if the email is already in use
-            var existingPersonaByEmail = _personaRepository.BuscarCorreo(request.Correo);
+            var existingPersonaByEmail = await _personaRepository.BuscarCorreo(request.Correo);
             if (existingPersonaByEmail != null)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
             // Check if the phone number is already in use
-            var existingPersonaByPhone = _personaRepository.BuscarTelefono(request.Telefono);
+            var existingPersonaByPhone = await _personaRepository.BuscarTelefono(request.Telefono);
             if (existingPersonaByPhone != null)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
@@ -140,60 +140,56 @@ namespace Business.Schema_Ventas.Empleados
 
             var persona = new Persona
             {
-                PrimerNombre = nombres[0], // Primer nombre
-                SegundoNombre = nombres.Length > 1 ? nombres[1] : null, // Segundo nombre (if exists)
-                ApellidoPaterno = apellidos[0], // Apellido paterno
-                ApellidoMaterno = apellidos.Length > 1 ? apellidos[1] : null, // Apellido materno (if exists)
+                PrimerNombre = nombres[0],
+                SegundoNombre = nombres.Length > 1 ? nombres[1] : null,
+                ApellidoPaterno = apellidos[0],
+                ApellidoMaterno = apellidos.Length > 1 ? apellidos[1] : null,
                 Email = request.Correo.ToLower(),
                 Telefono = request.Telefono,
                 NroDocumento = request.Identificacion,
-                Genero = "",
-                IdTipoDocumento = 1,
+                Genero = "",  // Asigna un valor apropiado si es necesario
+                IdTipoDocumento = 1,  // Asegúrate de que el IdTipoDocumento sea el correcto
             };
 
             await _personaRepository.Create(persona);
 
-            //var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
-            //if (sucursal == null)
-            //{
-            //    throw new ArgumentException("La sucursal especificada no existe.");
-            //}
-
+            // Obtener el rol del empleado
             var rol = await _rolesRepository.GetByRol(request.Rol);
             if (rol == null)
             {
                 throw new ArgumentException("El rol especificado no existe.");
             }
 
-            var estado = request.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase) ? true : request.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase) ? false : (bool?)null;
-
+            // Crear el empleado
             var empleado = new Empleado
             {
                 IdPersona = persona.IdPersona,
                 IdRol = rol.IdRol,
-                //IdSucursal = sucursal.IdSucursal,
-                Estado = estado
+                IdSucursal = 1,  // Asegúrate de que IdSucursal sea correcto
+                Estado = true  // Asignar el estado predeterminado
             };
 
-            // Insert the new Empleado
             await _empleadoRepository.Create(empleado);
 
-            // Map the inserted entity back to the response model
+            // Mapear el empleado y la persona a la respuesta
             var response = _mapper.Map<EmpleadosUiResponse>(empleado);
             response.Persona = _mapper.Map<PersonaResponse>(persona);
-            //response.Sucursal = sucursal.Nombre;
 
             return response;
         }
 
         public async Task<EmpleadosUiResponse> UpdateUiEmpleado(EmpleadoUpdateUiRequest request)
-         {
+        {
+            // Verificar que el ID del empleado es válido y no es nulo
+            if (request.IdEmpleado <= 0)
+            {
+                throw new ArgumentException("El ID del empleado no es válido.");
+            }
+
             // Buscar el empleado por su ID
             var empleadoExistente = await _empleadoRepository.BuscarporId(request.IdEmpleado);
-            if (empleadoExistente == null)
-            {
-                throw new ArgumentException("El empleado especificado no existe.");
-            }
+
+                        
 
             // Validar y actualizar la persona asociada al empleado
             var personaExistente = await _personaRepository.BuscarporId(empleadoExistente.IdPersona);
@@ -203,14 +199,14 @@ namespace Business.Schema_Ventas.Empleados
             }
 
             // Verificar si el correo electrónico ya está registrado por otra persona
-            var empleadoConEmail =  _personaRepository.BuscarCorreo(request.Correo);
+            var empleadoConEmail = await _personaRepository.BuscarCorreo(request.Correo);
             if (empleadoConEmail != null && empleadoConEmail.IdPersona != personaExistente.IdPersona)
             {
                 throw new ArgumentException("El correo electrónico ya se encuentra registrado.");
             }
 
             // Verificar si el número de teléfono ya está registrado por otra persona
-            var empleadoConTelefono =  _personaRepository.BuscarTelefono(request.Telefono);
+            var empleadoConTelefono = await _personaRepository.BuscarTelefono(request.Telefono);
             if (empleadoConTelefono != null && empleadoConTelefono.IdPersona != personaExistente.IdPersona)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
@@ -230,14 +226,7 @@ namespace Business.Schema_Ventas.Empleados
 
             await _personaRepository.Update(personaExistente);
 
-            // Obtener la sucursal por nombre
-            //var sucursal = await _sucursalRepository.GetBySucursalName(request.Sucursal);
-            //if (sucursal == null)
-            //{
-            //    throw new ArgumentException("La sucursal especificada no existe.");
-            //}
-
-            // Actualizar el rol del empleado y la sucursal
+            // Actualizar el rol del empleado
             var rol = await _rolesRepository.GetByRol(request.Rol);
             if (rol == null)
             {
@@ -245,24 +234,17 @@ namespace Business.Schema_Ventas.Empleados
             }
 
             empleadoExistente.IdRol = rol.IdRol;
-            //empleadoExistente.IdSucursal = sucursal.IdSucursal;
-            // Actualizar el estado del empleado
-            var estado = request.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase)
-                ? true
-                : request.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase)
-                ? false
-                : (bool?)null;
+            empleadoExistente.Estado = true;  // Estado predeterminado o según la lógica
 
-            empleadoExistente.Estado = estado;
             await _empleadoRepository.Update(empleadoExistente);
 
             // Mapear y devolver la respuesta
             var response = _mapper.Map<EmpleadosUiResponse>(empleadoExistente);
             response.Persona = _mapper.Map<PersonaResponse>(personaExistente);
-            //response.Sucursal = sucursal.Nombre;
 
             return response;
         }
+
 
         public async Task<bool> DeleteUiEmpleado(int idEmpleado)
         {

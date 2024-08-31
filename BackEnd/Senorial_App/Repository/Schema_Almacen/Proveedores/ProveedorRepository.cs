@@ -15,7 +15,7 @@ namespace Repository.Schema_Almacen.Proveedores
 {
     public class ProveedorRepository : CrudRepository<Proveedor>, IProveedorRepository
     {
-        public Proveedor BuscarporId(int id)
+        public async Task<Proveedor> BuscarporId(int id)
         {
             var proveedor = dbset.Where(x => x.IdProveedor == id).FirstOrDefault();
             return proveedor;
@@ -36,7 +36,7 @@ namespace Repository.Schema_Almacen.Proveedores
                     pro => pro.IdPersona,
                     (p, pro) => new ProveedorUiRequest
                     {
-                        IdProveedor = p.IdPersona,
+                        IdProveedor = pro.IdProveedor,
                         ProveedorNombreCompleto = $"{p.PrimerNombre} {p.ApellidoPaterno}",
                         Correo = p.Email,
                         Telefono = p.Telefono,

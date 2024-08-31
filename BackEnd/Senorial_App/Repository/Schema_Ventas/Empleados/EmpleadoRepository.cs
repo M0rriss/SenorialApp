@@ -23,32 +23,29 @@ namespace Repository.Schema_Ventas.Empleados
         public async Task<List<EmpleadosUiRequest>> UiEmpleado()
         {
             return await db.Empleados
-        .Join(db.Personas,
-            e => e.IdPersona,
-            p => p.IdPersona,
-            (e, p) => new { Empleado = e, Persona = p })
-        .Join(db.Roles,
-            ep => ep.Empleado.IdRol,
-            r => r.IdRol,
-            (ep, r) => new { ep.Empleado, ep.Persona, Rol = r })
-        .Join(db.Sucursals,
-            epr => epr.Empleado.IdSucursal,
-            s => s.IdSucursal,
-            (epr, s) => new EmpleadosUiRequest
-            {
-                IdEmpleado = epr.Empleado.IdPersona,
-                Nombres = epr.Persona.PrimerNombre + " " + epr.Persona.SegundoNombre,
-                Apellidos = epr.Persona.ApellidoPaterno + " " + epr.Persona.ApellidoMaterno,
-                Correo = epr.Persona.Email,
-                Telefono = epr.Persona.Telefono,
-                Identificacion = epr.Persona.NroDocumento,
-                Rol = epr.Rol.Nombre,
-                Estado = epr.Empleado.Estado.HasValue
-                            ? (epr.Empleado.Estado.Value ? "Activo" : "Inactivo")
-                            : "Activo", // Manejo explícito de nullables
-                
-            })
-        .ToListAsync();
+                .Join(db.Personas,
+                    e => e.IdPersona,
+                    p => p.IdPersona,
+                    (e, p) => new { Empleado = e, Persona = p })
+                .Join(db.Roles,
+                    ep => ep.Empleado.IdRol,
+                    r => r.IdRol,
+                    (ep, r) => new { ep.Empleado, ep.Persona, Rol = r })
+                .Join(db.Sucursals,
+                    epr => epr.Empleado.IdSucursal,
+                    s => s.IdSucursal,
+                    (epr, s) => new EmpleadosUiRequest
+                    {
+                        IdEmpleado = epr.Empleado.IdEmpleado,
+                        Nombres = epr.Persona.PrimerNombre + " " + epr.Persona.SegundoNombre,
+                        Apellidos = epr.Persona.ApellidoPaterno + " " + epr.Persona.ApellidoMaterno,
+                        Correo = epr.Persona.Email,
+                        Telefono = epr.Persona.Telefono,
+                        Identificacion = epr.Persona.NroDocumento,
+                        Rol = epr.Rol.Nombre,
+                        Estado = epr.Empleado.Estado ?? true
+                    })
+                .ToListAsync();
         }
         public async Task<Empleado> InsertUiEmpleado(Empleado empleado)
         {
@@ -75,7 +72,7 @@ namespace Repository.Schema_Ventas.Empleados
         }
         public async Task<Empleado> BuscarporId(int id)
         {
-            var empleado = await dbset.FirstOrDefaultAsync(e => e.IdEmpleado == id);
+            var empleado = await db.Empleados.FirstOrDefaultAsync(e => e.IdEmpleado == id);
             return empleado;
         }
         
