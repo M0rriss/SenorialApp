@@ -50,6 +50,8 @@ listarProveedores(){
 }
 crearProveedor() {
   const req = this.formSupplier.value;
+  req.idProveedor = 0;
+
   this.proveedorService.crearRegistro(req).subscribe({
     next: (res: ProveedorResponse) => {
       this.notificationService.showSuccess('Proveedor creado exitosamente', 'Éxito');

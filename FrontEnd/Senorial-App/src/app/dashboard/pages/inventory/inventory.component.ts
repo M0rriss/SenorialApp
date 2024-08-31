@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntradaRequest } from '@app/core/models/dashboard/entrada/entrada-request';
 import { BusqueInventarioInsumoResponse } from '@app/core/models/dashboard/Inventario/busqueda-inventario-insumo-response';
@@ -11,6 +11,7 @@ import { GenericFilterResponse } from '@app/core/models/generic/generic-filter-r
 import { EntradaService } from '@app/dashboard/services/entrada/entrada.service';
 import { InventoryService } from '@app/dashboard/services/inventory/inventory.service';
 import { SalidaService } from '@app/dashboard/services/salida/salida.service';
+import { NotificationService } from '@app/shared/services/toast/notification.service';
 
 // Interfaz para representar un ítem de inventario
 interface InventoryItem {
@@ -25,14 +26,15 @@ interface InventoryItem {
 @Component({
   selector: 'inventory',
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.scss']
+  styleUrls: ['./inventory.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InventoryComponent implements OnInit {
   // Variables para la paginación
   first: number = 0;
-  rows: number = 10;
+  rows: number = 5;
   first2: number = 0;
-  rows2: number = 10;
+  rows2: number = 5;
   totalRecords: number = 0;
 
   // Variables para manejar los diálogos modales
@@ -73,7 +75,8 @@ export class InventoryComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private InventarioServicio: InventoryService,
     private entradaService:EntradaService,
-    private salidaService:SalidaService
+    private salidaService:SalidaService,
+    private notificationService: NotificationService
   ) {
     this.formDetalle = this.fb.group({
       descripcion: [],
@@ -127,7 +130,7 @@ stockTotal:0
 
   buscarInventarioInsumo(){
     this.idInsumo= +this.formBuscar.get('insumo')?.value;
-  
+
     this.InventarioServicio.buscarInsumoInvetario(this.idInsumo).subscribe({
       next: (res:BusqueInventarioInsumoResponse)=>{
         this.busquedaInsumo = res;
@@ -142,11 +145,15 @@ stockTotal:0
       idInsumo: this.idInsumo,
       idInventario: 1,
     };
- 
+
     this.entradaService.registarEntrada(req).subscribe({
       next: (res:CustomResponse)=>{
-        alert(res.message);
+        this.notificationService.showContrast('Entrada registrada','Exito');
+        this.formEntrada.reset();
         this.closeDialog();
+      },
+      error: (err) => {
+          this.notificationService.showError('Error al registrar la entrada', 'Error');
       }
     });
   }
@@ -160,8 +167,12 @@ stockTotal:0
     }
     this.salidaService.registarSalida(req).subscribe({
       next:(res:CustomResponse)=>{
-        alert(res.message);
+        this.notificationService.showContrast('Salida registrada','Exito');
+        this.formEntrada.reset();
         this.closeDialog();
+      },
+      error: (err) => {
+          this.notificationService.showError('Error al registrar la salida', 'Error');
       }
     })
   }
@@ -175,7 +186,7 @@ stockTotal:0
   }
 
   filtrarlistaInventario(){
-    
+
   }
 
   // Método para abrir el diálogo de edición
@@ -255,8 +266,8 @@ stockTotal:0
   getDisponibilidad(stock: number): string {
     if (stock > 18) {
       return 'Suficiente';
-    } else if (stock > 10) {
-      return 'En Proceso';
+    } else if (stock < 19 && stock > 11){
+      return 'En-Proceso';
     } else {
       return 'Agotados';
     }
@@ -266,7 +277,7 @@ stockTotal:0
   getStatusClass(stock: number): string {
     if (stock > 18) {
       return 'status-sufficient';
-    } else if (stock > 10) {
+    } else if (stock < 19 && stock > 11) {
       return 'status-processing';
     } else {
       return 'status-out-of-stock';

@@ -181,14 +181,14 @@ namespace Business.Schema_Ventas.Clientes
             }
 
             // Validar si el nuevo correo está en uso por otro usuario
-            var userWithEmail =  _personaRepository.BuscarCorreo(request.Correo);
+            var userWithEmail = await _personaRepository.BuscarCorreo(request.Correo);
             if (userWithEmail != null && userWithEmail.IdPersona != existingCliente.IdPersona)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
             // Validar si el nuevo teléfono está en uso por otro usuario
-            var userWithPhone =  _personaRepository.BuscarTelefono(request.Telefono);
+            var userWithPhone =  await _personaRepository.BuscarTelefono(request.Telefono);
             if (userWithPhone != null && userWithPhone.IdPersona != existingCliente.IdPersona)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");

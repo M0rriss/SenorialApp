@@ -28,7 +28,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
         [DocumentType]
         public string Identificacion { get; set; }
         public string Rol { get; set; }
-        public string Estado { get; set; }
+        public bool Estado { get; set; }
         //public string Sucursal { get; set; } = null;
 
 
@@ -46,7 +46,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Empleados
         [DocumentType]
         public string Identificacion { get; set; }
         public string Rol { get; set; }
-        public string Estado { get; set; }
+        public bool Estado { get; set; }
         //public string Sucursal { get; set; } = null;
 
 

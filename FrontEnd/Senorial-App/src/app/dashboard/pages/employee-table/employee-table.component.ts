@@ -48,27 +48,30 @@ constructor(
 this.listarRoles();
 this.listarEmpleados();
   }
-listarRoles(){
-  this.rolService.getAll().subscribe(
-    {
-      next: (res: RolResponse[])=>{
+  listarRoles() {
+    this.rolService.getAll().subscribe({
+      next: (res: RolResponse[]) => {
         this.roles = res;
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'Hubo un problema al listar los roles');
       }
-    }
-  );
-}
-listarEmpleados(){
+    });
+  }
+listarEmpleados() {
   this.empleadoService.listarEmpleado().subscribe({
-    next: (res: EmpleadoResponse[])=>{
-      this.employees=res;
+    next: (res: EmpleadoResponse[]) => {
+      this.employees = res;
     },
     error: () => {
       this.notificationService.showError('Error', 'Hubo un problema al listar los empleados');
     }
-  })
+  });
 }
 crearEmpleado() {
   const req = this.formEmployee.value as EmpleadoRequest;
+  req.estado = this.formEmployee.get("estado")?.value == "true" ? true : false;
+  req.idEmpleado = 0;
   this.empleadoService.crearEmpleado(req).subscribe({
     next: (res: EmpleadoResponse) => {
       this.notificationService.showSuccess('Éxito', 'Empleado creado');
@@ -83,6 +86,7 @@ crearEmpleado() {
 
 editarEmpleado() {
   const req = this.formEmployee.value as EmpleadoRequest;
+  req.estado = this.formEmployee.get("estado")?.value == "true" ? true : false;
   req.idEmpleado = this.idEmpleado;
   this.empleadoService.actualizarEmpleado(req).subscribe({
     next: (res: EmpleadoResponse) => {
@@ -95,36 +99,34 @@ editarEmpleado() {
     }
   });
 }
-
-
 employeeAcciones() {
-  if (this.modalButtonText === "Agregar") {
+  if (this.modalButtonText === 'Agregar Empleado') {
     this.crearEmpleado();
   } else {
     this.editarEmpleado();
   }
 }
-// editEmployee(empleado: EmpleadoResponse): void {
-//   this.formEmployee.patchValue({
-//     nombres: empleado.nombres,
-//     apellidos: empleado.apellidos,
-//     correo: empleado.correo,
-//     telefono: empleado.telefono,
-//     identificacion: empleado.identificacion,
-//     rol: empleado.rol,
-//     estado: empleado.estado
-//   });
+onEstadoChange(empleado: EmpleadoResponse, event: Event) {
+  const checkbox = event.target as HTMLInputElement;
+  const nuevoEstado = checkbox.checked;
 
-//     this.idEmpleado = empleado.idEmpleado;
-//     this.openDialog('edit');
+  // Actualizar el estado en la base de datos
+  const req: EmpleadoRequest = {
+    ...empleado,
+    estado: nuevoEstado
+  };
 
-// }
-
-
-
-
+  this.empleadoService.actualizarEmpleado(req).subscribe({
+    next: () => {
+      this.notificationService.showSuccess('Éxito', 'Estado del empleado actualizado');
+      empleado.estado = nuevoEstado;
+    },
+    error: () => {
+      this.notificationService.showError('Error', 'Hubo un problema al actualizar el estado del empleado');
+    }
+  });
+}
 openDialog(action: string, empleado?: EmpleadoResponse): void {
-  console.log(action)
   if (action === 'add') {
     this.modalTitle = 'Agregar Empleado';
     this.modalButtonText = 'Agregar Empleado';
@@ -132,18 +134,23 @@ openDialog(action: string, empleado?: EmpleadoResponse): void {
   } else if (action === 'edit' && empleado) {
     this.modalTitle = 'Editar Empleado';
     this.modalButtonText = 'Guardar Cambios';
-    this.formEmployee.patchValue({
-      nombres: empleado.nombres,
-      apellidos: empleado.apellidos,
-      correo: empleado.correo,
-      telefono: empleado.telefono,
-      identificacion: empleado.identificacion,
-      rol: empleado.rol,
-      estado: empleado.estado
-    });
-    this.idEmpleado = empleado.idEmpleado;
+    this.editEmployee(empleado);
   }
   this.isModalOpen = true;
+}
+
+editEmployee(empleado: EmpleadoResponse): void {
+  this.formEmployee.patchValue({
+    nombres: empleado.nombres,
+    apellidos: empleado.apellidos,
+    correo: empleado.correo,
+    telefono: empleado.telefono,
+    identificacion: empleado.identificacion,
+    rol: empleado.rol,
+    estado: empleado.estado
+  });
+
+  this.idEmpleado = empleado.idEmpleado;
 }
   closeDialog(): void {
     this.isModalOpen = false;

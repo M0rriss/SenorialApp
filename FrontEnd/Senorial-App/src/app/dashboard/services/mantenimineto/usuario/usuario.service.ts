@@ -24,6 +24,7 @@ export class UsuarioService{
         //Cargar datos
         const formData = new FormData();
         formData.append("File",req.file);
+        formData.append("NombreCompleto",req.nombreCompleto);
         formData.append("Email",req.email);
         formData.append("Password",req.password);
         formData.append("Role",req.role.toString());
@@ -40,6 +41,7 @@ export class UsuarioService{
         formData.append("IdUsuario",req.idUsuario.toString());
         formData.append("File",req.file);
         formData.append("Email",req.email);
+        formData.append("NombreCompleto",req.nombreCompleto);
         formData.append("Password",req.password);
         formData.append("Role",req.role.toString());
         formData.append("Contact",req.contact);

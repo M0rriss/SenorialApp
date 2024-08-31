@@ -13,13 +13,13 @@
       <input type="text" class="search-input" [(ngModel)]="nombreInsumo"  placeholder="Buscar Insumo o por Fecha" aria-label="Buscar">
     </div>
     </div>
-  
+
     <table class="inventory-table">
       <thead>
         <tr>
           <th>Insumo</th>
           <th>Unidad de Medida</th>
-          <th>Stock</th>
+          <th>Cantidad</th>
           <th>Fecha</th>
           <th>Tipo</th>
         </tr>
@@ -108,7 +108,7 @@
         <label for="quantity-input" class="visually-hidden">Cantidad</label>
         <input formControlName="cantidad" type="text" id="quantity-input" class="input-field" placeholder="Cantidad" />
         <label for="reason-input" class="visually-hidden">Precio</label>
-        <input formControlName="precioCompra" type="text" id="reason-input" class="input-field" placeholder="Motivo" />
+        <input formControlName="precioCompra" type="text" id="reason-input" class="input-field" placeholder="Precio" />
         <div class="action-buttons">
           <button type="submit" class="register-button" (click)="agregarEntrada()">Registrar</button>
           <button type="button" class="cancel-button" (click)="closeDialog()">Cancelar</button>
@@ -129,7 +129,7 @@
       <!-- <i class="fa-solid fa-magnifying-glass search-icon"></i>
       <label for="search-input" class="visually-hidden">Buscar</label>
       <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" /> -->
-      <select (change)="buscarInventarioInsumo()" formControlName="insumo">
+      <select (change)="buscarInventarioInsumo()" formControlName="insumo"   >
         @for (item of inventarioDetalle.lista; track $index) {
           <option [value]="item.idInsumo"  >{{item.nombre}}</option>
         }
@@ -170,23 +170,23 @@
           <th>Descripcion</th>
           <th>Stock</th>
           <th>Disponibilidad</th>
-          <th>Acción</th>
+          <!-- <th>Acción</th> -->
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of inventarioDetalle.lista">
           <td>{{ item.nombre }}</td>
           <td>{{ item.stoct }}</td>
-          <td>{{item.disponibilidad}}</td>
-          <!-- <td><span class="status" [ngClass]="getStatusClass(item.stoct)">{{ getDisponibilidad(item.stoct) }}</span></td> -->
-          <td>
+          <td><span class="status" [ngClass]="getStatusClass(item.stoct)">{{ item.disponibilidad }}</span></td>
+          <!-- <td>{{item.disponibilidad}}</td> -->
+          <!-- <td>
             <button class="action-btn" aria-label="Edit" >
               <i class="fa-regular fa-pen-to-square" style="color:#624DE3"></i>
             </button>
             <button class="action-btn" aria-label="Delete" (click)="openDeleteDialog(item)">
               <i class="fa-solid fa-trash" style="color:#F00006"></i>
             </button>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -243,3 +243,4 @@
     </div>
   </div>
 </div>
+<p-toast/>

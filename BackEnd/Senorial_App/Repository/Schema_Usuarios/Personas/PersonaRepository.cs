@@ -1,5 +1,6 @@
 ﻿using DBSenorialModels.Senorial;
 using IRepository.Schema_Usuarios.Personas;
+using Microsoft.EntityFrameworkCore;
 using Repository.Schema_Generico.CRUD;
 using RequestResponseModels.Request.Schema_Generico.Filtro;
 using RequestResponseModels.Response.Schema_Generico.Filtro;
@@ -22,17 +23,17 @@ namespace Repository.Schema_Usuarios.Personas
             var persona = dbset.Where(x => x.IdPersona == id).FirstOrDefault();
             return persona;
         }
-        public Persona BuscarCorreo(string email)
+        public async  Task<Persona> BuscarCorreo(string email)
         {
-            var persona = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+            var persona = await dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefaultAsync();
             return persona;
         }
-        public Persona BuscarDni(string documento)
+        public  async Task<Persona> BuscarDni(string documento)
         {
             var persona = dbset.Where(x => x.NroDocumento == documento).FirstOrDefault();
             return persona;
         }
-        public Persona BuscarTelefono(string phone)
+        public async Task<Persona> BuscarTelefono(string phone)
         {
             var persona = dbset.Where(x => x.Telefono == phone).FirstOrDefault();
             return persona;

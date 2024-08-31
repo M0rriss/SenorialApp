@@ -22,7 +22,6 @@ public partial class Empleado
     [Column("id_sucursal")]
     public int IdSucursal { get; set; }
     [Column("estado")]
-    [StringLength(100)]
     public bool? Estado { get; set; }
 
     [ForeignKey("IdPersona")]

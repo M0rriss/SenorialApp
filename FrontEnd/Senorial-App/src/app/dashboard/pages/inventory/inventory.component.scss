@@ -1,4 +1,7 @@
 @use 'sass:math';
+@import "node_modules/primeng/resources/themes/aura-light-blue/theme.css";
+@import "node_modules/primeng/resources/primeng.css";
+@import "node_modules/primeicons/primeicons.css";
 $primary-color      : #161a23;
 $secondary-color    : #fcfbfb;
 $accent-color       : #3db114;
@@ -45,6 +48,7 @@ $inter-font         : 'Inter', sans-serif;
   color: $text-color;
   align-self: center;
   font: 50px 'Poppins', sans-serif;
+  margin: 0 0;
 }
 
 .filter-buttons {
@@ -201,23 +205,32 @@ $inter-font         : 'Inter', sans-serif;
   color: white;
 }
 
-.search-navigation {
-  border-radius: 12px;
-  display: flex;
-  gap: 8px;
-  font: 400 14px/24px Inter, sans-serif;
-  color: #a6abb7;
-  justify-content: center;
-  padding: 10px 16px;
-  border: 1px solid #878492;
-  margin-bottom: 19px;
-  align-items: center;
-}
+// .search-navigation {
+//   border-radius: 12px;  // Asegura que el borde exterior sea consistente
+//   padding: 10px 16px;  // Espaciado que envuelve el contenido
+//   border: 1px solid #878492;  // Coincide con el borde del select
+//   margin-bottom: 19px;  // Espaciado inferior
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #fff;
+// }
 
 .search-icon {
   width: 24px;
 }
-
+select {
+  border-radius: 12px;
+  border: 1px solid #878492;
+  padding: 10px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background-color: #fff;
+  outline: none;
+  margin-bottom: 25px;
+}
 .search-text {
   flex: 1;
   border: none;
@@ -356,7 +369,7 @@ $inter-font         : 'Inter', sans-serif;
     color: $text-color;
     font: 500 40px Poppins, sans-serif;
     text-align: center;
-    
+
   }
 
   .stock-table {
@@ -364,12 +377,17 @@ $inter-font         : 'Inter', sans-serif;
     border-collapse: separate;
     border-spacing: 0 15px;
 
-    th,
-    td {
+    th{
       padding: 15px;
       text-align: left;
       font-family: Montserrat, sans-serif;
-      font-size: 13px;
+      font-size: 14px;
+    }
+    td {
+      padding: 8px;
+      text-align: left;
+      font-family: Montserrat, sans-serif;
+      font-size: 12px;
     }
 
     th {
@@ -412,7 +430,7 @@ $inter-font         : 'Inter', sans-serif;
     border-radius: 21px;
     font-size: 12px;
 
-    &.status-sufficient {
+    &.status-sufficient{
       background-color: #ebf9f1;
       color: #1f9254;
     }

@@ -34,5 +34,5 @@ public partial class DetalleInventario
     public virtual Inventario Inventario { get; set; } = null!;
 
     [NotMapped]
-    public string EstadoStock => StockTotal > 16 ? "Suficiente" : StockTotal > 10 ? "En progreso" : "Agotándose";
+    public string EstadoStock => StockTotal > 16 ? "Suficiente" : StockTotal > 11 ? "En progreso" : "Agotándose";
 }

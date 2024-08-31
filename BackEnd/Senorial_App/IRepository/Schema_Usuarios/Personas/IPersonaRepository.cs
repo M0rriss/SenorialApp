@@ -11,9 +11,9 @@ namespace IRepository.Schema_Usuarios.Personas
     public interface IPersonaRepository : ICrudRepository<Persona>
     {
         Task<Persona> BuscarporId(int id);
-        Persona BuscarCorreo(string email);
-        Persona BuscarDni(string documento);
-        Persona BuscarTelefono(string phone);
+        Task<Persona> BuscarDni(string documento);
+        Task<Persona> BuscarTelefono(string phone);
         Task<bool> DeletePersona(int id);
+        Task<Persona> BuscarCorreo(string email);
     }
 }

@@ -606,14 +606,14 @@ namespace Business.Schema_Usuarios.Usuarios
             }
 
             // Check if the new email is already in use by another user
-            var userWithEmail = _personaRepository.BuscarCorreo(request.Correo);
+            var userWithEmail = await _personaRepository.BuscarCorreo(request.Correo);
             if (userWithEmail != null && userWithEmail.IdPersona != existingUser.IdPersona)
             {
                 throw new ArgumentException("El correo electrónico ya está registrado.");
             }
 
             // Check if the new phone number is already in use by another user
-            var userWithPhone = _personaRepository.BuscarTelefono(request.Telefono);
+            var userWithPhone = await _personaRepository.BuscarTelefono(request.Telefono);
             if (userWithPhone != null && userWithPhone.IdPersona != existingUser.IdPersona)
             {
                 throw new ArgumentException("El número de teléfono ya está registrado.");
@@ -683,6 +683,7 @@ namespace Business.Schema_Usuarios.Usuarios
         public async Task<CustomResponse> CrearNuevoUsuarioAsync(UsuarioAddRequest req)
         {
             EncriptarDesencriptar encriptar = new();
+
             //Registra Imagen
             UploadImageResponse imagen = await _imagenesBusiness.SubirImagenAsync(req.File);
             Imagene img = new()
@@ -691,16 +692,17 @@ namespace Business.Schema_Usuarios.Usuarios
                 ImageData = imagen.Url,
             };
             img = await _imagenesRepository.Create(img);
+            var nombresArray = req.NombreCompleto.Split(' ', 2);
+            string primerNombre = nombresArray[0];
+            string apellidoPaterno = nombresArray.Length > 1 ? nombresArray[1] : null;
 
-            //Crear Persona
+            // Crear Persona
             Guid guid = Guid.NewGuid();
             string guidString = guid.ToString();
-            Persona persona = new() 
+            Persona persona = new()
             {
-                PrimerNombre = "test",
-                SegundoNombre = "",
-                ApellidoMaterno = "test",
-                ApellidoPaterno = "",
+                PrimerNombre = primerNombre,
+                ApellidoPaterno = apellidoPaterno,
                 NroDocumento = guidString,
                 Email = req.Email,
                 Telefono = req.Contact,
@@ -711,8 +713,8 @@ namespace Business.Schema_Usuarios.Usuarios
                 Genero = "",
             };
             persona = await _personaRepository.Create(persona);
-            
-            //Crear Usuario
+
+            // Crear Usuario
             Usuario usuario = new()
             {
                 UserName = guidString,
@@ -728,30 +730,27 @@ namespace Business.Schema_Usuarios.Usuarios
             };
             await _usuarioRepository.Create(usuario);
 
-            //Respuesta
+            // Respuesta
             CustomResponse res = new()
             {
                 Code = "2000",
-                Message = "Se registro Correctamente"
+                Message = "Se registró correctamente"
             };
             return res;
         }
         public async Task<CustomResponse> ActulizarUsuarioAsync(UsuarioUpdateRequest req)
         {
-            //Campos
             EncriptarDesencriptar encriptar = new();
             Imagene img = new();
             Usuario user = await _usuarioRepository.GetById(req.IdUsuario);
-            if(user == null)
+            if (user == null)
             {
-                throw new Exception("Usuaro No encontrado");
+                throw new Exception("Usuario No encontrado");
             }
             Persona persona = await _personaRepository.GetById(user.IdPersona);
 
-            
-
             //Registra Imagen
-            if (req.Nuevo) 
+            if (req.Nuevo)
             {
                 UploadImageResponse imagen = await _imagenesBusiness.SubirImagenAsync(req.File);
                 img.FileName = imagen.PublicId;
@@ -760,15 +759,23 @@ namespace Business.Schema_Usuarios.Usuarios
             }
             else
             {
-                 img = await _imagenesRepository.GetById(user.IdImg);
+                img = await _imagenesRepository.GetById(user.IdImg);
             }
-            //Editar Persona
+
+            // Separar nombres y apellidos
+            var nombresArray = req.NombreCompleto.Split(' ', 2);
+            string primerNombre = nombresArray[0];
+            string apellidoPaterno = nombresArray.Length > 1 ? nombresArray[1] : null;
+
+            // Editar Persona
+            persona.PrimerNombre = primerNombre;
+            persona.ApellidoPaterno = apellidoPaterno;
             persona.Telefono = req.Contact;
             persona.Email = req.Email;
             await _personaRepository.Update(persona);
 
-            //Editar Usuario
-            if(user.Password != req.Password)
+            // Editar Usuario
+            if (user.Password != req.Password)
             {
                 user.Password = encriptar.AES_encriptar(req.Password);
             }
@@ -776,11 +783,11 @@ namespace Business.Schema_Usuarios.Usuarios
             user.IdRol = req.Role;
             await _usuarioRepository.Update(user);
 
-            //Respuesta
+            // Respuesta
             CustomResponse res = new()
             {
                 Code = "2000",
-                Message = "Se actulizo Correctamente"
+                Message = "Se actualizó correctamente"
             };
 
             return res;

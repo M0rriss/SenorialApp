@@ -6,5 +6,5 @@ export interface EmpleadoRequest {
   telefono:       string;
   identificacion: string;
   rol:            string;
-  estado:         string;
+  estado:         boolean;
 }

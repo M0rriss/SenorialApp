@@ -27,6 +27,7 @@ export class UserMaintenanceComponent implements OnInit {
   isConfirmDialogOpen: boolean = false;
   modalTitle: string = 'Agregar Usuario';
   modalButtonText: string = 'Agregar';
+
   isUserEnabled: boolean = true;
   confirmDialogDescription: string = '';
   confirmDialogTitle: string = '';
@@ -54,7 +55,7 @@ export class UserMaintenanceComponent implements OnInit {
 
   ){
     this.formUsuario = this.fb.group({
-      nombre:[],
+      nombreCompleto:[],
       email: [],
       password: [],
       role: [],
@@ -150,7 +151,7 @@ export class UserMaintenanceComponent implements OnInit {
   editUser(user: UsuarioResponse): void {
     this.idUsuario = user.idUsuario;
     this.formUsuario.patchValue({
-      nombre:user.nombre,
+      nombreCompleto:user.nombre,
       email: user.email,
       password: user.password,
       role: user.idRol,
