@@ -16,7 +16,6 @@ namespace RequestResponseModels.Response.Auth
         public string RefreshToken { get; set; } = "";
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
-        public UsuarioResponse Usuario { get; set; } = new UsuarioResponse();
-        public RolesResponse RolName { get; set; } = new RolesResponse();
+        public LoginResponse infoUsuario { get; set; } = null!;
     }
 }
