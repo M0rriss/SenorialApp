@@ -1,21 +1,22 @@
+// generic-filter-request.dart
+import 'package:m_senorial/models/Resquest/products/product-resques.dart';
+
 class GenericFilterRequest {
-  final int numeroPagina;
-  final int cantidad;
-  final List<FiltroRequest> filtros;
+  int numeroPagina;
+  int cantidad;
+  List<FiltroRequest> filtros;
 
   GenericFilterRequest({
     required this.numeroPagina,
     required this.cantidad,
     required this.filtros,
   });
-}
 
-class FiltroRequest {
-  final String name;
-  final String value;
-
-  FiltroRequest({
-    required this.name,
-    required this.value,
-  });
+  Map<String, dynamic> toJson() {
+    return {
+      'numeroPagina': numeroPagina,
+      'cantidad': cantidad,
+      'filtros': filtros.map((filtro) => filtro.toJson()).toList(),
+    };
+  }
 }

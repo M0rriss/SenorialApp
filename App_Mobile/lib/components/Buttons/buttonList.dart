@@ -10,6 +10,7 @@ class ButtonList extends StatelessWidget {
   final Color? color;
   final IconData? icon;
   final Function()? onIconTap; // Añadir función para manejar clic en el ícono
+  final String imageProduc; // Añadir un parámetro para la URL de la imagen
 
   const ButtonList({
     Key? key,
@@ -20,6 +21,7 @@ class ButtonList extends StatelessWidget {
     this.color,
     this.icon,
     this.onIconTap, // Añadir parámetro para función de clic en ícono
+    required this.imageProduc, // Añadir parámetro para la URL de la imagen
   }) : super(key: key);
 
   @override
@@ -46,11 +48,16 @@ class ButtonList extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Image.network(
+              imageProduc, // Usa la URL de la imagen pasada
+              width: 110.14, 
+              height: 72.14,
+            ),
             const SizedBox(height: 8),
             Text(
               text,
               style: const TextStyle(
-                fontSize: 18.88,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -62,6 +69,7 @@ class ButtonList extends StatelessWidget {
                 fontSize: 12.59,
               ),
             ),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -70,7 +78,7 @@ class ButtonList extends StatelessWidget {
                   style: GoogleFonts.dmSans(
                     textStyle: const TextStyle(
                       color: Color.fromARGB(255, 228, 137, 84),
-                      fontWeight: FontWeight.bold, // Ajusta el peso si es necesario
+                      fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
                   ),

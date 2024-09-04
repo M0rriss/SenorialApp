@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductWidget extends StatefulWidget {
-  final String productName; // Nombre del producto
-  final String productPrice; // Precio del producto
+  final String productName; 
+  final double productPrice; 
   final bool showControls;
-  final VoidCallback? onDelete; // Hacer que onDelete sea opcional
+  final VoidCallback? onDelete;
+  final VoidCallback? precioInc;
+  final VoidCallback? precioDec;
+  final int incremento;
+  final String ruta;
 
   ProductWidget({
     Key? key,
     required this.productName,
     required this.productPrice,
+    required this.ruta,
     this.showControls = true,
     this.onDelete,
+    this.precioInc,
+    this.precioDec,
+    this.incremento = 1,
   }) : super(key: key);
 
   @override
@@ -20,21 +28,40 @@ class ProductWidget extends StatefulWidget {
 }
 
 class _ProductWidgetState extends State<ProductWidget> {
-  int cantidad = 2;
+ int cantidad = 1;
+ double precioVenta = 0;  
+  // void incrementarCantidad() {
+  //   setState(() {
+  //    var precioCont = widget.productPrice;
+  //    cantidad++;
+  //    precioCont = cantidad * precioCont;
+  //    precioVenta = precioCont;
+     
+  //   });
+  // }
 
-  void incrementarCantidad() {
-    setState(() {
-      cantidad++;
-    });
+  // void decrementarCantidad() {
+  //   if (cantidad > 0) {
+  //     setState(() {
+  //       var precioRes =widget.productPrice;
+  //       cantidad--;
+  //       precioRes = cantidad * precioRes;
+  //       precioVenta = precioRes;
+        
+  //     });
+  //   }
+  // }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    precioVenta = widget.productPrice;
+    
   }
 
-  void decrementarCantidad() {
-    if (cantidad > 0) {
-      setState(() {
-        cantidad--;
-      });
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +79,8 @@ class _ProductWidgetState extends State<ProductWidget> {
               color: const Color.fromRGBO(254, 242, 215, 1),
             ),
             child: Center(
-              child: Image.asset(
-                'lib/imagenes/burger1.png',
+              child: Image.network(
+                widget.ruta,
                 width: 75,
                 height: 60,
                 fit: BoxFit.contain,
@@ -67,7 +94,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               children: [
                 const SizedBox(height: 5),
                 Text(
-                  widget.productName, // Usa el nombre del producto pasado como parámetro
+                  widget.productName,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -75,7 +102,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  widget.productPrice, // Usa el precio del producto pasado como parámetro
+                  'S/. ${widget.productPrice .toStringAsFixed(2)}',
+                  // precioVenta.toString(),
                   style: const TextStyle(
                     fontSize: 15,
                     color: Colors.black,
@@ -122,7 +150,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: decrementarCantidad,
+                            onTap: widget.precioDec,
                             child: Container(
                               width: 19.39,
                               height: 19.39,
@@ -142,7 +170,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 14),
                             child: Text(
-                              '$cantidad',
+                              widget.incremento.toString(),
                               style: const TextStyle(
                                 fontSize: 12.12,
                                 color: Colors.white,
@@ -151,7 +179,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: incrementarCantidad,
+                            onTap: widget.precioInc,
                             child: Container(
                               width: 19.39,
                               height: 19.39,
@@ -192,3 +220,4 @@ class _ProductWidgetState extends State<ProductWidget> {
     );
   }
 }
+

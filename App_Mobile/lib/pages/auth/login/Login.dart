@@ -7,8 +7,13 @@ import 'package:m_senorial/components/Inputs/my_input_text.dart';
 import 'package:m_senorial/components/Texts/my_text_center.dart';
 import 'package:m_senorial/components/Texts/my_text_title.dart';
 import 'package:m_senorial/components/Extras/square_icon.dart';
+import 'package:m_senorial/core-url/urlconst.dart';
+import 'package:m_senorial/services/auth/login.service.dart';
+
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
+
+  AuthService loginService = AuthService(ruta: UrlAuth.login, dio: Dio());
 
   @override
   _LoginState createState() => _LoginState();
@@ -18,7 +23,7 @@ class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _rememberMe = false;
-
+  
   ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
 
   // final String endpoint = dotenv.env['API_ENDPOINT']!;
@@ -57,29 +62,72 @@ class _LoginState extends State<Login> {
     return emailRegex.hasMatch(email);
   }
 
-   void login() async {
-    final dio = Dio();
-    final response = await dio.post('https://localhost:7283/api/Auth/Login/Mobile',
-      data: {'email': emailController.text, 'password': passwordController.text},
+void login() async {
+  final dio = Dio();
+  final BuildContext currentContext = context;
+
+  try {
+    // Mostrar un indicador de proceso mientras se realiza la autenticación
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Iniciando sesión...'),
+        duration: const Duration(seconds: 1),  // Tiempo de espera para que se muestre el mensaje
+        onVisible: () async {
+          // Enviar la solicitud de inicio de sesión
+          final response = await dio.post(
+            UrlAuth.login,
+            data: {
+              'email': emailController.text,
+              'password': passwordController.text,
+            },
+          );
+
+          // Convertir la respuesta a un Map
+          final responseData = response.data;
+
+          // Verificar si la respuesta es exitosa
+          if (responseData != null && responseData['success'] == true) {
+            var box = Hive.box("security");
+
+            // Verificar si el campo 'infoUsuario' existe y no es null antes de acceder a 'email'
+            if (responseData['infoUsuario'] != null && responseData['infoUsuario']['email'] != null) {
+              box.put('email', responseData['infoUsuario']['email']);
+            } else {
+              _showErrorMessage(currentContext, 'Error al obtener el correo electrónico del usuario.');
+              return;
+            }
+
+            // Verificar si el token existe antes de almacenarlo
+            if (responseData['token'] != null) {
+              box.put('token', responseData['token']);
+            } else {
+              _showErrorMessage(currentContext, 'Error al obtener el token.');
+              return;
+            }
+              box.put('nombre',responseData['infoUsuario']['nombre']);
+              box.put('rol',responseData['infoUsuario']['rol']);
+            // Navegar a la pantalla principal
+            context.go('/home');
+          } else {
+            _showErrorMessage(currentContext, 'Correo electrónico o contraseña incorrectos');
+          }
+        },
+      ),
     );
-
-    var box = Hive.box("security");
-                      box.put("userName", response.data['usuario']['email']);
-                      box.put("token",response.data['token']);
-
-    if (response.data['success'] == true) {
-      // Navegar a la pantalla principal o realizar la acción de inicio de sesión
-      context.go('/home');
-    } else {
-      String message = 'Correo electrónico o contraseña incorrectos';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    } 
+  } catch (e) {
+    // Manejo de errores
+    _showErrorMessage(currentContext, 'Ha ocurrido un error. Por favor, intenta de nuevo.');
   }
+}
+
+void _showErrorMessage(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3),
+    ),
+  );
+}
 
   void forgotPassword() {
     context.go('/login/forgetpassword');
@@ -167,7 +215,7 @@ class _LoginState extends State<Login> {
                           checkboxTheme: CheckboxThemeData(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4.0),
-                              side: BorderSide(color: Color.fromARGB(180, 213, 214, 209)),
+                              side: const BorderSide(color: Color.fromARGB(180, 213, 214, 209)),
                             ),
                             fillColor: MaterialStateProperty.all<Color>(Color.fromRGBO(15, 14, 14, 1)),
                           ),
@@ -216,21 +264,21 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 27,),
             // Sign Up
-            Padding(
-              padding: const EdgeInsets.all(0),
+            const Padding(
+              padding: EdgeInsets.all(0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Don't have an account?",
                     style: TextStyle(
                       color: Color.fromRGBO(100, 105, 130, 1),
                       fontSize: 16,
                     ),
                   ),
-                  const SizedBox(width: 10,),
+                  SizedBox(width: 10,),
                   InkWell(
-                    child: const Text(
+                    child: Text(
                       "SIGN UP",
                       style: TextStyle(
                         color: Color.fromRGBO(255, 118, 34, 1),

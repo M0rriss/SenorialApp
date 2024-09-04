@@ -13,7 +13,7 @@ class ProductResponse {
     String nombreProducto;
     String detalleProducto;
     String rutaImagen;
-    int precioVenta;
+    double precioVenta;
 
     ProductResponse({
         required this.idProducto,

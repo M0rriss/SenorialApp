@@ -1,11 +1,13 @@
-class CategoriasResponse {
+class CategoriasRequest
+ {
     int idCategoria;
     String nombre;
     dynamic idCategoriaPadre;
     bool estado;
     String estadoDescripcion;
 
-    CategoriasResponse({
+    CategoriasRequest
+    ({
         required this.idCategoria,
         required this.nombre,
         required this.idCategoriaPadre,
@@ -13,7 +15,9 @@ class CategoriasResponse {
         required this.estadoDescripcion,
     });
 
-    factory CategoriasResponse.fromJson(Map<String, dynamic> json) => CategoriasResponse(
+    factory CategoriasRequest
+    .fromJson(Map<String, dynamic> json) => CategoriasRequest
+    (
         idCategoria: json["idCategoria"],
         nombre: json["nombre"],
         idCategoriaPadre: json["idCategoriaPadre"],

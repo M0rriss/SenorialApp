@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 import 'package:m_senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
+import 'package:m_senorial/pages/Order/OrderSuccessful.dart';
 import 'package:m_senorial/pages/auth/Edit-Profile/PersonalEdit.dart';
 import 'package:m_senorial/pages/auth/Edit-Profile/PersonalInfo.dart';
 import 'package:m_senorial/pages/auth/Register-Data/RegisterData.dart';
@@ -63,21 +65,30 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: 'categories',
-              builder: (context, state) => Categories(),
+              builder: (context, state){
+                PedidoRequest req = state.extra as PedidoRequest;
+                return Categories(data: req);
+              },
               routes: [
                 GoRoute(
                   path: 'productslist',
                   builder: (context, state) {
-                    final category = state.extra as String? ?? '';
-                    return ProductsList(category: category);
+                    PedidoRequest req = state.extra as PedidoRequest;
+                    return ProductsList(pedido: req);
                   },
                   routes: [
                     GoRoute(
                       path: 'ordermenu',
                       builder: (context, state) {
-                        final selectedProducts = state.extra as List<Map<String, dynamic>>? ?? [];
-                        return OrderMenuIndoor(selectedProducts: selectedProducts);
+                        PedidoRequest req = state.extra as PedidoRequest;
+                        return OrderMenuIndoor(pedido: req);
                       },
+                      routes: [
+                        GoRoute(
+                          path: 'ordersuccessful',
+                          builder: (context, state) => OrderSuccessful(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -95,14 +106,24 @@ final GoRouter router = GoRouter(
               routes: [
                 GoRoute(
                   path: 'categories',
-                  builder: (context, state) => Categories(),
+                  builder: (context, state) {
+                    PedidoRequest req = state.extra as PedidoRequest;
+                    return Categories(data: req);
+                  },
                   routes: [
                     GoRoute(
                       path: 'productslist',
                       builder: (context, state) {
-                        final category = state.extra as String? ?? '';
-                        return ProductsList(category: category);
+                    PedidoRequest req = state.extra as PedidoRequest;
+                        return ProductsList(pedido: req,);
                       },
+
+                      routes: [
+                        GoRoute(
+                          path: 'ordersuccessful',
+                          builder: (context, state) => OrderSuccessful(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -112,6 +133,5 @@ final GoRouter router = GoRouter(
         ),
       ],
     ),
-    // Agrega otras rutas aquí si es necesario
   ],
 );

@@ -1,31 +1,140 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:m_senorial/components/Buttons/buttonExtras.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Buttons/buttonOrden.dart';
 import 'package:m_senorial/components/Extras/productwidget.dart';
-import 'package:m_senorial/components/Extras/remove_item_dialog.dart'; // Importa el nuevo widget
+import 'package:m_senorial/components/Extras/remove_item_dialog.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 
-class OrderMenuIndoor extends StatelessWidget {
-  final List<Map<String, dynamic>> selectedProducts; // Almacena los productos seleccionados con nombre y precio
+class OrderMenuIndoor extends StatefulWidget {
+  final PedidoRequest pedido;
 
-  OrderMenuIndoor({Key? key, required this.selectedProducts}) : super(key: key);
+  const OrderMenuIndoor({
+    Key? key,
+    required this.pedido,
+  }) : super(key: key);
 
-  final codeController = TextEditingController();
+  @override
+  State<OrderMenuIndoor> createState() => _OrderMenuIndoorState();
+}
 
-  void showRemoveItemDialog(BuildContext context) {
+class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
+  // late List<Map<String, dynamic>> products;
+  double total = 0;
+  List<double> precios = [];
+
+  @override
+  void initState() {
+    super.initState();
+    listarProductos();
+  }
+
+  void listarProductos() {
+    for (var p in widget.pedido.lista) {
+      total += p.precio * p.cantidad;
+      precios.add(p.precio);
+    }
+  }
+
+  void showRemoveItemDialog(int index) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return RemoveItemDialog(); // Usa el nuevo widget
+        return RemoveItemDialog(
+          onConfirm: () {
+            setState(() {
+              var x = 0;
+              for (var p in widget.pedido.lista) {
+                if (p.idProducto == index) {
+                  total -= p.precio;
+                  precios.remove(x);
+                  widget.pedido.lista.remove(p);
+                }
+              }
+              // products.removeAt(index);
+            });
+          },
+        );
       },
     );
   }
 
-  // Calcula el total sumando los precios de los productos seleccionados
-  double calcularTotal() {
-    return selectedProducts.fold(0, (sum, item) => sum + item['precio']);
-  }
+  // void incrementarCantidad(int index) {
+  //   setState(() {
+  //     var x = 0;
+  //     for (var p in widget.pedido.lista) {
+  //       if (p.cantidad == 9) {
+  //         break;
+  //       } else {
+  //         if (p.idProducto == index) {
+  //           p.cantidad++;
+  //           p.precio = p.cantidad * precios[x];
+  //           total = precios[x] + total;
+  //         }
+  //         x++;
+  //       }
+  //     }
+  //   });
+  // }
+
+  // void decrementarCantidad(int index) {
+  //   setState(() {
+  //     var x = 0;
+  //     for (var p in widget.pedido.lista) {
+  //       if (p.cantidad == 1) {
+  //         break;
+  //       } else {
+  //         if (p.idProducto == index) {
+  //           p.cantidad--;
+  //           p.precio = p.cantidad * precios[x];
+  //           total = total - precios[x];
+  //         }
+  //         x++;
+  //       }
+  //     }
+  //   });
+  // }
+void incrementarCantidad(int idProducto) {
+  setState(() {
+    // Buscar el índice del producto correspondiente en la lista
+    var productoEncontrado = widget.pedido.lista.firstWhere(
+      (p) => p.idProducto == idProducto,
+      
+    );
+
+    if (productoEncontrado != null && productoEncontrado.cantidad < 9) {
+      // Incrementar la cantidad y actualizar el precio total del producto
+      productoEncontrado.cantidad++;
+      productoEncontrado.precio = productoEncontrado.cantidad * precios[widget.pedido.lista.indexOf(productoEncontrado)];
+
+      // Actualizar el total global
+      total += precios[widget.pedido.lista.indexOf(productoEncontrado)];
+    }
+  });
+}
+
+void decrementarCantidad(int idProducto) {
+  setState(() {
+    // Buscar el índice del producto correspondiente en la lista
+    var productoEncontrado = widget.pedido.lista.firstWhere(
+      (p) => p.idProducto == idProducto,
+      
+    );
+
+    if (productoEncontrado != null && productoEncontrado.cantidad > 1) {
+      // Decrementar la cantidad y actualizar el precio total del producto
+      productoEncontrado.cantidad--;
+      productoEncontrado.precio = productoEncontrado.cantidad * precios[widget.pedido.lista.indexOf(productoEncontrado)];
+
+      // Actualizar el total global
+      total -= precios[widget.pedido.lista.indexOf(productoEncontrado)];
+    }
+  });
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +149,12 @@ class OrderMenuIndoor extends StatelessWidget {
                 const SizedBox(width: 20),
                 ButtonBack(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    context.go('/home/salestable/categories/productslist',
+                        extra: widget.pedido);
                   },
                 ),
                 const SizedBox(width: 20),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+                    const Text(
                       'PEDIDO',
                       style: TextStyle(
                         fontSize: 14.57,
@@ -55,51 +162,54 @@ class OrderMenuIndoor extends StatelessWidget {
                         color: Color.fromRGBO(252, 110, 42, 1),
                       ),
                     ),
-                    Text(
-                      'Pedido No.16', // Aquí podrías personalizar el número de pedido si es necesario
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(153, 153, 153, 1),
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
+                const SizedBox(width: 222),
                 UserButton(
-                  onTap: () {
-                    // Acción cuando se presiona el botón
-                  },
+                  onTap: () {},
                 ),
               ],
             ),
             const SizedBox(height: 30),
             Row(
               children: [
-                const Spacer(),
+                const SizedBox(width: 290),
                 MyButtonExtras(
                   borderRadius: 10,
-                  onTap: () {},
-                  text: 'MESA - 1',
+                  onTap: () {  },
+                  //  text: 'MESA - ${widget.pedido.orden.idMesa}',
+                 text: 'MESA ${widget.pedido.orden.idMesa > 0 ? widget.pedido.orden.idMesa : ''}',
+                  
                 ),
+                const SizedBox(width: 20),
               ],
             ),
             const SizedBox(height: 15),
-            Text(
-              'Total ${selectedProducts.length} artículos', // Muestra la cantidad de productos
-              style: const TextStyle(
-                color: Color.fromRGBO(156, 155, 166, 1),
-                fontSize: 15.7,
-                fontWeight: FontWeight.normal,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 38.0),
+              child: Text(
+                "Total ${widget.pedido.lista.length} artículos",
+                style: const TextStyle(
+                  color: Color.fromRGBO(156, 155, 166, 1),
+                  fontSize: 15.7,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
             const SizedBox(height: 16),
-            for (var producto in selectedProducts)
+            for (var i in widget.pedido.lista)
               ProductWidget(
-                productName: producto['nombre'],
-                productPrice: 'S/. ${producto['precio'].toStringAsFixed(2)}', // Muestra el precio del producto
+                ruta: i.ruta,
+                productName: i.nombre,
+                productPrice:
+                    i.precio, // Mostrar el precio actualizado del producto
+                incremento: i.cantidad, // Mostrar la cantidad del producto
+                precioInc: () {
+                  incrementarCantidad(i.idProducto);
+                },
+                precioDec: () {
+                  decrementarCantidad(i.idProducto);
+                },
                 onDelete: () {
-                  showRemoveItemDialog(context);
+                  showRemoveItemDialog(i.idProducto);
                 },
               ),
             const SizedBox(height: 32),
@@ -119,7 +229,7 @@ class OrderMenuIndoor extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    'S/. ${calcularTotal().toStringAsFixed(2)}', // Muestra el total calculado
+                    'S/. ${total.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.normal,
@@ -129,17 +239,18 @@ class OrderMenuIndoor extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 25),
-           Center(
-  child: MyButtonOrdern(
-    onTap: () {
-      // Acción cuando se presiona el botón 'Hacer Pedido'
-    },
-    text: 'Hacer Pedido',
-    borderRadius: 10,
-    color: const Color.fromRGBO(255, 145, 15, 1),
-  ),
-),
-
+            if (widget.pedido.lista.isNotEmpty)
+            Center(
+              child: MyButtonOrdern(
+                onTap: () {
+                  context.go(
+                      '/home/salestable/categories/productslist/ordermenu/ordersuccessful');
+                },
+                text: 'Hacer Pedido',
+                borderRadius: 10,
+                color: const Color.fromRGBO(255, 145, 15, 1),
+              ),
+            ),
             const SizedBox(height: 30),
           ],
         ),

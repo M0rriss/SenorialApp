@@ -1,6 +1,6 @@
 class GenericFilterResponse<T> {
-  final int totalRegistros;
-  final List<T> lista;
+   int totalRegistros;
+   List<T> lista;
 
   GenericFilterResponse({
     required this.totalRegistros,
