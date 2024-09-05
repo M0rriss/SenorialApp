@@ -48,12 +48,14 @@ class AuthResponse {
 class InfoUsuario {
     int idPersona;
     int idRol;
+    int idEmpleado;
     String nombre;
     String email;
     String rol;
 
     InfoUsuario({
         required this.idPersona,
+        required this.idEmpleado,
         required this.idRol,
         required this.nombre,
         required this.email,
@@ -62,6 +64,7 @@ class InfoUsuario {
 
     factory InfoUsuario.fromJson(Map<String, dynamic> json) => InfoUsuario(
         idPersona: json["idPersona"],
+        idEmpleado: json["idEmpleado"],
         idRol: json["idRol"],
         nombre: json["nombre"],
         email: json["email"],
@@ -70,6 +73,7 @@ class InfoUsuario {
 
     Map<String, dynamic> toJson() => {
         "idPersona": idPersona,
+        "idEmpleado": idEmpleado,
         "idRol": idRol,
         "nombre": nombre,
         "email": email,

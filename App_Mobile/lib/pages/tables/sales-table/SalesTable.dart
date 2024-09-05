@@ -24,6 +24,7 @@ class _SalestableState extends State<Salestable> {
   List<MesasResponse> mesas = [];
   // AuthService loginService = AuthService(ruta: UrlAuth.login, dio: Dio());
   String nombreUsuario = '';
+  int idEmpleado = 0;
   late AuthService loginService;
   @override
   void initState() {
@@ -39,6 +40,11 @@ class _SalestableState extends State<Salestable> {
             nombreUsuario = unico;
           })
         });
+        //*AGREGUE
+        obtenerEmpleado();
+          
+        
+        //*
   }
 
   Future<String> mostrarNombre() async {
@@ -47,11 +53,30 @@ class _SalestableState extends State<Salestable> {
     var nombre = box.get('nombre');
     return nombre;
   }
+  //* EMPLEADO
+  
+  Future<void> obtenerEmpleado() async {
+    var box = await Hive.openBox('security');
+    var empleado = box.get('idEmpleado');
 
+    // Si el empleado es null, puedes manejar el error, pero se espera que no lo sea
+    if (empleado != null) {
+      setState(() {
+        idEmpleado = empleado;
+      });
+    } else {
+      // Manejo de error si no se encuentra el idEmpleado
+      print('Error: No se encontró idEmpleado');
+    }
+  }
+  //*
   Future<List<MesasResponse>> listarMesas() async {
     final response = await widget.mesasService.listarMesas();
     List<MesasResponse> list =
         response.map((data) => MesasResponse.fromJson(data)).toList();
+          for (var mesa in list) {
+    print("Mesa ID: ${mesa.idMesa}, Nombre: ${mesa.nombre}"); // Ajusta según los campos de MesasResponse
+  }
     return list;
     // Actualizar el estado con la lista obtenida
   }
@@ -128,10 +153,13 @@ class _SalestableState extends State<Salestable> {
                   itemCount: mesas.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ButtonTables(
-                      onTap:(){
+                      onTap:() {
                         PedidoRequest req = PedidoRequest();
                         req.orden.idMesa = mesas[index].idMesa;
                         req.orden.idTipoPedido = 1;
+                        //* AGRGAMOS EL ID EMPLEADO
+                         req.orden.idEmpleado = idEmpleado;
+                        //*
                         navCategories(req);
                       }, // Navega a Categories al hacer clic en una mesa
                       text: mesas[index].idMesa.toString(),

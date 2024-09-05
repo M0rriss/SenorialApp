@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:m_senorial/components/Buttons/buttonExtras.dart';
@@ -7,6 +9,8 @@ import 'package:m_senorial/components/Buttons/buttonOrden.dart';
 import 'package:m_senorial/components/Extras/productwidget.dart';
 import 'package:m_senorial/components/Extras/remove_item_dialog.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedidos-request.dart';
+import 'package:m_senorial/services/pedidos/pedidos-service.dart';
 
 class OrderMenuIndoor extends StatefulWidget {
   final PedidoRequest pedido;
@@ -25,6 +29,12 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
   double total = 0;
   List<double> precios = [];
 
+//PEDIDOS CREACION VARIABLES
+ final PedidosService pedidosService = PedidosService();
+//
+
+
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +47,67 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
       precios.add(p.precio);
     }
   }
+  // * IMPLEMENTACION DEL PEDIDO
+  PedidosRequest convertirPedido(PedidoRequest pedidoRequest) {
+  // Calcula el total antes de enviar el pedido
+  double total = pedidoRequest.lista.fold(0, (sum, producto) {
+    return sum + (producto.precio * producto.cantidad);
+  });
+
+  // Asegúrate de que estos valores no sean 0 antes de enviar el pedido
+  if (pedidoRequest.orden.idEmpleado == 0 || pedidoRequest.orden.idMesa == 0 || pedidoRequest.orden.idTipoPedido == 0) {
+    throw Exception("El ID de empleado, mesa o tipo de pedido no puede ser 0");
+  }
+
+  return PedidosRequest(
+    idPedido: pedidoRequest.orden.idPedido,
+    idEmpleado: pedidoRequest.orden.idEmpleado,
+    idMesa: pedidoRequest.orden.idMesa,
+    mesaNombre: 'Mesa ${pedidoRequest.orden.idMesa}',
+    fechaPedido: DateTime.now(),  // Ajusta la fecha a como la necesita el backend
+    estado: pedidoRequest.orden.estado,
+    total: total,  // Ahora envía el total correcto
+    idTipoPedido: pedidoRequest.orden.idTipoPedido,
+    detalles: pedidoRequest.lista.map((producto) {
+      return Detalle(
+        idDetallePedido: 0, 
+        idProducto: producto.idProducto,
+        productoNombre: producto.nombre,
+        cantidad: producto.cantidad,
+        precioUnitario: producto.precio,
+      );
+    }).toList(),
+  );
+}
+  //*PEDIDO
+Future<void> hacerPedido() async {
+  try {
+    // Convertimos PedidoRequest a PedidosRequest
+    PedidosRequest pedido = convertirPedido(widget.pedido);
+    print(jsonEncode(pedido.toJson())); 
+    // Llamada al servicio para registrar el pedido
+    final response = await pedidosService.RegistrarPedido(pedido);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Pedido registrado con éxito')),
+      );
+      // Redirigir al usuario a otra pantalla
+      context.go('/home/salestable/categories/productslist/ordermenu/ordersuccessful');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al registrar el pedido')),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error: $e')),
+    );
+  }
+}
+
+//*
+  //*
 
   void showRemoveItemDialog(int index) {
     showModalBottomSheet(
@@ -243,8 +314,7 @@ void decrementarCantidad(int idProducto) {
             Center(
               child: MyButtonOrdern(
                 onTap: () {
-                  context.go(
-                      '/home/salestable/categories/productslist/ordermenu/ordersuccessful');
+                 hacerPedido();
                 },
                 text: 'Hacer Pedido',
                 borderRadius: 10,

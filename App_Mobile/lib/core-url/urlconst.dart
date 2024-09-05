@@ -1,5 +1,5 @@
-//const String dominio = "https://localhost:7283";
- const String dominio = "https://senorialapp.somee.com";
+const String dominio = "https://localhost:7283";
+ //const String dominio = "https://senorialapp.somee.com";
 
 class SubRutas {
   //AUTH
@@ -8,6 +8,8 @@ class SubRutas {
   static const String categoria = "$dominio/api/Categoria"; 
   static const String producto = "$dominio/api/Producto";
   static const String home = "$dominio/api/TipoPedido";
+
+  static const String orden = "$dominio/api/Pedido";
 }
 
 class UrlAuth {
@@ -35,4 +37,10 @@ class UrlProductos {
 //HOME
 class   UrlHome {
 static const String listipopedido = "${SubRutas.home}/Listado";
+}
+
+class UrlPedidos {
+  static const String pedido = SubRutas.orden;
+  static const String pedidosLocal = "${SubRutas.orden}/PedidosLocal";
+  static const String detPedidos = "${SubRutas.orden}/DetPedidos";
 }

@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 import 'package:m_senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
 import 'package:m_senorial/pages/Order/OrderSuccessful.dart';
-import 'package:m_senorial/pages/auth/Edit-Profile/PersonalEdit.dart';
-import 'package:m_senorial/pages/auth/Edit-Profile/PersonalInfo.dart';
 import 'package:m_senorial/pages/auth/Register-Data/RegisterData.dart';
 import 'package:m_senorial/pages/Order/Registrar-Pedidos/TakeOutRegister.dart';
 import 'package:m_senorial/pages/home/Welcome-S/Welcome.dart';
@@ -14,12 +11,9 @@ import 'package:m_senorial/pages/auth/verification/Verified.dart';
 import 'package:m_senorial/pages/categories/categorie/Categories.dart';
 import 'package:m_senorial/pages/home/Home.dart';
 import 'package:m_senorial/pages/products/product-list/ProductsList.dart';
-import 'package:m_senorial/pages/tables/add-tables/AddTables.dart';
 import 'package:m_senorial/pages/tables/sales-table/SalesTable.dart';
 import 'package:m_senorial/pages/auth/login/Login.dart';
-import 'package:m_senorial/pages/tables/edit-tables/EditTables.dart';
 import 'package:m_senorial/pages/home/Welcome-S/Loading.dart';
-import 'package:m_senorial/pages/auth/Edit-Profile/MenuLogin.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -82,6 +76,7 @@ final GoRouter router = GoRouter(
                       builder: (context, state) {
                         PedidoRequest req = state.extra as PedidoRequest;
                         return OrderMenuIndoor(pedido: req);
+                       
                       },
                       routes: [
                         GoRoute(

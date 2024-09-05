@@ -1,11 +1,11 @@
 class OrdenRequest {
-int idPedido = 0;
+int idPedido;
 int idEmpleado;
 int idMesa;
 String fechaPedido;
 int estado;
-double total = 0;
-int idTipoPedido = 0;
+double total;
+int idTipoPedido;
 
 OrdenRequest({this.idPedido = 0, this.idEmpleado = 0,this.idMesa = 0,
 this.fechaPedido = '',this.estado = 0, this.total = 0,this.idTipoPedido = 0 });
