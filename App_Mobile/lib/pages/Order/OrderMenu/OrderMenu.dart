@@ -14,8 +14,21 @@ class OrderMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void OrderMenu() {
+    void goToOrderMenu() {
       Navigator.pushNamed(context, '/OrderMenu');
+    }
+
+    // Ejemplo de lista de productos con nombre y precio
+    final List<Map<String, dynamic>> productos = [
+      {'name': 'Hamburguesa de Pollo', 'price': 30.00},
+      {'name': 'Hamburguesa de Res', 'price': 35.00},
+      {'name': 'Hamburguesa Vegana', 'price': 28.00},
+      {'name': 'Hamburguesa BBQ', 'price': 32.00},
+    ];
+
+    // Calcular el subtotal sumando los precios de los productos
+    double calcularSubtotal() {
+      return productos.fold(0.0, (total, producto) => total + producto['price']);
     }
 
     return Scaffold(
@@ -28,9 +41,7 @@ class OrderMenu extends StatelessWidget {
               children: [
                 const SizedBox(width: 20),
                 ButtonBack(
-                  onTap: () {
-                    OrderMenu();
-                  },
+                  onTap: goToOrderMenu,
                 ),
                 const SizedBox(width: 20),
                 const Column(
@@ -54,7 +65,7 @@ class OrderMenu extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(width: 198),
+                const Spacer(),
                 UserButton(
                   onTap: () {
                     // Acción cuando se presiona el botón
@@ -65,52 +76,40 @@ class OrderMenu extends StatelessWidget {
             const SizedBox(height: 30),
             Row(
               children: [
-                const SizedBox(width: 289),
+                const Spacer(),
                 MyButtonExtras(
                   borderRadius: 10,
                   onTap: () {},
                   text: 'MESA - 1',
                 ),
+                const SizedBox(width: 20),
               ],
             ),
             const SizedBox(height: 10),
-            const Row(
-              children: [
-                SizedBox(width: 29),
-                Text(
-                  'Total 04 artículos',
-                  style: TextStyle(
-                    color: Color.fromRGBO(156, 155, 166, 1),
-                    fontSize: 15.7,
-                    fontWeight: FontWeight.normal,
-                  ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 29.0),
+              child: Text(
+                'Total 04 artículos',
+                style: TextStyle(
+                  color: Color.fromRGBO(156, 155, 166, 1),
+                  fontSize: 15.7,
+                  fontWeight: FontWeight.normal,
                 ),
-              ],
+              ),
             ),
             const SizedBox(height: 14),
-            ProductWidget(
-              productName: 'Hamburguesa de Pollo',
-              productPrice: 'S/. 30.00',
-              showControls: false,
-            ), // Usa la versión sin controles
-            const SizedBox(height: 14),
-            ProductWidget(
-              productName: 'Hamburguesa de Res',
-              productPrice: 'S/. 35.00',
-              showControls: false,
-            ), // Usa la versión sin controles
-            const SizedBox(height: 14),
-            ProductWidget(
-              productName: 'Hamburguesa Vegana',
-              productPrice: 'S/. 28.00',
-              showControls: false,
-            ), // Usa la versión sin controles
-            const SizedBox(height: 14),
-            ProductWidget(
-              productName: 'Hamburguesa BBQ',
-              productPrice: 'S/. 32.00',
-              showControls: false,
-            ), // Usa la versión sin controles
+            // Mostrar los productos en la lista
+            ...productos.map((producto) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 14.0),
+                child: ProductWidget(
+                  ruta: "",
+                  productName: producto['name'],
+                  productPrice: producto['price'],
+                  showControls: false,
+                ),
+              );
+            }).toList(),
             // Aquí añadimos la raya vertical centrada con borderRadius
             Center(
               child: ClipRRect(
@@ -123,11 +122,11 @@ class OrderMenu extends StatelessWidget {
                 ),
               ),
             ),
-            // Aquí añadimos el texto y la suma entre ProductWidget y MyButtonOrdern
-            const Row(
+            // Mostrar el subtotal de la orden
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 35.0),
                   child: Text(
                     'Order Subtotal',
@@ -138,10 +137,10 @@ class OrderMenu extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    'S/.120.00', // Aquí deberías calcular la suma real de los productos
-                    style: TextStyle(
+                    'S/. ${calcularSubtotal().toStringAsFixed(2)}', // Mostrar el subtotal calculado
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.normal,
                     ),

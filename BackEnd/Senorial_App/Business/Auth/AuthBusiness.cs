@@ -202,7 +202,8 @@ namespace Business.Auth
                 Email = usuario.Email,
                 Nombre = usuario.Nombre,
                 IdPersona = usuario.IdPerson,
-                Rol = usuario.Rol
+                Rol = usuario.Rol,
+                IdEmpleado = usuario.IdEmpleado
             };
             return result;
         }

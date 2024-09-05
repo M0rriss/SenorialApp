@@ -1,43 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:m_senorial/components/Buttons/buttonTwo.dart';
 import 'package:m_senorial/components/Buttons/buttonTables.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Extras/status.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/models/Response/mesas/mesas-response.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:m_senorial/services/auth/login.service.dart';
 import 'package:m_senorial/services/mesas/mesa_service.dart';
 
 class Salestable extends StatefulWidget {
-  Salestable({Key? key});
   final mesasService = MesasService();
+  Salestable({Key? key}) : super(key: key);
 
   @override
-  _SalestableState createState() => _SalestableState();
+  State<Salestable> createState() => _SalestableState();
 }
 
 class _SalestableState extends State<Salestable> {
   List<MesasResponse> mesas = [];
-   @override
+  // AuthService loginService = AuthService(ruta: UrlAuth.login, dio: Dio());
+  String nombreUsuario = '';
+  int idEmpleado = 0;
+  late AuthService loginService;
+  @override
   void initState() {
     super.initState();
-    listarMesas().then((value)=>{
-      setState(() {
-        mesas = value;
-      })
-    }); // Llamar al método cuando el widget se inicialice
-  }
-  Future<List<MesasResponse>> listarMesas() async {
-    final response = await widget.mesasService.listarMesas();
-    List<MesasResponse> list = response.map((data) => MesasResponse.fromJson(data)).toList();
-    return list;
-     // Actualizar el estado con la lista obtenida
-    
+    listarMesas().then((value) => {
+          setState(() {
+            mesas = value;
+          })
+        });
+        mostrarNombre().then((value)=>{
+          setState(() {
+            String unico = value.substring(0,value.indexOf(" "));
+            nombreUsuario = unico;
+          })
+        });
+        //*AGREGUE
+        obtenerEmpleado();
+          
+        
+        //*
   }
 
-  void navCategories() {
-    context.go('/home/salestable/categories');
+  Future<String> mostrarNombre() async {
+    var box = await Hive.openBox(
+        'security'); // Asegurarse de que la caja está abierta
+    var nombre = box.get('nombre');
+    return nombre;
+  }
+  //* EMPLEADO
+  
+  Future<void> obtenerEmpleado() async {
+    var box = await Hive.openBox('security');
+    var empleado = box.get('idEmpleado');
+
+    // Si el empleado es null, puedes manejar el error, pero se espera que no lo sea
+    if (empleado != null) {
+      setState(() {
+        idEmpleado = empleado;
+      });
+    } else {
+      // Manejo de error si no se encuentra el idEmpleado
+      print('Error: No se encontró idEmpleado');
+    }
+  }
+  //*
+  Future<List<MesasResponse>> listarMesas() async {
+    final response = await widget.mesasService.listarMesas();
+    List<MesasResponse> list =
+        response.map((data) => MesasResponse.fromJson(data)).toList();
+          for (var mesa in list) {
+    print("Mesa ID: ${mesa.idMesa}, Nombre: ${mesa.nombre}"); // Ajusta según los campos de MesasResponse
+  }
+    return list;
+    // Actualizar el estado con la lista obtenida
+  }
+
+  void navCategories(PedidoRequest req) {
+    context.go('/home/salestable/categories',extra: req);
   }
 
   @override
@@ -68,7 +113,7 @@ class _SalestableState extends State<Salestable> {
                       ),
                     ),
                     Text(
-                      'Mauricio',
+                      nombreUsuario,
                       style: GoogleFonts.sen(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -108,7 +153,15 @@ class _SalestableState extends State<Salestable> {
                   itemCount: mesas.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ButtonTables(
-                      onTap: navCategories, // Navega a Categories al hacer clic en una mesa
+                      onTap:() {
+                        PedidoRequest req = PedidoRequest();
+                        req.orden.idMesa = mesas[index].idMesa;
+                        req.orden.idTipoPedido = 1;
+                        //* AGRGAMOS EL ID EMPLEADO
+                         req.orden.idEmpleado = idEmpleado;
+                        //*
+                        navCategories(req);
+                      }, // Navega a Categories al hacer clic en una mesa
                       text: mesas[index].idMesa.toString(),
                       color: const Color.fromRGBO(254, 240, 211, 1),
                       status: '0 items',

@@ -10,6 +10,7 @@ namespace DBSenorialModels.View.Auth.Usuario
     public class VwUsuario
     {
         public int IdPerson { get; set; } = 0;
+        public int IdEmpleado { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string Rol { get; set; } = string.Empty;
         public int IdRol { get; set; } = 0;

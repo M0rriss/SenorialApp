@@ -6,11 +6,8 @@
     "\\Senorial_App\\App_Senorial\\Controllers",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\TipoPedido",
-    "\\Senorial_App\\Repository",
-    "\\Senorial_App\\Repository\\Schema_Almacen",
-    "\\Senorial_App\\Repository\\Schema_Almacen\\DetalleInventarios",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\Senorial_App.sln",
+  "SelectedNode": "\\Senorial_App\\App_Senorial\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

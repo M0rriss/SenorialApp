@@ -1,130 +1,147 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:m_senorial/components/Buttons/buttonList.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Buttons/custom_button.dart';
+import 'package:m_senorial/models/Response/categorias/categorias-response.dart';
 import 'package:m_senorial/models/Response/productos/product-response.dart';
+import 'package:m_senorial/models/Resquest/Pedido/listar_request.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:m_senorial/models/Resquest/products/product-resques.dart';
 import 'package:m_senorial/models/generic/generic-filter-request.dart';
 import 'package:m_senorial/models/generic/generic-filter-response.dart';
+import 'package:m_senorial/services/categorias/categoria_service.dart';
+import 'package:m_senorial/services/products/product_service.dart';
 
 class ProductsList extends StatefulWidget {
-  final String category;
+  final PedidoRequest pedido;
 
-  const ProductsList({Key? key, required this.category}) : super(key: key);
+  const ProductsList({Key? key, required this.pedido}) : super(key: key);
 
   @override
-  _ProductsListState createState() => _ProductsListState();
+  State<ProductsList> createState() => _ProductsListState();
 }
 
 class _ProductsListState extends State<ProductsList> {
+  final CategoriaService categoriaService = CategoriaService();
+  final ProductService productService = ProductService();
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _productos = [];
-  List<Map<String, dynamic>> _productosFiltrados = [];
-  List<Map<String, dynamic>> _selectedProducts = [];
+
+  GenericFilterResponse<ProductResponse> productosv2 =
+      GenericFilterResponse<ProductResponse>(totalRegistros: 0, lista: []);
+  List<ProductResponse> _productosFiltrados = [];
+  List<Map<String, dynamic>> selectedProducts = [];
+
+  List<String> subCaterias = [];
+  String? selectedSubCategorias;
   String? selectedValue;
+
+  int? filtro1;
+  int? filtro2;
+  List<CategoriasResponse> subCategoria = [];
 
   @override
   void initState() {
+    //cargarSubCategorias();
     super.initState();
-     GenericFilterRequest req =
-        GenericFilterRequest(numeroPagina: 1, cantidad: 5, filtros: []);
-    filtarOrdenesPraradas(req).then((value) => {
+    listarProducto(
+            idCategoria: widget.pedido.filtro.idCategoria, idSubCategoria: '')
+        .then((value) {
+      setState(() {
+        productosv2 = value;
+        _productosFiltrados = productosv2.lista;
+      });
+    });
+    listarSubCategoria().then((value) => {
           setState(() {
-          print(value);
+            subCategoria = value;
           })
         });
-    // _fetchProductsByCategory(widget.category);
   }
 
-  Future<Response> filtarOrdenesPraradas(GenericFilterRequest req) async {
-    final Dio dio = Dio();
-    var box = Hive.box("security");
-     var token = box.get('token');
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["authorization"] = "Bearer $token";
-    String ruta = "https://localhost:7283/api/Producto/Filtro/Ecommerce";
-    final response = await dio.post(ruta, data: req);
-    return response;
-  }
-
-Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
-    GenericFilterRequest req =
-        GenericFilterRequest(numeroPagina: 1, cantidad: 5, filtros: []);
-    final res = await filtarOrdenesPraradas(req);
-    print(res.data);
-    List<ProductResponse> m = [];
-    for (var i in res.data['lista']) {
-      ProductResponse tmp = ProductResponse.fromJson(i);
-      m.add(tmp);
+  Future<List<CategoriasResponse>> listarSubCategoria() async {
+    final res = await categoriaService
+        .filtroSubCategoria(int.parse(widget.pedido.filtro.idCategoria));
+    List<CategoriasResponse> data = [];
+    for (var c in res.data) {
+      CategoriasResponse tmp = CategoriasResponse.fromJson(c);
+      data.add(tmp);
     }
-    GenericFilterResponse<ProductResponse> mesa =
-        GenericFilterResponse<ProductResponse>(
-            totalRegistros: res.data['totalRegistros'], lista: m);
-    return mesa;
+    return data;
   }
 
-  // Future<void> _fetchProductsByCategory(String category) async {
-  //   try {
-  //     Dio dio = Dio();
-  //     GenericFilterRequest request = GenericFilterRequest(numeroPagina: 1, cantidad: 5, filtros: []);
-  //     final response = await dio.post('https://localhost:7283/api/Producto/Filtro/Ecommerce', data:request);
-  //     print(response.data);
-  //     // Verifica si los datos recibidos son válidos
-  //     if (response.statusCode == 200 && response.data is List) {
-  //       final List<Map<String, dynamic>> productos = List<Map<String, dynamic>>.from(
-  //         response.data.map((product) {
-  //           // Asegúrate de que los datos están disponibles y se están extrayendo correctamente
-  //           double precio = 0.0;
-  //           if (product['precio'] != null) {
-  //             try {
-  //               precio = double.parse(product['precio'].toString());
-  //             } catch (e) {
-  //               print('Error al convertir el precio: $e');
-  //             }
-  //           }
+  Future<void> filtrarProductos(String idSubCategoria) async {
+    try {
+      // Llama a la función listarProducto para obtener los productos filtrados
+      GenericFilterResponse<ProductResponse> res = await listarProducto(
+        idCategoria: widget.pedido.filtro.idCategoria,
+        idSubCategoria: idSubCategoria,
+      );
 
-  //           return {
-  //             'nombre': product['nombre'] ?? 'Sin nombre',
-  //             'descripcion': product['descripcion'] ?? 'Sin descripción',
-  //             'precio': precio,
-  //           };
-  //         }),
-  //       );
+      setState(() {
+        _productosFiltrados = res.lista; // Actualiza los productos filtrados
+      });
+    } catch (e) {
+      print('Error al filtrar productos: $e');
+    }
+  }
 
-  //       setState(() {
-  //         _productos = productos;
-  //         _productosFiltrados = productos;
-  //       });
-  //     } else {
-  //       print('Error en la estructura de los datos recibidos.');
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching products: $e');
-  //   }
-  // }
+  Future<GenericFilterResponse<ProductResponse>> listarProducto(
+      {String idCategoria = "",
+      String idSubCategoria = "",
+      int page = 1}) async {
+    GenericFilterRequest req = GenericFilterRequest(
+      numeroPagina: page,
+      cantidad: 6,
+      filtros: [
+        if (idCategoria.isNotEmpty)
+          FiltroRequest(name: "Categoria", value: idCategoria),
+        if (idSubCategoria.isNotEmpty)
+          FiltroRequest(name: "SubCategoria", value: idSubCategoria),
+      ],
+    );
+
+    final res = await productService.filtrarProductos(req);
+    return res;
+  }
+
+  void _fetchProducts() {
+    listarProducto(
+      idCategoria: widget.pedido.filtro.idCategoria,
+      idSubCategoria: "",
+    ).then((value) {
+      setState(() {
+        productosv2 = value;
+        _productosFiltrados = productosv2.lista;
+      });
+    });
+  }
 
   void _buscarProducto(String consulta) {
     setState(() {
-      _productosFiltrados = _productos
-          .where((producto) =>
-              producto['nombre'].toLowerCase().contains(consulta.toLowerCase()))
-          .toList();
+      if (consulta.isEmpty) {
+        _productosFiltrados = productosv2.lista;
+      } else {
+        _productosFiltrados = productosv2.lista
+            .where((producto) => producto.nombreProducto
+                .toLowerCase()
+                .contains(consulta.toLowerCase()))
+            .toList();
+      }
     });
   }
 
   void _incrementProductCount(String nombre, double precio) {
     setState(() {
-      _selectedProducts.add({'nombre': nombre, 'precio': precio});
+      selectedProducts.add({'nombre': nombre, 'precio': precio});
     });
   }
 
   void navCategories() {
     context.go('/home/salestable/categories/productslist/ordermenu',
-        extra: _selectedProducts);
+        extra: widget.pedido);
   }
 
   @override
@@ -136,21 +153,22 @@ Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
             const SizedBox(height: 50),
             Row(
               children: [
-                const SizedBox(width: 22),
+                const SizedBox(width: 20),
                 ButtonBack(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    PedidoRequest req = widget.pedido;
+                    context.go('/home/salestable/categories', extra: req);
                   },
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 10),
                 SizedBox(
-                  width: 124,
-                  height: 45,
+                  width: 170,
+                  height: 40,
                   child: DropdownButtonFormField2<String>(
                     isExpanded: true,
                     decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 1),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(32),
                         borderSide: const BorderSide(
@@ -162,15 +180,16 @@ Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
                             color: Color.fromRGBO(225, 122, 20, 1), width: 2),
                       ),
                     ),
-                    hint: const Text(
-                      '',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    items: _productos
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item['nombre'],
+                    hint: const Text("Sub Categorias"),
+                    // hint: const Text(
+                    //   'nombre',
+                    //   style: TextStyle(fontSize: 12),
+                    // ),
+                    items: subCategoria
+                        .map((subCategoria) => DropdownMenuItem<String>(
+                              value: subCategoria.idCategoria.toString(),
                               child: Text(
-                                item['nombre'],
+                                subCategoria.nombre,
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ))
@@ -179,23 +198,22 @@ Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
                       setState(() {
                         selectedValue = value;
                       });
+                      filtrarProductos(value!);
                     },
                     onSaved: (value) {
                       selectedValue = value;
                     },
+                    value: selectedValue,
                   ),
                 ),
-                const SizedBox(width: 22),
                 CustomButton(
                   onTap: navCategories,
                   text: 'Ordenar',
                   color: const Color.fromRGBO(225, 145, 15, 1),
-                  badgeNumber: _selectedProducts.length,
+                  badgeNumber: widget.pedido.lista.length,
                 ),
                 UserButton(
-                  onTap: () {
-                    // Acción cuando se presiona el botón
-                  },
+                  onTap: () {},
                 ),
               ],
             ),
@@ -224,8 +242,8 @@ Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
             ),
             const SizedBox(height: 40),
             Wrap(
-              spacing: 15,
-              runSpacing: 15,
+              spacing: -5,
+              runSpacing: 20,
               children: [
                 for (var producto in _productosFiltrados)
                   Column(
@@ -236,12 +254,89 @@ Future<GenericFilterResponse<ProductResponse>> listarMesas() async {
                         height: 215,
                         child: ButtonList(
                           onTap: () {},
-                          text: producto['nombre'],
-                          additionalText: producto['descripcion'],
-                          extraText: 'S/${producto['precio'].toStringAsFixed(2)}',
+                          text: producto.nombreProducto,
+                          additionalText: producto.detalleProducto,
+                          extraText:
+                              'S/${producto.precioVenta.toStringAsFixed(2)}',
                           icon: Icons.add,
-                          onIconTap: () =>
-                              _incrementProductCount(producto['nombre'], producto['precio']),
+                          onIconTap: () {
+                            // setState(() {
+                            //   if (widget.pedido.lista.isEmpty) {
+                            //     ListarRequest data = ListarRequest();
+                            //     data.idProducto = producto.idProducto;
+                            //     data.cantidad = 1;
+                            //     data.precio = producto.precioVenta;
+                            //     data.nombre = producto.nombreProducto;
+                            //     data.ruta = producto.rutaImagen;
+                            //     widget.pedido.lista.add(data);
+                            //   } else {
+                            //     for (var i in widget.pedido.lista) {
+                            //       if (i.idProducto == producto.idProducto) {
+                            //         //agregar aqui tu diseño de modas
+
+                            //         return;
+                            //       }
+                            //     }
+                            //     ListarRequest data = ListarRequest();
+                            //     data.idProducto = producto.idProducto;
+                            //     data.cantidad = 1;
+                            //     data.precio = producto.precioVenta;
+                            //     data.nombre = producto.nombreProducto;
+                            //     data.ruta = producto.rutaImagen;
+                            //     widget.pedido.lista.add(data);
+                            //   }
+                            // });
+                            setState(() {
+                              if (widget.pedido.lista.isEmpty) {
+                                ListarRequest data = ListarRequest();
+                                data.idProducto = producto.idProducto;
+                                data.cantidad = 1;
+                                data.precio = producto.precioVenta;
+                                data.nombre = producto.nombreProducto;
+                                data.ruta = producto.rutaImagen;
+                                widget.pedido.lista.add(data);
+                              } else {
+                                bool productoYaSeleccionado = false;
+                                
+                                // Comprobar si el producto ya está seleccionado
+                                for (var i in widget.pedido.lista) {
+                                  if (i.idProducto == producto.idProducto) {
+                                    productoYaSeleccionado = true;
+                                    break;
+                                  }
+                                }
+
+                                if (productoYaSeleccionado) {
+                                  // Mostrar SnackBar si el producto ya ha sido seleccionado
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                        'Este producto ya ha sido seleccionado.',
+                                      ),
+                                      duration: const Duration(seconds: 2),
+                                      action: SnackBarAction(
+                                        label: 'OK',
+                                        onPressed: () {
+                                          // Aquí puedes manejar alguna acción si lo deseas
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                  return; // Detener la ejecución si el producto ya fue agregado
+                                } else {
+                                  // Agregar el producto si no ha sido seleccionado
+                                  ListarRequest data = ListarRequest();
+                                  data.idProducto = producto.idProducto;
+                                  data.cantidad = 1;
+                                  data.precio = producto.precioVenta;
+                                  data.nombre = producto.nombreProducto;
+                                  data.ruta = producto.rutaImagen;
+                                  widget.pedido.lista.add(data);
+                                }
+                              }
+                            });
+                          },
+                          imageProduc: producto.rutaImagen,
                         ),
                       ),
                     ],

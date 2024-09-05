@@ -7,15 +7,18 @@ import 'package:hive/hive.dart';
 import 'package:m_senorial/components/Buttons/buttonCategories.dart'; // Asegúrate de que la ruta es correcta
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
+import 'package:m_senorial/core-url/urlconst.dart';
 import 'package:m_senorial/models/Response/categorias/categorias-response.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 
 class Categories extends StatefulWidget {
-  Categories({Key? key}) : super(key: key);
+  final PedidoRequest data;
+  const Categories({Key? key, required this.data}) : super(key: key);
 
   @override
-  _CategoriesState createState() => _CategoriesState();
+  State<Categories> createState() => _CategoriesState();
 }
-
+String nombreUsuario = '';
 class _CategoriesState extends State<Categories> {
   Future listarMesas() async {
     try {
@@ -24,15 +27,21 @@ class _CategoriesState extends State<Categories> {
       var token = box.get('token');
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers["authorization"] = "Bearer $token";
-      final response = await dio.get("https://localhost:7283/api/Categoria/listar");
-      print(response);
+      final response =
+      await dio.get(UrlCategorias.listar);
+          // await dio.get("https://localhost:7283/api/Categoria/listar");
       final list = response.data as List;
       return list;
     } on DioException catch (e) {
       print(e);
     }
   }
-
+Future<String> mostrarNombre() async {
+    var box = await Hive.openBox(
+        'security'); // Asegurarse de que la caja está abierta
+    var nombre = box.get('nombre');
+    return nombre;
+  }
   final TextEditingController _searchController = TextEditingController();
   List<CategoriasResponse> list = [];
 
@@ -44,12 +53,20 @@ class _CategoriesState extends State<Categories> {
         for (var element in value) {
           CategoriasResponse tmp = CategoriasResponse.fromJson(element);
           list.add(tmp);
+          
         }
+        
       });
+       mostrarNombre().then((value)=>{
+          setState(() {
+            String unico = value.substring(0,value.indexOf(" "));
+            nombreUsuario = unico;
+          })
+        });
     });
   }
 
-  void filterCategories(String searchText) {
+  void SearchCategories(String searchText) {
     setState(() {
       list = list
           .where((category) =>
@@ -58,26 +75,30 @@ class _CategoriesState extends State<Categories> {
     });
   }
 
-  void navProducts(String category) {
-    context.go('/home/salestable/categories/productslist', extra: category);
+  void listarProductos() {}
+
+  void navProducts(PedidoRequest data) {
+    PedidoRequest req = data;
+
+    context.go('/home/salestable/categories/productslist', extra: req);
   }
 
-String getImagePath(String categoryName) {
-  switch (categoryName) {
-    case 'Hamburguesas':
-      return 'lib/imagenes/burger.png';
-    case 'Parrillas y Pollos':
-      return 'lib/imagenes/pollos.png';
-    case 'Platos de Fondo':
-      return 'lib/imagenes/platos-fondo.png';
-    case 'Bebidas':
-      return 'lib/imagenes/bebidas.png';
-    case 'Complementos':
-      return 'lib/imagenes/complementos.png';
-    default:
-      return 'lib/imagenes/burger.png';
+  String getImagePath(String categoryName) {
+    switch (categoryName) {
+      case 'Hamburguesas':
+        return 'lib/imagenes/burger.png';
+      case 'Parrillas y Pollos':
+        return 'lib/imagenes/pollos.png';
+      case 'Platos de Fondo':
+        return 'lib/imagenes/platos-fondo.png';
+      case 'Bebidas':
+        return 'lib/imagenes/bebidas.png';
+      case 'Complementos':
+        return 'lib/imagenes/complementos.png';
+      default:
+        return 'lib/imagenes/burger.png';
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +128,7 @@ String getImagePath(String categoryName) {
                       ),
                     ),
                     Text(
-                      'Mauricio',
+                      nombreUsuario,
                       style: GoogleFonts.sen(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -116,7 +137,7 @@ String getImagePath(String categoryName) {
                     ),
                   ],
                 ),
-                const SizedBox(width: 203),
+                const SizedBox(width: 213),
                 UserButton(
                   onTap: () {
                     // Acción cuando se presiona el botón
@@ -130,7 +151,7 @@ String getImagePath(String categoryName) {
               height: 54,
               child: TextField(
                 controller: _searchController,
-                onChanged: filterCategories,
+                onChanged: SearchCategories,
                 decoration: InputDecoration(
                   labelText: 'Buscar',
                   border: OutlineInputBorder(
@@ -148,9 +169,16 @@ String getImagePath(String categoryName) {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: MyButtonCategories(
-                      onTap: () => navProducts(category.nombre),
+                      onTap: () {
+                        PedidoRequest req = PedidoRequest();
+                        req.lista = widget.data.lista;
+                        req.filtro.idCategoria = category.idCategoria.toString();
+                        req.filtro.idSubCategoria = category.idCategoriaPadre.toString();
+                        navProducts(req);
+                      },
                       text: category.nombre,
-                      imagePath: getImagePath(category.nombre), // Se obtiene la imagen correcta
+                      imagePath: getImagePath(
+                          category.nombre), // Se obtiene la imagen correcta
                     ),
                   ),
                 if (list.isEmpty)

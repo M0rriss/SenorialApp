@@ -17,5 +17,7 @@ namespace DBSenorialModels.View.Usuario.User
         public string Telefono { get; set; } = string.Empty;
         public string RutaImg { get; set; } = string.Empty;
         public bool Estado { get; set; }
+        public int IdEmpleado { get; set; }
+
     }
 }

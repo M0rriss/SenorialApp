@@ -1,5 +1,5 @@
 const String dominio = "https://localhost:7283";
-// const String dominio = "https://senorialapp.somee.com/";
+ //const String dominio = "https://senorialapp.somee.com";
 
 class SubRutas {
   //AUTH
@@ -7,6 +7,9 @@ class SubRutas {
   static const String tables = "$dominio/api/Mesa";
   static const String categoria = "$dominio/api/Categoria"; 
   static const String producto = "$dominio/api/Producto";
+  static const String home = "$dominio/api/TipoPedido";
+
+  static const String orden = "$dominio/api/Pedido";
 }
 
 class UrlAuth {
@@ -21,9 +24,23 @@ class UrlMesas {
 //CATEGORIAS
 class UrlCategorias {
   static const String listcategoria = "${SubRutas.categoria}/Listado";
+  static const String listar = "${SubRutas.categoria}/listar";
+  static const String fitrocategoria = "${SubRutas.categoria}/listar/Sub";
+  static const String listarsub = "${SubRutas.categoria}/SubCategoria";
 }
 //PRODUCTO
 class UrlProductos {
   static const String listproduct = "${SubRutas.producto}/Listado";
-  static const String idproduct = "${SubRutas.producto}"; 
+  static const String idproduct = SubRutas.producto;
+  static const String filtro= "${SubRutas.producto}/Filtro/Ecommerce";
+}
+//HOME
+class   UrlHome {
+static const String listipopedido = "${SubRutas.home}/Listado";
+}
+
+class UrlPedidos {
+  static const String pedido = SubRutas.orden;
+  static const String pedidosLocal = "${SubRutas.orden}/PedidosLocal";
+  static const String detPedidos = "${SubRutas.orden}/DetPedidos";
 }

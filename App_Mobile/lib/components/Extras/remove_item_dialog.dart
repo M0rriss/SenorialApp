@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class RemoveItemDialog extends StatelessWidget {
-  const RemoveItemDialog({Key? key}) : super(key: key);
+  final VoidCallback onConfirm;
+
+  const RemoveItemDialog({Key? key, required this.onConfirm}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class RemoveItemDialog extends StatelessWidget {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    // Realiza la acción de eliminar
+                    onConfirm(); // Llama al callback para eliminar
                     Navigator.of(context).pop(); // Cierra el bottom sheet
                   },
                   child: const Text(
