@@ -33,56 +33,56 @@ namespace Repository.Schema_Usuarios.Usuarios
         public async Task<VwUsuario> ObtenerPorCorreo(string email)
         {
             VwUsuario list = new();
-            //var query = await (from user in dbset
-            //            join rol in db.Roles
-            //                on user.IdRol equals rol.IdRol
-            //            join person in db.Personas
-            //                on user.IdPersona equals person.IdPersona
-            //            where user.Email == email
-            //            select new
-            //            {
-            //                user.IdPersona,
-            //                user.IdRol,
-            //                user.Email,
-            //                Nombre = person.PrimerNombre + " " + person.ApellidoPaterno,
-            //                Rol = rol.Nombre,
-            //                user.Password,
-            //                user.IdUsuario,
-            //            }).ToListAsync();
-
-            //foreach (var u in query)
-            //{
-            //    list.Nombre = u.Nombre;
-            //    list.Email = u.Email;
-            //    list.IdPerson = u.IdPersona;
-            //    list.IdRol = u.IdRol;
-            //    list.Rol = u.Rol;
-            //    list.Password = u.Password;
-            //    list.IdUsuario = u.IdUsuario;
-            //}
-            //return list;
-
-            var query = await (from user in db.Usuarios
+            var query = await (from user in dbset
                                join rol in db.Roles
                                    on user.IdRol equals rol.IdRol
-                               join persona in db.Personas
-                                   on user.IdPersona equals persona.IdPersona
-                               join empleado in db.Empleados
-                                   on persona.IdPersona equals empleado.IdPersona
+                               join person in db.Personas
+                                   on user.IdPersona equals person.IdPersona
                                where user.Email == email
-                               select new VwUsuario
+                               select new
                                {
-                                   IdUsuario = user.IdUsuario,
-                                   Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+                                   user.IdPersona,
+                                   user.IdRol,
+                                   user.Email,
+                                   Nombre = person.PrimerNombre + " " + person.ApellidoPaterno,
                                    Rol = rol.Nombre,
-                                   IdRol = user.IdRol,
-                                   Password = user.Password,
-                                   Email = user.Email,
-                                   IdPerson = persona.IdPersona,
-                                   IdEmpleado = empleado.IdEmpleado // Asegúrate de obtener correctamente el IdEmpleado
-                               }).FirstOrDefaultAsync();
+                                   user.Password,
+                                   user.IdUsuario,
+                               }).ToListAsync();
 
-            return query;
+            foreach (var u in query)
+            {
+                list.Nombre = u.Nombre;
+                list.Email = u.Email;
+                list.IdPerson = u.IdPersona;
+                list.IdRol = u.IdRol;
+                list.Rol = u.Rol;
+                list.Password = u.Password;
+                list.IdUsuario = u.IdUsuario;
+            }
+            return list;
+
+            //var query = await (from user in db.Usuarios
+            //                   join rol in db.Roles
+            //                       on user.IdRol equals rol.IdRol
+            //                   join persona in db.Personas
+            //                       on user.IdPersona equals persona.IdPersona
+            //                   join empleado in db.Empleados
+            //                       on persona.IdPersona equals empleado.IdPersona
+            //                   where user.Email == email
+            //                   select new VwUsuario
+            //                   {
+            //                       IdUsuario = user.IdUsuario,
+            //                       Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+            //                       Rol = rol.Nombre,
+            //                       IdRol = user.IdRol,
+            //                       Password = user.Password,
+            //                       Email = user.Email,
+            //                       IdPerson = persona.IdPersona,
+            //                       IdEmpleado = empleado.IdEmpleado // Asegúrate de obtener correctamente el IdEmpleado
+            //                   }).FirstOrDefaultAsync();
+
+            //return query;
 
 
             /*var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
@@ -210,51 +210,6 @@ namespace Repository.Schema_Usuarios.Usuarios
         private async Task<List<VwUsuarios>> ListarUsuarioAsync()
         {
             // Corregido: Inicializar la lista correctamente
-            //List<VwUsuarios> list = new List<VwUsuarios>();
-
-            //var query = await (from user in dbset
-            //                   join rol in db.Roles
-            //                       on user.IdRol equals rol.IdRol
-            //                   join persona in db.Personas
-            //                       on user.IdPersona equals persona.IdPersona
-            //                   join empleado in db.Empleados
-            //                       on persona.IdPersona equals empleado.IdPersona
-            //                   join img in db.Imagenes
-            //                       on user.IdImg equals img.Id
-            //                   select new
-            //                   {
-            //                       user.IdUsuario,
-            //                       Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
-            //                       Rol = rol.Nombre,
-            //                       rol.IdRol,
-            //                       user.Password,
-            //                       user.Email,
-            //                       persona.Telefono,
-            //                       Estado = true, // Esto puede ser un valor predeterminado o algo que calcules
-            //                       RutaImg = img.ImageData,
-            //                       empleado.IdEmpleado // Agregar IdEmpleado
-            //                   }).ToListAsync();
-
-            //foreach (var item in query)
-            //{
-            //    VwUsuarios tmp = new VwUsuarios()
-            //    {
-            //        IdUsuario = item.IdUsuario,
-            //        Nombre = item.Nombre,
-            //        Rol = item.Rol,
-            //        Telefono = item.Telefono,
-            //        Estado = item.Estado,
-            //        RutaImg = item.RutaImg,
-            //        Email = item.Email,
-            //        Password = item.Password,
-            //        IdRol = item.IdRol,
-            //        IdEmpleado = item.IdEmpleado // Asignar el IdEmpleado correctamente
-            //    };
-
-            //    list.Add(tmp);
-            //}
-
-            //return list;
             List<VwUsuarios> list = new List<VwUsuarios>();
 
             var query = await (from user in dbset
@@ -266,21 +221,66 @@ namespace Repository.Schema_Usuarios.Usuarios
                                    on persona.IdPersona equals empleado.IdPersona
                                join img in db.Imagenes
                                    on user.IdImg equals img.Id
-                               select new VwUsuarios
+                               select new
                                {
-                                   IdUsuario = user.IdUsuario,
+                                   user.IdUsuario,
                                    Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
                                    Rol = rol.Nombre,
-                                   IdRol = user.IdRol,
-                                   Password = user.Password,
-                                   Email = user.Email,
-                                   Telefono = persona.Telefono,
-                                   Estado = true, // Si el estado es fijo, lo puedes dejar como está
+                                   rol.IdRol,
+                                   user.Password,
+                                   user.Email,
+                                   persona.Telefono,
+                                   Estado = true, // Esto puede ser un valor predeterminado o algo que calcules
                                    RutaImg = img.ImageData,
-                                   IdEmpleado = empleado.IdEmpleado // Agregar IdEmpleado directamente
+                                   // empleado.IdEmpleado // Agregar IdEmpleado
                                }).ToListAsync();
 
-            return query;
+            foreach (var item in query)
+            {
+                VwUsuarios tmp = new VwUsuarios()
+                {
+                    IdUsuario = item.IdUsuario,
+                    Nombre = item.Nombre,
+                    Rol = item.Rol,
+                    Telefono = item.Telefono,
+                    Estado = item.Estado,
+                    RutaImg = item.RutaImg,
+                    Email = item.Email,
+                    Password = item.Password,
+                    IdRol = item.IdRol,
+                    //IdEmpleado = item.IdEmpleado // Asignar el IdEmpleado correctamente
+                };
+
+                list.Add(tmp);
+            }
+
+            return list;
+            //List<VwUsuarios> list = new List<VwUsuarios>();
+
+            //var query = await (from user in dbset
+            //                   join rol in db.Roles
+            //                       on user.IdRol equals rol.IdRol
+            //                   join persona in db.Personas
+            //                       on user.IdPersona equals persona.IdPersona
+            //                   join empleado in db.Empleados
+            //                       on persona.IdPersona equals empleado.IdPersona
+            //                   join img in db.Imagenes
+            //                       on user.IdImg equals img.Id
+            //                   select new VwUsuarios
+            //                   {
+            //                       IdUsuario = user.IdUsuario,
+            //                       Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+            //                       Rol = rol.Nombre,
+            //                       IdRol = user.IdRol,
+            //                       Password = user.Password,
+            //                       Email = user.Email,
+            //                       Telefono = persona.Telefono,
+            //                       Estado = true, // Si el estado es fijo, lo puedes dejar como está
+            //                       RutaImg = img.ImageData,
+            //                       IdEmpleado = empleado.IdEmpleado // Agregar IdEmpleado directamente
+            //                   }).ToListAsync();
+
+            //return query;
         }
         public async Task<GenericFilterResponse<VwUsuarios>> GetByFilterViewAsync(GenericFilterRequest request)
         {

@@ -17,6 +17,6 @@ namespace IRepository.Schema_Ventas.Pedidos
         Task<Pedido> UpdatePedido(Pedido pedido);
         Task<bool> DeletePedido(int id);
         Task<List<VwPedido>> ObtenerPedidosAsync();
-        Task<List<VwDetPedido>> DetallePedidoAsync();
+        Task<List<VwDetPedido>> DetallePedidoAsync(int idPedido);
     }
 }

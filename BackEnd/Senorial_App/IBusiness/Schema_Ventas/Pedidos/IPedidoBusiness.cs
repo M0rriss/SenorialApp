@@ -17,6 +17,6 @@ namespace IBusiness.Schema_Ventas.Pedidos
         Task<PedidoResponse> UpdatePedido(PedidoRequest request);
         Task<bool> DeletePedido(int id);
         Task<List<VwPedido>> ObtenerPedidos();
-        Task<List<VwDetPedido>> DetallePedido();
+        Task<List<VwDetPedido>> DetallePedido(int idPedido);
     }
 }
