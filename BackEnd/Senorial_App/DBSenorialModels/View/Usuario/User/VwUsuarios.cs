@@ -20,4 +20,5 @@ namespace DBSenorialModels.View.Usuario.User
         //public int IdEmpleado { get; set; }
 
     }
+    
 }

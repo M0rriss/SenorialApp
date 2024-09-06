@@ -38,7 +38,7 @@ namespace IBusiness.Schema_Usuarios.Usuarios
         Task<bool> DeleteUiUser(int idUsuario);
 
         Task<GenericFilterResponse<VwUsuarios>> ListarUsuarioAsync(GenericFilterRequest req);
-
+        Task<VwUsuarioE> BuscarPorCorreoE(string email);
         Task<CustomResponse> CrearNuevoUsuarioAsync(UsuarioAddRequest req);
         Task<CustomResponse> ActulizarUsuarioAsync(UsuarioUpdateRequest req);
     }

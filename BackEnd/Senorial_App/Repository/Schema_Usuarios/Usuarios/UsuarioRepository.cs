@@ -88,6 +88,36 @@ namespace Repository.Schema_Usuarios.Usuarios
             /*var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
             return usuario;*/
         }
+        public async Task<VwUsuarioE> ObtenerPorCorreoE(string email)
+        {
+
+
+            var query = await (from user in db.Usuarios
+                               join rol in db.Roles
+                                   on user.IdRol equals rol.IdRol
+                               join persona in db.Personas
+                                   on user.IdPersona equals persona.IdPersona
+                               join empleado in db.Empleados
+                                   on persona.IdPersona equals empleado.IdPersona
+                               where user.Email == email
+                               select new VwUsuarioE
+                               {
+                                   IdUsuario = user.IdUsuario,
+                                   Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+                                   Rol = rol.Nombre,
+                                   IdRol = user.IdRol,
+                                   Password = user.Password,
+                                   Email = user.Email,
+                                   IdPerson = persona.IdPersona,
+                                   IdEmpleado = empleado.IdEmpleado // Asegúrate de obtener correctamente el IdEmpleado
+                               }).FirstOrDefaultAsync();
+
+            return query;
+
+
+            /*var usuario = dbset.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+            return usuario;*/
+        }
         /// <summary>
         /// ECOMMERCE
         /// </summary>
@@ -281,6 +311,37 @@ namespace Repository.Schema_Usuarios.Usuarios
             //                   }).ToListAsync();
 
             //return query;
+
+        }
+        private async Task<List<VwUsuariosE>> ListarUsuarioEAsync()
+        {
+
+            List<VwUsuariosE> list = new List<VwUsuariosE>();
+
+            var query = await (from user in dbset
+                               join rol in db.Roles
+                                   on user.IdRol equals rol.IdRol
+                               join persona in db.Personas
+                                   on user.IdPersona equals persona.IdPersona
+                               join empleado in db.Empleados
+                                   on persona.IdPersona equals empleado.IdPersona
+                               join img in db.Imagenes
+                                   on user.IdImg equals img.Id
+                               select new VwUsuariosE
+                               {
+                                   IdUsuario = user.IdUsuario,
+                                   Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+                                   Rol = rol.Nombre,
+                                   IdRol = user.IdRol,
+                                   Password = user.Password,
+                                   Email = user.Email,
+                                   Telefono = persona.Telefono,
+                                   Estado = true, // Si el estado es fijo, lo puedes dejar como está
+                                   RutaImg = img.ImageData,
+                                   IdEmpleado = empleado.IdEmpleado // Agregar IdEmpleado directamente
+                               }).ToListAsync();
+
+            return query;
         }
         public async Task<GenericFilterResponse<VwUsuarios>> GetByFilterViewAsync(GenericFilterRequest request)
         {

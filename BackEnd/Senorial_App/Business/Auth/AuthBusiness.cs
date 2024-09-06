@@ -182,7 +182,7 @@ namespace Business.Auth
         public async Task<LoginMobileResponse> LoginMobile(LoginUserRequest request)
         {
             var result = new LoginMobileResponse();
-            VwUsuario usuario = await _usuarioBusiness.BuscarPorCorreo(request.Email);
+            VwUsuarioE usuario = await _usuarioBusiness.BuscarPorCorreoE(request.Email);
 
 
             if (usuario == null) return result;
@@ -196,14 +196,14 @@ namespace Business.Auth
             result.Success = true;
             result.Message = "Login Correcto";
             result.RefreshToken = refreshToken.Token;
-            result.infoUsuario = new()
+            result.infoUsuario = new ()
             {
                 IdRol = usuario.IdRol,
                 Email = usuario.Email,
                 Nombre = usuario.Nombre,
                 IdPersona = usuario.IdPerson,
                 Rol = usuario.Rol,
-                //IdEmpleado = usuario.IdEmpleado
+                IdEmpleado = usuario.IdEmpleado
             };
             return result;
         }

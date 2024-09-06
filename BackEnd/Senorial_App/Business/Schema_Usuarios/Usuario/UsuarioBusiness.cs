@@ -154,6 +154,12 @@ namespace Business.Schema_Usuarios.Usuarios
             return usuario;
 
         }
+        public async Task<VwUsuarioE> BuscarPorCorreoE(string email)
+        {
+            VwUsuarioE usuario = await _usuarioRepository.ObtenerPorCorreoE(email);
+            return usuario;
+
+        }
 
         public async Task<UsuarioResponse> BuscarCorreoEcommerce(string email)
         {
