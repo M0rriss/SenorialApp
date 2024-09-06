@@ -18,7 +18,9 @@ class Categories extends StatefulWidget {
   @override
   State<Categories> createState() => _CategoriesState();
 }
+
 String nombreUsuario = '';
+
 class _CategoriesState extends State<Categories> {
   Future listarMesas() async {
     try {
@@ -27,21 +29,22 @@ class _CategoriesState extends State<Categories> {
       var token = box.get('token');
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers["authorization"] = "Bearer $token";
-      final response =
-      await dio.get(UrlCategorias.listar);
-          // await dio.get("https://localhost:7283/api/Categoria/listar");
+      final response = await dio.get(UrlCategorias.listar);
+      // await dio.get("https://localhost:7283/api/Categoria/listar");
       final list = response.data as List;
       return list;
     } on DioException catch (e) {
       print(e);
     }
   }
-Future<String> mostrarNombre() async {
+
+  Future<String> mostrarNombre() async {
     var box = await Hive.openBox(
         'security'); // Asegurarse de que la caja está abierta
     var nombre = box.get('nombre');
     return nombre;
   }
+
   final TextEditingController _searchController = TextEditingController();
   List<CategoriasResponse> list = [];
 
@@ -53,16 +56,14 @@ Future<String> mostrarNombre() async {
         for (var element in value) {
           CategoriasResponse tmp = CategoriasResponse.fromJson(element);
           list.add(tmp);
-          
         }
-        
       });
-       mostrarNombre().then((value)=>{
-          setState(() {
-            String unico = value.substring(0,value.indexOf(" "));
-            nombreUsuario = unico;
-          })
-        });
+      mostrarNombre().then((value) => {
+            setState(() {
+              String unico = value.substring(0, value.indexOf(" "));
+              nombreUsuario = unico;
+            })
+          });
     });
   }
 
@@ -170,11 +171,19 @@ Future<String> mostrarNombre() async {
                     padding: const EdgeInsets.all(10.0),
                     child: MyButtonCategories(
                       onTap: () {
-                        PedidoRequest req = PedidoRequest();
-                        req.lista = widget.data.lista;
-                        req.filtro.idCategoria = category.idCategoria.toString();
-                        req.filtro.idSubCategoria = category.idCategoriaPadre.toString();
-                        navProducts(req);
+                        //var box = Hive.box("security");
+                        //PedidoRequest req = PedidoRequest();
+                        //widget.data.orden.idEmpleado = box.get('idEmpleado');
+                        widget.data.lista = widget.data.lista;
+                        widget.data.filtro.idCategoria =
+                            category.idCategoria.toString();
+                        widget.data.filtro.idSubCategoria =
+                            category.idCategoriaPadre.toString();
+                        print("Booooo");
+                        print(widget.data.orden.idEmpleado);
+                        print(widget.data.orden.idMesa);
+                        print("Boooooxxxxx");
+                        navProducts(widget.data);
                       },
                       text: category.nombre,
                       imagePath: getImagePath(

@@ -106,6 +106,9 @@ void login() async {
             }
               box.put('nombre',responseData['infoUsuario']['nombre']);
               box.put('rol',responseData['infoUsuario']['rol']);
+              print("IDEMPLEADO");
+              print(responseData['infoUsuario']['idEmpleado']);
+               print("IDEMPLEADO<<");
               box.put('idEmpleado', responseData['infoUsuario']['idEmpleado']);
             // Navegar a la pantalla principal
             context.go('/home');

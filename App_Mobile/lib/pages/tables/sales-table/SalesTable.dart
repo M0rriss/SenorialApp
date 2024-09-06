@@ -34,17 +34,16 @@ class _SalestableState extends State<Salestable> {
             mesas = value;
           })
         });
-        mostrarNombre().then((value)=>{
+    mostrarNombre().then((value) => {
           setState(() {
-            String unico = value.substring(0,value.indexOf(" "));
+            String unico = value.substring(0, value.indexOf(" "));
             nombreUsuario = unico;
           })
         });
-        //*AGREGUE
-        obtenerEmpleado();
-          
-        
-        //*
+    //*AGREGUE
+    obtenerEmpleado();
+
+    //*
   }
 
   Future<String> mostrarNombre() async {
@@ -54,7 +53,7 @@ class _SalestableState extends State<Salestable> {
     return nombre;
   }
   //* EMPLEADO
-  
+
   Future<void> obtenerEmpleado() async {
     var box = await Hive.openBox('security');
     var empleado = box.get('idEmpleado');
@@ -69,20 +68,23 @@ class _SalestableState extends State<Salestable> {
       print('Error: No se encontró idEmpleado');
     }
   }
+
   //*
   Future<List<MesasResponse>> listarMesas() async {
     final response = await widget.mesasService.listarMesas();
     List<MesasResponse> list =
         response.map((data) => MesasResponse.fromJson(data)).toList();
-          for (var mesa in list) {
-    print("Mesa ID: ${mesa.idMesa}, Nombre: ${mesa.nombre}"); // Ajusta según los campos de MesasResponse
-  }
+    for (var mesa in list) {
+      print("Mesa ID: ${mesa.idMesa}, Nombre: ${mesa.nombre}"); // Ajusta según los campos de MesasResponse
+      print(mesa.cantidad );
+      print(mesa.estado );
+    }
     return list;
     // Actualizar el estado con la lista obtenida
   }
 
   void navCategories(PedidoRequest req) {
-    context.go('/home/salestable/categories',extra: req);
+    context.go('/home/salestable/categories', extra: req);
   }
 
   @override
@@ -153,18 +155,22 @@ class _SalestableState extends State<Salestable> {
                   itemCount: mesas.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ButtonTables(
-                      onTap:() {
+                      onTap: () {
                         PedidoRequest req = PedidoRequest();
                         req.orden.idMesa = mesas[index].idMesa;
                         req.orden.idTipoPedido = 1;
                         //* AGRGAMOS EL ID EMPLEADO
-                         req.orden.idEmpleado = idEmpleado;
+                        req.orden.idEmpleado = idEmpleado;
+                        print("BUEBUE");
+                        print(req.orden.idEmpleado);
+                        print(req.orden.idMesa);
+                        print("BUEBUExxxxx");
                         //*
                         navCategories(req);
                       }, // Navega a Categories al hacer clic en una mesa
                       text: mesas[index].idMesa.toString(),
                       color: const Color.fromRGBO(254, 240, 211, 1),
-                      status: '0 items',
+                      status: '${mesas[index].cantidad} items',
                       statusColor: const Color.fromRGBO(171, 174, 188, 1),
                       width: 74,
                       height: 60,

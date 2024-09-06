@@ -154,7 +154,7 @@ class OrderMenu extends StatelessWidget {
                 onTap: () {
                   // Acción cuando se presiona el botón
                 },
-                text: 'Hacer Pedido',
+                text: 'Hacer Pedidox',
                 borderRadius: 0,
                 color: const Color.fromRGBO(255, 145, 15, 1),
               ),

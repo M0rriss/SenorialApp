@@ -30,10 +30,8 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
   List<double> precios = [];
 
 //PEDIDOS CREACION VARIABLES
- final PedidosService pedidosService = PedidosService();
+  final PedidosService pedidosService = PedidosService();
 //
-
-
 
   @override
   void initState() {
@@ -47,64 +45,76 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
       precios.add(p.precio);
     }
   }
+
   // * IMPLEMENTACION DEL PEDIDO
   PedidosRequest convertirPedido(PedidoRequest pedidoRequest) {
-  // Calcula el total antes de enviar el pedido
-  double total = pedidoRequest.lista.fold(0, (sum, producto) {
-    return sum + (producto.precio * producto.cantidad);
-  });
-
-  // Asegúrate de que estos valores no sean 0 antes de enviar el pedido
-  if (pedidoRequest.orden.idEmpleado == 0 || pedidoRequest.orden.idMesa == 0 || pedidoRequest.orden.idTipoPedido == 0) {
-    throw Exception("El ID de empleado, mesa o tipo de pedido no puede ser 0");
-  }
-
-  return PedidosRequest(
-    idPedido: pedidoRequest.orden.idPedido,
-    idEmpleado: pedidoRequest.orden.idEmpleado,
-    idMesa: pedidoRequest.orden.idMesa,
-    mesaNombre: 'Mesa ${pedidoRequest.orden.idMesa}',
-    fechaPedido: DateTime.now(),  // Ajusta la fecha a como la necesita el backend
-    estado: pedidoRequest.orden.estado,
-    total: total,  // Ahora envía el total correcto
-    idTipoPedido: pedidoRequest.orden.idTipoPedido,
-    detalles: pedidoRequest.lista.map((producto) {
-      return Detalle(
-        idDetallePedido: 0, 
-        idProducto: producto.idProducto,
-        productoNombre: producto.nombre,
-        cantidad: producto.cantidad,
-        precioUnitario: producto.precio,
-      );
-    }).toList(),
-  );
-}
-  //*PEDIDO
-Future<void> hacerPedido() async {
-  try {
-    // Convertimos PedidoRequest a PedidosRequest
-    PedidosRequest pedido = convertirPedido(widget.pedido);
-    print(jsonEncode(pedido.toJson())); 
-    // Llamada al servicio para registrar el pedido
-    final response = await pedidosService.RegistrarPedido(pedido);
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Pedido registrado con éxito')),
-      );
-      // Redirigir al usuario a otra pantalla
-      context.go('/home/salestable/categories/productslist/ordermenu/ordersuccessful');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al registrar el pedido')),
-      );
+    // Calcula el total antes de enviar el pedido
+    print("test1");
+    double total = pedidoRequest.lista.fold(0, (sum, producto) {
+      return sum + (producto.precio * producto.cantidad);
+    });
+    print("test2");
+    // Asegúrate de que estos valores no sean 0 antes de enviar el pedido
+    if (pedidoRequest.orden.idEmpleado == 0) {
+      throw Exception("El ID de empleado, no puede ser 0");
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: $e')),
+    if (pedidoRequest.orden.idMesa == 0) {
+      throw Exception("El ID de mesa,  no puede ser 0");
+    }
+    if (pedidoRequest.orden.idTipoPedido == 0) {
+      throw Exception("El ID de tipo pedido, no puede ser 0");
+    }
+    print("test3");
+    return PedidosRequest(
+      idPedido: pedidoRequest.orden.idPedido,
+      idEmpleado: pedidoRequest.orden.idEmpleado,
+      idMesa: pedidoRequest.orden.idMesa,
+      mesaNombre: 'Mesa ${pedidoRequest.orden.idMesa}',
+      fechaPedido:
+          DateTime.now(), // Ajusta la fecha a como la necesita el backend
+      estado: pedidoRequest.orden.estado,
+      total: total, // Ahora envía el total correcto
+      idTipoPedido: pedidoRequest.orden.idTipoPedido,
+      detalles: pedidoRequest.lista.map((producto) {
+        return Detalle(
+          idDetallePedido: 0,
+          idProducto: producto.idProducto,
+          productoNombre: producto.nombre,
+          cantidad: producto.cantidad,
+          precioUnitario: producto.precio,
+        );
+      }).toList(),
     );
   }
-}
+
+  //*PEDIDO
+  Future<void> hacerPedido() async {
+    print("xzxzxzxzxzxzxzxxz");
+    try {
+      // Convertimos PedidoRequest a PedidosRequest
+      PedidosRequest pedido = convertirPedido(widget.pedido);
+      print(jsonEncode(pedido.toJson()));
+      // Llamada al servicio para registrar el pedido
+      final response = await pedidosService.RegistrarPedido(pedido);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Pedido registrado con éxito')),
+        );
+        // Redirigir al usuario a otra pantalla
+        context.go(
+            '/home/salestable/categories/productslist/ordermenu/ordersuccessful');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al registrar el pedido')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
 
 //*
   //*
@@ -167,45 +177,43 @@ Future<void> hacerPedido() async {
   //     }
   //   });
   // }
-void incrementarCantidad(int idProducto) {
-  setState(() {
-    // Buscar el índice del producto correspondiente en la lista
-    var productoEncontrado = widget.pedido.lista.firstWhere(
-      (p) => p.idProducto == idProducto,
-      
-    );
+  void incrementarCantidad(int idProducto) {
+    setState(() {
+      // Buscar el índice del producto correspondiente en la lista
+      var productoEncontrado = widget.pedido.lista.firstWhere(
+        (p) => p.idProducto == idProducto,
+      );
 
-    if (productoEncontrado != null && productoEncontrado.cantidad < 9) {
-      // Incrementar la cantidad y actualizar el precio total del producto
-      productoEncontrado.cantidad++;
-      productoEncontrado.precio = productoEncontrado.cantidad * precios[widget.pedido.lista.indexOf(productoEncontrado)];
+      if (productoEncontrado != null && productoEncontrado.cantidad < 9) {
+        // Incrementar la cantidad y actualizar el precio total del producto
+        productoEncontrado.cantidad++;
+        productoEncontrado.precio = productoEncontrado.cantidad *
+            precios[widget.pedido.lista.indexOf(productoEncontrado)];
 
-      // Actualizar el total global
-      total += precios[widget.pedido.lista.indexOf(productoEncontrado)];
-    }
-  });
-}
+        // Actualizar el total global
+        total += precios[widget.pedido.lista.indexOf(productoEncontrado)];
+      }
+    });
+  }
 
-void decrementarCantidad(int idProducto) {
-  setState(() {
-    // Buscar el índice del producto correspondiente en la lista
-    var productoEncontrado = widget.pedido.lista.firstWhere(
-      (p) => p.idProducto == idProducto,
-      
-    );
+  void decrementarCantidad(int idProducto) {
+    setState(() {
+      // Buscar el índice del producto correspondiente en la lista
+      var productoEncontrado = widget.pedido.lista.firstWhere(
+        (p) => p.idProducto == idProducto,
+      );
 
-    if (productoEncontrado != null && productoEncontrado.cantidad > 1) {
-      // Decrementar la cantidad y actualizar el precio total del producto
-      productoEncontrado.cantidad--;
-      productoEncontrado.precio = productoEncontrado.cantidad * precios[widget.pedido.lista.indexOf(productoEncontrado)];
+      if (productoEncontrado != null && productoEncontrado.cantidad > 1) {
+        // Decrementar la cantidad y actualizar el precio total del producto
+        productoEncontrado.cantidad--;
+        productoEncontrado.precio = productoEncontrado.cantidad *
+            precios[widget.pedido.lista.indexOf(productoEncontrado)];
 
-      // Actualizar el total global
-      total -= precios[widget.pedido.lista.indexOf(productoEncontrado)];
-    }
-  });
-}
-
-
+        // Actualizar el total global
+        total -= precios[widget.pedido.lista.indexOf(productoEncontrado)];
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -225,14 +233,14 @@ void decrementarCantidad(int idProducto) {
                   },
                 ),
                 const SizedBox(width: 20),
-                    const Text(
-                      'PEDIDO',
-                      style: TextStyle(
-                        fontSize: 14.57,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(252, 110, 42, 1),
-                      ),
-                    ),
+                const Text(
+                  'PEDIDO',
+                  style: TextStyle(
+                    fontSize: 14.57,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(252, 110, 42, 1),
+                  ),
+                ),
                 const SizedBox(width: 222),
                 UserButton(
                   onTap: () {},
@@ -245,10 +253,10 @@ void decrementarCantidad(int idProducto) {
                 const SizedBox(width: 290),
                 MyButtonExtras(
                   borderRadius: 10,
-                  onTap: () {  },
+                  onTap: () {},
                   //  text: 'MESA - ${widget.pedido.orden.idMesa}',
-                 text: 'MESA ${widget.pedido.orden.idMesa > 0 ? widget.pedido.orden.idMesa : ''}',
-                  
+                  text:
+                      'MESA ${widget.pedido.orden.idMesa > 0 ? widget.pedido.orden.idMesa : ''}',
                 ),
                 const SizedBox(width: 20),
               ],
@@ -311,16 +319,16 @@ void decrementarCantidad(int idProducto) {
             ),
             const SizedBox(height: 25),
             if (widget.pedido.lista.isNotEmpty)
-            Center(
-              child: MyButtonOrdern(
-                onTap: () {
-                 hacerPedido();
-                },
-                text: 'Hacer Pedido',
-                borderRadius: 10,
-                color: const Color.fromRGBO(255, 145, 15, 1),
+              Center(
+                child: MyButtonOrdern(
+                  onTap: () {
+                    hacerPedido();
+                  },
+                  text: 'Hacer Pedidou',
+                  borderRadius: 10,
+                  color: const Color.fromRGBO(255, 145, 15, 1),
+                ),
               ),
-            ),
             const SizedBox(height: 30),
           ],
         ),
