@@ -203,7 +203,7 @@ namespace Business.Auth
                 Nombre = usuario.Nombre,
                 IdPersona = usuario.IdPerson,
                 Rol = usuario.Rol,
-                IdEmpleado = usuario.IdEmpleado
+                //IdEmpleado = usuario.IdEmpleado
             };
             return result;
         }

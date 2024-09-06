@@ -6,8 +6,11 @@
     "\\Senorial_App\\App_Senorial\\Controllers",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas",
     "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\TipoPedido",
+    "\\Senorial_App\\Repository",
+    "\\Senorial_App\\Repository\\Schema_Usuarios",
+    "\\Senorial_App\\Repository\\Schema_Usuarios\\Usuarios",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\App_Senorial\\Program.cs",
+  "SelectedNode": "\\Senorial_App\\Repository\\Schema_Usuarios\\Usuarios\\UsuarioRepository.cs",
   "PreviewInSolutionExplorer": false
 }

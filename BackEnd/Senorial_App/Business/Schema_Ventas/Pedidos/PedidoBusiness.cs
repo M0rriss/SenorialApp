@@ -92,9 +92,9 @@ namespace Business.Schema_Ventas.Pedidos
             return await _pedidoRepository.ObtenerPedidosAsync();
         }
 
-        public async Task<List<VwDetPedido>> DetallePedido()
+        public async Task<List<VwDetPedido>> DetallePedido(int idPedido)
         {
-            return await _pedidoRepository.DetallePedidoAsync();
+            return await _pedidoRepository.DetallePedidoAsync(idPedido);
         }
         #endregion
     }

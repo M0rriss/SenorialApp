@@ -84,11 +84,12 @@ namespace Repository.Schema_Ventas.Pedidos
 
             return query;
         }
-        public async Task<List<VwDetPedido>> DetallePedidoAsync()
+        public async Task<List<VwDetPedido>> DetallePedidoAsync(int idPedido)
         {
             var query = await (from dp in db.DetallePedidos
                                join p in db.Productos on dp.IdProducto equals p.IdProducto
                                join i in db.Imagenes on p.IdImg equals i.Id
+                               where dp.IdPedido == idPedido
                                select new VwDetPedido
                                {
                                    IdPedido = dp.IdPedido,

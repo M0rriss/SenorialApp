@@ -125,9 +125,9 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
         }
         [HttpGet]
         [Route("DetPedidos")]
-        public async Task<ActionResult> GetDetallePedidosLocal()
+        public async Task<ActionResult> GetDetallePedidosLocal([FromQuery] int idPedido)
         {
-            var result = await _pedidoBusiness.DetallePedido();
+            var result = await _pedidoBusiness.DetallePedido(idPedido);
             return Ok(result);
         }
         #endregion CRUD METHODS
