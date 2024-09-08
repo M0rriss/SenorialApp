@@ -14,10 +14,10 @@
     </div>
     <div class="order-cards-container">
       <div class="order-cards-wrapper">
-        <article class="order-card" *ngFor="let order of orders" [ngClass]="getOrderClass(order.status)" (click)="openOrderSummary(order)">
+        <article class="order-card" *ngFor="let order of pedidos" [ngClass]="getOrderClass(order.estado)" (click)="openOrderSummary(order)">
           <div class="order-status">
-            <span class="status-badge" [ngClass]="getBadgeClass(order.status)">{{ order.status }}</span>
-            <span class="table-number">Mesa-{{ order.table }}</span>
+            <span class="status-badge" [ngClass]="getBadgeClass(order.estado)">{{ this.estado }}</span>
+            <span class="table-number">{{ order.nombreMesa }}</span>
           </div>
           <div class="order-details">
             <div class="customer-info">
@@ -25,16 +25,16 @@
                 <div class="customer-icon">
                   <i class="fa-solid fa-user"></i>
                 </div>
-                <span class="customer-name">{{ order.customerName }}</span>
+                <span class="customer-name">{{ order.nombreEmpleado }}</span>
               </div>
               <div class="order-items">
-                <span>{{ order.items.length }}</span>
+                <span>{{ order.cantidadTotal }}</span>
                 <span> Items</span>
               </div>
             </div>
             <div class="order-type">
               <i class="fa-solid fa-location-dot order-type-icon"></i>
-              <span>{{ order.orderType }}</span>
+              <span>{{ order.tipoPedido }}</span>
             </div>
           </div>
         </article>
@@ -72,16 +72,16 @@
         </div>
       </div>
       <div class="order-items-container">
-        <article class="order-item-summary" *ngFor="let item of selectedOrder.items">
+        <article class="order-item-summary" *ngFor="let item of detalle">
           <button class="delete-item-button" (click)="deleteItem(item)">
             <i class="fa-solid fa-xmark"></i>
           </button>
           <div class="item-details-summary">
-            <h3 class="item-title-summary">{{ item.title }}</h3>
-            <p class="item-description-summary">{{ item.description }}</p>
-            <p class="item-price-summary">{{ item.price }}</p>
+            <h3 class="item-title-summary">{{ item.nombreProducto }}</h3>
+            <p class="item-description-summary">{{ item.descripcionProducto }}</p>
+            <p class="item-price-summary">{{ item.precioProducto }}</p>
           </div>
-          <img loading="lazy" [src]="item.image" class="item-image-summary" alt="{{ item.title }}" />
+          <img loading="lazy" [src]="item.urlImagen" class="item-image-summary" alt="{{ item.nombreProducto }}" />
         </article>
       </div>
     </div>

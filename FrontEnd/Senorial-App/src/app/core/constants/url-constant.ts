@@ -29,6 +29,8 @@ const subRutas = {
     clientes:`${dominio}/api/Cliente`,
     empleados:`${dominio}/api/Empleado`,
     proveedores:`${dominio}/api/Proveedor`,
+    // PEDIDO
+    pedido: `${dominio}/api/Pedido`,
 }
 
 //INVENTARIO
@@ -129,4 +131,11 @@ export const urlEmplados = {
 }
 export const urlProveedores = {
   generic: `${subRutas.proveedores}`,
+ }
+
+ export const urlPedido = {
+    list : `${subRutas.pedido}/PedidosLocal`,
+    detalle : `${subRutas.pedido}/DetPedidos`,
+    listo: `${subRutas.pedido}/PedidoListo`,
+    cancelar: `${subRutas.pedido}/CancelarPedido`
  }

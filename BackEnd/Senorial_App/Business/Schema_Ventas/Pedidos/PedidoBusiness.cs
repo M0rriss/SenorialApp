@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CommonModels.Common;
 using DBSenorialModels.Estados;
 using DBSenorialModels.Senorial;
 using DBSenorialModels.View.Pedidos;
@@ -96,6 +97,28 @@ namespace Business.Schema_Ventas.Pedidos
         {
             return await _pedidoRepository.DetallePedidoAsync(idPedido);
         }
-        #endregion
+
+        public async Task<CustomResponse> PedidoListo(int idPedido)
+        {
+            CustomResponse res = new()
+            {
+                Code = "200",
+                Message = "Pedido Listo"
+            };
+            await _pedidoRepository.PedidoListoAsync(idPedido);
+            return res;
+        }
+
+        public async Task<CustomResponse> CancelarPedido(int idPedido)
+        {
+            CustomResponse res = new()
+            {
+                Code = "200",
+                Message = "Se cancelo el pedido"
+            };
+            await _pedidoRepository.CancelarPedidoAsync(idPedido);
+            return res;
+        }
+        #endregion PEDIDOS DASHBOARD
     }
 }
