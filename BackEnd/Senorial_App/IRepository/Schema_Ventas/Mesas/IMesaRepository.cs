@@ -13,5 +13,7 @@ namespace IRepository.Schema_Ventas.Mesas
     {
         Task<List<VwMesa>> MesasLocal();
         Task<List<VwMesaDetalle>> ObtenerDetallesMesaAsync(int idMesa, int idPedido);
+        Task UpdateMesaAsync(Mesa mesa);
+        Task<Mesa> GetMesaByIdAsync(int idMesa);
     }
 }
