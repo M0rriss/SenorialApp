@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Schema_Ventas.Pedidos;
+using CommonModels.Common;
 using IBusiness.Schema_Ventas.Pedidos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -130,6 +131,32 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
             var result = await _pedidoBusiness.DetallePedido(idPedido);
             return Ok(result);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("PedidoListo")]
+        public async Task<ActionResult<CustomResponse>> PedidoListo([FromQuery] int idPedido)
+        {
+            CustomResponse res = await _pedidoBusiness.PedidoListo(idPedido);
+            return Ok(res);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("CancelarPedido")]
+        public async Task<ActionResult<CustomResponse>> CancelarPedido([FromQuery] int idPedido)
+        {
+            CustomResponse res = await _pedidoBusiness.CancelarPedido(idPedido);
+            return Ok(res);
+        }
+
+        
         #endregion CRUD METHODS
     }
 }

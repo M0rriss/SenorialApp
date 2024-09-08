@@ -1,4 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DetallePedidoResponse } from '@app/core/models/dashboard/pedido/detalle-pedido-response';
+import { PedidoLocalResponse } from '@app/core/models/dashboard/pedido/pedido-local-response';
+import { PedidoService } from '@app/dashboard/services/pedido/pedido.service';
 import {
   ConfirmationService,
   MessageService,
@@ -10,12 +13,17 @@ import {
   encapsulation: ViewEncapsulation.None
 
 })
-export class OrdersComponent {
-
+export class OrdersComponent implements OnInit {
+ pedidos: PedidoLocalResponse[] = [];
+ detalle: DetallePedidoResponse[] = [];
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private pedidoService:PedidoService
 ) {}
+  ngOnInit(): void {
+    this.pedidoLocalListado();
+  }
 confirmPayment(event: Event) {
   this.confirmationService.confirm({
       target: event.target as EventTarget,
@@ -83,19 +91,24 @@ confirmPayment(event: Event) {
 
   selectedOrder: any;
   isCancelModalOpen: boolean = false;
+  estado: string = "all";
   selectStatus(status: any) {
     // Logic to filter orders based on status
   }
 
-  getOrderClass(status: any) {
+  getOrderClass(status: number) {
     switch (status) {
-      case 'Ready to serve':
+      case 1:
+        this.estado = "ready-to-serve";
         return 'ready-to-serve';
-      case 'Cancelled':
+      case 4:
+        this.estado = "cancelled";
         return 'cancelled';
-      case 'Being Cooked':
+      case 2:
+        this.estado = "being-cooked";
         return 'being-cooked';
-      case 'Invoice':
+      case 3:
+        this.estado = "invoiced";
         return 'invoiced';
       default:
         return 'all';
@@ -161,12 +174,29 @@ confirmPayment(event: Event) {
 
 openOrderSummary(order: any) {
   this.selectedOrder = order;
+  this.buscarDetallePedido(order.idPedido);
 }
 
 onPageChange(event: any) {
   this.first = event.first;
   this.rows = event.rows;
   //this.listarEmpleados();
+}
+
+pedidoLocalListado(){
+  this.pedidoService.listarPedidos().subscribe({
+    next: (res:PedidoLocalResponse[])=>{
+      this.pedidos = res;
+    }
+  })
+}
+
+buscarDetallePedido(idPedido:number){
+  this.pedidoService.buscardetallePedido(idPedido).subscribe({
+    next: (res:DetallePedidoResponse[])=>{
+      this.detalle = res;
+    }
+  })
 }
 
 }

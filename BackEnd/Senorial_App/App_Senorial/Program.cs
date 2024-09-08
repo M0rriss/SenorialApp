@@ -90,9 +90,9 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Señorial Web Services",
+        Title = "Seï¿½orial Web Services",
         Version = "v1",
-        Description = "Documentación de los servicios para el sistema de Señorial",
+        Description = "Documentaciï¿½n de los servicios para el sistema de Seï¿½orial",
         Contact = new OpenApiContact
         {
             Name = "Mauricio Contreras",
@@ -131,7 +131,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 //Add DbContext
 builder.Services.AddDbContext<DBSenorialContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DBSenorial")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DBSenorial"), b => b.MigrationsAssembly("App_Senorial")));
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfiles).Assembly);

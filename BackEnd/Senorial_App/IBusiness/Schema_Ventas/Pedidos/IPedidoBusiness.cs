@@ -1,4 +1,5 @@
-﻿using DBSenorialModels.View.Pedidos;
+﻿using CommonModels.Common;
+using DBSenorialModels.View.Pedidos;
 using RequestResponseModels.Request.Schema_Ventas.Pedidos;
 using RequestResponseModels.Response.Schema_Ventas.Pedidos;
 using System;
@@ -18,5 +19,7 @@ namespace IBusiness.Schema_Ventas.Pedidos
         Task<bool> DeletePedido(int id);
         Task<List<VwPedido>> ObtenerPedidos();
         Task<List<VwDetPedido>> DetallePedido(int idPedido);
+        Task<CustomResponse> PedidoListo(int idPedido);
+        Task<CustomResponse> CancelarPedido(int idPedido);
     }
 }

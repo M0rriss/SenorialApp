@@ -1,4 +1,5 @@
-﻿using DBSenorialModels.Senorial;
+﻿using DBSenorialModels.Estados;
+using DBSenorialModels.Senorial;
 using DBSenorialModels.View.Pedidos;
 using IRepository.Schema_Ventas.Pedidos;
 using Microsoft.EntityFrameworkCore;
@@ -86,7 +87,7 @@ namespace Repository.Schema_Ventas.Pedidos
         }
         public async Task<List<VwDetPedido>> DetallePedidoAsync(int idPedido)
         {
-            var query = await (from dp in db.DetallePedidos
+            List<VwDetPedido> query = await (from dp in db.DetallePedidos
                                join p in db.Productos on dp.IdProducto equals p.IdProducto
                                join i in db.Imagenes on p.IdImg equals i.Id
                                where dp.IdPedido == idPedido
@@ -100,6 +101,42 @@ namespace Repository.Schema_Ventas.Pedidos
                                }).ToListAsync();
 
             return query;
+        }
+
+        public async Task<bool> PedidoListoAsync(int idPedido)
+        {
+            Pedido? query = await (from pedido in dbset
+                        where pedido.IdPedido == idPedido
+                        select pedido).FirstOrDefaultAsync();
+
+            if(query == null)
+            {
+                throw new Exception("No se encontro el pedido");
+            }
+            
+            query.Estado = EstadoOrden.Preparado.IdEstadoOrden;
+
+            await Update(query);
+
+            return true;
+        }
+
+        public async Task<bool> CancelarPedidoAsync(int idPedido)
+        {
+            Pedido? query = await (from pedido in dbset
+                        where pedido.IdPedido == idPedido
+                        select pedido).FirstOrDefaultAsync();
+
+            if(query == null)
+            {
+                throw new Exception("No se encontro el pedido");
+            }
+            
+            query.Estado = EstadoOrden.Cancelado.IdEstadoOrden;
+
+            await Update(query);
+
+            return true;
         }
 
     }
