@@ -1,5 +1,5 @@
-//const String dominio = "https://localhost:7283";
- const String dominio = "https://senorialapp.somee.com";
+const String dominio = "https://localhost:7283";
+ //const String dominio = "https://senorialapp.somee.com";
 
 class SubRutas {
   //AUTH

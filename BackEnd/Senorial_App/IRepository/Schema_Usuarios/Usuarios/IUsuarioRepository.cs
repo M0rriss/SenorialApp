@@ -31,7 +31,7 @@ namespace IRepository.Schema_Usuarios.Usuarios
         Task<Usuario> UpdateUiUsuarios(Usuario usuario);
         Task<bool> DeleteUiUsuarios(int id);
         Task<List<Usuario>> ObtenerPorPersonaId(int personaId);
-
+        Task<VwUsuarioE> ObtenerPorCorreoE(string email);
         Task<GenericFilterResponse<VwUsuarios>> GetByFilterViewAsync(GenericFilterRequest request);
 
     }

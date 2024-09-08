@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Azure.Core;
+using DBSenorialModels.Estados;
 using DBSenorialModels.Senorial;
 using DBSenorialModels.View.Mesa;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using IBusiness.Schema_Ventas.Mesas;
 using IRepository.Schema_Ventas.Mesas;
 using Repository.Schema_Ventas.Mesas;
@@ -158,7 +160,25 @@ namespace Business.Schema_Ventas.Mesas
         #region MESA LOCAL
         public async Task<List<VwMesa>> MesasLocal()
         {
-            return await _mesaRepository.MesasLocal();
+            // Obtener la lista de mesas desde el repositorio
+            var mesas = await _mesaRepository.MesasLocal();
+
+            // Iterar sobre las mesas para inicializar el estado usando la clase EstadoLocal
+            foreach (var mesa in mesas)
+            {
+                // Inicializar el estado basado en el valor de IdEstadoMesa
+                mesa.Estado = InicializarEstado(mesa.Estado);
+            }
+
+            return mesas;
+        }
+        private int InicializarEstado(int idEstadoMesa)
+        {
+            // Buscar el estado correspondiente en EstadoLocal
+            var estado = EstadoLocal.EstadoMesasL.FirstOrDefault(e => e.IdEstadoMesa == idEstadoMesa);
+
+            // Si no se encuentra el estado, devolver el estado "Disponible" por defecto
+            return estado?.IdEstadoMesa ?? EstadoLocal.Disponible.IdEstadoMesa;
         }
         public async Task<List<VwMesaDetalle>> ObtenerDetallesMesa(int idMesa, int idPedido)
         {

@@ -4,9 +4,11 @@ using DBSenorialModels.Estados;
 using DBSenorialModels.Senorial;
 using DBSenorialModels.View.Pedidos;
 using IBusiness.Schema_Ventas.Pedidos;
+using IRepository.Schema_Ventas.Mesas;
 using IRepository.Schema_Ventas.Pedidos;
 using Microsoft.AspNetCore.Identity;
 using PusherServer;
+using Repository.Schema_Ventas.Mesas;
 using Repository.Schema_Ventas.Pedidos;
 using RequestResponseModels.Request.Schema_Ventas.Pedidos;
 using RequestResponseModels.Response.Schema_Ventas.Pedidos;
@@ -22,9 +24,11 @@ namespace Business.Schema_Ventas.Pedidos
     {
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IMapper _mapper;
+        private readonly IMesaRepository _mesaRepository;
         public PedidoBusiness( IMapper mapper)
         {
             _pedidoRepository = new PedidoRepository();
+            _mesaRepository = new MesaRepository();
             _mapper = mapper;
         }
         public async Task<PedidoResponse> GetPedidoById(int id)
@@ -68,6 +72,13 @@ namespace Business.Schema_Ventas.Pedidos
 
             var pedido = _mapper.Map<Pedido>(request);
             pedido.Estado = EstadoOrden.Pendiente.IdEstadoOrden;
+            pedido.IdMesa = request.IdMesa;
+            var mesa = await _mesaRepository.GetMesaByIdAsync(pedido.IdMesa); // Obtener la mesa por ID
+            if (mesa != null)
+            {
+                mesa.EstadoMesaLocal = EstadoLocal.Ocupado.IdEstadoMesa; // Cambiar el estado de la mesa a "Ocupado"
+                await _mesaRepository.UpdateMesaAsync(mesa); // Guardar los cambios en la base de datos
+            }
             //pedido.IdPedido = request.IdPedido;
             //pedido.IdTipoPedido = request.IdTipoPedido;
             pedido = await _pedidoRepository.CreatePedido(pedido);
