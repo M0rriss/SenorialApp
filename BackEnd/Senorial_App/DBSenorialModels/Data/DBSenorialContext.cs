@@ -374,6 +374,9 @@ public partial class DBSenorialContext : DbContext
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Empleados)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sucursal_id_fk");
+            entity.HasData(
+    new Empleado() { IdEmpleado = 1, IdRol = 1, IdPersona = 1, IdSucursal = 1 }
+    );
         });
 
         modelBuilder.Entity<Entrada>(entity =>

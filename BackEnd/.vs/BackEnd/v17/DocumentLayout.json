@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Repository\\Schema_Ventas\\Mesas\\MesaRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Senorial_App\\Repository\\Schema_Ventas\\Mesas\\MesaRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Business\\Schema_Ventas\\Pedidos\\PedidoBusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Senorial_App\\Business\\Schema_Ventas\\Pedidos\\PedidoBusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +39,45 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MesaRepository.cs",
+              "DocumentMoniker": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Repository\\Schema_Ventas\\Mesas\\MesaRepository.cs",
+              "RelativeDocumentMoniker": "Senorial_App\\Repository\\Schema_Ventas\\Mesas\\MesaRepository.cs",
+              "ToolTip": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Repository\\Schema_Ventas\\Mesas\\MesaRepository.cs",
+              "RelativeToolTip": "Senorial_App\\Repository\\Schema_Ventas\\Mesas\\MesaRepository.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAADoAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-08T04:02:38.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MesaBusiness.cs",
+              "DocumentMoniker": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs",
+              "RelativeDocumentMoniker": "Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs",
+              "ToolTip": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs",
+              "RelativeToolTip": "Senorial_App\\Business\\Schema_Ventas\\Mesas\\MesaBusiness.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-08T04:02:22.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PedidoBusiness.cs",
+              "DocumentMoniker": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Business\\Schema_Ventas\\Pedidos\\PedidoBusiness.cs",
+              "RelativeDocumentMoniker": "Senorial_App\\Business\\Schema_Ventas\\Pedidos\\PedidoBusiness.cs",
+              "ToolTip": "D:\\PRUEBA_SENORIAL\\SenorialAppMauricio\\BackEnd\\Senorial_App\\Business\\Schema_Ventas\\Pedidos\\PedidoBusiness.cs",
+              "RelativeToolTip": "Senorial_App\\Business\\Schema_Ventas\\Pedidos\\PedidoBusiness.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-08T03:00:28.312Z",
+              "EditorCaption": ""
             }
           ]
         },

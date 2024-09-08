@@ -51,7 +51,7 @@ namespace Repository.Schema_Ventas.Mesas
                     Nombre = item.NombreMesa,
                     Precio = item.Precio,
                     Cantidad = item.Cantidad,
-                    Estado = item.EstadoMesaLocal,
+                    Estado = item.EstadoMesaLocal ?? 1,
                 })
                 .ToList();
 
@@ -77,7 +77,16 @@ namespace Repository.Schema_Ventas.Mesas
             return query;
         }
 
+        public async Task<Mesa> GetMesaByIdAsync(int idMesa)
+        {
+            return await db.Mesas.FindAsync(idMesa);
+        }
 
+        public async Task UpdateMesaAsync(Mesa mesa)
+        {
+            db.Mesas.Update(mesa);
+            await db.SaveChangesAsync();
+        }
 
 
 

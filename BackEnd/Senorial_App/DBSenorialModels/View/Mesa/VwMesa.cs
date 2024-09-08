@@ -14,7 +14,7 @@ namespace DBSenorialModels.View.Mesa
         public string Nombre { get; set; } = string.Empty;
         public decimal Precio { get; set; }
         public int Cantidad { get; set; }
-        public int? Estado { get; set; } 
+        public int Estado { get; set; } 
     }
 
 }

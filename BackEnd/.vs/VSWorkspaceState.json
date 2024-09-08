@@ -2,10 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Senorial_App",
-    "\\Senorial_App\\App_Senorial",
-    "\\Senorial_App\\App_Senorial\\Controllers",
-    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas",
-    "\\Senorial_App\\App_Senorial\\Controllers\\Schema_Ventas\\TipoPedido",
+    "\\Senorial_App\\Business",
+    "\\Senorial_App\\Business\\Schema_Ventas",
+    "\\Senorial_App\\Business\\Schema_Ventas\\Pedidos",
     "\\Senorial_App\\DBSenorialModels",
     "\\Senorial_App\\DBSenorialModels\\Estados",
     "\\Senorial_App\\Repository",
@@ -13,6 +12,6 @@
     "\\Senorial_App\\Repository\\Schema_Usuarios\\Usuarios",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\App_Senorial\\appsettings.json",
+  "SelectedNode": "\\Senorial_App\\DBSenorialModels\\Estados\\EstadoLocal.cs",
   "PreviewInSolutionExplorer": false
 }

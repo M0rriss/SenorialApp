@@ -82,7 +82,20 @@ class _SalestableState extends State<Salestable> {
     return list;
     // Actualizar el estado con la lista obtenida
   }
+Color _getStatusColor(int estado) {
+  switch (estado) {
+    case 1:
+      return const Color.fromRGBO(171, 174, 188, 1); // Gris
 
+    case 2:
+      return const Color.fromRGBO(241, 115, 115, 1); // Rojo
+    case 3:
+      return const Color.fromRGBO(119, 152, 238, 1); // Azul claro
+
+    default:
+      return const Color.fromRGBO(254, 240, 211, 1); // Color por defecto
+  }
+}
   void navCategories(PedidoRequest req) {
     context.go('/home/salestable/categories', extra: req);
   }
@@ -171,7 +184,7 @@ class _SalestableState extends State<Salestable> {
                       text: mesas[index].idMesa.toString(),
                       color: const Color.fromRGBO(254, 240, 211, 1),
                       status: '${mesas[index].cantidad} items',
-                      statusColor: const Color.fromRGBO(171, 174, 188, 1),
+                      statusColor: _getStatusColor(mesas[index].estado),
                       width: 74,
                       height: 60,
                     );
