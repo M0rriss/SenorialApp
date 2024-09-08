@@ -63,10 +63,10 @@
         <span class="status-indicator status-red" aria-hidden="true"></span>
         <span>Inventario</span>
       </li>
-      <li routerLink="/" class="submenu-item">
+      <!-- <li routerLink="/" class="submenu-item">
         <span class="status-indicator status-purple" aria-hidden="true"></span>
         <span>Detalle del Stock</span>
-      </li>
+      </li> -->
       <!-- <li routerLink="/" class="submenu-item">
         <span class="status-indicator status-blue" aria-hidden="true"></span>
         <span>Insumos</span>
@@ -79,13 +79,13 @@
     </li>
     <ul *ngIf="dropdowns['reportes']" class="submenu">
       <li class="submenu-item">
-        <span class="status-indicator status-red" aria-hidden="true"></span>
+        <span class="status-indicator status-blue" aria-hidden="true"></span>
         <span>Reportes</span>
       </li>
-      <li  class="submenu-item">
+      <!-- <li  class="submenu-item">
         <span class="status-indicator status-blue" aria-hidden="true"></span>
         <span>Documentos</span>
-      </li>
+      </li> -->
     </ul>
     <div class="divider"></div>
     <li class="nav-item" [ngClass]="{'active': activeMenu === 'mantenimiento'}" (click)="toggleDropdown('mantenimiento')">

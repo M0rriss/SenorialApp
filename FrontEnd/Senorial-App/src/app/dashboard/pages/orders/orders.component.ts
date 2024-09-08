@@ -60,34 +60,6 @@ confirmPayment(event: Event) {
     { label: 'Cancelado', color: '#f17474' }
   ];
 
-  orders = [
-    // Pedidos para llevar (PickUp)
-    {
-      status: 'Ready to serve', table: 1, customerName: 'Mauricio', items: [
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg' }
-      ],
-      orderType: 'PickUp'
-    },
-    {
-      status: 'Invoice', table: 4, customerName: 'Mauricio', items: [
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/bc656a6c49f29511278ef0db6230e8afb39b1d1cfe88af681bfe8f7344a6547c?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
-      ],
-      orderType: 'PickUp'
-    },
-    // Pedidos para comer aquí (Indoor)
-    {
-      status: 'Cancelled', table: 2, customerName: 'Mauricio', items: [
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/0b170496c4b0a21debaf737164dd77e647143b2fdc9cf06bfbd494626a79de70?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
-      ],
-      orderType: 'Indoor'
-    },
-    {
-      status: 'Being Cooked', table: 3, customerName: 'Mauricio', items: [
-        { title: 'The classics for 3', description: '1 McChicken, 1 Big Mac, 1 Royal Cheeseburger', price: 'PEN 23.10', image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/bc656a6c49f29511278ef0db6230e8afb39b1d1cfe88af681bfe8f7344a6547c?apiKey=217b68ba2ab24926b015d8eb14374581&&apiKey=217b68ba2ab24926b015d8eb14374581' }
-      ],
-      orderType: 'Indoor'
-    }
-  ];
 
   selectedOrder: any;
   isCancelModalOpen: boolean = false;
@@ -138,7 +110,23 @@ confirmPayment(event: Event) {
   }
 
   markAsReady() {
-    // Logic to mark the order as ready
+    if (this.selectedOrder) {
+      this.pedidoService.pedidoListo(this.selectedOrder.idPedido).subscribe({
+        next: (res) => {
+          // Mostrar notificación de éxito
+          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido ha sido marcado como listo', life: 3000 });
+
+          // Actualizar estado del pedido localmente
+          this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
+          this.closeOrderModal();
+        },
+        error: (err) => {
+          // Mostrar notificación de error
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
+        }
+      });
+    }
+
   }
 
   openCancelModal() {
@@ -150,9 +138,26 @@ confirmPayment(event: Event) {
   }
 
   confirmCancelOrder() {
-    // Logic to cancel the order
-    this.isCancelModalOpen = false;
-    this.closeOrderModal();
+    if (this.selectedOrder) {
+      this.pedidoService.cancelarPedido(this.selectedOrder.idPedido).subscribe({
+        next: (res) => {
+          // Mostrar notificación de éxito
+          this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido ha sido cancelado', life: 3000 });
+
+          // Actualizar estado del pedido localmente (estado 4 es Cancelado)
+          this.selectedOrder!.estado = 4;
+
+          // Cerrar el modal
+          this.closeCancelModal();
+          this.closeOrderModal();
+        },
+        error: (err) => {
+          // Mostrar notificación de error
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido', life: 3000 });
+        }
+      });
+    }
+
   }
 
   deleteItem(item: any) {

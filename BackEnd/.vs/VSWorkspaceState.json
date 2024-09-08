@@ -4,14 +4,14 @@
     "\\Senorial_App",
     "\\Senorial_App\\Business",
     "\\Senorial_App\\Business\\Schema_Ventas",
-    "\\Senorial_App\\Business\\Schema_Ventas\\Pedidos",
-    "\\Senorial_App\\DBSenorialModels",
-    "\\Senorial_App\\DBSenorialModels\\Estados",
+    "\\Senorial_App\\Business\\Schema_Ventas\\Mesas",
     "\\Senorial_App\\Repository",
     "\\Senorial_App\\Repository\\Schema_Usuarios",
     "\\Senorial_App\\Repository\\Schema_Usuarios\\Usuarios",
+    "\\Senorial_App\\Repository\\Schema_Ventas",
+    "\\Senorial_App\\Repository\\Schema_Ventas\\Mesas",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\DBSenorialModels\\Estados\\EstadoLocal.cs",
+  "SelectedNode": "\\Senorial_App\\Senorial_App.sln",
   "PreviewInSolutionExplorer": false
 }

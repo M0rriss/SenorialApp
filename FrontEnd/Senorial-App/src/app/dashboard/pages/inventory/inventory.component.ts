@@ -54,19 +54,7 @@ export class InventoryComponent implements OnInit {
   // Formulario reactivo para editar los detalles del inventario
   formDetalle: FormGroup;
 
-  // Datos del inventario
-  inventory: InventoryItem[] = [
-    { name: 'Papa', unit: 'KG', stock: 50 },
-    { name: 'Pollo', unit: 'KG', stock: 20 },
-    { name: 'Tomate', unit: 'KG', stock: 5 }
-  ];
 
-  // Datos para el detalle de stock
-  stocks = [
-    { name: 'Papa', unit: 'KG', stock: 50, disponibilidad: 'Suficiente', precioCompra: 'S/.5.00', precioVenta: 'S/.7.00' },
-    { name: 'Papa', unit: 'KG', stock: 15, disponibilidad: 'En Proceso', precioCompra: 'S/.5.00', precioVenta: 'S/.7.00' },
-    { name: 'Papa', unit: 'KG', stock: 5, disponibilidad: 'Agotados', precioCompra: 'S/.5.00', precioVenta: 'S/.7.00' }
-  ];
 
   formBuscar: FormGroup;
   formEntrada:FormGroup;
@@ -99,8 +87,10 @@ export class InventoryComponent implements OnInit {
   ngOnInit(): void {
     this.listarInventario();
     this.listarInventarioDetalle();
+    this.listadoInsumos();
   }
   //Campos
+  inventarioInsumos:InventarioDetalleResponse[] = [];
   invertario: GenericFilterResponse<InventarioResponse> = {lista:[],totalRegistros:0};
   inventarioDetalle: GenericFilterResponse<InventarioDetalleResponse> = {lista:[],totalRegistros:0};
   busquedaInsumo: BusqueInventarioInsumoResponse = {
@@ -125,6 +115,20 @@ stockTotal:0
       next: (res:GenericFilterResponse<InventarioDetalleResponse>)=>{
         this.inventarioDetalle = res;
       }
+    });
+   /*  this.InventarioServicio.listarInventarioDetalle(1,1000,'').subscribe({
+      next: (res:GenericFilterResponse<InventarioDetalleResponse>)=>{
+        this.inventarioDetalle = res;
+      }
+    }); */
+
+  }
+  //LISTADO PARA ENTRADAS Y SALIDAS DE LOS INSUMOS
+  listadoInsumos(){
+    this.InventarioServicio.listarInventarioDetalle(1, 1000, '').subscribe({
+      next: (res: GenericFilterResponse<InventarioDetalleResponse>) => {
+        this.inventarioInsumos = res.lista; // Asigna la lista de insumos
+      },
     });
   }
 
@@ -294,7 +298,7 @@ stockTotal:0
   onPageChange2(event: any) {
     this.first2 = event.first;
     this.rows2 = event.rows;
-    this.listarInventarioDetalle();
+     this.listarInventarioDetalle();
     // Aquí iría la lógica para manejar el cambio de página
   }
 

@@ -24,7 +24,7 @@
         </div>
         <footer class="order-summary-footer">
           <div class="total-amount">Monto Total: S/. {{local.precio | number:'1.2-2' }}</div>
-          <div class="attendant-info">Atendido Por : Victor</div>
+          <div class="attendant-info">Atendido Por : {{usuario.infoUser.nombre || 'nombre'}}</div>
           <div class="receipt-options">
             <div
               class="receipt-option"

@@ -8,7 +8,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 })
 export class InvoiceTypeComponent {
-  selectedOption: string = 'boleta';
+  selectedOption: string = 'factura';
   selectedPaymentOption: string = '';
   dniValue: string = ''; // Example DNI value
   rucValue: string = ''; // Example RUC value

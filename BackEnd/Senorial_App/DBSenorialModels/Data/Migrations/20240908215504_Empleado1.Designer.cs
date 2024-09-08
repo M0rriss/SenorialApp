@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migrations
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240902162429_Img")]
-    partial class Img
+    [Migration("20240908215504_Empleado1")]
+    partial class Empleado1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1140,6 +1140,16 @@ namespace DBSenorialModels.Data.Migrations
                     b.HasIndex("IdSucursal");
 
                     b.ToTable("empleado", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdEmpleado = 1,
+                            Estado = true,
+                            IdPersona = 1,
+                            IdRol = 1,
+                            IdSucursal = 1
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Entrada", b =>
@@ -2149,13 +2159,13 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 9, 2, 11, 24, 27, 94, DateTimeKind.Local).AddTicks(7009),
+                            FechaActualizacion = new DateTime(2024, 9, 8, 16, 55, 3, 986, DateTimeKind.Local).AddTicks(4308),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 9, 2, 11, 24, 27, 94, DateTimeKind.Local).AddTicks(7012),
+                            FechaActualizacion = new DateTime(2024, 9, 8, 16, 55, 3, 986, DateTimeKind.Local).AddTicks(4311),
                             IdSucursal = 2
                         });
                 });
@@ -2292,12 +2302,6 @@ namespace DBSenorialModels.Data.Migrations
                         {
                             IdMetodo = 4,
                             Descripcion = "Descuento",
-                            Estado = true
-                        },
-                        new
-                        {
-                            IdMetodo = 5,
-                            Descripcion = "Otros",
                             Estado = true
                         });
                 });
@@ -3818,7 +3822,7 @@ namespace DBSenorialModels.Data.Migrations
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 9, 2, 11, 24, 27, 99, DateTimeKind.Local).AddTicks(8222),
+                            CreatedAt = new DateTime(2024, 9, 8, 16, 55, 3, 990, DateTimeKind.Local).AddTicks(7259),
                             Email = "admin@admin.com",
                             IdImg = 1,
                             IdPersona = 1,

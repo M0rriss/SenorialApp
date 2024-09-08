@@ -6,18 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DBSenorialModels.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class @new : Migration
+    public partial class Empleado1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DeleteData(
+                schema: "Ventas",
+                table: "metodo_pago",
+                keyColumn: "id_metodo",
+                keyValue: 5);
+
             migrationBuilder.UpdateData(
                 schema: "Almacen",
                 table: "inventario",
                 keyColumn: "id_inventario",
                 keyValue: 1,
                 column: "fecha_actualizacion",
-                value: new DateTime(2024, 8, 31, 0, 52, 15, 214, DateTimeKind.Local).AddTicks(21));
+                value: new DateTime(2024, 9, 8, 16, 55, 3, 986, DateTimeKind.Local).AddTicks(4308));
 
             migrationBuilder.UpdateData(
                 schema: "Almacen",
@@ -25,7 +31,7 @@ namespace DBSenorialModels.Data.Migrations
                 keyColumn: "id_inventario",
                 keyValue: 2,
                 column: "fecha_actualizacion",
-                value: new DateTime(2024, 8, 31, 0, 52, 15, 214, DateTimeKind.Local).AddTicks(24));
+                value: new DateTime(2024, 9, 8, 16, 55, 3, 986, DateTimeKind.Local).AddTicks(4311));
 
             migrationBuilder.UpdateData(
                 schema: "Usuarios",
@@ -33,7 +39,7 @@ namespace DBSenorialModels.Data.Migrations
                 keyColumn: "id_usuario",
                 keyValue: 1,
                 column: "created_at",
-                value: new DateTime(2024, 8, 31, 0, 52, 15, 218, DateTimeKind.Local).AddTicks(5427));
+                value: new DateTime(2024, 9, 8, 16, 55, 3, 990, DateTimeKind.Local).AddTicks(7259));
         }
 
         /// <inheritdoc />
@@ -45,7 +51,7 @@ namespace DBSenorialModels.Data.Migrations
                 keyColumn: "id_inventario",
                 keyValue: 1,
                 column: "fecha_actualizacion",
-                value: new DateTime(2024, 8, 26, 15, 52, 36, 473, DateTimeKind.Local).AddTicks(9765));
+                value: new DateTime(2024, 9, 8, 13, 32, 38, 888, DateTimeKind.Local).AddTicks(6563));
 
             migrationBuilder.UpdateData(
                 schema: "Almacen",
@@ -53,7 +59,13 @@ namespace DBSenorialModels.Data.Migrations
                 keyColumn: "id_inventario",
                 keyValue: 2,
                 column: "fecha_actualizacion",
-                value: new DateTime(2024, 8, 26, 15, 52, 36, 473, DateTimeKind.Local).AddTicks(9768));
+                value: new DateTime(2024, 9, 8, 13, 32, 38, 888, DateTimeKind.Local).AddTicks(6565));
+
+            migrationBuilder.InsertData(
+                schema: "Ventas",
+                table: "metodo_pago",
+                columns: new[] { "id_metodo", "descripcion", "estado" },
+                values: new object[] { 5, "Otros", true });
 
             migrationBuilder.UpdateData(
                 schema: "Usuarios",
@@ -61,7 +73,7 @@ namespace DBSenorialModels.Data.Migrations
                 keyColumn: "id_usuario",
                 keyValue: 1,
                 column: "created_at",
-                value: new DateTime(2024, 8, 26, 15, 52, 36, 478, DateTimeKind.Local).AddTicks(1352));
+                value: new DateTime(2024, 9, 8, 13, 32, 38, 911, DateTimeKind.Local).AddTicks(1475));
         }
     }
 }

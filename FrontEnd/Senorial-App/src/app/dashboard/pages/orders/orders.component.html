@@ -54,7 +54,7 @@
 
 <!-- Order Summary Modal -->
 <div class="modal-background" *ngIf="selectedOrder" (click)="closeOrderModal()">
-  <section class="order-summary" [ngClass]="{'takeaway': selectedOrder.orderType === 'PickUp', 'dine-in': selectedOrder.orderType === 'Indoor'}" (click)="$event.stopPropagation()">
+  <section class="order-summary" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h2 class="summary-title">Resumen del Pedido</h2>
       <button class="close-button" (click)="closeOrderModal()">
@@ -63,23 +63,37 @@
     </div>
     <div class="summary-content">
       <div class="summary-header">
-        <button class="table-number-summary" *ngIf="selectedOrder.orderType === 'Indoor'">Mesa {{ selectedOrder.table }}</button>
+        <!-- Mostrar el número de la mesa si es un pedido de tipo Indoor -->
+        <button class="table-number-summary" *ngIf="selectedOrder.tipoPedido === 'Indoor'">
+         {{ selectedOrder.nombreMesa }}
+        </button>
+
+
         <div class="action-buttons">
-          <!-- Botón para pagar que dispara el popup -->
-          <button class="pay-button" *ngIf="selectedOrder.orderType === 'PickUp'" (click)="confirmPayment($event)">Ir a Pagar</button>
-          <button class="ready-button" (click)="markAsReady()">Listo</button>
-          <button class="cancel-button" (click)="openCancelModal()">Cancelar Orden</button>
+          <!-- Botón para pagar (solo para pedidos de tipo 'PickUp') -->
+          <button class="pay-button" *ngIf="selectedOrder.tipoPedido === 'PickUp'" (click)="confirmPayment($event)">
+            Ir a Pagar
+          </button>
+
+          <!-- Botón para marcar como listo (si no está listo y no está cancelado) -->
+          <button class="ready-button" *ngIf="selectedOrder.estado !== 1 && selectedOrder.estado !== 4" (click)="markAsReady()">
+            Listo
+          </button>
+
+          <!-- Botón para cancelar el pedido (si no está listo ni cancelado) -->
+          <button class="cancel-button" *ngIf="selectedOrder.estado !== 1 && selectedOrder.estado !== 4" (click)="openCancelModal()">
+            Cancelar Orden
+          </button>
         </div>
       </div>
+
+      <!-- Detalles del Pedido -->
       <div class="order-items-container">
         <article class="order-item-summary" *ngFor="let item of detalle">
-          <button class="delete-item-button" (click)="deleteItem(item)">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
           <div class="item-details-summary">
             <h3 class="item-title-summary">{{ item.nombreProducto }}</h3>
             <p class="item-description-summary">{{ item.descripcionProducto }}</p>
-            <p class="item-price-summary">{{ item.precioProducto }}</p>
+            <p class="item-price-summary">S/.{{ item.precioProducto | number :'1.2-2' }}</p>
           </div>
           <img loading="lazy" [src]="item.urlImagen" class="item-image-summary" alt="{{ item.nombreProducto }}" />
         </article>

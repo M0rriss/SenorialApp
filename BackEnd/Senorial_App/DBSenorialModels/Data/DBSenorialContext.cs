@@ -375,7 +375,7 @@ public partial class DBSenorialContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("sucursal_id_fk");
             entity.HasData(
-    new Empleado() { IdEmpleado = 1, IdRol = 1, IdPersona = 1, IdSucursal = 1 }
+    new Empleado() { IdEmpleado = 1, IdRol = 1, IdPersona = 1, IdSucursal = 1, Estado = true }
     );
         });
 
@@ -603,8 +603,8 @@ public partial class DBSenorialContext : DbContext
                 new MetodoPago { IdMetodo = 1, Descripcion = "Efectivo",     Estado = true },
                 new MetodoPago { IdMetodo = 2, Descripcion = "Tarjeta",      Estado = true },
                 new MetodoPago { IdMetodo = 3, Descripcion = "Transferencia",Estado = true },
-                new MetodoPago { IdMetodo = 4, Descripcion = "Descuento",    Estado = true },
-                new MetodoPago { IdMetodo = 5, Descripcion = "Otros",        Estado = true }
+                new MetodoPago { IdMetodo = 4, Descripcion = "Descuento",    Estado = true }
+                
             );
         });
         modelBuilder.Entity<TipoDocumento>(entity =>
