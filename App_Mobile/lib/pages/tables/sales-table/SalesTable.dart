@@ -99,7 +99,9 @@ Color _getStatusColor(int estado) {
   void navCategories(PedidoRequest req) {
     context.go('/home/salestable/categories', extra: req);
   }
-
+// void navOrderMenu() {
+//     context.go('/home/salestable/categories/productslist/ordermenu');
+//   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,10 +171,17 @@ Color _getStatusColor(int estado) {
                   itemBuilder: (BuildContext context, int index) {
                     return ButtonTables(
                       onTap: () {
-                        PedidoRequest req = PedidoRequest();
+                        if(mesas[index].cantidad > 0){
+                          
+                          // INICIO DE UNA REAPERTURA
+                          //Reidirgir a 
+                         context.go('/home/salestable/categories/productslist/ordermenu');
+                        }else{
+                          // INICIO DE UN NUEVO DE PEDIDO PRESENCIAL
+                          PedidoRequest req = PedidoRequest();
                         req.orden.idMesa = mesas[index].idMesa;
                         req.orden.idTipoPedido = 1;
-                        //* AGRGAMOS EL ID EMPLEADO
+                        // * AGRGAMOS EL ID EMPLEADO
                         req.orden.idEmpleado = idEmpleado;
                         print("BUEBUE");
                         print(req.orden.idEmpleado);
@@ -180,6 +189,8 @@ Color _getStatusColor(int estado) {
                         print("BUEBUExxxxx");
                         //*
                         navCategories(req);
+                        }
+                        
                       }, // Navega a Categories al hacer clic en una mesa
                       text: mesas[index].idMesa.toString(),
                       color: const Color.fromRGBO(254, 240, 211, 1),

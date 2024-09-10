@@ -140,8 +140,18 @@ class _ProductsListState extends State<ProductsList> {
   }
 
   void navCategories() {
-    context.go('/home/salestable/categories/productslist/ordermenu',
-        extra: widget.pedido);
+    // Verificamos si el tipo de pedido es "Comer Aquí" o "Para Llevar"
+  if (widget.pedido.orden.idTipoPedido == 1) {
+    // Si es "Comer Aquí"
+    context.go('/home/salestable/categories/productslist/ordermenuindoor', extra: widget.pedido);
+  } else if (widget.pedido.orden.idTipoPedido == 2) {
+    // Si es "Para Llevar"
+    context.go('/home/takeoutregister/registerdata/categories/productslist/ordermenuindoor', extra: widget.pedido);
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Tipo de pedido no válido.')),
+    );
+  }
   }
 
   @override
@@ -156,8 +166,19 @@ class _ProductsListState extends State<ProductsList> {
                 const SizedBox(width: 20),
                 ButtonBack(
                   onTap: () {
-                    PedidoRequest req = widget.pedido;
-                    context.go('/home/salestable/categories', extra: req);
+                    
+                      // Verificamos si el tipo de pedido es "Comer Aquí" o "Para Llevar"
+                    if (widget.pedido.orden.idTipoPedido == 1) {
+                      // Si es "Comer Aquí"
+                      context.go('/home/salestable/categories', extra: widget.pedido);
+                    } else if (widget.pedido.orden.idTipoPedido == 2) {
+                      // Si es "Para Llevar"
+                      context.go('/home/takeoutregister/registerdata/categories', extra: widget.pedido);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Tipo de pedido no válido.')),
+                      );
+                    }
                   },
                 ),
                 const SizedBox(width: 10),

@@ -63,6 +63,8 @@ using RequestResponseModels.Response.Schema_Generico.Filtro;
 using DBSenorialModels.View.Producto;
 using RequestResponseModels.Request.Schema_Ventas.TipoPedido;
 using RequestResponseModels.Response.Schema_Ventas.TipoPedido;
+using RequestResponseModels.Request.Schema_Ventas.TbPedidoLlevar;
+using RequestResponseModels.Request.Schema_Ventas.TbDetallePedidoLlevar;
 
 namespace UtilityAutoMapper
 {
@@ -294,6 +296,13 @@ namespace UtilityAutoMapper
             CreateMap<Pedido, PedidoResponse>().ReverseMap();
             CreateMap<DetallePedido, DetallePedidoRequest>().ReverseMap();
             CreateMap<DetallePedido, DetallePedidoResponse>().ReverseMap();
+
+
+            CreateMap<PedidoLlevar, OrdenLlevarRequest>().ReverseMap();
+            CreateMap<PedidoLlevar, OrdenLlevarResponse>().ReverseMap();
+            CreateMap<DetallePedidoLlevar, DetallePedidoLlevarRequest>().ReverseMap();
+            CreateMap<DetallePedidoLlevar, DetallePedidoLlevarResponse>().ReverseMap();
+           
 
             #endregion
             #region Tipo Pedidos

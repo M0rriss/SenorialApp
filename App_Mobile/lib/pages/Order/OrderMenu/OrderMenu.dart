@@ -5,32 +5,35 @@ import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Buttons/buttonOrden.dart';
 import 'package:m_senorial/components/Extras/productwidget.dart';
 
-class OrderMenu extends StatelessWidget {
-  OrderMenu({Key? key}) : super(key: key);
+class OrderMenu extends StatefulWidget {
+  const OrderMenu({Key? key}) : super(key: key);
 
+  @override
+  _OrderMenuState createState() => _OrderMenuState();
+}
+
+class _OrderMenuState extends State<OrderMenu> {
   final codeController = TextEditingController();
 
-  void mesas() {}
+  // Ejemplo de lista de productos con nombre y precio
+  final List<Map<String, dynamic>> productos = [
+    {'name': 'Hamburguesa de Pollo', 'price': 30.00},
+    {'name': 'Hamburguesa de Res', 'price': 35.00},
+    {'name': 'Hamburguesa Vegana', 'price': 28.00},
+    {'name': 'Hamburguesa BBQ', 'price': 32.00},
+  ];
+
+  // Calcular el subtotal sumando los precios de los productos
+  double calcularSubtotal() {
+    return productos.fold(0.0, (total, producto) => total + producto['price']);
+  }
+
+  void goToOrderMenu() {
+    Navigator.pop(context); // Vuelve a la pantalla anterior
+  }
 
   @override
   Widget build(BuildContext context) {
-    void goToOrderMenu() {
-      Navigator.pushNamed(context, '/OrderMenu');
-    }
-
-    // Ejemplo de lista de productos con nombre y precio
-    final List<Map<String, dynamic>> productos = [
-      {'name': 'Hamburguesa de Pollo', 'price': 30.00},
-      {'name': 'Hamburguesa de Res', 'price': 35.00},
-      {'name': 'Hamburguesa Vegana', 'price': 28.00},
-      {'name': 'Hamburguesa BBQ', 'price': 32.00},
-    ];
-
-    // Calcular el subtotal sumando los precios de los productos
-    double calcularSubtotal() {
-      return productos.fold(0.0, (total, producto) => total + producto['price']);
-    }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -55,14 +58,14 @@ class OrderMenu extends StatelessWidget {
                         color: Color.fromRGBO(252, 110, 42, 1),
                       ),
                     ),
-                    Text(
+                    /* Text(
                       'Pedido No.16',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color.fromRGBO(153, 153, 153, 1),
                       ),
-                    ),
+                    ), */
                   ],
                 ),
                 const Spacer(),
@@ -154,7 +157,7 @@ class OrderMenu extends StatelessWidget {
                 onTap: () {
                   // Acción cuando se presiona el botón
                 },
-                text: 'Hacer Pedidox',
+                text: 'Hacer Pedidou',
                 borderRadius: 0,
                 color: const Color.fromRGBO(255, 145, 15, 1),
               ),

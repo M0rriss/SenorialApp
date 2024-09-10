@@ -14,3 +14,21 @@ class Filtros {
 
   Filtros({this.idCategoria = "",this.idSubCategoria=""});
 }
+
+class PedidoLlevarRequest extends PedidoRequest {
+ List<ProductoLlevarRequest> productosLlevar = []; 
+}
+// Definición de un producto específico para "para llevar"
+class ProductoLlevarRequest {
+  int idPedidoLlevar;   // ID del pedido para llevar
+  int idProducto;       // ID del producto
+  int cantidad;         // Cantidad de productos en el pedido
+  double precioUnitario; // Precio unitario del producto
+
+  ProductoLlevarRequest({
+    this.idPedidoLlevar = 0, 
+    this.idProducto = 0, 
+    this.cantidad = 0, 
+    this.precioUnitario = 0,
+  });
+}

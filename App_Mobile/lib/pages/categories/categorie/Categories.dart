@@ -81,7 +81,19 @@ class _CategoriesState extends State<Categories> {
   void navProducts(PedidoRequest data) {
     PedidoRequest req = data;
 
+   // Verificar si es un pedido para llevar o comer aquí
+  if (req.orden.idTipoPedido == 1) {
+    // Comer aquí
     context.go('/home/salestable/categories/productslist', extra: req);
+  } else if (req.orden.idTipoPedido == 2) {
+    // Para llevar
+    context.go('/home/takeoutregister/registerdata/categories/productslist', extra: req);
+  } else {
+    // Caso de error si no está definido correctamente el idTipoPedido
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Tipo de pedido no válido.')),
+    );
+  }
   }
 
   String getImagePath(String categoryName) {
@@ -112,9 +124,20 @@ class _CategoriesState extends State<Categories> {
               children: [
                 const SizedBox(width: 18),
                 ButtonBack(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
+                   onTap: () {
+                      if (widget.data.orden.idTipoPedido == 1) {
+                        // Si es "Comer Aquí"
+                        Navigator.of(context).pop();  // Simplemente retrocede a la pantalla anterior
+                      } else if (widget.data.orden.idTipoPedido == 2) {
+                        // Si es "Para Llevar"
+                        Navigator.of(context).pop();  // Igual retrocede, pero está listo para más lógica
+                      } else {
+                        // Si no hay un tipo de pedido válido, mostramos un mensaje de error
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Tipo de pedido no válido.')),
+                        );
+                      }
+                    },
                 ),
                 const SizedBox(width: 20),
                 Column(

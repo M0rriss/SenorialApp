@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace RequestResponseModels.Response.Schema_Ventas.Pedidos
 {
-    public class PedidoResponse
+    public class OrdenLlevarResponse
     {
-        public int IdPedido { get; set; }
+        public int IdPedidoLlevar { get; set; }
+
         public int IdEmpleado { get; set; }
-        public int IdMesa { get; set; }
-        public string MesaNombre { get; set; }
+        public int IdCliente { get; set; }
+        public string NombreCliente { get; set; }
         public DateTime FechaPedido { get; set; }
         public int Estado { get; set; } // "Carrito", "Preparandose", "Listo para servir", etc.
         public decimal Total { get; set; }
         public int IdTipoPedido { get; set; } // "Indoor" or "PickUp"
-        public List<DetallePedidoResponse> Detalles { get; set; }
+        public List<DetallePedidoLlevarResponse> DetallesLlevar { get; set; }
     }
-    
 }

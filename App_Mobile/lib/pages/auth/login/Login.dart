@@ -267,7 +267,7 @@ void _showErrorMessage(BuildContext context, String message) {
               },
             ),
             const SizedBox(height: 27,),
-            // Sign Up
+            /* // Sign Up
             const Padding(
               padding: EdgeInsets.all(0),
               child: Row(
@@ -292,8 +292,8 @@ void _showErrorMessage(BuildContext context, String message) {
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 20,),
+            ), */
+            /* const SizedBox(height: 20,),
             // Or
             const Padding(
               padding: EdgeInsets.all(0),
@@ -317,7 +317,7 @@ void _showErrorMessage(BuildContext context, String message) {
               children: [
                 SquareIcon(imagePath: 'lib/imagenes/Google.svg')
               ],
-            ),
+            ), */
           ],
         ),
       ),

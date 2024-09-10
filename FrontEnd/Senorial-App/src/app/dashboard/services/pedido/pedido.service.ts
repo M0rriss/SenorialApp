@@ -28,4 +28,5 @@ export class PedidoService{
     public cancelarPedido(idPedido:number) : Observable<CustomResponse>{
         return this.http.delete<CustomResponse>(`${urlPedido.cancelar}?idPedido=${idPedido}`,{});
     }
+
 }

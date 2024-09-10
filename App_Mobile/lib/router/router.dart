@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:m_senorial/pages/Order/OrderMenu/OrderMenu.dart';
 import 'package:m_senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
 import 'package:m_senorial/pages/Order/OrderSuccessful.dart';
 import 'package:m_senorial/pages/auth/Register-Data/RegisterData.dart';
@@ -72,7 +73,7 @@ final GoRouter router = GoRouter(
                   },
                   routes: [
                     GoRoute(
-                      path: 'ordermenu',
+                      path: 'ordermenuindoor',
                       builder: (context, state) {
                         PedidoRequest req = state.extra as PedidoRequest;
                         return OrderMenuIndoor(pedido: req);
@@ -84,12 +85,21 @@ final GoRouter router = GoRouter(
                           builder: (context, state) => OrderSuccessful(),
                         ),
                       ],
+                      
                     ),
                   ],
                 ),
+                   GoRoute(
+                      path: 'ordermenu',
+                      builder: (context, state) {
+                        PedidoRequest req = state.extra as PedidoRequest;
+                        return OrderMenu(); // Faltaba el paso correcto para OrderMenu
+                      },
+                    ),  
               ],
             ),
           ],
+          
         ),
         GoRoute(
           path: 'takeoutregister',
@@ -105,22 +115,39 @@ final GoRouter router = GoRouter(
                     PedidoRequest req = state.extra as PedidoRequest;
                     return Categories(data: req);
                   },
+                 routes: [
+                GoRoute(
+                  path: 'productslist',
+                  builder: (context, state) {
+                    PedidoRequest req = state.extra as PedidoRequest;
+                    return ProductsList(pedido: req);
+                  },
                   routes: [
                     GoRoute(
-                      path: 'productslist',
+                      path: 'ordermenuindoor',
                       builder: (context, state) {
-                    PedidoRequest req = state.extra as PedidoRequest;
-                        return ProductsList(pedido: req,);
+                        PedidoRequest req = state.extra as PedidoRequest;
+                        return OrderMenuIndoor(pedido: req);
+                       
                       },
-
                       routes: [
                         GoRoute(
                           path: 'ordersuccessful',
                           builder: (context, state) => OrderSuccessful(),
                         ),
                       ],
+                      
                     ),
                   ],
+                ),
+                   GoRoute(
+                      path: 'ordermenu',
+                      builder: (context, state) {
+                        PedidoRequest req = state.extra as PedidoRequest;
+                        return OrderMenu(); // Faltaba el paso correcto para OrderMenu
+                      },
+                    ),  
+                    ],
                 ),
               ],
             ),

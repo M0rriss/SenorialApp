@@ -27,6 +27,17 @@ namespace RequestResponseModels.Request.Schema_Ventas.Cliente
         [DocumentType]
         public string DNI { get; set; }
     }
+    public class ClienteMovilRequest
+    {
+        public int IdCliente { get; set; }
+        public string Nombres { get; set; }
+        
+        [Phone]
+        public string? Telefono { get; set; }
+        [DocumentType]
+        public string NroDocumento { get; set; }
+
+    }
     public class ClienteUpdateUiRequest
     {
         public int IdCliente { get; set; }

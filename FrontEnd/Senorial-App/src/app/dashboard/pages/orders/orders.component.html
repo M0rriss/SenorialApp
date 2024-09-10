@@ -16,7 +16,11 @@
       <div class="order-cards-wrapper">
         <article class="order-card" *ngFor="let order of pedidos" [ngClass]="getOrderClass(order.estado)" (click)="openOrderSummary(order)">
           <div class="order-status">
-            <span class="status-badge" [ngClass]="getBadgeClass(order.estado)">{{ this.estado }}</span>
+            <span class="status-badge"
+             [ngClass]="getBadgeClass(order.estado)"
+
+
+             >{{ this.estado }}</span>
             <span class="table-number">{{ order.nombreMesa }}</span>
           </div>
           <div class="order-details">

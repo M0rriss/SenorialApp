@@ -10,7 +10,9 @@ import 'package:m_senorial/components/Extras/productwidget.dart';
 import 'package:m_senorial/components/Extras/remove_item_dialog.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedidos-request.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
 import 'package:m_senorial/services/pedidos/pedidos-service.dart';
+import 'package:m_senorial/services/pedidosllevar/pedidosllevar_services.dart';
 
 class OrderMenuIndoor extends StatefulWidget {
   final PedidoRequest pedido;
@@ -28,7 +30,7 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
   // late List<Map<String, dynamic>> products;
   double total = 0;
   List<double> precios = [];
-
+String nombreCliente ="";
 //PEDIDOS CREACION VARIABLES
   final PedidosService pedidosService = PedidosService();
 //
@@ -45,6 +47,37 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
       precios.add(p.precio);
     }
   }
+
+OrdenLlevarRequest convertirParallevar(PedidoRequest pedidoRequest) {
+  print("Convirtiendo a OrdenLlevarRequest...");
+  double total = pedidoRequest.lista.fold(0, (sum, producto) {
+    return sum + (producto.precio * producto.cantidad);
+  });
+
+  if (pedidoRequest.orden.idEmpleado == 0 || pedidoRequest.orden.idTipoPedido == 0) {
+    throw Exception("ID de empleado o tipo de pedido no pueden ser 0.");
+  }
+
+  List<DetallesLlevar> detalles = pedidoRequest.lista.map((producto) {
+    return DetallesLlevar(
+      idProducto: producto.idProducto,
+      cantidad: producto.cantidad,
+      precioUnitario: producto.precio,
+    );
+  }).toList();
+
+  return OrdenLlevarRequest(
+    idPedidoLlevar: pedidoRequest.orden.idPedido,
+    idEmpleado: pedidoRequest.orden.idEmpleado,
+    idCliente: pedidoRequest.orden.idCliente,
+    nombreCliente: nombreCliente,
+    fechaPedido: DateTime.now(),
+    estado: pedidoRequest.orden.estado,
+    total: total.toDouble(),
+    idTipoPedido: pedidoRequest.orden.idTipoPedido,
+    detallesLlevar: detalles,
+  );
+}
 
   // * IMPLEMENTACION DEL PEDIDO
   PedidosRequest convertirPedido(PedidoRequest pedidoRequest) {
@@ -88,95 +121,94 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
   }
 
   //*PEDIDO
-  Future<void> hacerPedido() async {
-    print("xzxzxzxzxzxzxzxxz");
-    try {
-      // Convertimos PedidoRequest a PedidosRequest
+Future<void> hacerPedido() async {
+  try {
+    if (widget.pedido.orden.idTipoPedido == 2) {
+      // Si es un pedido para llevar
+      OrdenLlevarRequest pedidoLlevar = convertirParallevar(widget.pedido);
+
+      final response = await PedidosLlevarService().RegistrarPedido(pedidoLlevar);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Pedido para llevar registrado con éxito')),
+        );
+        context.go('/home/salestable/categories/productslist/ordermenuindoor/ordersuccessful');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error al registrar el pedido para llevar')),
+        );
+      }
+    } else {
+      // Si es un pedido para comer aquí
       PedidosRequest pedido = convertirPedido(widget.pedido);
-      print(jsonEncode(pedido.toJson()));
-      // Llamada al servicio para registrar el pedido
+
       final response = await pedidosService.RegistrarPedido(pedido);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Pedido registrado con éxito')),
+          const SnackBar(content: Text('Pedido registrado con éxito')),
         );
-        // Redirigir al usuario a otra pantalla
-        context.go(
-            '/home/salestable/categories/productslist/ordermenu/ordersuccessful');
+        context.go('/home/salestable/categories/productslist/ordermenuindoor/ordersuccessful');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al registrar el pedido')),
+          const SnackBar(content: Text('Error al registrar el pedido')),
         );
       }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error: $e')),
+    );
   }
+}
+
 
 //*
   //*
 
-  void showRemoveItemDialog(int index) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return RemoveItemDialog(
-          onConfirm: () {
-            setState(() {
-              var x = 0;
-              for (var p in widget.pedido.lista) {
-                if (p.idProducto == index) {
-                  total -= p.precio;
-                  precios.remove(x);
-                  widget.pedido.lista.remove(p);
-                }
-              }
-              // products.removeAt(index);
-            });
-          },
-        );
-      },
-    );
-  }
-
-  // void incrementarCantidad(int index) {
-  //   setState(() {
-  //     var x = 0;
-  //     for (var p in widget.pedido.lista) {
-  //       if (p.cantidad == 9) {
-  //         break;
-  //       } else {
-  //         if (p.idProducto == index) {
-  //           p.cantidad++;
-  //           p.precio = p.cantidad * precios[x];
-  //           total = precios[x] + total;
-  //         }
-  //         x++;
-  //       }
-  //     }
-  //   });
+  // void showRemoveItemDialog(int index) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return RemoveItemDialog(
+  //         onConfirm: () {
+  //           setState(() {
+  //             var x = 0;
+  //             for (var p in widget.pedido.lista) {
+  //               if (p.idProducto == index) {
+  //                 total -= p.precio;
+  //                 precios.remove(x);
+  //                 widget.pedido.lista.remove(p);
+  //               }
+  //             }
+  //             // products.removeAt(index);
+  //           });
+  //         },
+  //       );
+  //     },
+  //   );
   // }
+void showRemoveItemDialog(int index) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return RemoveItemDialog(
+        onConfirm: () {
+          setState(() {
+            // Eliminar el producto de la lista y actualizar el total
+            var productoAEliminar = widget.pedido.lista.firstWhere(
+              (producto) => producto.idProducto == index,
+            );
+            total -= productoAEliminar.precio * productoAEliminar.cantidad;
+            widget.pedido.lista.remove(productoAEliminar);
+          });
+        },
+      );
+    },
+  );
+}
 
-  // void decrementarCantidad(int index) {
-  //   setState(() {
-  //     var x = 0;
-  //     for (var p in widget.pedido.lista) {
-  //       if (p.cantidad == 1) {
-  //         break;
-  //       } else {
-  //         if (p.idProducto == index) {
-  //           p.cantidad--;
-  //           p.precio = p.cantidad * precios[x];
-  //           total = total - precios[x];
-  //         }
-  //         x++;
-  //       }
-  //     }
-  //   });
-  // }
   void incrementarCantidad(int idProducto) {
     setState(() {
       // Buscar el índice del producto correspondiente en la lista
@@ -228,8 +260,14 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
                 const SizedBox(width: 20),
                 ButtonBack(
                   onTap: () {
-                    context.go('/home/salestable/categories/productslist',
-                        extra: widget.pedido);
+                   if (widget.pedido.orden.idTipoPedido == 1) {
+                      // Redirigir a la lista de productos en la mesa
+                      context.go('/home/salestable/categories/productslist',
+                          extra: widget.pedido);
+                    } else {
+                      // Redirigir a la página del cliente
+                      context.go('/home/takeoutregister/registerdata/categories/productslist', extra: widget.pedido);
+                    }
                   },
                 ),
                 const SizedBox(width: 20),
@@ -255,8 +293,9 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
                   borderRadius: 10,
                   onTap: () {},
                   //  text: 'MESA - ${widget.pedido.orden.idMesa}',
-                  text:
-                      'MESA ${widget.pedido.orden.idMesa > 0 ? widget.pedido.orden.idMesa : ''}',
+                 text: widget.pedido.orden.idTipoPedido == 1 
+                ? 'MESA - ${widget.pedido.orden.idMesa}'
+                : 'CLIENTE',
                 ),
                 const SizedBox(width: 20),
               ],
@@ -322,9 +361,16 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
               Center(
                 child: MyButtonOrdern(
                   onTap: () {
-                    hacerPedido();
+                     // Verificar el tipo de pedido antes de proceder
+                    if (widget.pedido.orden.idTipoPedido == 1) {
+                      // Para comer aquí
+                      hacerPedido();
+                    } else {
+                      // Para llevar
+                      hacerPedido();  // Si es diferente función, debes asegurarte de que esté definida
+                    }
                   },
-                  text: 'Hacer Pedidou',
+                  text: 'Hacer Pedidox',
                   borderRadius: 10,
                   color: const Color.fromRGBO(255, 145, 15, 1),
                 ),

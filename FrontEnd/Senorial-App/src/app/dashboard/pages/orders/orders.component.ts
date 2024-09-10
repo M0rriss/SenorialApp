@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DetallePedidoLlevarResponse } from '@app/core/models/dashboard/pedido/detalle-pedido-llevar-response';
 import { DetallePedidoResponse } from '@app/core/models/dashboard/pedido/detalle-pedido-response';
+import { PedidoLlevarResponse } from '@app/core/models/dashboard/pedido/pedido-llevar-response';
 import { PedidoLocalResponse } from '@app/core/models/dashboard/pedido/pedido-local-response';
 import { PedidoService } from '@app/dashboard/services/pedido/pedido.service';
+import { PedidollevarService } from '@app/dashboard/services/pedido/pedidollevar.service';
 import {
   ConfirmationService,
   MessageService,
@@ -15,14 +18,18 @@ import {
 })
 export class OrdersComponent implements OnInit {
  pedidos: PedidoLocalResponse[] = [];
+ pedidollevar: PedidoLlevarResponse[] =[];
  detalle: DetallePedidoResponse[] = [];
+ detallellevar:DetallePedidoLlevarResponse[]=[];
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private pedidoService:PedidoService
+    private pedidoService:PedidoService,
+    private pedidollevarService:PedidollevarService
 ) {}
   ngOnInit(): void {
     this.pedidoLocalListado();
+    this.pedidoLlevarListado();
   }
 confirmPayment(event: Event) {
   this.confirmationService.confirm({
@@ -88,19 +95,21 @@ confirmPayment(event: Event) {
   }
 
   getBadgeClass(status: any) {
+    console.log("Estado recibido:", status);
     switch (status) {
-      case 'Ready to serve':
-        return 'ready-badge';
-      case 'Cancelled':
-        return 'cancelled-badge';
-      case 'Being Cooked':
-        return 'cooking-badge';
-      case 'Invoice':
-        return 'invoice-badge';
+      case 1:
+        return 'ready-badge';  // Estado "listo para servir"
+      case 4:
+        return 'cancelled-badge';  // Estado "cancelado"
+      case 2:
+        return 'cooking-badge';  // Estado "siendo cocinado"
+      case 3:
+        return 'invoice-badge';  // Estado "facturado"
       default:
-        return 'all';
+        return 'all';  // Clase por defecto si no hay coincidencia
     }
   }
+
   openOrderModal(order: any) {
     this.selectedOrder = order;
   }
@@ -203,5 +212,60 @@ buscarDetallePedido(idPedido:number){
     }
   })
 }
+pedidoLlevarListado(){
+  this.pedidollevarService.listarPedidosLlevar().subscribe({
+    next: (res:PedidoLlevarResponse[])=>{
+      this.pedidollevar = res
+    }
+  })
+}
+buscarDetallePedidoLlevar(idPedido:number){
+  this.pedidollevarService.buscardetallePedidoLlevar(idPedido).subscribe({
+    next: (res:DetallePedidoLlevarResponse[])=>{
+      this.detallellevar = res;
+    }
+  })
+}
+// Métodos para manejar pedidos de llevar
 
+markAsReadyLlevar() {
+  if (this.selectedOrder) {
+    this.pedidollevarService.pedidoListoLlevar(this.selectedOrder.idPedido).subscribe({
+      next: (res) => {
+        // Mostrar notificación de éxito
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido de llevar ha sido marcado como listo', life: 3000 });
+
+        // Actualizar estado del pedido localmente
+        this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
+        this.closeOrderModal();
+      },
+      error: (err) => {
+        // Mostrar notificación de error
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
+      }
+    });
+  }
+}
+
+confirmCancelOrderLlevar() {
+  if (this.selectedOrder) {
+    this.pedidollevarService.cancelarPedidoLlevar(this.selectedOrder.idPedido).subscribe({
+      next: (res) => {
+        // Mostrar notificación de éxito
+        this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido de llevar ha sido cancelado', life: 3000 });
+
+        // Actualizar estado del pedido localmente (estado 4 es Cancelado)
+        this.selectedOrder!.estado = 4;
+
+        // Cerrar el modal
+        this.closeCancelModal();
+        this.closeOrderModal();
+      },
+      error: (err) => {
+        // Mostrar notificación de error
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido de llevar', life: 3000 });
+      }
+    });
+  }
+}
 }
