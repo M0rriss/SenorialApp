@@ -17,8 +17,6 @@ class PedidosLlevarService{
     final response = await dio.post(ruta, data: pedido.toJson());
     return response;
 
-
-
   }
-
+  
 }

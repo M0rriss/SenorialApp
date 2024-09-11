@@ -36,14 +36,14 @@
     </ul> -->
     <li class="nav-item" [ngClass]="{'active': activeMenu === 'clientes'}" (click)="toggleDropdown('clientes')">
       <img src="./profile-icon.svg" alt="" class="nav-icon" />
-      <span class="nav-text">Clientes</span>
+      <span class="nav-text">Empleados</span>
       <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['clientes']}"></i>
     </li>
     <ul *ngIf="dropdowns['clientes']" class="submenu">
-      <li routerLink="/cliente" class="submenu-item">
+     <!--  <li routerLink="/cliente" class="submenu-item">
         <span class="status-indicator status-orange" aria-hidden="true"></span>
         <span>Clientes</span>
-      </li>
+      </li> -->
       <li routerLink="/empleado" class="submenu-item">
         <span class="status-indicator status-blue" aria-hidden="true"></span>
         <span>Empleados</span>
@@ -72,7 +72,7 @@
         <span>Insumos</span>
       </li> -->
     </ul>
-    <li  class="nav-item" [ngClass]="{'active': activeMenu === 'reportes'}" (click)="toggleDropdown('reportes')">
+    <!-- <li  class="nav-item" [ngClass]="{'active': activeMenu === 'reportes'}" (click)="toggleDropdown('reportes')">
       <img src="./report-icon.svg" alt="" class="nav-icon" />
       <span class="nav-text">Reportes</span>
       <i class="fa-solid fa-angle-down" [ngClass]="{'fa-angle-up': dropdowns['reportes']}"></i>
@@ -82,11 +82,11 @@
         <span class="status-indicator status-blue" aria-hidden="true"></span>
         <span>Reportes</span>
       </li>
-      <!-- <li  class="submenu-item">
+      <li  class="submenu-item">
         <span class="status-indicator status-blue" aria-hidden="true"></span>
         <span>Documentos</span>
-      </li> -->
-    </ul>
+      </li>
+    </ul> -->
     <div class="divider"></div>
     <li class="nav-item" [ngClass]="{'active': activeMenu === 'mantenimiento'}" (click)="toggleDropdown('mantenimiento')">
       <img src="./settings-icon.svg" alt="" class="nav-icon" />

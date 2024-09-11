@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\Senorial_App",
-    "\\Senorial_App\\Repository",
-    "\\Senorial_App\\Repository\\Schema_Ventas",
-    "\\Senorial_App\\Repository\\Schema_Ventas\\Pedidos",
+    "\\Senorial_App\\Business",
+    "\\Senorial_App\\Business\\Schema_Ventas",
+    "\\Senorial_App\\Business\\Schema_Ventas\\TbPedidoLlevar",
     "\\Senorial_App\\RequestResponseModels",
     "\\Senorial_App\\RequestResponseModels\\Request",
     "\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas",
     "\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas\\Cliente",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\Repository\\Schema_Ventas\\Pedidos\\PedidoRepository.cs",
+  "SelectedNode": "\\Senorial_App\\Senorial_App.sln",
   "PreviewInSolutionExplorer": false
 }

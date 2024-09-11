@@ -17,16 +17,16 @@ export class PedidollevarService {
     return this.http.get<PedidoLlevarResponse[]>(urlPedidoLlevar.list);
 }
 
-public buscardetallePedidoLlevar(idPedido:number):Observable<DetallePedidoLlevarResponse[]>{
-    return this.http.get<DetallePedidoLlevarResponse[]>(`${urlPedidoLlevar.detalle}?idPedido=${idPedido}`)
+public buscardetallePedidoLlevar(idPedidoLlevar:number):Observable<DetallePedidoLlevarResponse[]>{
+    return this.http.get<DetallePedidoLlevarResponse[]>(`${urlPedidoLlevar.detalle}?idPedidoLlevar=${idPedidoLlevar}`)
 }
 
-public pedidoListoLlevar(idPedido:number) : Observable<CustomResponse>{
-    return this.http.put<CustomResponse>(`${urlPedidoLlevar.listo}?idPedido=${idPedido}`,{});
+public pedidoListoLlevar(idPedidoLlevar:number) : Observable<CustomResponse>{
+    return this.http.put<CustomResponse>(`${urlPedidoLlevar.listo}?idPedidoLlevar=${idPedidoLlevar}`,{});
 }
 
-public cancelarPedidoLlevar(idPedido:number) : Observable<CustomResponse>{
-    return this.http.delete<CustomResponse>(`${urlPedidoLlevar.cancelar}?idPedido=${idPedido}`,{});
+public cancelarPedidoLlevar(idPedidoLlevar:number) : Observable<CustomResponse>{
+    return this.http.delete<CustomResponse>(`${urlPedidoLlevar.cancelar}?idPedidoLlevar=${idPedidoLlevar}`,{});
 }
 
 

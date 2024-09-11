@@ -21,6 +21,7 @@ export class OrdersComponent implements OnInit {
  pedidollevar: PedidoLlevarResponse[] =[];
  detalle: DetallePedidoResponse[] = [];
  detallellevar:DetallePedidoLlevarResponse[]=[];
+ allOrders: any[] = [];
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -120,20 +121,37 @@ confirmPayment(event: Event) {
 
   markAsReady() {
     if (this.selectedOrder) {
-      this.pedidoService.pedidoListo(this.selectedOrder.idPedido).subscribe({
-        next: (res) => {
-          // Mostrar notificación de éxito
-          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido ha sido marcado como listo', life: 3000 });
+      if (this.selectedOrder.tipoPedido === 'Indoor') {
+        this.pedidoService.pedidoListo(this.selectedOrder.idPedido).subscribe({
+          next: (res) => {
+            // Mostrar notificación de éxito
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido ha sido marcado como listo', life: 3000 });
 
-          // Actualizar estado del pedido localmente
-          this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
-          this.closeOrderModal();
-        },
-        error: (err) => {
-          // Mostrar notificación de error
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
-        }
-      });
+            // Actualizar estado del pedido localmente
+            this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
+            this.closeOrderModal();
+          },
+          error: (err) => {
+            // Mostrar notificación de error
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
+          }
+        });
+      } else if (this.selectedOrder.tipoPedido === 'PickUp') {
+        this.pedidollevarService.pedidoListoLlevar(this.selectedOrder.idPedidoLlevar).subscribe({
+          next: (res) => {
+            // Mostrar notificación de éxito
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido de llevar ha sido marcado como listo', life: 3000 });
+
+            // Actualizar estado del pedido localmente
+            this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
+            this.closeOrderModal();
+          },
+          error: (err) => {
+            // Mostrar notificación de error
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
+          }
+        });
+      }
     }
 
   }
@@ -148,23 +166,43 @@ confirmPayment(event: Event) {
 
   confirmCancelOrder() {
     if (this.selectedOrder) {
-      this.pedidoService.cancelarPedido(this.selectedOrder.idPedido).subscribe({
-        next: (res) => {
-          // Mostrar notificación de éxito
-          this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido ha sido cancelado', life: 3000 });
+      if (this.selectedOrder.tipoPedido === 'Indoor') {
+        this.pedidoService.cancelarPedido(this.selectedOrder.idPedido).subscribe({
+          next: (res) => {
+            // Mostrar notificación de éxito
+            this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido ha sido cancelado', life: 3000 });
 
-          // Actualizar estado del pedido localmente (estado 4 es Cancelado)
-          this.selectedOrder!.estado = 4;
+            // Actualizar estado del pedido localmente (estado 4 es Cancelado)
+            this.selectedOrder!.estado = 4;
 
-          // Cerrar el modal
-          this.closeCancelModal();
-          this.closeOrderModal();
-        },
-        error: (err) => {
-          // Mostrar notificación de error
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido', life: 3000 });
-        }
-      });
+            // Cerrar el modal
+            this.closeCancelModal();
+            this.closeOrderModal();
+          },
+          error: (err) => {
+            // Mostrar notificación de error
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido', life: 3000 });
+          }
+        });
+      } else if (this.selectedOrder.tipoPedido === 'PickUp') {
+        this.pedidollevarService.cancelarPedidoLlevar(this.selectedOrder.idPedidoLlevar).subscribe({
+          next: (res) => {
+            // Mostrar notificación de éxito
+            this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido de llevar ha sido cancelado', life: 3000 });
+
+            // Actualizar estado del pedido localmente (estado 4 es Cancelado)
+            this.selectedOrder!.estado = 4;
+
+            // Cerrar el modal
+            this.closeCancelModal();
+            this.closeOrderModal();
+          },
+          error: (err) => {
+            // Mostrar notificación de error
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido de llevar', life: 3000 });
+          }
+        });
+      }
     }
 
   }
@@ -186,10 +224,18 @@ confirmPayment(event: Event) {
   }
 
 
-openOrderSummary(order: any) {
-  this.selectedOrder = order;
-  this.buscarDetallePedido(order.idPedido);
-}
+  openOrderSummary(order: any) {
+    this.selectedOrder = order;
+
+    // Verificar si el pedido es "Indoor" o "PickUp"
+    if (order.tipoPedido === 'Indoor') {
+      // Llamar a la API de "Comer Aquí"
+      this.buscarDetallePedido(order.idPedido);
+    } else if (order.tipoPedido === 'PickUp') {
+      // Llamar a la API de "Para Llevar"
+      this.buscarDetallePedidoLlevar(order.idPedidoLlevar);
+    }
+  }
 
 onPageChange(event: any) {
   this.first = event.first;
@@ -216,11 +262,12 @@ pedidoLlevarListado(){
   this.pedidollevarService.listarPedidosLlevar().subscribe({
     next: (res:PedidoLlevarResponse[])=>{
       this.pedidollevar = res
+      console.log(res)
     }
   })
 }
-buscarDetallePedidoLlevar(idPedido:number){
-  this.pedidollevarService.buscardetallePedidoLlevar(idPedido).subscribe({
+buscarDetallePedidoLlevar(idPedidoLlevar:number){
+  this.pedidollevarService.buscardetallePedidoLlevar(idPedidoLlevar).subscribe({
     next: (res:DetallePedidoLlevarResponse[])=>{
       this.detallellevar = res;
     }
@@ -228,44 +275,44 @@ buscarDetallePedidoLlevar(idPedido:number){
 }
 // Métodos para manejar pedidos de llevar
 
-markAsReadyLlevar() {
-  if (this.selectedOrder) {
-    this.pedidollevarService.pedidoListoLlevar(this.selectedOrder.idPedido).subscribe({
-      next: (res) => {
-        // Mostrar notificación de éxito
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido de llevar ha sido marcado como listo', life: 3000 });
+// markAsReadyLlevar() {
+//   if (this.selectedOrder) {
+//     this.pedidollevarService.pedidoListoLlevar(this.selectedOrder.idPedidoLlevar).subscribe({
+//       next: (res) => {
+//         // Mostrar notificación de éxito
+//         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El pedido de llevar ha sido marcado como listo', life: 3000 });
 
-        // Actualizar estado del pedido localmente
-        this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
-        this.closeOrderModal();
-      },
-      error: (err) => {
-        // Mostrar notificación de error
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
-      }
-    });
-  }
-}
+//         // Actualizar estado del pedido localmente
+//         this.selectedOrder!.estado = 1; // Supongamos que 1 es el estado de "listo"
+//         this.closeOrderModal();
+//       },
+//       error: (err) => {
+//         // Mostrar notificación de error
+//         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al marcar el pedido como listo', life: 3000 });
+//       }
+//     });
+//   }
+// }
 
-confirmCancelOrderLlevar() {
-  if (this.selectedOrder) {
-    this.pedidollevarService.cancelarPedidoLlevar(this.selectedOrder.idPedido).subscribe({
-      next: (res) => {
-        // Mostrar notificación de éxito
-        this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido de llevar ha sido cancelado', life: 3000 });
+// confirmCancelOrderLlevar() {
+//   if (this.selectedOrder) {
+//     this.pedidollevarService.cancelarPedidoLlevar(this.selectedOrder.idPedidoLlevar).subscribe({
+//       next: (res) => {
+//         // Mostrar notificación de éxito
+//         this.messageService.add({ severity: 'success', summary: 'Cancelado', detail: 'El pedido de llevar ha sido cancelado', life: 3000 });
 
-        // Actualizar estado del pedido localmente (estado 4 es Cancelado)
-        this.selectedOrder!.estado = 4;
+//         // Actualizar estado del pedido localmente (estado 4 es Cancelado)
+//         this.selectedOrder!.estado = 4;
 
-        // Cerrar el modal
-        this.closeCancelModal();
-        this.closeOrderModal();
-      },
-      error: (err) => {
-        // Mostrar notificación de error
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido de llevar', life: 3000 });
-      }
-    });
-  }
-}
+//         // Cerrar el modal
+//         this.closeCancelModal();
+//         this.closeOrderModal();
+//       },
+//       error: (err) => {
+//         // Mostrar notificación de error
+//         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un problema al cancelar el pedido de llevar', life: 3000 });
+//       }
+//     });
+//   }
+// }
 }
