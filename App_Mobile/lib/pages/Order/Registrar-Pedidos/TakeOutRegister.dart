@@ -1,17 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:m_senorial/components/Buttons/buttonIntems.dart';
 import 'package:m_senorial/components/Buttons/buttonTwo.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 
-class TakeOutRegister extends StatelessWidget {
-  TakeOutRegister({Key? key}) : super(key: key);
+class TakeOutRegister extends StatefulWidget {
+  const TakeOutRegister({Key? key}) : super(key: key);
 
+  @override
+  _TakeOutRegisterState createState() => _TakeOutRegisterState();
+}
+
+class _TakeOutRegisterState extends State<TakeOutRegister> {
   final codeController = TextEditingController();
 
   void navRegister(BuildContext context) {
-  context.go('/home/takeoutregister/registerdata');
+    context.go('/home/takeoutregister/registerdata');
+  }
+
+  String nombreUsuario = '';
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    mostrarNombre().then((value) => {
+          setState(() {
+            String unico = value.substring(0, value.indexOf(" "));
+            nombreUsuario = unico;
+          })
+        });
+  }
+  
+
+  Future<String> mostrarNombre() async {
+    var box = await Hive.openBox('security'); // Asegurarse de que la caja está abierta
+    var nombre = box.get('nombre');
+    return nombre;
   }
 
   @override
@@ -34,8 +62,8 @@ class TakeOutRegister extends StatelessWidget {
                   const SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'VENTAS',
                         style: TextStyle(
                           fontSize: 14.57,
@@ -44,8 +72,8 @@ class TakeOutRegister extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Mauricio',
-                        style: TextStyle(
+                        nombreUsuario,  
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(153, 153, 153, 1),
@@ -53,7 +81,7 @@ class TakeOutRegister extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   MyButtonTwo(
                     onTap: () => navRegister(context),
                     text: 'Registrar Pedido',

@@ -39,4 +39,6 @@ export class AuthService {
  loginWithGoogle(idToken: string): Observable<LoginEcommerceResponse> {
   return this.http.post<LoginEcommerceResponse>(urlAuth.googleSignInEcommerce, { tokenId: idToken });
 }
+
+
 }

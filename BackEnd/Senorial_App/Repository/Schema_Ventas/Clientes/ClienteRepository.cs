@@ -21,7 +21,12 @@ namespace Repository.Schema_Ventas.Clientes
         {
             throw new NotImplementedException();
         }
-
+        public async Task<Cliente> GetByDocumento(string nroDocumento)
+        {
+            return await db.Clientes
+                .Include(c => c.IdPersonaNavigation) // Incluir la relación con Persona
+                .FirstOrDefaultAsync(c => c.IdPersonaNavigation.NroDocumento == nroDocumento);
+        }
         public async Task<List<ClienteUiRequest>> UiCliente()
         {
             return await db.Personas.Join(
@@ -75,6 +80,11 @@ namespace Repository.Schema_Ventas.Clientes
             return true;
         }
         public Cliente BuscarporId(int id)
+        {
+            var cliente = dbset.Where(x => x.IdCliente == id).FirstOrDefault();
+            return cliente;
+        }
+        public async Task<Cliente> ObtenerCLientePorId(int id)
         {
             var cliente = dbset.Where(x => x.IdCliente == id).FirstOrDefault();
             return cliente;

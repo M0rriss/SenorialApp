@@ -207,6 +207,10 @@ align-items: end;  }
       justify-content: center;
       align-items: center;
       border: 2px dashed #d0d5dd;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+
 
       i {
         font-size: 48px;

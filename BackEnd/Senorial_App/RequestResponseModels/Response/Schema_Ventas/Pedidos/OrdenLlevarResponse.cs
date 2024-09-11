@@ -1,0 +1,24 @@
+﻿using RequestResponseModels.Request.Schema_Ventas.TbDetallePedidoLlevar;
+using RequestResponseModels.Response.Schema_Ventas.DetallePedidos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RequestResponseModels.Response.Schema_Ventas.Pedidos
+{
+    public class OrdenLlevarResponse
+    {
+        public int IdPedidoLlevar { get; set; }
+
+        public int IdEmpleado { get; set; }
+        public int IdCliente { get; set; }
+        public string NombreCliente { get; set; }
+        public DateTime FechaPedido { get; set; }
+        public int Estado { get; set; } // "Carrito", "Preparandose", "Listo para servir", etc.
+        public decimal Total { get; set; }
+        public int IdTipoPedido { get; set; } // "Indoor" or "PickUp"
+        public List<DetallePedidoLlevarResponse> DetallesLlevar { get; set; }
+    }
+}

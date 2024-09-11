@@ -16,6 +16,8 @@ namespace IRepository.Schema_Ventas.Clientes
         Task<Cliente> UpdateUiCliente(Cliente cliente);
         Task<bool> DeleteUiCliente(int idPersona);
        Cliente BuscarporId(int id);
+        Task<Cliente> GetByDocumento(string nroDocumento);
+        Task<Cliente> ObtenerCLientePorId(int id);
 
     }
 }

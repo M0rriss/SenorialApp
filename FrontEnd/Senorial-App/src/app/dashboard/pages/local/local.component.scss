@@ -85,10 +85,10 @@ body {
   border         : none;
   cursor         : pointer;
 
-  &:focus,
+ /*  &:focus,
   &.selected {
     background-color: #f1f1f1;
-  }
+  } */
 }
 
 .status-content {

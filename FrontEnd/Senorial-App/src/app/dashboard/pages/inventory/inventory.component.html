@@ -10,7 +10,7 @@
     </div>
     <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="text" class="search-input" [(ngModel)]="nombreInsumo"  placeholder="Buscar Insumo o por Fecha" aria-label="Buscar">
+      <input type="text" class="search-input" [(ngModel)]="nombreInsumo"  placeholder="Buscar Insumo" aria-label="Buscar">
     </div>
     </div>
 
@@ -30,7 +30,7 @@
             <td>{{item.insumo}}</td>
             <td>{{item.unidadMedida}}</td>
             <td>{{item.stock}}</td>
-            <td>{{item.fecha  |date: 'M/d/yy, h:mm a'}}</td>
+            <td>{{item.fecha  | date: 'd/MMM/yy, h:mm a'}}</td>
             @if(item.tipo == 'Entradas'){
               <td><span class="status-tag status-entry">{{item.tipo}}</span></td>
             }
@@ -90,17 +90,24 @@
       <label for="search-input" class="visually-hidden">Buscar</label>
       <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" /> -->
       <select (change)="buscarInventarioInsumo()" formControlName="insumo">
-        @for (item of inventarioDetalle.lista; track $index) {
+        @for (item of inventarioInsumos; track $index) {
           <option [value]="item.idInsumo"  >{{item.nombre}}</option>
         }
       </select>
+     <!--  <p-dropdown
+      [options]="inventarioDetalle.lista"
+      formControlName="insumo"
+      optionLabel="nombre"
+      [editable]="true"
+      placeholder="Seleccionar Insumo">
+    </p-dropdown> -->
     </form>
 
     <div class="stock-info">
       <h2 class="stock-item">{{ busquedaInsumo.nombre || 'stock actual:' }}</h2>
       <div class="stock-details" *ngIf="busquedaInsumo">
-        <span class="stock-label">stock actual:</span>
-        <span class="stock-value">{{ busquedaInsumo.stockTotal }}</span>
+        <span class="stock-label">Stock actual:</span>
+        <span class="stock-value"><b>{{ busquedaInsumo.stockTotal }}</b></span>
       </div>
     </div>
     <ng-container *ngIf="busquedaInsumo">
@@ -129,17 +136,27 @@
       <!-- <i class="fa-solid fa-magnifying-glass search-icon"></i>
       <label for="search-input" class="visually-hidden">Buscar</label>
       <input type="search" id="search-input" class="search-text" placeholder="Buscar" (input)="onSearch($event)" /> -->
-      <select (change)="buscarInventarioInsumo()" formControlName="insumo"   >
-        @for (item of inventarioDetalle.lista; track $index) {
+
+      <select (change)="buscarInventarioInsumo()" formControlName="insumo">
+        @for (item of inventarioInsumos; track $index) {
           <option [value]="item.idInsumo"  >{{item.nombre}}</option>
         }
       </select>
+      <!-- <p-dropdown
+      [options]="inventarioDetalle.lista"
+      formControlName="insumo"
+      optionLabel="nombre"
+      [editable]="true"
+      placeholder="Seleccionar Insumo"
+      (onChange)="buscarInventarioInsumo($event.value)">
+    </p-dropdown> -->
+
     </form>
     <div class="stock-info stock-info-exit">
       <h2 class="stock-item-out">{{ busquedaInsumo.nombre || 'stock actual:' }}</h2>
       <div class="stock-details" *ngIf="busquedaInsumo">
-        <span class="stock-label-out">stock actual:</span>
-        <span class="stock-value-out">{{ busquedaInsumo.stockTotal }}</span>
+        <span class="stock-label-out">Stock actual:</span>
+        <span class="stock-value-out"><b>{{ busquedaInsumo.stockTotal }}</b></span>
       </div>
     </div>
     <ng-container *ngIf="busquedaInsumo">

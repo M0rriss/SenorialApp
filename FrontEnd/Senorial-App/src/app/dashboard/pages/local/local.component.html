@@ -184,8 +184,8 @@
           <div class="table-card" (click)="navigateToDetail(mesa)">
             <div class="table-header">
               <div class="table-status-dot" [ngClass]="{
-                'status-occupied': mesa.estado === 1,
-                'status-available': mesa.estado === 2,
+                'status-occupied': mesa.estado === 2,
+                'status-available': mesa.estado === 1,
                 'status-billed': mesa.estado === 3
               }"></div>
               <span class="table-price">S/.{{ mesa.precio | number:'1.2-2' }}</span>

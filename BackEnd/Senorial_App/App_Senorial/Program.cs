@@ -130,8 +130,10 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
 });
 //Add DbContext
+//builder.Services.AddDbContext<DBSenorialContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("DBSenorial"), b => b.MigrationsAssembly("App_Senorial")));
 builder.Services.AddDbContext<DBSenorialContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DBSenorial"), b => b.MigrationsAssembly("App_Senorial")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DBSenorial")));
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(IStartup).Assembly, typeof(AutoMapperProfiles).Assembly);

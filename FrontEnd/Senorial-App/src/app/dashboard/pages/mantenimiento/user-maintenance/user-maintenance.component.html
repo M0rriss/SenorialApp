@@ -38,7 +38,7 @@
               <div class="action-buttons">
                 <!-- <i class="add-icon fa-solid fa-circle-plus" (click)="addUser()"></i> -->
                 <i class="edit-icon fa-regular fa-pen-to-square" (click)="editUser(item)"></i>
-                <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog(item.estado)"></i>
+                <!-- <i class="delete-icon fa-solid fa-trash" (click)="openConfirmDialog(item.estado)"></i> -->
               </div>
             </td>
           </tr>
@@ -66,6 +66,7 @@
     <h2 class="dialog-title">{{modalTitle}}</h2>
     <form [formGroup]="formUsuario" (submit)="accionesModal()">
       <div class="image-upload-container">
+
         <div class="upload-image-preview">
           <i class="fa-regular fa-user"></i>
         </div>

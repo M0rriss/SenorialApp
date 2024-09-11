@@ -23,12 +23,12 @@
           </div>
           <div *ngIf="loginError" class="error-text">Lo sentimos ingrese bien la credenciales</div>
           <a routerLink="/forgot-password" class="forgot-password">¿Olvidaste tu contraseña?</a>
-          <div class="social-login">
+          <!-- <div class="social-login">
             <span class="social-login-text">Inicia sesión con:</span>
             <asl-google-signin-button class="google-login" style="background-color: transparent; border-style: none;">
               <img src="./googleIconWeb.svg" alt="Google Icon"  class="google-icon">
             </asl-google-signin-button>
-          </div>
+          </div> -->
           <button type="submit" class="submit-btn">Ingresar</button>
         </form>
       </div>
@@ -100,10 +100,10 @@
           @if(this.loginRegistroForm.get('passwordRegistro')?.errors &&  loginRegistroForm.touched){
             <p class="error-text">Campo requerido</p>
           }
-          <div class="social-login">
+          <!-- <div class="social-login">
             <span class="social-login-text">Regístrate con:</span>
             <img src="./googleIconWeb.svg" alt="Google Icon"  class="google-icon">
-          </div>
+          </div> -->
           <button type="submit" [disabled]="this.loginRegistroForm.invalid" class="register-button">Registrarse</button>
         </form>
       </div>

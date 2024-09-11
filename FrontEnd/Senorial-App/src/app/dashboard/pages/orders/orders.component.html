@@ -1,4 +1,4 @@
-<div class="main-container">
+<!-- <div class="main-container">
   <side-bar></side-bar>
   <div class="order-info-container">
     <div class="order-info-wrapper">
@@ -14,9 +14,13 @@
     </div>
     <div class="order-cards-container">
       <div class="order-cards-wrapper">
-        <article class="order-card" *ngFor="let order of pedidos" [ngClass]="getOrderClass(order.estado)" (click)="openOrderSummary(order)">
+        <article class="order-card" *ngFor="let order of pedidos" [ngClass]="getOrderClass(order.estado) " (click)="openOrderSummary(order)">
           <div class="order-status">
-            <span class="status-badge" [ngClass]="getBadgeClass(order.estado)">{{ this.estado }}</span>
+            <span class="status-badge"
+             [ngClass]="getBadgeClass(order.estado)"
+
+
+             >{{ this.estado }}</span>
             <span class="table-number">{{ order.nombreMesa }}</span>
           </div>
           <div class="order-details">
@@ -40,7 +44,7 @@
         </article>
       </div>
     </div>
-    <!-- Componente de Paginación -->
+
   <div class="pagination-container">
    <p-paginator
      [rows]="rows"
@@ -52,9 +56,9 @@
   </div>
 </div>
 
-<!-- Order Summary Modal -->
+
 <div class="modal-background" *ngIf="selectedOrder" (click)="closeOrderModal()">
-  <section class="order-summary" [ngClass]="{'takeaway': selectedOrder.orderType === 'PickUp', 'dine-in': selectedOrder.orderType === 'Indoor'}" (click)="$event.stopPropagation()">
+  <section class="order-summary" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h2 class="summary-title">Resumen del Pedido</h2>
       <button class="close-button" (click)="closeOrderModal()">
@@ -63,23 +67,36 @@
     </div>
     <div class="summary-content">
       <div class="summary-header">
-        <button class="table-number-summary" *ngIf="selectedOrder.orderType === 'Indoor'">Mesa {{ selectedOrder.table }}</button>
+
+        <button class="table-number-summary" *ngIf="selectedOrder.tipoPedido === 'Indoor'">
+         {{ selectedOrder.nombreMesa }}
+        </button>
+
+
         <div class="action-buttons">
-          <!-- Botón para pagar que dispara el popup -->
-          <button class="pay-button" *ngIf="selectedOrder.orderType === 'PickUp'" (click)="confirmPayment($event)">Ir a Pagar</button>
-          <button class="ready-button" (click)="markAsReady()">Listo</button>
-          <button class="cancel-button" (click)="openCancelModal()">Cancelar Orden</button>
+
+          <button class="pay-button" *ngIf="selectedOrder.tipoPedido === 'PickUp'" (click)="confirmPayment($event)">
+            Ir a Pagar
+          </button>
+
+
+          <button class="ready-button" *ngIf="selectedOrder.estado !== 1 && selectedOrder.estado !== 4" (click)="markAsReady()">
+            Listo
+          </button>
+
+
+          <button class="cancel-button" *ngIf="selectedOrder.estado !== 1 && selectedOrder.estado !== 4" (click)="openCancelModal()">
+            Cancelar Orden
+          </button>
         </div>
       </div>
+
       <div class="order-items-container">
         <article class="order-item-summary" *ngFor="let item of detalle">
-          <button class="delete-item-button" (click)="deleteItem(item)">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
           <div class="item-details-summary">
             <h3 class="item-title-summary">{{ item.nombreProducto }}</h3>
             <p class="item-description-summary">{{ item.descripcionProducto }}</p>
-            <p class="item-price-summary">{{ item.precioProducto }}</p>
+            <p class="item-price-summary">S/.{{ item.precioProducto | number :'1.2-2' }}</p>
           </div>
           <img loading="lazy" [src]="item.urlImagen" class="item-image-summary" alt="{{ item.nombreProducto }}" />
         </article>
@@ -88,6 +105,154 @@
   </section>
 </div>
 
+
+<div class="modal-background" *ngIf="isCancelModalOpen" (click)="closeCancelModal()">
+  <section class="cancel-modal" (click)="$event.stopPropagation()">
+    <h2 class="modal-title">Cancelar Pedido</h2>
+    <p class="modal-message">Estas seguro que quieres cancelarlo?</p>
+    <div class="button-group">
+      <button class="btn btn-confirm" (click)="confirmCancelOrder()">Si</button>
+      <button class="btn btn-cancel" (click)="closeCancelModal()">No</button>
+    </div>
+  </section>
+</div>
+
+<p-confirmPopup #confirmPopupRef></p-confirmPopup>
+<p-toast></p-toast> -->
+<div class="main-container">
+  <side-bar></side-bar>
+  <div class="order-info-container">
+    <div class="order-info-wrapper">
+      <h2 class="order-info-title">Información del Pedido</h2>
+      <div class="order-status-tabs">
+        <div class="status-tab" *ngFor="let status of statusTabs" (click)="selectStatus(status)">
+          <div class="status-tab-content">
+            <div class="status-icon" [ngStyle]="{'background-color': status.color}"></div>
+            <span class="status-text">{{ status.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-cards-container">
+      <div class="order-cards-wrapper">
+        <!-- Mostrar pedidos locales -->
+        <ng-container *ngFor="let order of pedidos">
+          <ng-container *ngTemplateOutlet="orderCardTemplate; context: { order: order }"></ng-container>
+        </ng-container>
+
+        <!-- Mostrar pedidos para llevar -->
+        <ng-container *ngFor="let order of pedidollevar">
+          <ng-container *ngTemplateOutlet="orderCardTemplate; context: { order: order }"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="pagination-container">
+      <p-paginator
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)"
+      ></p-paginator>
+    </div>
+  </div>
+</div>
+
+<!-- Template reutilizable para mostrar pedidos -->
+<ng-template #orderCardTemplate let-order="order">
+  <article class="order-card" [ngClass]="getOrderClass(order.estado)" (click)="openOrderSummary(order)">
+    <div class="order-status">
+      <span class="status-badge" [ngClass]="getBadgeClass(order.estado)">
+        {{ this.estado }}
+      </span>
+      <!-- Mostrar nombre de la mesa o "N/A" si es un pedido de PickUp -->
+      <span class="table-number">{{ order.nombreMesa }}</span>
+    </div>
+    <div class="order-details">
+      <div class="customer-info">
+        <div class="customer-name-wrapper">
+          <div class="customer-icon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <span class="customer-name">{{ order.nombreEmpleado }}</span>
+        </div>
+        <div class="order-items">
+          <span>{{ order.cantidadTotal }}</span>
+          <span> Items</span>
+        </div>
+      </div>
+      <div class="order-type">
+        <i class="fa-solid fa-location-dot order-type-icon"></i>
+        <span>{{ order.tipoPedido }}</span>
+      </div>
+    </div>
+  </article>
+</ng-template>
+
+<!-- Order Summary Modal -->
+<div class="modal-background" *ngIf="selectedOrder" (click)="closeOrderModal()">
+  <section class="order-summary" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="summary-title">Resumen del Pedido</h2>
+      <button class="close-button" (click)="closeOrderModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="summary-content">
+      <div class="summary-header">
+        <!-- Mostrar el número de la mesa si es un pedido de tipo Indoor -->
+        <button class="table-number-summary" *ngIf="selectedOrder.tipoPedido === 'Indoor'">
+          {{ selectedOrder.nombreMesa }}
+        </button>
+
+        <div class="action-buttons">
+          <!-- Botón para pagar (solo para pedidos de tipo 'PickUp') -->
+          <button class="pay-button" *ngIf="selectedOrder.tipoPedido === 'PickUp'" (click)="confirmPayment($event)">
+            Ir a Pagar
+          </button>
+
+          <!-- Botón para marcar como listo (si no está listo y no está cancelado) -->
+          <button class="ready-button" *ngIf="selectedOrder.estado !== 1 && selectedOrder.estado !== 4" (click)="markAsReady()">
+            Listo
+          </button>
+
+          <!-- Botón para cancelar el pedido (si no está listo ni cancelado) -->
+          <button class="cancel-button" *ngIf="selectedOrder.estado !== 1 && selectedOrder.estado !== 4" (click)="openCancelModal()">
+            Cancelar Orden
+          </button>
+        </div>
+      </div>
+
+      <!-- Detalles del Pedido -->
+      <div class="order-items-container">
+        <!-- Mostrar detalles si es un pedido Indoor (comer aquí) -->
+        <ng-container *ngIf="selectedOrder.tipoPedido === 'Indoor'">
+          <article class="order-item-summary" *ngFor="let item of detalle">
+            <div class="item-details-summary">
+              <h3 class="item-title-summary">{{ item.nombreProducto }}</h3>
+              <p class="item-description-summary">{{ item.descripcionProducto }}</p>
+              <p class="item-price-summary">S/.{{ item.precioProducto | number :'1.2-2' }}</p>
+            </div>
+            <img loading="lazy" [src]="item.urlImagen" class="item-image-summary" alt="{{ item.nombreProducto }}" />
+          </article>
+        </ng-container>
+
+        <!-- Mostrar detalles si es un pedido PickUp (para llevar) -->
+        <ng-container *ngIf="selectedOrder.tipoPedido === 'PickUp'">
+          <article class="order-item-summary" *ngFor="let item of detallellevar">
+            <div class="item-details-summary">
+              <h3 class="item-title-summary">{{ item.nombreProducto }}</h3>
+              <p class="item-description-summary">{{ item.descripcionProducto }}</p>
+              <p class="item-price-summary">S/.{{ item.precioProducto | number :'1.2-2' }}</p>
+            </div>
+            <img loading="lazy" [src]="item.urlImagen" class="item-image-summary" alt="{{ item.nombreProducto }}" />
+          </article>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+</div>
 <!-- Cancel Order Modal -->
 <div class="modal-background" *ngIf="isCancelModalOpen" (click)="closeCancelModal()">
   <section class="cancel-modal" (click)="$event.stopPropagation()">
@@ -99,6 +264,6 @@
     </div>
   </section>
 </div>
-<!-- Confirm Popup -->
+
 <p-confirmPopup #confirmPopupRef></p-confirmPopup>
 <p-toast></p-toast>

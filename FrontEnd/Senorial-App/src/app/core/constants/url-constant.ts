@@ -31,6 +31,7 @@ const subRutas = {
     proveedores:`${dominio}/api/Proveedor`,
     // PEDIDO
     pedido: `${dominio}/api/Pedido`,
+    pedidosLlevar: `${dominio}/api/PedidoLlevar`,
 }
 
 //INVENTARIO
@@ -138,4 +139,10 @@ export const urlProveedores = {
     detalle : `${subRutas.pedido}/DetPedidos`,
     listo: `${subRutas.pedido}/PedidoListo`,
     cancelar: `${subRutas.pedido}/CancelarPedido`
+ }
+ export const urlPedidoLlevar = {
+    list : `${subRutas.pedidosLlevar}/PedidosLlevar`,
+    detalle : `${subRutas.pedidosLlevar}/DetallePedidoLlevar`,
+    listo: `${subRutas.pedidosLlevar}/PedidoLlevarListo`,
+    cancelar: `${subRutas.pedidosLlevar}/CancelarPedidoLlevar`
  }

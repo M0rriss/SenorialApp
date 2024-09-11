@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBSenorialModels.Data.Migrations
 {
     [DbContext(typeof(DBSenorialContext))]
-    [Migration("20240831055217_new")]
-    partial class @new
+    [Migration("20240908183239_Empleado")]
+    partial class Empleado
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1140,6 +1140,16 @@ namespace DBSenorialModels.Data.Migrations
                     b.HasIndex("IdSucursal");
 
                     b.ToTable("empleado", "Ventas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdEmpleado = 1,
+                            Estado = true,
+                            IdPersona = 1,
+                            IdRol = 1,
+                            IdSucursal = 1
+                        });
                 });
 
             modelBuilder.Entity("DBSenorialModels.Senorial.Entrada", b =>
@@ -1208,8 +1218,434 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             Id = 1,
-                            FileName = "test",
-                            ImageData = "https://th.bing.com/th/id/OIP.TpPLUJnbBx_WleAW68PhvQHaFF?rs=1&pid=ImgDetMain"
+                            FileName = "Hamburguesa-clasica",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258842/Hamburguesa-clasica_ggudid.png"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FileName = "Hamburguesa-queso-tocino",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258842/Hamburguesa-queso-tocino_li42kl.png"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FileName = "Hamburguesa-senorial",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258842/Hamburguesa-senorial_qw9pko.png"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FileName = "1-4-de-pollo-a-la-brasa",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258861/Pollo-a-la-brasa-1-4_kh0xna.png"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FileName = "1-4-de-pollo-broaster",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258863/Pollo-broaster-1-4_bvqfwh.png"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FileName = "Parrilla-de-pollo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258857/Parrilla-de-pollo_mqiwcu.png"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FileName = "Parrilla-de-pollo-al-ajo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258857/Parrilla-de-pollo-al-ajo_zyzrtw.png"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FileName = "Parrilla-de-pollo-dietetica",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258857/Parrilla-de-pollo-dietetico_ym2r5n.png"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FileName = "Parrilla-mixta",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258858/Parrilla-mixta_ehhq5k.png"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FileName = "Brochetas-de-pollo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258870/Brochetas-de-pollo_jmqtvn.png"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FileName = "Pollo-a-la-pizzarola",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258860/Pollo-a-la-pizzarola_orxsc5.png"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FileName = "Bisteck-a-la-parrilla",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258870/Bisteck-a-la-parrilla_r9iclg.png"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FileName = "Chorizo-a-la-parrilla",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258881/Chorizo-a-la-parrilla_dgpnvt.png"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FileName = "Chicharron-senorial",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258878/Chicharron-senorial_p50hre.png"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            FileName = "Lonjitas",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258849/Lonjitas_xdukaq.png"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            FileName = "Chaufa-especial",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258877/Chaufa-especial_alryv8.png"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            FileName = "Chaufa-mixto",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258878/Chaufa-mixto_ysfysw.png"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            FileName = "Spaguetti-a-lo-alfredo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258866/Spaguetti-a-lo-alfredo_pyobkl.png"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            FileName = "Cafe-pasado",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258872/Cafe-pasado_fks93h.png"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            FileName = "Chocolate-con-panetón",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258881/Chocolate-con-paneton_nbteel.png"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            FileName = "Leche-fresca",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258846/Leche-fresca_tpj7mm.png"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            FileName = "Milo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258852/Milo_yii8m1.png"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            FileName = "Cafe-con-leche",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258872/Cafe-con-leche_rrxkzt.png"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            FileName = "Mates",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258851/Mates_wcsite.png"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            FileName = "Gaseosa-3lts",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258840/Gaseosa-de-3lts_el2kgx.png"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            FileName = "Gaseosa-2.25lts",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258839/Gaseosa-de-2.25lts_r780yp.png"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            FileName = "Gaseosa-1.5lts",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258839/Gaseosa-de-1.5lts_ajne1a.png"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            FileName = "Gaseosa-1lts",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258840/Gaseosa-de-1lts_axqqpe.png"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            FileName = "Gaseosa-1-2lt",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258840/Gaseosa-de-500ml_m2rgju.png"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            FileName = "Gaseosa-personal",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258840/Gaseosa-personal_hnkmlf.png"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            FileName = "Gaseosa-piranita",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258840/Gaseosa-piranita_jv3ord.png"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            FileName = "Refresco-de-maracuya-jarra",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258863/Refresco-de-maracuya-Jarra_aeakzt.png"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            FileName = "Chicha-morada-jarra",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258878/Chicha-morada-Jarra_xsjncx.png"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            FileName = "Limonada-Frozen-jarra",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258848/Limonada-frozen-Jarra_xftmfy.png"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            FileName = "Limonada-Americana-jarra",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258848/Limona-americana-Jarra_esgczd.png"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            FileName = "Caliente-de-pisco",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258872/Caliente-de-pisco_sjalzc.png"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            FileName = "Caliente-de-vino",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258874/Caliente-de-vino_kwaift.png"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            FileName = "Caliente-de-ron",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258872/Caliente-de-ron_pg2g1m.png"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            FileName = "Caliente-de-whisky",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258875/Caliente-de-whisky_gpmkst.png"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            FileName = "Cerveza-en-lata",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258875/Cerveza-en-lata_qozyqi.png"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            FileName = "Cerveza-negra",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258877/Cerveza-negra_kk7eux.png"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            FileName = "Cerveza-de-trigo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258875/Cerveza-de-trigo_yabm3n.png"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            FileName = "Vino-queirolo-vaso",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258867/Vino-queirolo-Vaso_kj8sbq.png"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            FileName = "Whisky-vaso",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258867/Wisky-Vaso_qnwn1m.png"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            FileName = "Pisco-Vargas-vaso",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258860/Pisco-vargas-Vaso_t8y3oz.png"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            FileName = "Mojito",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258854/Mojito_ubvhpc.png"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            FileName = "Machu-Picchu",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258849/Machu-picchu_sosb2h.png"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            FileName = "Daikiri",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258881/Daikiri_scg5iq.png"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            FileName = "Pina-colada",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258860/Pina-colada_qoav6s.png"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            FileName = "Pisco-sour",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258860/Pisco-sour_xhrnzd.png"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            FileName = "Naranjita",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258856/Naranjita_jrm3qr.png"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            FileName = "Alitas-en-salsa-BBQ",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258869/Alitas-en-salsa-BBQ_itujfe.png"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            FileName = "Alitas-broaster",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258869/Alitas-broaster_e0wdiv.png"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            FileName = "Tequenos-especiales",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258866/Tequenos-especiales_q4topa.png"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            FileName = "Durazno-en-almíbar",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258881/Durazno-en-almibar_yfzewe.png"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            FileName = "Helado-02-bolas",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258842/Helado-02-bolas_n7g79i.png"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            FileName = "Helado-03-bolas",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258845/Helado-03-bolas_ct5qkk.png"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            FileName = "Gelatina",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258842/Gelatina_lirwco.png"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            FileName = "Flan",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258839/Flan_mygmdv.png"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            FileName = "Jugo-de-papaya",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258845/Jugo-de-papaya_miqnbk.png"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            FileName = "Jugo-de-fresa-con-leche",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258845/Jugo-de-fresa_abese7.png"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            FileName = "Jugo-de-platano",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258845/Jugo-de-platano_yrsmee.png"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            FileName = "Jugo-surtido",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258845/Jugo-surtido_fjl9jf.png"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            FileName = "Ensalada-de-frutas",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258881/Ensalada-de-frutas_jybwbc.png"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            FileName = "Milkshake-de-Oreo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258851/Milkshake-de-oreo_crwp9x.png"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            FileName = "Milkshake-de-durazno",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258851/Milkshake-de-durazno_p1ltvm.png"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            FileName = "Milkshake-de-fresa",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258851/Milkshake-de-fresa_btvt9f.png"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            FileName = "Salchipapa-clasica",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258864/Salchipapa-clasica_umbxrb.png"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            FileName = "Salchipapa-ayacuchana",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258864/Salchipapa-ayacuchana_vzk1h3.png"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            FileName = "Salchipiernita",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258866/Salchipiernita_wxckli.png"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            FileName = "Mounstruo",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258855/Mounstruo_bgqfgs.png"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            FileName = "Mounstrito",
+                            ImageData = "https://res.cloudinary.com/dilxrtdwx/image/upload/v1725258854/Mounstrito_vjfxho.png"
                         });
                 });
 
@@ -1723,13 +2159,13 @@ namespace DBSenorialModels.Data.Migrations
                         new
                         {
                             IdInventario = 1,
-                            FechaActualizacion = new DateTime(2024, 8, 31, 0, 52, 15, 214, DateTimeKind.Local).AddTicks(21),
+                            FechaActualizacion = new DateTime(2024, 9, 8, 13, 32, 38, 888, DateTimeKind.Local).AddTicks(6563),
                             IdSucursal = 1
                         },
                         new
                         {
                             IdInventario = 2,
-                            FechaActualizacion = new DateTime(2024, 8, 31, 0, 52, 15, 214, DateTimeKind.Local).AddTicks(24),
+                            FechaActualizacion = new DateTime(2024, 9, 8, 13, 32, 38, 888, DateTimeKind.Local).AddTicks(6565),
                             IdSucursal = 2
                         });
                 });
@@ -2136,7 +2572,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa queso tocino",
                             IdCategoria = 17,
-                            IdImg = 1,
+                            IdImg = 2,
                             Nombre = "Hamburguesa queso tocino",
                             PrecioVenta = 12.00m
                         },
@@ -2146,7 +2582,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Hamburguesa señorial",
                             IdCategoria = 17,
-                            IdImg = 1,
+                            IdImg = 3,
                             Nombre = "Hamburguesa señorial",
                             PrecioVenta = 15.00m
                         },
@@ -2156,7 +2592,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo a la brasa",
                             IdCategoria = 6,
-                            IdImg = 1,
+                            IdImg = 4,
                             Nombre = "1/4 de pollo a la brasa",
                             PrecioVenta = 12.00m
                         },
@@ -2166,7 +2602,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "1/4 de pollo broaster",
                             IdCategoria = 6,
-                            IdImg = 1,
+                            IdImg = 5,
                             Nombre = "1/4 de pollo broaster",
                             PrecioVenta = 15.00m
                         },
@@ -2176,7 +2612,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo",
                             IdCategoria = 7,
-                            IdImg = 1,
+                            IdImg = 6,
                             Nombre = "Parrilla de pollo",
                             PrecioVenta = 15.00m
                         },
@@ -2186,7 +2622,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo al ajo",
                             IdCategoria = 7,
-                            IdImg = 1,
+                            IdImg = 7,
                             Nombre = "Parrilla de pollo al ajo",
                             PrecioVenta = 16.00m
                         },
@@ -2196,7 +2632,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Parrilla de pollo dietética",
                             IdCategoria = 7,
-                            IdImg = 1,
+                            IdImg = 8,
                             Nombre = "Parrilla de pollo dietética",
                             PrecioVenta = 16.00m
                         },
@@ -2206,7 +2642,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Parrilla mixta",
                             IdCategoria = 7,
-                            IdImg = 1,
+                            IdImg = 9,
                             Nombre = "Parrilla mixta",
                             PrecioVenta = 20.00m
                         },
@@ -2216,7 +2652,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Brochetas de pollo",
                             IdCategoria = 8,
-                            IdImg = 1,
+                            IdImg = 10,
                             Nombre = "Brochetas de pollo",
                             PrecioVenta = 15.00m
                         },
@@ -2226,7 +2662,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Pollo a la pizzarola",
                             IdCategoria = 8,
-                            IdImg = 1,
+                            IdImg = 11,
                             Nombre = "Pollo a la pizzarola",
                             PrecioVenta = 20.00m
                         },
@@ -2236,7 +2672,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Bisteck a la parrilla",
                             IdCategoria = 8,
-                            IdImg = 1,
+                            IdImg = 12,
                             Nombre = "Bisteck a la parrilla",
                             PrecioVenta = 18.00m
                         },
@@ -2246,7 +2682,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Chorizo a la parrilla",
                             IdCategoria = 8,
-                            IdImg = 1,
+                            IdImg = 13,
                             Nombre = "Chorizo a la parrilla",
                             PrecioVenta = 11.00m
                         },
@@ -2256,7 +2692,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Chicharrón señorial",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 14,
                             Nombre = "Chicharrón señorial",
                             PrecioVenta = 15.00m
                         },
@@ -2266,7 +2702,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Lonjitas",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 15,
                             Nombre = "Lonjitas",
                             PrecioVenta = 6.00m
                         },
@@ -2276,7 +2712,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Chaufa especial",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 16,
                             Nombre = "Chaufa especial",
                             PrecioVenta = 10.00m
                         },
@@ -2286,7 +2722,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Chaufa mixto",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 17,
                             Nombre = "Chaufa mixto",
                             PrecioVenta = 12.00m
                         },
@@ -2296,7 +2732,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Spaguetti a lo alfredo",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 18,
                             Nombre = "Spaguetti a lo alfredo",
                             PrecioVenta = 14.00m
                         },
@@ -2306,7 +2742,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Café pasado",
                             IdCategoria = 10,
-                            IdImg = 1,
+                            IdImg = 19,
                             Nombre = "Café pasado",
                             PrecioVenta = 2.50m
                         },
@@ -2316,7 +2752,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Chocolate con panetón",
                             IdCategoria = 10,
-                            IdImg = 1,
+                            IdImg = 20,
                             Nombre = "Chocolate con panetón",
                             PrecioVenta = 5.00m
                         },
@@ -2326,7 +2762,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Leche fresca",
                             IdCategoria = 10,
-                            IdImg = 1,
+                            IdImg = 21,
                             Nombre = "Leche fresca",
                             PrecioVenta = 3.00m
                         },
@@ -2336,7 +2772,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Milo",
                             IdCategoria = 10,
-                            IdImg = 1,
+                            IdImg = 22,
                             Nombre = "Milo",
                             PrecioVenta = 3.00m
                         },
@@ -2346,7 +2782,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Café con leche",
                             IdCategoria = 10,
-                            IdImg = 1,
+                            IdImg = 23,
                             Nombre = "Café con leche",
                             PrecioVenta = 4.00m
                         },
@@ -2356,7 +2792,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Mates",
                             IdCategoria = 10,
-                            IdImg = 1,
+                            IdImg = 24,
                             Nombre = "Mates",
                             PrecioVenta = 2.00m
                         },
@@ -2366,7 +2802,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 3lts",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 25,
                             Nombre = "Gaseosa de 3lts",
                             PrecioVenta = 14.00m
                         },
@@ -2376,7 +2812,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 2.25lts",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 26,
                             Nombre = "Gaseosa de 2.25lts",
                             PrecioVenta = 11.00m
                         },
@@ -2386,7 +2822,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1.5lts",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 27,
                             Nombre = "Gaseosa de 1.5lts",
                             PrecioVenta = 9.00m
                         },
@@ -2396,7 +2832,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1lts",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 28,
                             Nombre = "Gaseosa de 1lts",
                             PrecioVenta = 7.00m
                         },
@@ -2406,7 +2842,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa de 1/2lt",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 29,
                             Nombre = "Gaseosa de 1/2lt",
                             PrecioVenta = 4.00m
                         },
@@ -2416,7 +2852,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa personal",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 30,
                             Nombre = "Gaseosa personal",
                             PrecioVenta = 2.50m
                         },
@@ -2426,7 +2862,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gaseosa pirañita",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 31,
                             Nombre = "Gaseosa pirañita",
                             PrecioVenta = 1.50m
                         },
@@ -2436,7 +2872,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Refresco de maracuya (Jarra)",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 32,
                             Nombre = "Refresco de maracuya (Jarra)",
                             PrecioVenta = 8.00m
                         },
@@ -2446,7 +2882,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Chicha morada (Jarra)",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 33,
                             Nombre = "Chicha morada (Jarra)",
                             PrecioVenta = 8.00m
                         },
@@ -2456,7 +2892,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Limonada Frozen (Jarra)",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 34,
                             Nombre = "Limonada Frozen (Jarra)",
                             PrecioVenta = 12.00m
                         },
@@ -2466,7 +2902,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Limonada Americana (Jarra)",
                             IdCategoria = 11,
-                            IdImg = 1,
+                            IdImg = 35,
                             Nombre = "Limonada Americana (Jarra)",
                             PrecioVenta = 11.00m
                         },
@@ -2476,7 +2912,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Caliente de pisco",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 36,
                             Nombre = "Caliente de pisco",
                             PrecioVenta = 30.00m
                         },
@@ -2486,7 +2922,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Caliente de vino",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 37,
                             Nombre = "Caliente de vino",
                             PrecioVenta = 40.00m
                         },
@@ -2496,7 +2932,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Caliente de ron",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 38,
                             Nombre = "Caliente de ron",
                             PrecioVenta = 35.00m
                         },
@@ -2506,7 +2942,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Caliente de whisky",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 39,
                             Nombre = "Caliente de whisky",
                             PrecioVenta = 45.00m
                         },
@@ -2516,7 +2952,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Cerveza en lata",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 40,
                             Nombre = "Cerveza en lata",
                             PrecioVenta = 6.00m
                         },
@@ -2526,7 +2962,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Cerveza negra",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 41,
                             Nombre = "Cerveza negra",
                             PrecioVenta = 10.00m
                         },
@@ -2536,7 +2972,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Cerveza de trigo",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 42,
                             Nombre = "Cerveza de trigo",
                             PrecioVenta = 10.00m
                         },
@@ -2546,7 +2982,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Vino queirolo (Vaso)",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 43,
                             Nombre = "Vino queirolo (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -2556,7 +2992,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Whisky (Vaso)",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 44,
                             Nombre = "Whisky (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -2566,7 +3002,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Pisco Vargas (Vaso)",
                             IdCategoria = 12,
-                            IdImg = 1,
+                            IdImg = 45,
                             Nombre = "Pisco Vargas (Vaso)",
                             PrecioVenta = 10.00m
                         },
@@ -2576,7 +3012,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Mojito",
                             IdCategoria = 13,
-                            IdImg = 1,
+                            IdImg = 46,
                             Nombre = "Mojito",
                             PrecioVenta = 15.90m
                         },
@@ -2586,7 +3022,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Machu Picchu",
                             IdCategoria = 13,
-                            IdImg = 1,
+                            IdImg = 47,
                             Nombre = "Machu Picchu",
                             PrecioVenta = 17.90m
                         },
@@ -2596,7 +3032,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Daikiri",
                             IdCategoria = 13,
-                            IdImg = 1,
+                            IdImg = 48,
                             Nombre = "Daikiri",
                             PrecioVenta = 15.90m
                         },
@@ -2606,7 +3042,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Piña colada",
                             IdCategoria = 13,
-                            IdImg = 1,
+                            IdImg = 49,
                             Nombre = "Piña colada",
                             PrecioVenta = 16.90m
                         },
@@ -2616,7 +3052,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Pisco sour",
                             IdCategoria = 13,
-                            IdImg = 1,
+                            IdImg = 50,
                             Nombre = "Pisco sour",
                             PrecioVenta = 15.90m
                         },
@@ -2626,7 +3062,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Naranjita",
                             IdCategoria = 13,
-                            IdImg = 1,
+                            IdImg = 51,
                             Nombre = "Naranjita",
                             PrecioVenta = 15.00m
                         },
@@ -2636,7 +3072,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Alitas en salsa BBQ",
                             IdCategoria = 14,
-                            IdImg = 1,
+                            IdImg = 52,
                             Nombre = "Alitas en salsa BBQ",
                             PrecioVenta = 35.00m
                         },
@@ -2646,7 +3082,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Alitas broaster",
                             IdCategoria = 14,
-                            IdImg = 1,
+                            IdImg = 53,
                             Nombre = "Alitas broaster",
                             PrecioVenta = 35.00m
                         },
@@ -2656,7 +3092,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Tequeños especiales",
                             IdCategoria = 14,
-                            IdImg = 1,
+                            IdImg = 54,
                             Nombre = "Tequeños especiales",
                             PrecioVenta = 20.00m
                         },
@@ -2666,7 +3102,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Durazno en almíbar",
                             IdCategoria = 15,
-                            IdImg = 1,
+                            IdImg = 55,
                             Nombre = "Durazno en almíbar",
                             PrecioVenta = 5.00m
                         },
@@ -2676,7 +3112,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Helado 02 bolas",
                             IdCategoria = 15,
-                            IdImg = 1,
+                            IdImg = 56,
                             Nombre = "Helado 02 bolas",
                             PrecioVenta = 4.00m
                         },
@@ -2686,7 +3122,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Helado 03 bolas",
                             IdCategoria = 15,
-                            IdImg = 1,
+                            IdImg = 57,
                             Nombre = "Helado 03 bolas",
                             PrecioVenta = 6.00m
                         },
@@ -2696,7 +3132,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Gelatina",
                             IdCategoria = 15,
-                            IdImg = 1,
+                            IdImg = 58,
                             Nombre = "Gelatina",
                             PrecioVenta = 3.00m
                         },
@@ -2706,7 +3142,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Flan",
                             IdCategoria = 15,
-                            IdImg = 1,
+                            IdImg = 59,
                             Nombre = "Flan",
                             PrecioVenta = 5.00m
                         },
@@ -2716,7 +3152,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Jugo de papaya",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 60,
                             Nombre = "Jugo de papaya",
                             PrecioVenta = 5.00m
                         },
@@ -2726,7 +3162,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Jugo de fresa con leche",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 61,
                             Nombre = "Jugo de fresa con leche",
                             PrecioVenta = 8.00m
                         },
@@ -2736,7 +3172,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Jugo de plátano",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 62,
                             Nombre = "Jugo de plátano",
                             PrecioVenta = 5.00m
                         },
@@ -2746,7 +3182,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Jugo surtido",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 63,
                             Nombre = "Jugo surtido",
                             PrecioVenta = 5.00m
                         },
@@ -2756,7 +3192,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Ensalada de frutas",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 64,
                             Nombre = "Ensalada de frutas",
                             PrecioVenta = 7.00m
                         },
@@ -2766,7 +3202,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de Oreo",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 65,
                             Nombre = "Milkshake de Oreo",
                             PrecioVenta = 11.90m
                         },
@@ -2776,7 +3212,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de durazno",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 66,
                             Nombre = "Milkshake de durazno",
                             PrecioVenta = 11.90m
                         },
@@ -2786,7 +3222,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Milkshake de fresa",
                             IdCategoria = 16,
-                            IdImg = 1,
+                            IdImg = 67,
                             Nombre = "Milkshake de fresa",
                             PrecioVenta = 11.90m
                         },
@@ -2796,7 +3232,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Salchipapa clásica",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 68,
                             Nombre = "Salchipapa clásica",
                             PrecioVenta = 7.00m
                         },
@@ -2806,7 +3242,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Salchipapa ayacuchana",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 69,
                             Nombre = "Salchipapa ayacuchana",
                             PrecioVenta = 9.00m
                         },
@@ -2816,7 +3252,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Horno",
                             Descripcion = "Salchipiernita",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 70,
                             Nombre = "Salchipiernita",
                             PrecioVenta = 11.00m
                         },
@@ -2826,7 +3262,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Mounstruo",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 71,
                             Nombre = "Mounstruo",
                             PrecioVenta = 18.00m
                         },
@@ -2836,7 +3272,7 @@ namespace DBSenorialModels.Data.Migrations
                             Derivar = "Cocina",
                             Descripcion = "Mounstrito",
                             IdCategoria = 9,
-                            IdImg = 1,
+                            IdImg = 72,
                             Nombre = "Mounstrito",
                             PrecioVenta = 10.00m
                         });
@@ -3392,7 +3828,7 @@ namespace DBSenorialModels.Data.Migrations
                             IdUsuario = 1,
                             CambiarPassword = "",
                             CodigoRecuperacion = "",
-                            CreatedAt = new DateTime(2024, 8, 31, 0, 52, 15, 218, DateTimeKind.Local).AddTicks(5427),
+                            CreatedAt = new DateTime(2024, 9, 8, 13, 32, 38, 911, DateTimeKind.Local).AddTicks(1475),
                             Email = "admin@admin.com",
                             IdImg = 1,
                             IdPersona = 1,

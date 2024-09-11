@@ -1,4 +1,5 @@
-﻿using RequestResponseModels.Response.Schema_Ventas.DetallePedidos;
+﻿using RequestResponseModels.Request.Schema_Ventas.TbDetallePedidoLlevar;
+using RequestResponseModels.Response.Schema_Ventas.DetallePedidos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,4 +20,5 @@ namespace RequestResponseModels.Response.Schema_Ventas.Pedidos
         public int IdTipoPedido { get; set; } // "Indoor" or "PickUp"
         public List<DetallePedidoResponse> Detalles { get; set; }
     }
+    
 }

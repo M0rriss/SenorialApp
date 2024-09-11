@@ -16,16 +16,17 @@ export class PedidoService{
     public listarPedidos():Observable<PedidoLocalResponse[]>{
         return this.http.get<PedidoLocalResponse[]>(urlPedido.list);
     }
-    
+
     public buscardetallePedido(idPedido:number):Observable<DetallePedidoResponse[]>{
         return this.http.get<DetallePedidoResponse[]>(`${urlPedido.detalle}?idPedido=${idPedido}`)
     }
 
     public pedidoListo(idPedido:number) : Observable<CustomResponse>{
-        return this.http.put<CustomResponse>(`${urlPedido.listo}?idPedido=${idPedido}`,{}); 
+        return this.http.put<CustomResponse>(`${urlPedido.listo}?idPedido=${idPedido}`,{});
     }
-    
+
     public cancelarPedido(idPedido:number) : Observable<CustomResponse>{
-        return this.http.delete<CustomResponse>(`${urlPedido.listo}?idPedido=${idPedido}`,{}); 
+        return this.http.delete<CustomResponse>(`${urlPedido.cancelar}?idPedido=${idPedido}`,{});
     }
+
 }

@@ -31,6 +31,11 @@ namespace DBSenorialModels.Estados
             IdEstadoOrden = 4,
             NombreEstado = "Cancelado"
         };
-        public static readonly List<EstadoOrden> EstadoOrdenes = [Preparado, Pendiente, Facturado, Cancelado ];
+        public static readonly EstadoOrden Editar = new()
+        {
+            IdEstadoOrden = 5,
+            NombreEstado = "Reaperturar"
+        };
+        public static readonly List<EstadoOrden> EstadoOrdenes = [Preparado, Pendiente, Facturado, Cancelado,Editar ];
     }
 }

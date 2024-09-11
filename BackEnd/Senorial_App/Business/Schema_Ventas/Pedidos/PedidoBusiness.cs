@@ -47,29 +47,7 @@ namespace Business.Schema_Ventas.Pedidos
 
         public async Task<PedidoResponse> CreatePedido(PedidoRequest request)
         {
-        //    var options = new PusherOptions
-        //    {
-        //        Cluster = "sa1",
-        //        Encrypted = true
-        //    };
-        //    //JALAR DATA DE BD DE MESAS "PEDIDOS"
-        //    var mesas = new List<object>
-        //{
-        //    new { idMesa = 1, estado = "Ocupado" },
-        //    new { idMesa = 2, estado = "Disponible" },
-        //    new { idMesa = 3, estado = "Facturado" }
-        //};
-        //    var pusher = new Pusher(
-        //      "1851156",
-        //      "ad70a1dc0ed70ee4e9ef",
-        //      "884a08eddbb7cb221dda",
-        //      options);
-
-        //    var result = await pusher.TriggerAsync(
-        //      "my-channel",
-        //      "my-event",
-        //      mesas);
-
+       
             var pedido = _mapper.Map<Pedido>(request);
             pedido.Estado = EstadoOrden.Pendiente.IdEstadoOrden;
             pedido.IdMesa = request.IdMesa;

@@ -10,6 +10,9 @@ class SubRutas {
   static const String home = "$dominio/api/TipoPedido";
 
   static const String orden = "$dominio/api/Pedido";
+  static const String pedidosLlevar= "$dominio/api/PedidoLlevar";
+  static const String detalleLlevar = "$dominio/api/DetallePedidoLlevar";
+  static const String servicios = "$dominio/api/Servicios";
 }
 
 class UrlAuth {
@@ -43,4 +46,10 @@ class UrlPedidos {
   static const String pedido = SubRutas.orden;
   static const String pedidosLocal = "${SubRutas.orden}/PedidosLocal";
   static const String detPedidos = "${SubRutas.orden}/DetPedidos";
+}
+class UrlPedidosLlevar { // Modificar
+  static const String pedidollevar = "${SubRutas.pedidosLlevar}/Create";
+}
+class UrlServicios {
+  static const String dni = "${SubRutas.servicios}/Dni";
 }
