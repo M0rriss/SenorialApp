@@ -8,7 +8,7 @@ class MesasResponse {
     int idPedido;
     int idMesa;
     String nombre;
-    int precio;
+    double precio;
     int cantidad;
     int estado;
 
@@ -25,7 +25,7 @@ class MesasResponse {
         idPedido: json["idPedido"],
         idMesa: json["idMesa"],
         nombre: json["nombre"],
-        precio: json["precio"],
+        precio: json["precio"].toDouble(),
         cantidad: json["cantidad"],
         estado: json["estado"]?? 0,
     );

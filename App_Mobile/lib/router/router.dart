@@ -60,7 +60,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: 'categories',
-              builder: (context, state){
+              builder: (context, state) {
                 PedidoRequest req = state.extra as PedidoRequest;
                 return Categories(data: req);
               },
@@ -77,7 +77,6 @@ final GoRouter router = GoRouter(
                       builder: (context, state) {
                         PedidoRequest req = state.extra as PedidoRequest;
                         return OrderMenuIndoor(pedido: req);
-                       
                       },
                       routes: [
                         GoRoute(
@@ -85,21 +84,21 @@ final GoRouter router = GoRouter(
                           builder: (context, state) => OrderSuccessful(),
                         ),
                       ],
-                      
                     ),
                   ],
                 ),
-                   GoRoute(
-                      path: 'ordermenu',
-                      builder: (context, state) {
-                        PedidoRequest req = state.extra as PedidoRequest;
-                        return OrderMenu(); // Faltaba el paso correcto para OrderMenu
-                      },
-                    ),  
+                GoRoute(
+                  path: 'ordermenu',
+                  builder: (context, state) {
+                    PedidoRequest req = state.extra as PedidoRequest;
+                    return OrderMenu(
+                      pedido: req,
+                    ); // Faltaba el paso correcto para OrderMenu
+                  },
+                ),
               ],
             ),
           ],
-          
         ),
         GoRoute(
           path: 'takeoutregister',
@@ -115,39 +114,39 @@ final GoRouter router = GoRouter(
                     PedidoRequest req = state.extra as PedidoRequest;
                     return Categories(data: req);
                   },
-                 routes: [
-                GoRoute(
-                  path: 'productslist',
-                  builder: (context, state) {
-                    PedidoRequest req = state.extra as PedidoRequest;
-                    return ProductsList(pedido: req);
-                  },
                   routes: [
                     GoRoute(
-                      path: 'ordermenuindoor',
+                      path: 'productslist',
                       builder: (context, state) {
                         PedidoRequest req = state.extra as PedidoRequest;
-                        return OrderMenuIndoor(pedido: req);
-                       
+                        return ProductsList(pedido: req);
                       },
                       routes: [
                         GoRoute(
-                          path: 'ordersuccessful',
-                          builder: (context, state) => OrderSuccessful(),
+                          path: 'ordermenuindoor',
+                          builder: (context, state) {
+                            PedidoRequest req = state.extra as PedidoRequest;
+                            return OrderMenuIndoor(pedido: req);
+                          },
+                          routes: [
+                            GoRoute(
+                              path: 'ordersuccessful',
+                              builder: (context, state) => OrderSuccessful(),
+                            ),
+                          ],
                         ),
                       ],
-                      
                     ),
-                  ],
-                ),
-                   GoRoute(
+                    GoRoute(
                       path: 'ordermenu',
                       builder: (context, state) {
                         PedidoRequest req = state.extra as PedidoRequest;
-                        return OrderMenu(); // Faltaba el paso correcto para OrderMenu
+                        return OrderMenu(
+                          pedido: req,
+                        ); // Faltaba el paso correcto para OrderMenu
                       },
-                    ),  
-                    ],
+                    ),
+                  ],
                 ),
               ],
             ),
