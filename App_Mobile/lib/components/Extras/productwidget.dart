@@ -30,27 +30,6 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
  int cantidad = 1;
  double precioVenta = 0;  
-  // void incrementarCantidad() {
-  //   setState(() {
-  //    var precioCont = widget.productPrice;
-  //    cantidad++;
-  //    precioCont = cantidad * precioCont;
-  //    precioVenta = precioCont;
-     
-  //   });
-  // }
-
-  // void decrementarCantidad() {
-  //   if (cantidad > 0) {
-  //     setState(() {
-  //       var precioRes =widget.productPrice;
-  //       cantidad--;
-  //       precioRes = cantidad * precioRes;
-  //       precioVenta = precioRes;
-        
-  //     });
-  //   }
-  // }
 
 
   @override
@@ -110,24 +89,24 @@ class _ProductWidgetState extends State<ProductWidget> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Row(
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.pen,
-                      size: 12.5,
-                      color: Color.fromRGBO(116, 119, 123, 1),
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      'Comentarios',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+                // const SizedBox(height: 20),
+                // const Row(
+                //   children: [
+                //     FaIcon(
+                //       FontAwesomeIcons.pen,
+                //       size: 12.5,
+                //       color: Color.fromRGBO(116, 119, 123, 1),
+                //     ),
+                //     SizedBox(width: 4),
+                //     Text(
+                //       'Comentarios',
+                //       style: TextStyle(
+                //         fontSize: 10,
+                //         color: Colors.grey,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

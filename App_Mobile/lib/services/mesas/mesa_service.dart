@@ -24,4 +24,18 @@ class MesasService  {
 
     return list;
   }
+   Future<List> listarDetallesProductosMesa(int idMesa, int idPedido,) async {
+    var box = await Hive.openBox('security');  // Asegurarse de que la caja está abierta
+    var token = box.get('token');
+    _dio.options.headers["authorization"] = "Bearer $token";
+
+    // Asegúrate de que UrlMesa está definido y contiene 'list'
+    String ruta = "${UrlPedidos.detPedidos}?IdMesa=$idMesa&IdPedido=$idPedido";
+    
+    final response = await _dio.get(ruta);
+    final list = response.data as List;
+
+     return list;
+    
+  }
 }

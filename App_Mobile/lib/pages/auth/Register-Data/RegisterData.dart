@@ -73,65 +73,70 @@ class _RegisterDataState extends State<RegisterData> {
   bool razon = true;
   void buscarDocumento() async {
     try {
-    if (DniClienteController.text.length == 8) {
-      DniResponse dni = await widget.dniService.buscarDni(DniClienteController.text);
-      if (dni.success) {  // Asumiendo que 'success' es un indicador de respuesta exitosa
-        setState(() {
-          document = dni;
-          documento = 1;
-          DatosCleinteController.text = "${dni.nombres} ${dni.apellidoPaterno} ${dni.apellidoMaterno}";
-        });
+      if (DniClienteController.text.length == 8) {
+        DniResponse dni =
+            await widget.dniService.buscarDni(DniClienteController.text);
+        if (dni.success) {
+          // Asumiendo que 'success' es un indicador de respuesta exitosa
+          setState(() {
+            document = dni;
+            documento = 1;
+            DatosCleinteController.text =
+                "${dni.nombres} ${dni.apellidoPaterno} ${dni.apellidoMaterno}";
+          });
+        } else {
+          // Limpia los campos y permite la entrada manual
+          setState(() {
+            DatosCleinteController
+                .clear(); // Asumiendo que quieres limpiar los campos
+            throw Exception(
+                "DNI no encontrado, por favor ingrese los datos manualmente.");
+          });
+        }
       } else {
-        // Limpia los campos y permite la entrada manual
-        setState(() {
-          DatosCleinteController.clear();  // Asumiendo que quieres limpiar los campos
-          throw Exception("DNI no encontrado, por favor ingrese los datos manualmente.");
-        });
+        throw Exception("Formato de DNI no válido.");
       }
-    } else {
-      throw Exception("Formato de DNI no válido.");
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
-  } on Exception catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-  }
   }
 
-  
-    
- void navGuardar(BuildContext context) {
+  void navGuardar(BuildContext context) {
 // INICIO DEL PEDIDO PARA LLEVAR
     // Enviar peticion Dio que crea un cliente
 
-  // Verificamos si el campo DNI está vacío
-  if (DniClienteController.text.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('El campo DNI no puede estar vacío.'))
-    );
-    return;
-  }
+    // Verificamos si el campo DNI está vacío
+    if (DniClienteController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('El campo DNI no puede estar vacío.')));
+      return;
+    }
 
-  // Verificamos si el campo Nombres y Apellidos está vacío
-  if (DatosCleinteController.text.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('El campo Nombres y Apellidos no puede estar vacío.'))
-    );
-    return;
-  }
+    // Verificamos si el campo Nombres y Apellidos está vacío
+    if (DatosCleinteController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('El campo Nombres y Apellidos no puede estar vacío.')));
+      return;
+    }
 // Validamos si hay un idCliente válido.
-   /*  if (idCliente == 0) {
+    /*  if (idCliente == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('No se pudo asignar un cliente, por favor intente nuevamente.'))
       );
       return;
     } */
-  // Llenamos los datos del pedido para llevar.
+    // Llenamos los datos del pedido para llevar.
+    // Guardar 
+    
     PedidoLlevarRequest pedido = PedidoLlevarRequest();
-    pedido.orden.idCliente = idCliente;  // ID del cliente generado.
+    pedido.orden.nombreCliente = DatosCleinteController.text;
+    pedido.orden.idCliente = idCliente; // ID del cliente generado.
     pedido.orden.idEmpleado = idEmpleado;
-    pedido.orden.idTipoPedido = 2;  // Tipo "2" para pedidos "para llevar".
+    pedido.orden.idTipoPedido = 2; // Tipo "2" para pedidos "para llevar".
     print({pedido});
-  // Finalmente, redirigimos a la siguiente pantalla con los datos del pedido
-  context.go('/home/takeoutregister/registerdata/categories', extra: pedido);
+    // Finalmente, redirigimos a la siguiente pantalla con los datos del pedido
+    context.go('/home/takeoutregister/registerdata/categories', extra: pedido);
   }
 
   @override

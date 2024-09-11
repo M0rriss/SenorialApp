@@ -4,9 +4,14 @@ import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Buttons/buttonOrden.dart';
 import 'package:m_senorial/components/Extras/productwidget.dart';
+import 'package:m_senorial/models/Resquest/Pedido/detalle_pedido_mesa_request.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:m_senorial/services/mesas/mesa_service.dart';
 
 class OrderMenu extends StatefulWidget {
-  const OrderMenu({Key? key}) : super(key: key);
+  final PedidoRequest pedido;
+
+  const OrderMenu({Key? key, required this.pedido}) : super(key: key);
 
   @override
   _OrderMenuState createState() => _OrderMenuState();
@@ -14,25 +19,34 @@ class OrderMenu extends StatefulWidget {
 
 class _OrderMenuState extends State<OrderMenu> {
   final codeController = TextEditingController();
+  List<DetallePedidoMesaRequest> productos = [];
 
-  // Ejemplo de lista de productos con nombre y precio
-  final List<Map<String, dynamic>> productos = [
-    {'name': 'Hamburguesa de Pollo', 'price': 30.00},
-    {'name': 'Hamburguesa de Res', 'price': 35.00},
-    {'name': 'Hamburguesa Vegana', 'price': 28.00},
-    {'name': 'Hamburguesa BBQ', 'price': 32.00},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Llamar al API para obtener el detalle de los productos por mesa
+    listarDetalleProductosMesa(
+      widget.pedido.orden.idMesa, 
+      widget.pedido.orden.idPedido);
+  }
+
+  Future<void> listarDetalleProductosMesa(int idMesa, int idPedido) async {
+    final response = await MesasService().listarDetallesProductosMesa(idMesa, idPedido);
+    setState(() {
+      productos = response.map((data) => DetallePedidoMesaRequest.fromJson(data)).toList();
+    });
+  }
 
   // Calcular el subtotal sumando los precios de los productos
   double calcularSubtotal() {
-    return productos.fold(0.0, (total, producto) => total + producto['price']);
+    return productos.fold(0.0, (total, producto) => total + producto.Subtotal);
   }
 
   void goToOrderMenu() {
-    Navigator.pop(context); // Vuelve a la pantalla anterior
+    Navigator.pop(context);
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -58,17 +72,9 @@ class _OrderMenuState extends State<OrderMenu> {
                         color: Color.fromRGBO(252, 110, 42, 1),
                       ),
                     ),
-                    /* Text(
-                      'Pedido No.16',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(153, 153, 153, 1),
-                      ),
-                    ), */
                   ],
                 ),
-                const Spacer(),
+                const SizedBox(width: 233),
                 UserButton(
                   onTap: () {
                     // Acción cuando se presiona el botón
@@ -83,7 +89,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 MyButtonExtras(
                   borderRadius: 10,
                   onTap: () {},
-                  text: 'MESA - 1',
+                  text: 'MESA - ${widget.pedido.orden.idMesa}',
                 ),
                 const SizedBox(width: 20),
               ],
@@ -92,7 +98,7 @@ class _OrderMenuState extends State<OrderMenu> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 29.0),
               child: Text(
-                'Total 04 artículos',
+                'Total de artículos',
                 style: TextStyle(
                   color: Color.fromRGBO(156, 155, 166, 1),
                   fontSize: 15.7,
@@ -106,17 +112,18 @@ class _OrderMenuState extends State<OrderMenu> {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 14.0),
                 child: ProductWidget(
-                  ruta: "",
-                  productName: producto['name'],
-                  productPrice: producto['price'],
+                  ruta: producto.Ruta,
+                  productName: producto.NombreProducto,
+                  productPrice: producto.Subtotal,
                   showControls: false,
                 ),
               );
             }).toList(),
-            // Aquí añadimos la raya vertical centrada con borderRadius
+            // Añadir una raya vertical centrada con borderRadius
             Center(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(100), // Ajusta el borderRadius aquí
+                borderRadius:
+                    BorderRadius.circular(100), // Ajusta el borderRadius aquí
                 child: Container(
                   width: 365,
                   height: 5,
@@ -142,7 +149,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    'S/. ${calcularSubtotal().toStringAsFixed(2)}', // Mostrar el subtotal calculado
+                    'S/. ${calcularSubtotal().toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.normal,
@@ -157,7 +164,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 onTap: () {
                   // Acción cuando se presiona el botón
                 },
-                text: 'Hacer Pedidou',
+                text: 'Reapertura de Mesa',
                 borderRadius: 0,
                 color: const Color.fromRGBO(255, 145, 15, 1),
               ),
@@ -168,7 +175,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 onTap: () {
                   // Acción cuando se presiona el botón
                 },
-                text: 'Cancelar Pedido',
+                text: 'Generar Comprovante',
                 borderRadius: 0,
                 color: const Color.fromRGBO(236, 40, 40, 1),
               ),

@@ -75,30 +75,34 @@ class _SalestableState extends State<Salestable> {
     List<MesasResponse> list =
         response.map((data) => MesasResponse.fromJson(data)).toList();
     for (var mesa in list) {
-      print("Mesa ID: ${mesa.idMesa}, Nombre: ${mesa.nombre}"); // Ajusta según los campos de MesasResponse
-      print(mesa.cantidad );
-      print(mesa.estado );
+      print(
+          "Mesa ID: ${mesa.idMesa}, Nombre: ${mesa.nombre}"); // Ajusta según los campos de MesasResponse
+      print(mesa.cantidad);
+      print(mesa.estado);
     }
     return list;
     // Actualizar el estado con la lista obtenida
   }
-Color _getStatusColor(int estado) {
-  switch (estado) {
-    case 1:
-      return const Color.fromRGBO(171, 174, 188, 1); // Gris
 
-    case 2:
-      return const Color.fromRGBO(241, 115, 115, 1); // Rojo
-    case 3:
-      return const Color.fromRGBO(119, 152, 238, 1); // Azul claro
+  Color _getStatusColor(int estado) {
+    switch (estado) {
+      case 1:
+        return const Color.fromRGBO(171, 174, 188, 1); // Gris
 
-    default:
-      return const Color.fromRGBO(254, 240, 211, 1); // Color por defecto
+      case 2:
+        return const Color.fromRGBO(241, 115, 115, 1); // Rojo
+      case 3:
+        return const Color.fromRGBO(119, 152, 238, 1); // Azul claro
+
+      default:
+        return const Color.fromRGBO(254, 240, 211, 1); // Color por defecto
+    }
   }
-}
+
   void navCategories(PedidoRequest req) {
     context.go('/home/salestable/categories', extra: req);
   }
+
 // void navOrderMenu() {
 //     context.go('/home/salestable/categories/productslist/ordermenu');
 //   }
@@ -171,26 +175,37 @@ Color _getStatusColor(int estado) {
                   itemBuilder: (BuildContext context, int index) {
                     return ButtonTables(
                       onTap: () {
-                        if(mesas[index].cantidad > 0){
-                          
+                        if (mesas[index].cantidad > 0) {
                           // INICIO DE UNA REAPERTURA
-                          //Reidirgir a 
-                         context.go('/home/salestable/categories/productslist/ordermenu');
-                        }else{
+                          //Reidirgir a
+                          PedidoRequest roq = PedidoRequest();
+                          roq.orden.idMesa = mesas[index].idMesa;
+                          roq.orden.idTipoPedido = 1;
+                          // * AGRGAMOS EL ID EMPLEADO
+                          roq.orden.idEmpleado = idEmpleado;
+                          roq.orden.idPedido = mesas[index].idPedido;
+                          print("BUEBUE");
+                          print(roq.orden.idEmpleado);
+                          print(roq.orden.idMesa);
+                          print("BUEBUExxxxx");
+                          //*
+                          context.go(
+                              '/home/salestable/categories/ordermenu',
+                              extra: roq);
+                        } else {
                           // INICIO DE UN NUEVO DE PEDIDO PRESENCIAL
                           PedidoRequest req = PedidoRequest();
-                        req.orden.idMesa = mesas[index].idMesa;
-                        req.orden.idTipoPedido = 1;
-                        // * AGRGAMOS EL ID EMPLEADO
-                        req.orden.idEmpleado = idEmpleado;
-                        print("BUEBUE");
-                        print(req.orden.idEmpleado);
-                        print(req.orden.idMesa);
-                        print("BUEBUExxxxx");
-                        //*
-                        navCategories(req);
+                          req.orden.idMesa = mesas[index].idMesa;
+                          req.orden.idTipoPedido = 1;
+                          // * AGRGAMOS EL ID EMPLEADO
+                          req.orden.idEmpleado = idEmpleado;
+                          print("BUEBUE");
+                          print(req.orden.idEmpleado);
+                          print(req.orden.idMesa);
+                          print("BUEBUExxxxx");
+                          //*
+                          navCategories(req);
                         }
-                        
                       }, // Navega a Categories al hacer clic en una mesa
                       text: mesas[index].idMesa.toString(),
                       color: const Color.fromRGBO(254, 240, 211, 1),
