@@ -137,12 +137,12 @@
     <div class="order-cards-container">
       <div class="order-cards-wrapper">
         <!-- Mostrar pedidos locales -->
-        <ng-container *ngFor="let order of pedidos">
+        <ng-container *ngFor="let order of pedidos; trackBy: trackByFn  " >
           <ng-container *ngTemplateOutlet="orderCardTemplate; context: { order: order }"></ng-container>
         </ng-container>
 
         <!-- Mostrar pedidos para llevar -->
-        <ng-container *ngFor="let order of pedidollevar">
+        <ng-container *ngFor="let order of pedidollevar; trackBy: trackByFn">
           <ng-container *ngTemplateOutlet="orderCardTemplate; context: { order: order }"></ng-container>
         </ng-container>
       </div>

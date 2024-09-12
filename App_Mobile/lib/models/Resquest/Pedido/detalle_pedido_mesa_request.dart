@@ -1,32 +1,44 @@
 class DetallePedidoMesaRequest {
-  int IdPedidoMesa;
-  int IdMesaDetalle;
-  String NombreProducto;
-  int CantidadItems;
-  double Subtotal;
-  double Precio;
-  String Ruta;
+  int idPedidoMesa;
+  int idMesaDetalle;
+  String nombreProducto;
+  int cantidadItems;
+  double subtotal;
+  double precio;
+  String ruta;
 
   DetallePedidoMesaRequest({
-    this.IdPedidoMesa = 0,
-    this.IdMesaDetalle = 0,
-    this.NombreProducto = "",
-    this.CantidadItems = 0,
-    this.Subtotal = 0.0,
-    this.Precio = 0,
-    this.Ruta = "",
+    this.idPedidoMesa = 0,
+    this.idMesaDetalle = 0,
+    this.nombreProducto = "",
+    this.cantidadItems = 1,
+    this.subtotal = 0.0,
+    this.precio = 0,
+    this.ruta = "",
 
 
   });
 
-  // Método factory para crear una instancia desde un JSON
+  // factory DetallePedidoMesaRequest.fromJson(Map<String, dynamic> json) {
+  //    return DetallePedidoMesaRequest(
+  //     idPedidoMesa: json['idPedidoMesa'],
+  //     idMesaDetalle: json['idMesaDetalle'],
+  //     nombreProducto: json['nombreProducto'],
+  //     cantidadItems: json['cantidadItems'],
+  //     subtotal: (json['subtotal']).toDouble(),
+  //     precio: (json['precioProducto']).toDouble(),
+  //     ruta: json['urlImagen'],
+  //   );
+  // }
   factory DetallePedidoMesaRequest.fromJson(Map<String, dynamic> json) {
     return DetallePedidoMesaRequest(
-      IdPedidoMesa: json['IdPedidoMesa'] ?? 0,
-      IdMesaDetalle: json['IdMesaDetalle'] ?? 0,
-      NombreProducto: json['NombreProducto'] ?? "",
-      CantidadItems: json['CantidadItems'] ?? 0,
-      Subtotal: (json['Subtotal'] ?? 0.0).toDouble(),
+      idPedidoMesa: json['idPedido'] ?? 0, 
+      idMesaDetalle: 0, 
+      nombreProducto: json['nombreProducto'] ?? '',
+      cantidadItems: 1, 
+      subtotal: (json['precioProducto'] ?? 0).toDouble(), 
+      precio: (json['precioProducto'] ?? 0).toDouble(),
+      ruta: json['urlImagen'] ?? '', 
     );
   }
 }
