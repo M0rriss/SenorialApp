@@ -49,6 +49,8 @@ class UrlPedidos {
 }
 class UrlPedidosLlevar { // Modificar
   static const String pedidollevar = "${SubRutas.pedidosLlevar}/Create";
+  static const String listarpedidollevar = "${SubRutas.pedidosLlevar}/PedidosLlevar";
+  static const String detpedidollevar = "${SubRutas.pedidosLlevar}/DetallePedidoLlevar";
 }
 class UrlServicios {
   static const String dni = "${SubRutas.servicios}/Dni";

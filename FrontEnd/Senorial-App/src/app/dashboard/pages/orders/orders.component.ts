@@ -94,22 +94,52 @@ confirmPayment(event: Event) {
         return 'all';
     }
   }
+  trackByFn(index: number, item: any): number {
+    return item.id; // Usar el ID único de cada orden
+  }
+  badgeClassCache = new Map<number, string>();
 
-  getBadgeClass(status: any) {
-    console.log("Estado recibido:", status);
+  getBadgeClass(status: number): string {
+    if (this.badgeClassCache.has(status)) {
+      return this.badgeClassCache.get(status)!;
+    }
+
+    let badgeClass;
     switch (status) {
       case 1:
-        return 'ready-badge';  // Estado "listo para servir"
-      case 4:
-        return 'cancelled-badge';  // Estado "cancelado"
+        badgeClass = 'ready-badge';
+        break;
       case 2:
-        return 'cooking-badge';  // Estado "siendo cocinado"
+        badgeClass = 'cooking-badge';
+        break;
       case 3:
-        return 'invoice-badge';  // Estado "facturado"
+        badgeClass = 'invoice-badge';
+        break;
+      case 4:
+        badgeClass = 'cancelled-badge';
+        break;
       default:
-        return 'all';  // Clase por defecto si no hay coincidencia
+        badgeClass = 'all';
     }
+
+    this.badgeClassCache.set(status, badgeClass);
+    return badgeClass;
   }
+  // getBadgeClass(status: any) {
+  //   console.log("Estado recibido:", status);
+  //   switch (status) {
+  //     case 1:
+  //       return 'ready-badge';  // Estado "listo para servir"
+  //     case 4:
+  //       return 'cancelled-badge';  // Estado "cancelado"
+  //     case 2:
+  //       return 'cooking-badge';  // Estado "siendo cocinado"
+  //     case 3:
+  //       return 'invoice-badge';  // Estado "facturado"
+  //     default:
+  //       return 'all';  // Clase por defecto si no hay coincidencia
+  //   }
+  // }
 
   openOrderModal(order: any) {
     this.selectedOrder = order;

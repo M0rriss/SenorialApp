@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:m_senorial/components/Buttons/buttonExtras.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
@@ -20,31 +21,56 @@ class OrderMenu extends StatefulWidget {
 class _OrderMenuState extends State<OrderMenu> {
   final codeController = TextEditingController();
   List<DetallePedidoMesaRequest> productos = [];
-
+final MesasService mesassService = MesasService();
   @override
   void initState() {
     super.initState();
-    // Llamar al API para obtener el detalle de los productos por mesa
+    
     listarDetalleProductosMesa(
       widget.pedido.orden.idMesa, 
       widget.pedido.orden.idPedido);
+       productos = convertir(widget.pedido);
+       
   }
 
-  Future<void> listarDetalleProductosMesa(int idMesa, int idPedido) async {
-    final response = await MesasService().listarDetallesProductosMesa(idMesa, idPedido);
-    setState(() {
-      productos = response.map((data) => DetallePedidoMesaRequest.fromJson(data)).toList();
-    });
+List<DetallePedidoMesaRequest> convertir(PedidoRequest pedidoRequest) {
+  List<DetallePedidoMesaRequest> productosConvertidos = [];
+
+  for (var producto in pedidoRequest.lista) {
+    productosConvertidos.add(DetallePedidoMesaRequest(
+      idPedidoMesa: pedidoRequest.orden.idPedido,  
+      idMesaDetalle: pedidoRequest.orden.idMesa,   
+      nombreProducto: producto.nombre,             
+      cantidadItems: producto.cantidad,            
+      subtotal: producto.precio * producto.cantidad, 
+      precio: producto.precio,                     
+      ruta: producto.ruta,                         
+    ));
   }
 
-  // Calcular el subtotal sumando los precios de los productos
+  return productosConvertidos;
+}
+
+
+
+
+ Future<void> listarDetalleProductosMesa(int idMesa, int idPedido) async {
+  final response = await mesassService.listarDetallesProductosMesa(idMesa, idPedido);
+  
+  // Imprime los datos que llegan de la API para depurar
+  print('Datos recibidos: $response');
+  
+  setState(() {
+    productos = response.map((data) => DetallePedidoMesaRequest.fromJson(data)).toList();
+  });
+}
+
+  
   double calcularSubtotal() {
-    return productos.fold(0.0, (total, producto) => total + producto.Subtotal);
+    return productos.fold(0.0, (total, producto) => total + producto.subtotal);
   }
 
-  void goToOrderMenu() {
-    Navigator.pop(context);
-  }
+ 
 
    @override
   Widget build(BuildContext context) {
@@ -57,9 +83,7 @@ class _OrderMenuState extends State<OrderMenu> {
             Row(
               children: [
                 const SizedBox(width: 20),
-                ButtonBack(
-                  onTap: goToOrderMenu,
-                ),
+               ButtonBack(onTap: () => context.go('/home/salestable')),
                 const SizedBox(width: 20),
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +101,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 const SizedBox(width: 233),
                 UserButton(
                   onTap: () {
-                    // Acción cuando se presiona el botón
+                    
                   },
                 ),
               ],
@@ -98,7 +122,7 @@ class _OrderMenuState extends State<OrderMenu> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 29.0),
               child: Text(
-                'Total de artículos',
+                'Total  Items',
                 style: TextStyle(
                   color: Color.fromRGBO(156, 155, 166, 1),
                   fontSize: 15.7,
@@ -107,23 +131,23 @@ class _OrderMenuState extends State<OrderMenu> {
               ),
             ),
             const SizedBox(height: 14),
-            // Mostrar los productos en la lista
+            
             ...productos.map((producto) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 14.0),
                 child: ProductWidget(
-                  ruta: producto.Ruta,
-                  productName: producto.NombreProducto,
-                  productPrice: producto.Subtotal,
+                  ruta: producto.ruta,
+                  productName: producto.nombreProducto,
+                  productPrice: producto.subtotal,
                   showControls: false,
                 ),
               );
             }).toList(),
-            // Añadir una raya vertical centrada con borderRadius
+            
             Center(
               child: ClipRRect(
                 borderRadius:
-                    BorderRadius.circular(100), // Ajusta el borderRadius aquí
+                    BorderRadius.circular(100), 
                 child: Container(
                   width: 365,
                   height: 5,
@@ -132,7 +156,7 @@ class _OrderMenuState extends State<OrderMenu> {
                 ),
               ),
             ),
-            // Mostrar el subtotal de la orden
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -162,7 +186,7 @@ class _OrderMenuState extends State<OrderMenu> {
             Center(
               child: MyButtonOrdern(
                 onTap: () {
-                  // Acción cuando se presiona el botón
+                  
                 },
                 text: 'Reapertura de Mesa',
                 borderRadius: 0,
@@ -173,7 +197,7 @@ class _OrderMenuState extends State<OrderMenu> {
             Center(
               child: MyButtonOrdern(
                 onTap: () {
-                  // Acción cuando se presiona el botón
+                  
                 },
                 text: 'Generar Comprovante',
                 borderRadius: 0,
