@@ -2,6 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Senorial_App",
+    "\\Senorial_App\\App_Senorial",
     "\\Senorial_App\\Business",
     "\\Senorial_App\\Business\\Schema_Ventas",
     "\\Senorial_App\\Business\\Schema_Ventas\\TbPedidoLlevar",
@@ -12,6 +13,6 @@
     "\\Senorial_App\\RequestResponseModels\\Request\\Schema_Ventas\\Pedidos",
     "\\Senorial_App\\UtilityAutoMapper"
   ],
-  "SelectedNode": "\\Senorial_App\\Senorial_App.sln",
+  "SelectedNode": "\\Senorial_App\\App_Senorial\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }

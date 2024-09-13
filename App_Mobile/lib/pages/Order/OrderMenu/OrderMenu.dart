@@ -6,6 +6,7 @@ import 'package:m_senorial/components/Buttons/buttonback.dart';
 import 'package:m_senorial/components/Buttons/buttonOrden.dart';
 import 'package:m_senorial/components/Extras/productwidget.dart';
 import 'package:m_senorial/models/Resquest/Pedido/detalle_pedido_mesa_request.dart';
+import 'package:m_senorial/models/Resquest/Pedido/listar_request.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 import 'package:m_senorial/services/mesas/mesa_service.dart';
 
@@ -62,6 +63,18 @@ List<DetallePedidoMesaRequest> convertir(PedidoRequest pedidoRequest) {
   
   setState(() {
     productos = response.map((data) => DetallePedidoMesaRequest.fromJson(data)).toList();
+
+    for (var producto in productos ) {
+      ListarRequest data = ListarRequest();
+      data.idProducto = producto.idProducto;
+      data.cantidad = producto.cantidadItems;
+      data.idDetallePedido = producto.idDetallePedido;
+      data.precio = producto.precio;
+      data.nombre = producto.nombreProducto;
+      data.ruta = producto.ruta;
+      widget.pedido.lista.add(data);
+      
+    }
   });
 }
 
@@ -137,6 +150,7 @@ List<DetallePedidoMesaRequest> convertir(PedidoRequest pedidoRequest) {
                 padding: const EdgeInsets.only(bottom: 14.0),
                 child: ProductWidget(
                   ruta: producto.ruta,
+                  cantidad: producto.cantidadItems,
                   productName: producto.nombreProducto,
                   productPrice: producto.subtotal,
                   showControls: false,
@@ -186,7 +200,7 @@ List<DetallePedidoMesaRequest> convertir(PedidoRequest pedidoRequest) {
             Center(
               child: MyButtonOrdern(
                 onTap: () {
-                  
+                  context.go('/home/salestable/categories', extra: widget.pedido);
                 },
                 text: 'Reapertura de Mesa',
                 borderRadius: 0,
@@ -199,7 +213,7 @@ List<DetallePedidoMesaRequest> convertir(PedidoRequest pedidoRequest) {
                 onTap: () {
                   
                 },
-                text: 'Generar Comprovante',
+                text: 'Generar Comprobante',
                 borderRadius: 0,
                 color: const Color.fromRGBO(236, 40, 40, 1),
               ),

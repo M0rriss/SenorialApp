@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ProductWidget extends StatefulWidget {
   final String productName; 
   final double productPrice; 
+  final int cantidad;
   final bool showControls;
   final VoidCallback? onDelete;
   final VoidCallback? precioInc;
@@ -16,6 +17,7 @@ class ProductWidget extends StatefulWidget {
     required this.productName,
     required this.productPrice,
     required this.ruta,
+    this.cantidad = 0,
     this.showControls = true,
     this.onDelete,
     this.precioInc,
@@ -77,6 +79,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${widget.cantidad} unidades',
+                  // precioVenta.toString(),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 10),

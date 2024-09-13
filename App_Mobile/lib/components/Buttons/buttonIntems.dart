@@ -101,7 +101,7 @@ class Buttonintems extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 50),
+                  const SizedBox(width: 50),
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -129,7 +129,7 @@ class DiagonalClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    path.moveTo(0, size.height * 0.20); // Inicia desde el borde izquierdo con un ligero desplazamiento hacia abajo
+    path.moveTo(0, size.height * 2.00); // Inicia desde el borde izquierdo con un ligero desplazamiento hacia abajo
     path.lineTo(size.width * 0.6, 0); // Traza la línea diagonal hacia arriba a la derecha
     path.lineTo(size.width, 0); // Llega a la esquina superior derecha
     path.lineTo(size.width, size.height); // Baja hacia la esquina inferior derecha
