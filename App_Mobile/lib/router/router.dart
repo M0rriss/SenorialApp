@@ -102,11 +102,11 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           path: 'takeoutregister',
-          builder: (context, state) => TakeOutRegister(),
-          //  builder: (context, state) {
-          //               PedidoRequest req = state.extra as PedidoRequest;
-          //               return TakeOutRegister(pedido: req);
-          //             },
+          // builder: (context, state) => TakeOutRegister(),
+          builder: (context, state) {
+            PedidoRequest req = state.extra as PedidoRequest;
+            return TakeOutRegister(pedido: req);
+          },
           routes: [
             GoRoute(
               path: 'registerdata',

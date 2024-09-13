@@ -75,8 +75,22 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(GenericResponse))]
         public async Task<ActionResult> CreatePedido([FromBody] PedidoRequest request)
         {
-            var result = await _pedidoBusiness.CreatePedido(request);
-            return Ok(result);
+            // Si la orden not existe en la mesa.
+            // Crear como siempre. <----------------- Orden nueva
+            var existingPedido = await _pedidoBusiness.GetPedidoById(request.IdPedido);
+            if (existingPedido != null)
+            {
+                var result = await _pedidoBusiness.UpdatePedido(request);
+                return Ok(result);
+            }
+            else
+            {
+                // Si la orden existe, reusarla. <------- Actualizar detalle | Reapertura
+                //var result = await _pedidoBusiness.UpdatePedido(request);
+                var result = await _pedidoBusiness.CreatePedido(request);
+                return Ok(result);
+            }
+
         }
 
         /// <summary>

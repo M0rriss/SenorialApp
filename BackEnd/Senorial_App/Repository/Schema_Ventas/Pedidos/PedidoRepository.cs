@@ -1,4 +1,5 @@
-﻿using DBSenorialModels.Estados;
+﻿using Azure.Core;
+using DBSenorialModels.Estados;
 using DBSenorialModels.Senorial;
 using DBSenorialModels.View.Pedidos;
 using IRepository.Schema_Ventas.Pedidos;
@@ -23,10 +24,12 @@ namespace Repository.Schema_Ventas.Pedidos
         public async Task<Pedido> GetPedidoById(int id)
         {
             return await db.Pedidos
+                .AsNoTracking()
                 .Include(p => p.Detalles)
                 .ThenInclude(d => d.Producto)
                 .Include(p => p.Mesa)
                 .FirstOrDefaultAsync(p => p.IdPedido == id);
+                
         }
 
         public async Task<List<Pedido>> GetAllPedidos()
@@ -50,8 +53,45 @@ namespace Repository.Schema_Ventas.Pedidos
             db.Pedidos.Update(pedido);
             await db.SaveChangesAsync();
             return pedido;
+           
+
+        }
+        public async Task AddDetalle(DetallePedido detalle)
+        {
+            db.DetallePedidos.Add(detalle);
+            await db.SaveChangesAsync();
         }
 
+        public async Task RemoveDetalle(DetallePedido detalle)
+        {
+            db.DetallePedidos.Remove(detalle);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task<List<DetallePedido>> GetDetallesByPedidoId(int idPedido)
+        {
+            return await db.DetallePedidos
+                .Where(d => d.IdPedido == idPedido)
+                .ToListAsync();
+        }
+        public async Task UpdateDetalle(DetallePedido detallePedido)
+        {
+            // Buscar el detalle en la base de datos
+            var existingDetalle = await db.DetallePedidos
+                .FirstOrDefaultAsync(d => d.IdDetallePedido == detallePedido.IdDetallePedido);
+
+            if (existingDetalle != null)
+            {
+                // Actualizar los campos del detalle
+                existingDetalle.IdProducto = detallePedido.IdProducto;
+                existingDetalle.Cantidad = detallePedido.Cantidad;
+                existingDetalle.PrecioUnitario = detallePedido.PrecioUnitario;
+
+                // Marcar el contexto como modificado
+                db.DetallePedidos.Update(existingDetalle);
+                await db.SaveChangesAsync();
+            }
+        }
         public async Task<bool> DeletePedido(int id)
         {
             var pedido = await db.Pedidos.FindAsync(id);
@@ -87,6 +127,7 @@ namespace Repository.Schema_Ventas.Pedidos
         }
         public async Task<List<VwDetPedido>> DetallePedidoAsync(int idPedido)
         {
+            int x = db.DetallePedidos.Count();
             List<VwDetPedido> query = await (from dp in db.DetallePedidos
                                join p in db.Productos on dp.IdProducto equals p.IdProducto
                                join i in db.Imagenes on p.IdImg equals i.Id
@@ -95,9 +136,12 @@ namespace Repository.Schema_Ventas.Pedidos
                                {
                                    IdPedido = dp.IdPedido,
                                    NombreProducto = p.Nombre,
+                                   cantidad = dp.Cantidad,
                                    DescripcionProducto = p.Descripcion, 
                                    PrecioProducto = p.PrecioVenta,
-                                   UrlImagen = i.ImageData
+                                   UrlImagen = i.ImageData,
+                                   idDetallePedido = dp.IdDetallePedido,
+                                   IdProducto = dp.IdProducto,
                                }).ToListAsync();
 
             return query;

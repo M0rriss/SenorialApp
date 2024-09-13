@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using PusherServer;
 using Repository.Schema_Ventas.Mesas;
 using Repository.Schema_Ventas.Pedidos;
+using RequestResponseModels.Request.Schema_Ventas.DetallePedidos;
 using RequestResponseModels.Request.Schema_Ventas.Pedidos;
+using RequestResponseModels.Response.Schema_Ventas.DetallePedidos;
 using RequestResponseModels.Response.Schema_Ventas.Pedidos;
 using System;
 using System.Collections.Generic;
@@ -66,11 +68,80 @@ namespace Business.Schema_Ventas.Pedidos
 
         public async Task<PedidoResponse> UpdatePedido(PedidoRequest request)
         {
-            var pedido = _mapper.Map<Pedido>(request);
-            pedido = await _pedidoRepository.UpdatePedido(pedido);
-            var response = _mapper.Map<PedidoResponse>(pedido);
+            //var pedido = _mapper.Map<Pedido>(request);
+            //pedido = await _pedidoRepository.UpdatePedido(pedido);
+            //var response = _mapper.Map<PedidoResponse>(pedido);
+            //return response;
+            // Verificar si el pedido existe
+            // Obtener el pedido existente
+            var existingPedido = await _pedidoRepository.GetPedidoById(request.IdPedido);
+
+            if (existingPedido == null)
+            {
+                throw new Exception("El pedido no existe.");
+            }
+
+            // Actualizar el pedido
+            existingPedido = _mapper.Map<Pedido>(request);
+            existingPedido.Estado = EstadoOrden.Pendiente.IdEstadoOrden;
+            existingPedido.IdMesa = request.IdMesa;
+
+           
+            existingPedido = await _pedidoRepository.UpdatePedido(existingPedido);
+
+            // Actualizar los detalles del pedido
+            await UpdateDetalles(existingPedido, request.Detalles);
+
+            // Mapear el pedido actualizado a PedidoResponse
+            var response = _mapper.Map<PedidoResponse>(existingPedido);
             return response;
+
         }
+        private async Task UpdateDetalles(Pedido existingPedido, List<DetallePedidoRequest> detalleRequests)
+        {
+            var existingDetalles = await _pedidoRepository.GetDetallesByPedidoId(existingPedido.IdPedido);
+            var updatedDetalles = detalleRequests.Select(d => new DetallePedido
+            {
+                IdProducto = d.IdProducto,
+                Cantidad = d.Cantidad,
+                PrecioUnitario = d.PrecioUnitario
+            }).ToList();
+
+            // Actualiza los detalles existentes
+            foreach (var updatedDetalle in updatedDetalles)
+            {
+                var existingDetalle = existingDetalles.FirstOrDefault(d => d.IdDetallePedido == updatedDetalle.IdDetallePedido);
+
+                if (existingDetalle != null)
+                {
+                    _mapper.Map(updatedDetalle, existingDetalle);
+                    await _pedidoRepository.UpdateDetalle(existingDetalle);
+                }
+                else
+                {
+                    var newDetalle = new DetallePedido
+                    {
+                        IdPedido = existingPedido.IdPedido,
+                        IdProducto = updatedDetalle.IdProducto,
+                        Cantidad = updatedDetalle.Cantidad,
+                        PrecioUnitario = updatedDetalle.PrecioUnitario
+                    };
+
+                    await _pedidoRepository.AddDetalle(newDetalle);
+                }
+            }
+
+            // Elimina los detalles que ya no están en la solicitud
+            var detallesParaEliminar = existingDetalles
+                .Where(d => !updatedDetalles.Any(ud => ud.IdDetallePedido == d.IdDetallePedido))
+                .ToList();
+
+            foreach (var detalle in detallesParaEliminar)
+            {
+                await _pedidoRepository.RemoveDetalle(detalle);
+            }
+        }
+
 
         public async Task<bool> DeletePedido(int id)
         {
@@ -106,6 +177,9 @@ namespace Business.Schema_Ventas.Pedidos
                 Message = "Se cancelo el pedido"
             };
             await _pedidoRepository.CancelarPedidoAsync(idPedido);
+            //var pedido = new Pedido();
+            
+            
             return res;
         }
         #endregion PEDIDOS DASHBOARD

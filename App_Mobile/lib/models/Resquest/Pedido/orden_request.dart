@@ -8,6 +8,7 @@ class OrdenRequest {
   double total;
   int idTipoPedido;
   String nombreCliente;
+  int cantidad;
 
   OrdenRequest(
       {this.idPedido = 0,
@@ -18,5 +19,10 @@ class OrdenRequest {
       this.total = 0,
       this.idTipoPedido = 0,
       this.idCliente = 0,
-      this.nombreCliente = ""});
+      this.cantidad = 0,
+      this.nombreCliente = ""
+      });
+
+  get precio => null;
+
 }

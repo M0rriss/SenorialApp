@@ -1,6 +1,8 @@
 class DetallePedidoMesaRequest {
   int idPedidoMesa;
   int idMesaDetalle;
+  int idProducto;
+  int idDetallePedido;
   String nombreProducto;
   int cantidadItems;
   double subtotal;
@@ -9,14 +11,14 @@ class DetallePedidoMesaRequest {
 
   DetallePedidoMesaRequest({
     this.idPedidoMesa = 0,
+    this.idProducto = 0,
+    this.idDetallePedido = 0,
     this.idMesaDetalle = 0,
     this.nombreProducto = "",
     this.cantidadItems = 1,
     this.subtotal = 0.0,
     this.precio = 0,
     this.ruta = "",
-
-
   });
 
   // factory DetallePedidoMesaRequest.fromJson(Map<String, dynamic> json) {
@@ -32,13 +34,15 @@ class DetallePedidoMesaRequest {
   // }
   factory DetallePedidoMesaRequest.fromJson(Map<String, dynamic> json) {
     return DetallePedidoMesaRequest(
-      idPedidoMesa: json['idPedido'] ?? 0, 
-      idMesaDetalle: 0, 
+      idPedidoMesa: json['idPedido'] ?? 0,
+      idMesaDetalle: 0,
+      idDetallePedido: json['idDetallePedido'] ?? 0,
+      idProducto: json['idProducto'] ?? 0,
       nombreProducto: json['nombreProducto'] ?? '',
-      cantidadItems: 1, 
-      subtotal: (json['precioProducto'] ?? 0).toDouble(), 
+      cantidadItems: json['cantidad'] ?? 0,
+      subtotal: (json['precioProducto'] ?? 0).toDouble(),
       precio: (json['precioProducto'] ?? 0).toDouble(),
-      ruta: json['urlImagen'] ?? '', 
+      ruta: json['urlImagen'] ?? '',
     );
   }
 }

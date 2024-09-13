@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:m_senorial/components/Extras/square_icon.dart';
 import 'package:m_senorial/core-url/urlconst.dart';
 import 'package:m_senorial/models/Response/home/home-response.dart';
+import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,11 +15,15 @@ class Home extends StatelessWidget {
         context.go('/home/salestable');
         break;
       case 2: // ID para "Para Llevar"
-        context.go('/home/takeoutregister');
+        PedidoRequest roq = PedidoRequest();
+        roq.orden.idMesa = 0;
+        roq.orden.idTipoPedido = 1;
+        context.go('/home/takeoutregister', extra: roq);
         break;
       default:
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Acción no disponible para este tipo de pedido.')),
+          SnackBar(
+              content: Text('Acción no disponible para este tipo de pedido.')),
         );
         break;
     }
@@ -30,7 +35,8 @@ class Home extends StatelessWidget {
 
     // Convertir la respuesta a una lista de objetos HomeResponse
     List<dynamic> data = response.data;
-    List<HomeResponse> list = data.map((item) => HomeResponse.fromJson(item)).toList();
+    List<HomeResponse> list =
+        data.map((item) => HomeResponse.fromJson(item)).toList();
 
     return list;
   }
@@ -100,8 +106,10 @@ class Home extends StatelessWidget {
             List<HomeResponse> pedidos = snapshot.data!;
 
             // Filtrar los pedidos por tipo
-            List<HomeResponse> comerAqui = pedidos.where((pedido) => pedido.idTipoPedido == 1).toList();
-            List<HomeResponse> paraLlevar = pedidos.where((pedido) => pedido.idTipoPedido == 2).toList();
+            List<HomeResponse> comerAqui =
+                pedidos.where((pedido) => pedido.idTipoPedido == 1).toList();
+            List<HomeResponse> paraLlevar =
+                pedidos.where((pedido) => pedido.idTipoPedido == 2).toList();
 
             return Center(
               child: Container(

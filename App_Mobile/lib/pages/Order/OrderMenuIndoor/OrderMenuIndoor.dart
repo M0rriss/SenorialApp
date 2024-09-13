@@ -39,6 +39,7 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
   }
 
   void listarProductos() {
+    print('previos productps ${widget.pedido.lista.length}');
     for (var p in widget.pedido.lista) {
       total += p.precio * p.cantidad;
       precios.add(p.precio);
@@ -108,7 +109,7 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
       idTipoPedido: pedidoRequest.orden.idTipoPedido,
       detalles: pedidoRequest.lista.map((producto) {
         return Detalle(
-          idDetallePedido: 0,
+          idDetallePedido: producto.idDetallePedido,
           idProducto: producto.idProducto,
           productoNombre: producto.nombre,
           cantidad: producto.cantidad,
@@ -295,9 +296,9 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
             for (var i in widget.pedido.lista)
               ProductWidget(
                 ruta: i.ruta,
+                cantidad: i.cantidad,
                 productName: i.nombre,
-                productPrice:
-                    i.precio, // Mostrar el precio actualizado del producto
+                productPrice:i.precio, // Mostrar el precio actualizado del producto
                 incremento: i.cantidad, // Mostrar la cantidad del producto
                 precioInc: () {
                   incrementarCantidad(i.idProducto);
@@ -349,7 +350,7 @@ class _OrderMenuIndoorState extends State<OrderMenuIndoor> {
                       hacerPedido(); // Si es diferente función, debes asegurarte de que esté definida
                     }
                   },
-                  text: 'Hacer Pedidox',
+                  text: 'Hacer Pedido',
                   borderRadius: 10,
                   color: const Color.fromRGBO(255, 145, 15, 1),
                 ),
