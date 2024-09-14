@@ -35,7 +35,8 @@ namespace Repository.Schema_Ventas.TbPedidoLlevar
         {
             return await db.PedidosLlevar
                 .Include(p => p.DetallesLlevar) 
-                .ThenInclude(d => d.Producto) 
+                .ThenInclude(d => d.Producto)
+                .Where(p => p.Estado != EstadoOrden.Cancelado.IdEstadoOrden && p.Estado != EstadoOrden.Preparado.IdEstadoOrden)
                 .ToListAsync();
         }
 
@@ -76,15 +77,21 @@ namespace Repository.Schema_Ventas.TbPedidoLlevar
                        join ppl in db.Personas on c.IdPersona equals ppl.IdPersona
                        join tp in db.TipoPedidos on pl.IdTipoPedido equals tp.IdTipoPedido
                        join dp in db.DetallePedidosLlevar on pl.IdPedidoLlevar equals dp.IdPedidoLlevar
-                       group dp by new { pl.IdPedidoLlevar, ppl.PrimerNombre, ppl.SegundoNombre, ppl.ApellidoPaterno, ppl.ApellidoMaterno, tp.Descripcion, pl.Estado } into grouped
-                       select new VwPedidoLlevar
+                       group dp by new { pl.IdPedidoLlevar, ppl.PrimerNombre, 
+                           ppl.SegundoNombre, ppl.ApellidoPaterno, 
+                           ppl.ApellidoMaterno, tp.Descripcion, 
+                           pl.Total,
+                           pl.Estado } into grouped
+                               where grouped.Key.Estado != EstadoOrden.Cancelado.IdEstadoOrden && grouped.Key.Estado != EstadoOrden.Preparado.IdEstadoOrden
+                               select new VwPedidoLlevar
                        {
                            IdPedidoLlevar = grouped.Key.IdPedidoLlevar,
                            NombresCompletosCliente = grouped.Key.PrimerNombre + " " + grouped.Key.SegundoNombre + " " + grouped.Key.ApellidoPaterno + " " + grouped.Key.ApellidoMaterno,
                            NombreEmpleado = grouped.Key.PrimerNombre, 
                            TipoPedido = grouped.Key.Descripcion,
                            CantidadTotal = grouped.Sum(x => x.Cantidad),
-                           Estado = grouped.Key.Estado
+                           Estado = grouped.Key.Estado,
+                           total = grouped.Key.Total
                        }).ToListAsync();
 
              return query;

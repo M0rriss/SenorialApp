@@ -21,6 +21,8 @@ namespace IBusiness.Schema_Ventas.Pedidos
         Task<List<VwDetPedido>> DetallePedido(int idPedido);
         Task<CustomResponse> PedidoListo(int idPedido);
         Task<CustomResponse> CancelarPedido(int idPedido);
-       
+        Task<CustomResponse> VaciarPedido(int idPedido);
+
+
     }
 }

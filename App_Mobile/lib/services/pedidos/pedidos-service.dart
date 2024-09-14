@@ -30,4 +30,14 @@ Future<Response> RegistrarPedido (PedidosRequest pedido) async{
     return response;
 
   }
+ Future<bool> CancelarPedido(int idPedido) async {
+    var box = Hive.box("security");
+    var token = box.get('token');
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+
+    String url = '${UrlPedidos.cancelar}?idPedido=$idPedido'; // Asegúrate de que la URL es correcta
+    final response = await dio.delete(url);
+    return true;
+  }
 }

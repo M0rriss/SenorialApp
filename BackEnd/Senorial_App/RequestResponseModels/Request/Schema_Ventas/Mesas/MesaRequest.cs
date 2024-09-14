@@ -21,5 +21,7 @@ namespace RequestResponseModels.Request.Schema_Ventas.Mesas
         [StringLength(100)]
         public string? Nombre { get; set; }
         public string Estado { get; set; }
+        public int EstadoMesaLocal { get; set; }
     }
+
 }

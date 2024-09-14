@@ -1,12 +1,18 @@
 ﻿using AutoMapper;
+using Azure.Core;
+using Business.Schema_Ventas.Mesas;
 using Business.Schema_Ventas.Pedidos;
 using CommonModels.Common;
+using DBSenorialModels.Estados;
+using IBusiness.Schema_Ventas.Mesas;
 using IBusiness.Schema_Ventas.Pedidos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RequestResponseModels.Request.Schema_Ventas.Mesas;
 using RequestResponseModels.Request.Schema_Ventas.Pedidos;
 using RequestResponseModels.Response.Schema_Generico.GenericResponse;
+using RequestResponseModels.Response.Schema_Ventas.Mesas;
 using RequestResponseModels.Response.Schema_Ventas.Pedidos;
 using System.Net;
 
@@ -19,10 +25,14 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
     {
         private readonly IPedidoBusiness _pedidoBusiness;
         private readonly IMapper _mapper;
+        private readonly IMesaBusiness _mesaBusiness;
+
         public PedidoController(IMapper mapper)
         {
             _mapper = mapper;
             _pedidoBusiness = new PedidoBusiness(mapper);
+            _mesaBusiness = new MesaBusiness(mapper);
+
         }
         #region CRUD METHODS
 
@@ -166,11 +176,39 @@ namespace App_Senorial.Controllers.Schema_Ventas.Pedidos
         [Route("CancelarPedido")]
         public async Task<ActionResult<CustomResponse>> CancelarPedido([FromQuery] int idPedido)
         {
+            //PedidoResponse xres = await _pedidoBusiness.GetPedidoById(idPedido);
+
+            //MesaResponse mesa = await _mesaBusiness.GetById(xres.IdMesa);
+
             CustomResponse res = await _pedidoBusiness.CancelarPedido(idPedido);
+            /// llamar al servicio que retornar el estado a la mesa
+            //var vaciarResponse = await _pedidoBusiness.VaciarPedido(idPedido);
+
+            //MesaUpdateRequest o = new MesaUpdateRequest();
+
+            //o.EstadoMesaLocal = EstadoLocal.Disponible.IdEstadoMesa;
+            //o.IdMesa = mesa.IdMesa;
+
+            //if (mesa.Estado == "True")
+            //{
+            //    o.Estado = Estado.Activo.Nombre;
+            //}
+            //else
+            //{
+            //    o.Estado = Estado.Inactivo.Nombre;
+            //}
+
+            //o.Nombre = mesa.Nombre;
+
+            //var result = await _mesaBusiness.UpdateMesa(o);
+
+            //// Eliminar registros
+
+
             return Ok(res);
         }
 
-        
+
         #endregion CRUD METHODS
     }
 }

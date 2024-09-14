@@ -94,6 +94,10 @@ namespace Business.Schema_Ventas.Mesas
             {
                 throw new ArgumentException("Mesa no encontrada.");
             }
+            if (request.EstadoMesaLocal != 0 )
+            {
+                mesa.EstadoMesaLocal = request.EstadoMesaLocal;
+            }
 
             mesa.Nombre = request.Nombre;
             mesa.Estado = estado;
@@ -169,6 +173,12 @@ namespace Business.Schema_Ventas.Mesas
                 // Inicializar el estado basado en el valor de IdEstadoMesa
                 mesa.Estado = InicializarEstado(mesa.Estado);
             }
+            //var mesasSinDuplicados = mesas
+            //       .GroupBy(m => m.IdMesa) // Agrupar por ID de mesa
+            //       .Select(g => g.First()) // Seleccionar el primer elemento de cada grupo
+            //       .ToList();
+
+            //return mesasSinDuplicados;
 
             return mesas;
         }
