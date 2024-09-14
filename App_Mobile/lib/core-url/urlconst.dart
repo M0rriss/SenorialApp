@@ -46,6 +46,7 @@ class UrlPedidos {
   static const String pedido = SubRutas.orden;
   static const String pedidosLocal = "${SubRutas.orden}/PedidosLocal";
   static const String detPedidos = "${SubRutas.orden}/DetPedidos";
+   static const String cancelar = "${SubRutas.orden}/CancelarPedido";
 }
 class UrlPedidosLlevar { // Modificar
   static const String pedidollevar = "${SubRutas.pedidosLlevar}/Create";

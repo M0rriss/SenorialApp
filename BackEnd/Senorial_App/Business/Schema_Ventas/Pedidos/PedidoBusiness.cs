@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using CommonModels.Common;
 using DBSenorialModels.Estados;
 using DBSenorialModels.Senorial;
@@ -49,21 +50,26 @@ namespace Business.Schema_Ventas.Pedidos
 
         public async Task<PedidoResponse> CreatePedido(PedidoRequest request)
         {
-       
+
             var pedido = _mapper.Map<Pedido>(request);
             pedido.Estado = EstadoOrden.Pendiente.IdEstadoOrden;
             pedido.IdMesa = request.IdMesa;
-            var mesa = await _mesaRepository.GetMesaByIdAsync(pedido.IdMesa); // Obtener la mesa por ID
+            var mesa = await _mesaRepository.GetMesaByIdAsync(pedido.IdMesa); 
             if (mesa != null)
             {
-                mesa.EstadoMesaLocal = EstadoLocal.Ocupado.IdEstadoMesa; // Cambiar el estado de la mesa a "Ocupado"
-                await _mesaRepository.UpdateMesaAsync(mesa); // Guardar los cambios en la base de datos
+                mesa.EstadoMesaLocal = EstadoLocal.Ocupado.IdEstadoMesa; 
+                await _mesaRepository.UpdateMesaAsync(mesa); 
+            }
+            if(mesa.EstadoMesaLocal == EstadoLocal.Disponible.IdEstadoMesa)
+            {
+
             }
             //pedido.IdPedido = request.IdPedido;
             //pedido.IdTipoPedido = request.IdTipoPedido;
             pedido = await _pedidoRepository.CreatePedido(pedido);
             var response = _mapper.Map<PedidoResponse>(pedido);
             return response;
+
         }
 
         public async Task<PedidoResponse> UpdatePedido(PedidoRequest request)
@@ -171,16 +177,85 @@ namespace Business.Schema_Ventas.Pedidos
 
         public async Task<CustomResponse> CancelarPedido(int idPedido)
         {
-            CustomResponse res = new()
+            //CustomResponse res = new()
+            //{
+            //    Code = "200",
+            //    Message = "Se cancelo el pedido"
+            //};
+            //await _pedidoRepository.CancelarPedidoAsync(idPedido);
+            ////var pedido = new Pedido();
+
+
+            //return res;
+            CustomResponse response = new CustomResponse();
+            try
             {
-                Code = "200",
-                Message = "Se cancelo el pedido"
-            };
-            await _pedidoRepository.CancelarPedidoAsync(idPedido);
-            //var pedido = new Pedido();
+                // Obtener el pedido para verificar su existencia
+                var pedido = await _pedidoRepository.GetPedidoById(idPedido);
+                if (pedido == null)
+                {
+                    response.Code = "404";
+                    response.Message = "Pedido no encontrado";
+                    return response;
+                }
+
+                // Eliminar todos los detalles del pedido
+                await _pedidoRepository.VaciarMesa(idPedido);
+
+                // Establecer el total del pedido a cero
+                pedido.Total = 0.00M;
+                await _pedidoRepository.UpdatePedido(pedido);
+
+                // Obtener la mesa asociada al pedido
+                var mesa = await _mesaRepository.GetMesaByIdAsync(pedido.IdMesa);
+                if (mesa != null)
+                {
+                    // Actualizar el estado de la mesa a Disponible
+                    mesa.EstadoMesaLocal = EstadoLocal.Disponible.IdEstadoMesa;
+                    await _mesaRepository.UpdateMesaAsync(mesa);
+                }
+
+                // Respuesta exitosa
+                response.Code = "200";
+                response.Message = "Pedido cancelado y mesa actualizada correctamente.";
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                response.Code = "500";
+                response.Message = $"Error al cancelar el pedido: {ex.Message}";
+            }
+
+            return response;
+        }
+        public async Task<CustomResponse> VaciarPedido(int idPedido)
+        {
+            CustomResponse response = new CustomResponse();
+
             
-            
-            return res;
+                // Obtén el pedido
+                var pedido = await _pedidoRepository.GetPedidoById(idPedido);
+                if (pedido == null)
+                {
+                    response.Code = "404";
+                    response.Message = "Pedido no encontrado";
+                    return response;
+                }
+
+                // Elimina todos los detalles del pedido
+                await _pedidoRepository.VaciarMesa(idPedido);
+
+                // Actualiza el total del pedido a cero
+                pedido.Total = 0.00M;
+                await _pedidoRepository.UpdatePedido(pedido);
+
+
+                // Respuesta exitosa
+                response.Code = "200";
+                response.Message = "Pedido vaciado correctamente";
+           
+
+            return response;
         }
         #endregion PEDIDOS DASHBOARD
     }

@@ -5,7 +5,6 @@ import 'package:m_senorial/components/Buttons/buttonIntems.dart';
 import 'package:m_senorial/components/Buttons/buttonTwo.dart';
 import 'package:m_senorial/components/Buttons/buttonUser.dart';
 import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/models/Resquest/Pedido/listar_request.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
 import 'package:m_senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
 import 'package:m_senorial/services/pedidosllevar/pedidosllevar_services.dart';
@@ -72,7 +71,7 @@ class _TakeOutRegisterState extends State<TakeOutRegister> {
   pedido.lista = []; 
 
   pedido.orden.cantidad = ordenLlevar.cantidad;
-  pedido.orden.total = 0.0; // O calcular el total si tienes detalles
+  pedido.orden.total = ordenLlevar.total; // O calcular el total si tienes detalles
 
   print("Cantidad total de ítems: ${pedido.orden.cantidad}");
   print("Precio total calculado: ${pedido.orden.total}");
@@ -181,7 +180,7 @@ class _TakeOutRegisterState extends State<TakeOutRegister> {
                     padding: const EdgeInsets.only(bottom: 20),
                    child: Buttonintems(
                    name: obtenerPrimerNombreCliente(pedido.orden.nombreCliente), 
-                   price: 'S/. ${pedido.orden.total}', 
+                   price: 'S/. ${pedido.orden.total.toStringAsFixed(2)}', 
                    items: '${pedido.orden.cantidad} items', 
                    svgIconPath: 'lib/imagenes/IconCube.svg', 
                   ),

@@ -182,7 +182,39 @@ namespace Repository.Schema_Ventas.Pedidos
 
             return true;
         }
+        public async Task VaciarMesa(int idPedido)
+        {
+            // Obtener todos los detalles asociados al pedido
+            var detalles = await db.DetallePedidos
+                                  .Where(d => d.IdPedido == idPedido)
+                                  .ToListAsync();
 
+            // Eliminar todos los detalles del pedido
+            foreach (var detalle in detalles)
+            {
+                await RemoveDetalle(detalle);
+            }
+
+            // Obtener el pedido para actualizar el estado de la mesa
+            var pedido = await db.Pedidos
+                                 .Include(p => p.Mesa)
+                                 .FirstOrDefaultAsync(p => p.IdPedido == idPedido);
+
+            if (pedido != null)
+            {
+                // Actualizar el estado de la mesa a 0 items y total S/.0.00
+                pedido.Mesa.EstadoMesaLocal = EstadoLocal.Disponible.IdEstadoMesa; // O el estado correspondiente
+                pedido.Total = 0.00M; // Precio total 0
+
+                await UpdatePedido(pedido); // Guardar cambios
+            }
+        }
+
+        public async Task<List<Pedido>> GetPedidosByMesaId(int idMesa)
+        {
+            // Asegúrate de que el método retorne una colección de pedidos
+            return await db.Pedidos.Where(p => p.IdMesa == idMesa).ToListAsync();
+        }
     }
 }
 

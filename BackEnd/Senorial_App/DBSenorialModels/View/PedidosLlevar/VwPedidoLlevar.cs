@@ -9,6 +9,7 @@ namespace DBSenorialModels.View.PedidosLlevar
     public class VwPedidoLlevar
     {
         public int IdPedidoLlevar { get; set; }
+        public decimal total { get; set; }
         public string NombresCompletosCliente { get; set; }
         public string NombreEmpleado { get; set; }
 

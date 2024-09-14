@@ -24,5 +24,7 @@ namespace IRepository.Schema_Ventas.Pedidos
         Task<List<DetallePedido>> GetDetallesByPedidoId(int idPedido);
         Task RemoveDetalle(DetallePedido detalle);
         Task AddDetalle(DetallePedido detalle);
+        Task VaciarMesa(int idPedido);
+        Task<List<Pedido>> GetPedidosByMesaId(int idMesa);
     }
 }

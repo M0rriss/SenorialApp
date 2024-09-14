@@ -54,7 +54,8 @@ class _RegisterDataState extends State<RegisterData> {
 
   void cancel() {
     // Acción al presionar el texto "Cancelar"
-    Navigator.pop(context); // Vuelve a la pantalla anteriorS
+    context.go('/home');
+    //Navigator.pop(context); // Vuelve a la pantalla anteriorS
   }
 
   DniResponse document = DniResponse(
@@ -127,8 +128,8 @@ class _RegisterDataState extends State<RegisterData> {
       return;
     } */
     // Llenamos los datos del pedido para llevar.
-    // Guardar 
-    
+    // Guardar
+
     PedidoLlevarRequest pedido = PedidoLlevarRequest();
     pedido.orden.nombreCliente = DatosCleinteController.text;
     pedido.orden.idCliente = idCliente; // ID del cliente generado.

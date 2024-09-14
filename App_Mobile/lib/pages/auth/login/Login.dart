@@ -6,7 +6,6 @@ import 'package:m_senorial/components/Buttons/button.dart';
 import 'package:m_senorial/components/Inputs/my_input_text.dart';
 import 'package:m_senorial/components/Texts/my_text_center.dart';
 import 'package:m_senorial/components/Texts/my_text_title.dart';
-import 'package:m_senorial/components/Extras/square_icon.dart';
 import 'package:m_senorial/core-url/urlconst.dart';
 import 'package:m_senorial/services/auth/login.service.dart';
 

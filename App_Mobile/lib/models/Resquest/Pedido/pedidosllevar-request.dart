@@ -40,7 +40,7 @@ class OrdenLlevarRequest {
         fechaPedido: DateTime.parse(json["fechaPedido"] ?? "2012-12-12"),
         estado: json["estado"] ?? 0,
         total: (json["total"]?.toDouble() ?? 0.0),
-        cantidad: (json["cantidad"] ?? 0),
+        cantidad: (json["cantidadTotal"] ?? 0),
         idTipoPedido: json["idTipoPedido"] ?? 0,
         detallesLlevar: List<DetallesLlevar>.from((json["detallesLlevar"] ?? [])
             .map((x) => DetallesLlevar.fromJson(x))),
