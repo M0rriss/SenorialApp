@@ -17,6 +17,9 @@ export class ProductoService extends CrudService<ProductResponse,ProductRequest>
     constructor(protected http:HttpClient){
         super(http, urlProducto.generic);
     }
+   listadoProductos(): Observable<ProductDashResponse[]> {
+        return this.http.get<ProductDashResponse[]>(urlProducto.listado);
+    }
     listarProductos(req: GenericFilterRequest) : Observable<GenericFilterResponse<ProductDashResponse>>{
         var res = this.http.post<GenericFilterResponse<ProductDashResponse>>(urlProducto.dashboard,req);
         return res;

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/models/Response/productos/product-response.dart';
-import 'package:m_senorial/models/generic/generic-filter-request.dart';
-import 'package:m_senorial/models/generic/generic-filter-response.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/models/Response/productos/product-response.dart';
+import 'package:senorial/models/generic/generic-filter-request.dart';
+import 'package:senorial/models/generic/generic-filter-response.dart';
 
 class ProductService {
   Dio dio = Dio();

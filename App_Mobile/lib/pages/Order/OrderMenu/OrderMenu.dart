@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:m_senorial/components/Buttons/buttonExtras.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Buttons/buttonOrden.dart';
-import 'package:m_senorial/components/Extras/productwidget.dart';
-import 'package:m_senorial/models/Resquest/Pedido/detalle_pedido_mesa_request.dart';
-import 'package:m_senorial/models/Resquest/Pedido/listar_request.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/services/mesas/mesa_service.dart';
-import 'package:m_senorial/services/pedidos/pedidos-service.dart';
+import 'package:senorial/components/Buttons/buttonExtras.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Buttons/buttonOrden.dart';
+import 'package:senorial/components/Extras/productwidget.dart';
+import 'package:senorial/models/Resquest/Pedido/detalle_pedido_mesa_request.dart';
+import 'package:senorial/models/Resquest/Pedido/listar_request.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/services/mesas/mesa_service.dart';
+import 'package:senorial/services/pedidos/pedidos-service.dart';
 
 class OrderMenu extends StatefulWidget {
   final PedidoRequest pedido;
@@ -220,8 +220,8 @@ class _OrderMenuState extends State<OrderMenu> {
             const SizedBox(height: 15),
             Center(
               child: MyButtonOrdern(
-                onTap: () {cancelarPedido;},
-                text: 'Cancelar Pedido',
+                onTap: () => context.go('/home/salestable'),
+                text: 'Cancelar',
                 borderRadius: 0,
                 color: const Color.fromRGBO(236, 40, 40, 1),
               ),

@@ -1,4 +1,4 @@
-# m_senorial
+# senorial
 
 A new Flutter project.
 

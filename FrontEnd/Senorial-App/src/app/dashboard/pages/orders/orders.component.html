@@ -167,7 +167,7 @@
         {{ this.estado }}
       </span>
       <!-- Mostrar nombre de la mesa o "N/A" si es un pedido de PickUp -->
-      <span class="table-number">{{ order.nombreMesa }}</span>
+      <span class="table-number">{{ order.nombreMesa || 'Cliente' }}</span>
     </div>
     <div class="order-details">
       <div class="customer-info">
@@ -208,7 +208,7 @@
 
         <div class="action-buttons">
           <!-- Botón para pagar (solo para pedidos de tipo 'PickUp') -->
-          <button class="pay-button" *ngIf="selectedOrder.tipoPedido === 'PickUp'" (click)="confirmPayment($event)">
+          <button class="pay-button" *ngIf="selectedOrder.tipoPedido === 'PickUp' && selectedOrder.estado !== 4" (click)="confirmPayment($event)">
             Ir a Pagar
           </button>
 

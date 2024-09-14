@@ -15,7 +15,7 @@
       <thead>
         <tr class="table-header">
           <th>Método de Pago</th>
-          <th>Estado</th>
+          <!-- <th>Estado</th> -->
           <th>Acciones</th>
         </tr>
       </thead>
@@ -23,13 +23,13 @@
         @for (item of metodoPago; track $index){
           <tr class="metodo-pago-row">
             <td>{{item.descripcion}}</td>
-            <td class="status-container">
+            <!-- <td class="status-container">
               <label class="switch">
                 <input type="checkbox" [checked]="item.estado" >
                 <span class="slider round"></span>
               </label>
               <span class="status-label">{{item.estadoDescripcion}}</span>
-            </td>
+            </td> -->
             <td>
               <div class="action-buttons">
                 <!-- <i class="add-icon fa-solid fa-circle-plus" (click)="addMetodoPago()"></i> -->

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
+import 'package:senorial/core-url/urlconst.dart';
 
 class CategoriaService {
   final Dio dio = Dio();

@@ -19,7 +19,9 @@ export class UsuarioService{
         var res = this.http.post<GenericFilterResponse<UsuarioResponse>>(urlUsuario.filtro,req);
         return res;
     }
-
+    public listarUsers():Observable<UsuarioResponse[]>{
+      return this.http.get<UsuarioResponse[]>(urlUsuario.listar);
+  }
     crearUsuario(req:UsuarioAddRequest) : Observable<CustomResponse>{
         //Cargar datos
         const formData = new FormData();
@@ -51,4 +53,5 @@ export class UsuarioService{
         var res = this.http.put<CustomResponse>(urlUsuario.update, formData);
         return res;
     }
+
 }

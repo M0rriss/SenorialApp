@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:m_senorial/components/Buttons/button.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Inputs/my_input_text.dart';
+import 'package:senorial/components/Buttons/button.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Inputs/my_input_text.dart';
 
 
 

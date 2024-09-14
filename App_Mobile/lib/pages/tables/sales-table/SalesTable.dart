@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/components/Buttons/buttonTwo.dart';
-import 'package:m_senorial/components/Buttons/buttonTables.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Extras/status.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/models/Response/mesas/mesas-response.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/services/auth/login.service.dart';
-import 'package:m_senorial/services/mesas/mesa_service.dart';
+import 'package:senorial/components/Buttons/buttonTwo.dart';
+import 'package:senorial/components/Buttons/buttonTables.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Extras/status.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/models/Response/mesas/mesas-response.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/services/auth/login.service.dart';
+import 'package:senorial/services/mesas/mesa_service.dart';
 
 class Salestable extends StatefulWidget {
   final mesasService = MesasService();

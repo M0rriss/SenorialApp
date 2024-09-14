@@ -1,5 +1,5 @@
-import 'package:m_senorial/models/auth/authResponse.dart';
-import 'package:m_senorial/models/generic/custom-response.dart';
+import 'package:senorial/models/auth/authResponse.dart';
+import 'package:senorial/models/generic/custom-response.dart';
 
 class LoginResponse {
   CustomResponse mensage;

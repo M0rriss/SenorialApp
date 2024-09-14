@@ -17,6 +17,7 @@ namespace DBSenorialModels.View.Auth.Usuario
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public int IdUsuario { get; set; } = 0;
+        //public string Telefono { get; set; } = string.Empty;
     }
     
 }

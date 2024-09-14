@@ -101,6 +101,7 @@ currentMetodoPago: MetodoPagoResponse | null = null;
     if (action === 'add') {
       this.modalTitle = 'Agregar Método de Pago';
       this.modalButtonText = 'Agregar';
+      this.formMetodoPago.reset();
     } else if (action === 'edit') {
       this.modalTitle = 'Editar Método de Pago';
       this.modalButtonText = 'Guardar';

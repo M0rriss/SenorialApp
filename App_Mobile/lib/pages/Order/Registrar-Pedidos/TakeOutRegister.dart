@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/components/Buttons/buttonIntems.dart';
-import 'package:m_senorial/components/Buttons/buttonTwo.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
-import 'package:m_senorial/services/pedidosllevar/pedidosllevar_services.dart';
+import 'package:senorial/components/Buttons/buttonIntems.dart';
+import 'package:senorial/components/Buttons/buttonTwo.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
+import 'package:senorial/services/pedidosllevar/pedidosllevar_services.dart';
 
 class TakeOutRegister extends StatefulWidget {
   final PedidoRequest pedido; 

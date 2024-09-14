@@ -237,32 +237,110 @@ namespace Repository.Schema_Usuarios.Usuarios
             return await db.Set<Usuario>().Where(u => u.IdPersona == personaId).ToListAsync();
         }
         #region MetodosUsuario
+        //private async Task<List<VwUsuarios>> ListarUsuarioAsync()
+        //{
+        //    // Corregido: Inicializar la lista correctamente
+        //    List<VwUsuarios> list = new List<VwUsuarios>();
+
+        //    var query = await (from user in dbset
+        //                       join rol in db.Roles
+        //                           on user.IdRol equals rol.IdRol
+        //                       join persona in db.Personas
+        //                           on user.IdPersona equals persona.IdPersona
+        //                       join empleado in db.Empleados
+        //                           on persona.IdPersona equals empleado.IdPersona
+        //                       join img in db.Imagenes
+        //                           on user.IdImg equals img.Id
+        //                       select new
+        //                       {
+        //                           user.IdUsuario,
+        //                           Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+        //                           Rol = rol.Nombre,
+        //                           rol.IdRol,
+        //                           user.Password,
+        //                           user.Email,
+        //                           persona.Telefono,
+        //                           Estado = true, // Esto puede ser un valor predeterminado o algo que calcules
+        //                           RutaImg = img.ImageData,
+        //                           // empleado.IdEmpleado // Agregar IdEmpleado
+        //                       }).ToListAsync();
+
+        //    foreach (var item in query)
+        //    {
+        //        VwUsuarios tmp = new VwUsuarios()
+        //        {
+        //            IdUsuario = item.IdUsuario,
+        //            Nombre = item.Nombre,
+        //            Rol = item.Rol,
+        //            Telefono = item.Telefono,
+        //            Estado = item.Estado,
+        //            RutaImg = item.RutaImg,
+        //            Email = item.Email,
+        //            Password = item.Password,
+        //            IdRol = item.IdRol,
+        //            //IdEmpleado = item.IdEmpleado // Asignar el IdEmpleado correctamente
+        //        };
+
+        //        list.Add(tmp);
+        //    }
+
+        //    return list;
+        //    //List<VwUsuarios> list = new List<VwUsuarios>();
+
+        //    //var query = await (from user in dbset
+        //    //                   join rol in db.Roles
+        //    //                       on user.IdRol equals rol.IdRol
+        //    //                   join persona in db.Personas
+        //    //                       on user.IdPersona equals persona.IdPersona
+        //    //                   join empleado in db.Empleados
+        //    //                       on persona.IdPersona equals empleado.IdPersona
+        //    //                   join img in db.Imagenes
+        //    //                       on user.IdImg equals img.Id
+        //    //                   select new VwUsuarios
+        //    //                   {
+        //    //                       IdUsuario = user.IdUsuario,
+        //    //                       Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
+        //    //                       Rol = rol.Nombre,
+        //    //                       IdRol = user.IdRol,
+        //    //                       Password = user.Password,
+        //    //                       Email = user.Email,
+        //    //                       Telefono = persona.Telefono,
+        //    //                       Estado = true, // Si el estado es fijo, lo puedes dejar como está
+        //    //                       RutaImg = img.ImageData,
+        //    //                       IdEmpleado = empleado.IdEmpleado // Agregar IdEmpleado directamente
+        //    //                   }).ToListAsync();
+
+        //    //return query;
+
+        //}
         private async Task<List<VwUsuarios>> ListarUsuarioAsync()
         {
-            // Corregido: Inicializar la lista correctamente
             List<VwUsuarios> list = new List<VwUsuarios>();
 
             var query = await (from user in dbset
                                join rol in db.Roles
-                                   on user.IdRol equals rol.IdRol
+                                   on user.IdRol equals rol.IdRol into userRoles
+                               from rol in userRoles.DefaultIfEmpty()
                                join persona in db.Personas
-                                   on user.IdPersona equals persona.IdPersona
+                                   on user.IdPersona equals persona.IdPersona into userPersonas
+                               from persona in userPersonas.DefaultIfEmpty()
                                join empleado in db.Empleados
-                                   on persona.IdPersona equals empleado.IdPersona
+                                   on persona.IdPersona equals empleado.IdPersona into personaEmpleados
+                               from empleado in personaEmpleados.DefaultIfEmpty()
                                join img in db.Imagenes
-                                   on user.IdImg equals img.Id
+                                   on user.IdImg equals img.Id into userImages
+                               from img in userImages.DefaultIfEmpty()
                                select new
                                {
-                                   user.IdUsuario,
+                                   IdUsuario = user.IdUsuario,
                                    Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
                                    Rol = rol.Nombre,
-                                   rol.IdRol,
-                                   user.Password,
-                                   user.Email,
-                                   persona.Telefono,
-                                   Estado = true, // Esto puede ser un valor predeterminado o algo que calcules
+                                   IdRol = user.IdRol,
+                                   Password = user.Password,
+                                   Email = user.Email,
+                                   Telefono = persona.Telefono,
+                                   Estado = true, // Si el estado es fijo, lo puedes dejar como está
                                    RutaImg = img.ImageData,
-                                   // empleado.IdEmpleado // Agregar IdEmpleado
                                }).ToListAsync();
 
             foreach (var item in query)
@@ -272,46 +350,18 @@ namespace Repository.Schema_Usuarios.Usuarios
                     IdUsuario = item.IdUsuario,
                     Nombre = item.Nombre,
                     Rol = item.Rol,
-                    Telefono = item.Telefono,
                     Estado = item.Estado,
                     RutaImg = item.RutaImg,
                     Email = item.Email,
                     Password = item.Password,
                     IdRol = item.IdRol,
-                    //IdEmpleado = item.IdEmpleado // Asignar el IdEmpleado correctamente
+                    Telefono = item.Telefono
                 };
 
                 list.Add(tmp);
             }
 
             return list;
-            //List<VwUsuarios> list = new List<VwUsuarios>();
-
-            //var query = await (from user in dbset
-            //                   join rol in db.Roles
-            //                       on user.IdRol equals rol.IdRol
-            //                   join persona in db.Personas
-            //                       on user.IdPersona equals persona.IdPersona
-            //                   join empleado in db.Empleados
-            //                       on persona.IdPersona equals empleado.IdPersona
-            //                   join img in db.Imagenes
-            //                       on user.IdImg equals img.Id
-            //                   select new VwUsuarios
-            //                   {
-            //                       IdUsuario = user.IdUsuario,
-            //                       Nombre = persona.PrimerNombre + " " + persona.ApellidoPaterno,
-            //                       Rol = rol.Nombre,
-            //                       IdRol = user.IdRol,
-            //                       Password = user.Password,
-            //                       Email = user.Email,
-            //                       Telefono = persona.Telefono,
-            //                       Estado = true, // Si el estado es fijo, lo puedes dejar como está
-            //                       RutaImg = img.ImageData,
-            //                       IdEmpleado = empleado.IdEmpleado // Agregar IdEmpleado directamente
-            //                   }).ToListAsync();
-
-            //return query;
-
         }
         private async Task<List<VwUsuariosE>> ListarUsuarioEAsync()
         {
@@ -372,6 +422,7 @@ namespace Repository.Schema_Usuarios.Usuarios
 
             return res;
         }
+
         #endregion MetodosUsuario
     }
 }

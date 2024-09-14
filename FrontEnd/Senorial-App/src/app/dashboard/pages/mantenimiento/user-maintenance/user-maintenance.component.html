@@ -3,10 +3,10 @@
   <div class="content">
     <h1 class="section-title">Usuarios</h1>
     <div class="action-bar">
-      <div class="search-container">
+     <!--  <div class="search-container">
         <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
         <input type="text" class="search-input" placeholder="Buscar por Usuario, Rol o Telefono">
-      </div>
+      </div> -->
     <div class="buttons">
       <button class="action-button"  (click)="addUser()">Agregar</button>
     </div>
@@ -17,7 +17,7 @@
           <th>Nombre</th>
           <th>Rol</th>
           <th>Telefono</th>
-          <th>Estado</th>
+          <!-- <th>Estado</th> -->
           <th>Acciones</th>
         </tr>
       </thead>
@@ -27,13 +27,13 @@
             <td>{{item.nombre}}</td>
             <td>{{item.rol}}</td>
             <td>{{item.telefono}}</td>
-            <td class="status-container">
+           <!--  <td class="status-container">
               <label class="switch" >
                 <input type="checkbox" [checked]="item.estado">
                 <span class="slider round"></span>
               </label>
               <span class="status-label">Activo</span>
-            </td>
+            </td> -->
             <td>
               <div class="action-buttons">
                 <!-- <i class="add-icon fa-solid fa-circle-plus" (click)="addUser()"></i> -->

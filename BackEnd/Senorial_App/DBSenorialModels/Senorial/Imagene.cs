@@ -17,7 +17,7 @@ public partial class Imagene
     public string? ImageData { get; set; }
 
     [Column("nombre")]
-    [StringLength(100)]
+    [StringLength(255)]
     public string? FileName { get; set; }
 
     [InverseProperty("IdImgNavigation")]

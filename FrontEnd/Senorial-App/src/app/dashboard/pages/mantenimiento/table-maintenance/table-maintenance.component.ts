@@ -48,13 +48,26 @@ export class TableMaintenanceComponent implements OnInit {
   }
 
   //FUNCIONAMINETO
-  listarMesas(){
-    this.mesaService.getAll()
-      .subscribe({
-        next: (data: MesaResponse[])=>{
-          this.mesasList = data;
-        }
-      });
+  // listarMesas(){
+  //   this.mesaService.getAll()
+  //     .subscribe({
+  //       next: (data: MesaResponse[])=>{
+  //         this.mesasList = data;
+  //       }
+  //     });
+  // }
+  listarMesas(): void {
+    this.mesaService.getAll().subscribe({
+      next: (data) => {
+        this.mesasList = data.map(mesa => ({
+          ...mesa,
+          estado: mesa.estado || 'Inactivo'  // Asegúrate de que el estado esté siempre definido
+        }));
+      },
+      error: () => {
+        this.notificationService.showError('Error', 'No se pudieron cargar las mesas.');
+      }
+    });
   }
   crearMesa(){
     let req = this.formMesa.value as MesaRequest;
@@ -149,5 +162,33 @@ export class TableMaintenanceComponent implements OnInit {
   closeConfirmDialog() {
     this.isConfirmDialogOpen = false;
     this.selectedMesa = null;
+  }
+  toggleEstado(mesa: MesaResponse, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const nuevoEstado = input.checked ? 'Activo' : 'Inactivo';
+
+    // Prepara el objeto de actualización
+    const mesaActualizada = { ...mesa, estado: nuevoEstado };
+
+    // Realiza la llamada al backend para actualizar el estado
+    this.mesaService.actulizarRegistro(mesaActualizada).subscribe({
+      next: (response) => {
+        // Verifica si la respuesta del backend contiene la información actualizada
+        if (response.estado === nuevoEstado) {
+          this.notificationService.showSuccess('Estado actualizado exitosamente');
+          // Actualiza el estado en la interfaz de usuario
+          mesa.estado = nuevoEstado;
+        } else {
+          // Restaura el estado visual si la actualización no fue exitosa
+          input.checked = (mesa.estado === 'Activo');
+          this.notificationService.showError('Error', 'El estado no se actualizó correctamente.');
+        }
+      },
+      error: () => {
+        // Restaura el estado visual si ocurre un error
+        input.checked = (mesa.estado === 'Activo');
+        this.notificationService.showError('Error', 'Hubo un problema al actualizar el estado.');
+      }
+    });
   }
 }

@@ -17,12 +17,13 @@
           <div class="mesa-item" *ngFor="let mesa of mesasList">
             <h3 class="mesa-name">{{ mesa.nombre }}</h3>
             <div class="mesa-actions">
-              <label class="switch">
-                <input type="checkbox" [checked]="mesa.estado">
-                <span class="slider round"></span>
-              </label>
+              <!-- <label class="switch">
+                <input type="checkbox" [checked]="mesa.estado" (change)="toggleEstado(mesa, $event)">
+                <span class="slider round" ></span>
+
+              </label> -->
               <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(mesa)"></i>
-              <i class="delete-icon fa-solid fa-ellipsis-vertical kebab-menu" (click)="openConfirmDialog(mesa)"></i>
+              <!-- <i class="delete-icon fa-solid fa-ellipsis-vertical kebab-menu" (click)="openConfirmDialog(mesa)"></i> -->
             </div>
           </div>
         </div>
@@ -61,7 +62,7 @@
         <h2 id="confirm-dialog-title" class="confirm-dialog-title">¿Quieres eliminar la mesa?</h2>
         <p class="confirm-dialog-description">¿Estás seguro que quieres eliminarla?</p>
         <div class="confirm-dialog-button-container">
-          <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button>
+          <!-- <button class="button confirm-dialog-confirm-button" (click)="confirmDelete()">Sí</button> -->
           <button class="button confirm-dialog-cancel-button" (click)="closeConfirmDialog()">No</button>
         </div>
       </div>

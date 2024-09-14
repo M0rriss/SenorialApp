@@ -3,10 +3,10 @@
   <div class="content">
     <h1 class="section-title">Empleados</h1>
     <div class="action-bar">
-      <div class="search-bar">
+      <!-- <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
         <input type="text" class="search-input" placeholder="Buscar por nombre, DNI, teléfono o correo" />
-      </div>
+      </div> -->
       <div class="buttons">
         <button class="action-button" (click)="openDialog('add')">Agregar</button>
       </div>
@@ -21,7 +21,7 @@
           <th>Teléfono</th>
           <!-- <th>Identificación</th> -->
           <th>Rol</th>
-          <th>Estado</th>
+          <!-- <th>Estado</th> -->
           <th>Acciones</th>
         </tr>
       </thead>
@@ -34,13 +34,13 @@
           <td>{{ empleado.telefono }}</td>
          <!--  <td>{{ empleado.identificacion }}</td> -->
           <td>{{ empleado.rol }}</td>
-          <td>
+         <!--  <td>
             <label class="switch">
                 <input type="checkbox" [checked]="empleado.estado" (change)="onEstadoChange(empleado, $event)">
                 <span class="slider round"></span>
             </label>
             <span class="status-label">{{ empleado.estado ? 'Activo' : 'Inactivo' }}</span>
-        </td>
+        </td> -->
           <td>
             <i class="edit-icon fa-regular fa-pen-to-square" (click)="openDialog('edit',empleado)"></i>
           </td>

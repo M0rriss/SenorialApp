@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { urlInventario } from "@app/core/constants/url-constant";
 import { BusqueInventarioInsumoResponse } from "@app/core/models/dashboard/Inventario/busqueda-inventario-insumo-response";
+import { DateFilterRequest } from "@app/core/models/dashboard/Inventario/date-filter-request";
 import { InventarioDetalleResponse } from "@app/core/models/dashboard/Inventario/inventario-detalle-response";
 import { InventarioResponse } from "@app/core/models/dashboard/Inventario/inventario-response";
 import { CustomResponse } from "@app/core/models/generic/custom-response";
@@ -38,4 +39,10 @@ import { Observable } from "rxjs";
         var res = this.http.delete<CustomResponse>(`${urlInventario.eliminar}?idInsumo=${idInsumo}`);
         return res;
     }
+    filtrarPorFechas(filtroFechas: DateFilterRequest): Observable<GenericFilterResponse<InventarioResponse>> {
+      return this.http.post<GenericFilterResponse<InventarioResponse>>(
+        `${urlInventario.filtrar}`,
+        filtroFechas
+      );
   }
+}

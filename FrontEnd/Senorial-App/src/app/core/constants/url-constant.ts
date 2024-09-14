@@ -32,6 +32,7 @@ const subRutas = {
     // PEDIDO
     pedido: `${dominio}/api/Pedido`,
     pedidosLlevar: `${dominio}/api/PedidoLlevar`,
+    inventario : `${dominio}/api/Inventario`
 }
 
 //INVENTARIO
@@ -39,7 +40,8 @@ export const urlInventario = {
     buscar : `${subRutas.detalleInventario}/Buscar`,
     listar: `${subRutas.detalleInventario}/Listar`,
     detalle: `${subRutas.detalleInventario}/Detalle`,
-    eliminar: `${subRutas.detalleInventario}/Eliminar`
+    eliminar: `${subRutas.detalleInventario}/Eliminar`,
+    filtrar : `${subRutas.inventario}/FiltrarPorFechas`
 }
 
 //ENTRAD
@@ -52,6 +54,7 @@ export const urlSalida = {
 }
 //MANTENIMIENTO
 export const urlUsuario = {
+    listar: subRutas.usuario,
     filtro: `${subRutas.usuario}/Filtro`,
     create: `${subRutas.usuario}/Create`,
     update: `${subRutas.usuario}/Update`,
@@ -59,6 +62,7 @@ export const urlUsuario = {
 
 export const urlProducto = {
     generic: `${subRutas.producto}`,
+    listado: `${subRutas.producto}/Listado`,
     ecommerce: `${subRutas.producto}/Filtro/Ecommerce`,
     dashboard: `${subRutas.producto}/Filtro/Dashboard`,
     create:`${subRutas.producto}/Crear`,
@@ -95,6 +99,7 @@ export const urlSuministro = {
 
 export const urlMesa = {
     generic: `${subRutas.mesas}`,
+    estado: `${subRutas.mesas}/estado`,
 }
 
 export const urlUnidad = {

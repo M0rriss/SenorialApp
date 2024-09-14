@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/models/Response/servicio/dni-response.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/models/Response/servicio/dni-response.dart';
 
 class DniService {
   final Dio dio= Dio();

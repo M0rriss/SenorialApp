@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/router/router.dart';
+import 'package:senorial/router/router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       
-      title: 'Señorial0',
+      title: 'Señorial',
       theme: ThemeData(
         useMaterial3: true,
         

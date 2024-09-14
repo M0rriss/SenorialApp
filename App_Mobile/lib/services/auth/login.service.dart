@@ -1,7 +1,7 @@
-import 'package:m_senorial/models/auth/LoginRequest.dart';
-import 'package:m_senorial/models/auth/LoginResponse.dart';
-import 'package:m_senorial/models/auth/authResponse.dart';
-import 'package:m_senorial/services/crud_service.dart';
+import 'package:senorial/models/auth/LoginRequest.dart';
+import 'package:senorial/models/auth/LoginResponse.dart';
+import 'package:senorial/models/auth/authResponse.dart';
+import 'package:senorial/services/crud_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

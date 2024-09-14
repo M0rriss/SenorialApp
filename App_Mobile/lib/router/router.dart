@@ -1,20 +1,20 @@
 import 'package:go_router/go_router.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/pages/Order/OrderMenu/OrderMenu.dart';
-import 'package:m_senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
-import 'package:m_senorial/pages/Order/OrderSuccessful.dart';
-import 'package:m_senorial/pages/auth/Register-Data/RegisterData.dart';
-import 'package:m_senorial/pages/Order/Registrar-Pedidos/TakeOutRegister.dart';
-import 'package:m_senorial/pages/home/Welcome-S/Welcome.dart';
-import 'package:m_senorial/pages/auth/forget-password/ForgetPassword.dart';
-import 'package:m_senorial/pages/auth/recovery-password/Recoverypassword.dart';
-import 'package:m_senorial/pages/auth/verification/Verified.dart';
-import 'package:m_senorial/pages/categories/categorie/Categories.dart';
-import 'package:m_senorial/pages/home/Home.dart';
-import 'package:m_senorial/pages/products/product-list/ProductsList.dart';
-import 'package:m_senorial/pages/tables/sales-table/SalesTable.dart';
-import 'package:m_senorial/pages/auth/login/Login.dart';
-import 'package:m_senorial/pages/home/Welcome-S/Loading.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/pages/Order/OrderMenu/OrderMenu.dart';
+import 'package:senorial/pages/Order/OrderMenuIndoor/OrderMenuIndoor.dart';
+import 'package:senorial/pages/Order/OrderSuccessful.dart';
+import 'package:senorial/pages/auth/Register-Data/RegisterData.dart';
+import 'package:senorial/pages/Order/Registrar-Pedidos/TakeOutRegister.dart';
+import 'package:senorial/pages/home/Welcome-S/Welcome.dart';
+import 'package:senorial/pages/auth/forget-password/ForgetPassword.dart';
+import 'package:senorial/pages/auth/recovery-password/Recoverypassword.dart';
+import 'package:senorial/pages/auth/verification/Verified.dart';
+import 'package:senorial/pages/categories/categorie/Categories.dart';
+import 'package:senorial/pages/home/Home.dart';
+import 'package:senorial/pages/products/product-list/ProductsList.dart';
+import 'package:senorial/pages/tables/sales-table/SalesTable.dart';
+import 'package:senorial/pages/auth/login/Login.dart';
+import 'package:senorial/pages/home/Welcome-S/Loading.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
