@@ -3,14 +3,14 @@ import 'package:flutter/services.dart'; // Necesario para los inputFormatters
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/components/Buttons/buttonOrden.dart';
-import 'package:m_senorial/components/Buttons/buttonTwo.dart';
-import 'package:m_senorial/components/Extras/my_form_text.dart';
-import 'package:m_senorial/components/Inputs/my_input_text.dart';
-import 'package:m_senorial/components/Texts/my_text_center.dart';
-import 'package:m_senorial/models/Response/servicio/dni-response.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/services/apisperu/dni-service.dart';
+import 'package:senorial/components/Buttons/buttonOrden.dart';
+import 'package:senorial/components/Buttons/buttonTwo.dart';
+import 'package:senorial/components/Extras/my_form_text.dart';
+import 'package:senorial/components/Inputs/my_input_text.dart';
+import 'package:senorial/components/Texts/my_text_center.dart';
+import 'package:senorial/models/Response/servicio/dni-response.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/services/apisperu/dni-service.dart';
 
 class RegisterData extends StatefulWidget {
   RegisterData({super.key});

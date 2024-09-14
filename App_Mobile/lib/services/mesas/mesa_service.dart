@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
+import 'package:senorial/core-url/urlconst.dart';
 
 class MesasService  {
   final Dio _dio;

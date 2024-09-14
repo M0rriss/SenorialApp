@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
 
 class MenuLogin extends StatelessWidget {
   MenuLogin({Key? key}) : super(key: key);

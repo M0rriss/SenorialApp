@@ -3,10 +3,10 @@
   <div class="content">
     <h1 class="section-title">Categorias</h1>
     <div class="action-bar">
-    <div class="search-container" *ngIf="isTableView">
+    <!-- <div class="search-container" *ngIf="isTableView">
       <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
       <input type="text" class="search-input" placeholder="Buscar por Categoria o SubCategoria">
-    </div>
+    </div> -->
     <div class="view-toggle">
       <button *ngIf="!isTableView" class="view-toggle-button" (click)="switchToTableView()">Ir a Tabla</button>
       <button *ngIf="isTableView" class="view-toggle-button" (click)="switchToVisualView()">Ir a Cuadro</button>
@@ -72,12 +72,12 @@
 
               <h3 class="category-name">{{ item.nombre }}</h3>
                 <div class="category-actions">
-                  <label class="switch">
+                  <!-- <label class="switch">
                     <input type="checkbox" [checked]="item.estado">
                     <span class="slider round"></span>
-                  </label>
+                  </label> -->
                   <i class="edit-icon fa-regular fa-pen-to-square" (click)="openEditDialog(item)"></i>
-                  <i class="delete-icon fa-solid fa-ellipsis-vertical kebab-menu" (click)="openConfirmDialog(item)"></i>
+                  <!-- <i class="delete-icon fa-solid fa-ellipsis-vertical kebab-menu" (click)="openConfirmDialog(item)"></i> -->
                 </div>
             </div>
           }

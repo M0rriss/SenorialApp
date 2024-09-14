@@ -3,10 +3,10 @@
   <div class="content">
     <h1 class="section-title">Insumos</h1>
     <div class="action-bar">
-      <div class="search-container">
-        <i class="fa-solid fa-magnifying-glass search-icon" onclick="performSearch()"></i>
-        <input type="text" class="search-input" placeholder="Buscar por Insumos o Unidad de Medida">
-      </div>
+      <!-- <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass search-icon" (click)="applySearchFilter()"></i>
+        <input type="text" class="search-input" placeholder="Buscar por Insumos o Unidad de Medida"[(ngModel)]="searchText" (ngModelChange)="applySearchFilter()">
+      </div> -->
     <div class="buttons">
       <button class="action-button"  (click)="addInsumo()">Agregar</button>
     </div>

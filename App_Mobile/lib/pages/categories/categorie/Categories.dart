@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 
-import 'package:m_senorial/components/Buttons/buttonCategories.dart'; // Asegúrate de que la ruta es correcta
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/models/Response/categorias/categorias-response.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/components/Buttons/buttonCategories.dart'; // Asegúrate de que la ruta es correcta
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/models/Response/categorias/categorias-response.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
 
 class Categories extends StatefulWidget {
   final PedidoRequest data;

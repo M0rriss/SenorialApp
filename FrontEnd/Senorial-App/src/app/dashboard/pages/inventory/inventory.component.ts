@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntradaRequest } from '@app/core/models/dashboard/entrada/entrada-request';
 import { BusqueInventarioInsumoResponse } from '@app/core/models/dashboard/Inventario/busqueda-inventario-insumo-response';
+import { DateFilterRequest } from '@app/core/models/dashboard/Inventario/date-filter-request';
 import { InventarioDetalleResponse } from '@app/core/models/dashboard/Inventario/inventario-detalle-response';
 import { InventarioResponse } from '@app/core/models/dashboard/Inventario/inventario-response';
 import { SalidaRequest } from '@app/core/models/dashboard/salida/salida-request';
@@ -36,7 +37,9 @@ export class InventoryComponent implements OnInit {
   first2: number = 0;
   rows2: number = 5;
   totalRecords: number = 0;
-
+  rangeDates: Date[] = []; // Almacena el rango de fechas seleccionado
+  inventario: any = { lista: [] };
+  totalRegistros: number = 0;
   // Variables para manejar los diálogos modales
   isModalOpen: boolean = false;
   isConfirmDialogOpen: boolean = false;
@@ -307,5 +310,25 @@ stockTotal:0
     // Lógica para manejar las acciones del detalle
     console.log('Guardando cambios para:', this.formDetalle.value);
     this.closeDialog(); // Cierra el diálogo después de guardar
+  }
+   // Filtrado por fechas
+   onDateRangeSelect(event: any) {
+    const fechaInicio = this.rangeDates[0]?.toISOString();
+    const fechaFin = this.rangeDates[1]?.toISOString();
+
+    if (fechaInicio && fechaFin) {
+      console.log('Fechas seleccionadas:', { fechaInicio, fechaFin });
+      this.buscarPorFechas(fechaInicio, fechaFin);
+    }
+  }
+
+  buscarPorFechas(fechaInicio: string, fechaFin: string) {
+    const filtroFechas: DateFilterRequest = { fechaInicio, fechaFin };
+    this.InventarioServicio.filtrarPorFechas(filtroFechas).subscribe({
+      next: (res) => {
+        this.inventario.lista = res.lista;
+        this.totalRegistros = res.totalRegistros;
+      }
+    });
   }
 }

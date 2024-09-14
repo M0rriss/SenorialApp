@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/components/Buttons/button.dart';
-import 'package:m_senorial/components/Inputs/my_input_text.dart';
-import 'package:m_senorial/components/Texts/my_text_center.dart';
-import 'package:m_senorial/components/Texts/my_text_title.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/services/auth/login.service.dart';
+import 'package:senorial/components/Buttons/button.dart';
+import 'package:senorial/components/Inputs/my_input_text.dart';
+import 'package:senorial/components/Texts/my_text_center.dart';
+import 'package:senorial/components/Texts/my_text_title.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/services/auth/login.service.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);

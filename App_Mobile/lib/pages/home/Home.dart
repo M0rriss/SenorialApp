@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:m_senorial/components/Extras/square_icon.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/models/Response/home/home-response.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/components/Extras/square_icon.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/models/Response/home/home-response.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);

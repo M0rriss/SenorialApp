@@ -1,5 +1,5 @@
 // generic-filter-request.dart
-import 'package:m_senorial/models/Resquest/products/product-resques.dart';
+import 'package:senorial/models/Resquest/products/product-resques.dart';
 
 class GenericFilterRequest {
   int numeroPagina;

@@ -1,8 +1,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
 
 class PedidosLlevarService{
 

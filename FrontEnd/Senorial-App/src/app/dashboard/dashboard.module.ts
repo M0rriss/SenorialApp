@@ -32,7 +32,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { Dropdown, DropdownModule } from 'primeng/dropdown';
-
+import { CalendarModule } from 'primeng/calendar'
 @NgModule({
   declarations: [
 
@@ -69,7 +69,8 @@ import { Dropdown, DropdownModule } from 'primeng/dropdown';
     ConfirmPopupModule,
     DialogModule,
     InputTextModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule
 
 
   ],

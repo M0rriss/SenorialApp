@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/Buttons/button.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Inputs/my_inputTwo_text.dart';
-import 'package:m_senorial/components/Texts/my_text_center.dart';
-import 'package:m_senorial/components/Texts/my_text_title.dart';
+import 'package:senorial/components/Buttons/button.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Inputs/my_inputTwo_text.dart';
+import 'package:senorial/components/Texts/my_text_center.dart';
+import 'package:senorial/components/Texts/my_text_title.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:m_senorial/components/Buttons/buttonExtras.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Buttons/buttonOrden.dart';
-import 'package:m_senorial/components/Extras/productwidget.dart';
-import 'package:m_senorial/components/Extras/remove_item_dialog.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedidos-request.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
-import 'package:m_senorial/services/pedidos/pedidos-service.dart';
-import 'package:m_senorial/services/pedidosllevar/pedidosllevar_services.dart';
+import 'package:senorial/components/Buttons/buttonExtras.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Buttons/buttonOrden.dart';
+import 'package:senorial/components/Extras/productwidget.dart';
+import 'package:senorial/components/Extras/remove_item_dialog.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/models/Resquest/Pedido/pedidos-request.dart';
+import 'package:senorial/models/Resquest/Pedido/pedidosllevar-request.dart';
+import 'package:senorial/services/pedidos/pedidos-service.dart';
+import 'package:senorial/services/pedidosllevar/pedidosllevar_services.dart';
 
 class OrderMenuIndoor extends StatefulWidget {
   final PedidoRequest pedido;

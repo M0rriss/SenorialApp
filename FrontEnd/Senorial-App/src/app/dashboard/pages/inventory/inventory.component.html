@@ -4,14 +4,23 @@
     <h1 class="inventory-title">Inventario</h1>
     <div class="action-bar">
     <div class="filter-buttons">
+      <!-- <p-calendar
+      [(ngModel)]="rangeDates"
+      selectionMode="range"
+      readonlyInput="true"
+      dateFormat="dd-mm-yy"
+      [enterKeyHint]="buscarPorFechas"
+      (onSelect)="onDateRangeSelect($event)">
+  </p-calendar> -->
       <button class="filter-button stock-detail-button" (click)="showStockDetail()">Stock Detail</button>
       <button class="filter-button entries-button" (click)="openEntryDialog()">Entradas</button>
       <button class="filter-button exits-button" (click)="openExitDialog()">Salidas</button>
     </div>
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
       <input type="text" class="search-input" [(ngModel)]="nombreInsumo"  placeholder="Buscar Insumo" aria-label="Buscar">
-    </div>
+
+    </div> -->
     </div>
 
     <table class="inventory-table">
@@ -177,10 +186,10 @@
   <section *ngIf="isStockDetailVisible" class="stock-detail">
     <button class="back-button" (click)="hideStockDetail()">Volver</button>
     <h1 class="stock-title">Detalle del Stock</h1>
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
       <input type="text" class="search-input" placeholder="Buscar Insumo " aria-label="Buscar">
-    </div>
+    </div> -->
     <table class="stock-table">
       <thead>
         <tr>

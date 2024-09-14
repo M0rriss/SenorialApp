@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:m_senorial/components/Buttons/button.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Extras/my_form_text.dart';
-import 'package:m_senorial/components/Inputs/my_input_text.dart';
-import 'package:m_senorial/components/Texts/my_text_center.dart';
-import 'package:m_senorial/components/Texts/my_text_title.dart';
+import 'package:senorial/components/Buttons/button.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Extras/my_form_text.dart';
+import 'package:senorial/components/Inputs/my_input_text.dart';
+import 'package:senorial/components/Texts/my_text_center.dart';
+import 'package:senorial/components/Texts/my_text_title.dart';
 
 class Recoverypassword extends StatefulWidget {
   Recoverypassword({super.key});

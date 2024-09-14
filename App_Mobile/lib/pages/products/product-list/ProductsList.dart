@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:go_router/go_router.dart';
-import 'package:m_senorial/components/Buttons/buttonList.dart';
-import 'package:m_senorial/components/Buttons/buttonUser.dart';
-import 'package:m_senorial/components/Buttons/buttonback.dart';
-import 'package:m_senorial/components/Buttons/custom_button.dart';
-import 'package:m_senorial/models/Response/categorias/categorias-response.dart';
-import 'package:m_senorial/models/Response/productos/product-response.dart';
-import 'package:m_senorial/models/Resquest/Pedido/listar_request.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedido_request.dart';
-import 'package:m_senorial/models/Resquest/products/product-resques.dart';
-import 'package:m_senorial/models/generic/generic-filter-request.dart';
-import 'package:m_senorial/models/generic/generic-filter-response.dart';
-import 'package:m_senorial/services/categorias/categoria_service.dart';
-import 'package:m_senorial/services/products/product_service.dart';
+import 'package:senorial/components/Buttons/buttonList.dart';
+import 'package:senorial/components/Buttons/buttonUser.dart';
+import 'package:senorial/components/Buttons/buttonback.dart';
+import 'package:senorial/components/Buttons/custom_button.dart';
+import 'package:senorial/models/Response/categorias/categorias-response.dart';
+import 'package:senorial/models/Response/productos/product-response.dart';
+import 'package:senorial/models/Resquest/Pedido/listar_request.dart';
+import 'package:senorial/models/Resquest/Pedido/pedido_request.dart';
+import 'package:senorial/models/Resquest/products/product-resques.dart';
+import 'package:senorial/models/generic/generic-filter-request.dart';
+import 'package:senorial/models/generic/generic-filter-response.dart';
+import 'package:senorial/services/categorias/categoria_service.dart';
+import 'package:senorial/services/products/product_service.dart';
 
 class ProductsList extends StatefulWidget {
   final PedidoRequest pedido;

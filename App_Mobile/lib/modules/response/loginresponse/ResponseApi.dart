@@ -1,4 +1,4 @@
-import 'package:m_senorial/models/auth/LoginResponse.dart';
+import 'package:senorial/models/auth/LoginResponse.dart';
 
 class ResponseApi {
   final bool success;

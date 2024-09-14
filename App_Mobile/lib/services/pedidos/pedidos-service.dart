@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
-import 'package:m_senorial/core-url/urlconst.dart';
-import 'package:m_senorial/models/Resquest/Pedido/pedidos-request.dart';
+import 'package:senorial/core-url/urlconst.dart';
+import 'package:senorial/models/Resquest/Pedido/pedidos-request.dart';
 
 class PedidosService{
   final Dio dio = Dio();

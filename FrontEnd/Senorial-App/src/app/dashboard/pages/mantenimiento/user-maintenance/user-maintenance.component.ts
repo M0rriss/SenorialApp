@@ -33,7 +33,7 @@ export class UserMaintenanceComponent implements OnInit {
   confirmDialogTitle: string = '';
  // Variables para la paginación
  first: number = 0;
- rows: number = 10;
+ rows: number = 5;
  totalRecords: number = 0;
 
  // status
@@ -85,10 +85,25 @@ export class UserMaintenanceComponent implements OnInit {
     }
     this.usuarioService.listarUsuarios(req).subscribe({
       next: (data: GenericFilterResponse<UsuarioResponse>)=>{
-        this.usuario = data;
+        console.log(data); // Verifica los datos recibidos en la consola
+        this.usuario.lista = data.lista;
+        this.totalRecords = data.totalRegistros;
+        this.usuario = data
+        console.log(data); // Verifica los datos recibidos en la consola
       },
     })
   }
+  listarUsers(){
+
+    this.usuarioService.listarUsers().subscribe({
+      next: (data: UsuarioResponse[])=>{
+
+      },
+    })
+  }
+
+
+
   crearNuevoUsuario(){
     let req = this.formUsuario.value as UsuarioAddRequest
     req.file = this.file;
@@ -101,6 +116,7 @@ export class UserMaintenanceComponent implements OnInit {
         this.notificationService.showError('Error', 'Hubo un problema al crear el usuario.');
       }
     })
+    this.listarUsuarios();
   }
   actulizarUsuario(){
     let req = this.formUsuario.value as UsuarioEditRequest

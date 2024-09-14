@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { urlMesa } from '@app/core/constants/url-constant';
 import { MesaRequest } from '@app/core/models/dashboard/mantenimiento/mesas/mesa-request';
@@ -12,6 +12,15 @@ import { Observable } from 'rxjs';
 export class MesaService extends CrudService<MesaResponse,MesaRequest> {
 
   constructor(protected http:HttpClient) { super(http,urlMesa.generic) }
+
+  // Método para obtener mesas por estado
+  estadoMesas(estado: boolean): Observable<MesaResponse[]> {
+    // Crear parámetros de consulta
+    const params = new HttpParams().set('estado', estado.toString());
+
+    // Hacer la solicitud HTTP GET con parámetros de consulta
+    return this.http.get<MesaResponse[]>(urlMesa.estado, { params });
+  }
 
   // listarMesas():Observable<MesaResponse[]>{
   //   var res = this.http.get<MesaResponse[]>(urlMesa.listar);
